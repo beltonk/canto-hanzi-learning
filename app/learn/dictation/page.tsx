@@ -18,7 +18,7 @@ function DictationContent() {
           <div className="flex items-center gap-2">
             <Link
               href="/"
-              className="text-base text-[#FFD93D] hover:text-[#F5C800] font-medium"
+              className="text-base text-[#FF6B6B] hover:text-[#E55555] font-medium"
             >
               ← 主頁
             </Link>

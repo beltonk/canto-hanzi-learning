@@ -19,7 +19,7 @@ function DecomposeContent() {
           <div className="flex items-center gap-2">
             <Link
               href="/"
-              className="text-base text-[#98D8AA] hover:text-[#7BC88E] font-medium"
+              className="text-base text-[#FF6B6B] hover:text-[#E55555] font-medium"
             >
               ← 主頁
             </Link>

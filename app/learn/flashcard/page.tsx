@@ -12,7 +12,7 @@ function FlashcardContent() {
         <div className="flex items-center gap-2 mb-4">
           <Link
             href="/"
-            className="text-base text-[#7EC8E3] hover:text-[#5BB8D8] font-medium"
+            className="text-base text-[#FF6B6B] hover:text-[#E55555] font-medium"
           >
             ← 主頁
           </Link>

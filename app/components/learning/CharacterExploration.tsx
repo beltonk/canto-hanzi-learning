@@ -106,23 +106,26 @@ export default function CharacterExploration({ character, grade, onCharacterChan
 
   return (
     <div className="max-w-4xl mx-auto space-y-6">
-      {/* Character Navigation - Collapsible */}
+      {/* Character Navigation - Show 2 rows by default, expand for all */}
       {allCharacters.length > 1 && (
         <div className="bg-white rounded-2xl shadow-[0_4px_16px_rgba(0,0,0,0.06)] overflow-hidden">
-          <button
-            onClick={() => setShowCharList(!showCharList)}
-            className="w-full px-4 py-3 flex items-center justify-between text-left hover:bg-[#FFF5F5] transition-colors"
-          >
-            <span className="text-base font-semibold text-[#636E72] flex items-center gap-2">
-              揀選漢字
-              <span className="text-sm text-[#B2BEC3]">（共 {allCharacters.length} 字）</span>
-            </span>
-            <span className={`text-xl text-[#FF6B6B] transition-transform ${showCharList ? 'rotate-180' : ''}`}>
-              ▼
-            </span>
-          </button>
-          {showCharList && (
-            <div className="px-4 pb-4 flex gap-2 flex-wrap border-t border-[#F0F0F0] pt-3">
+          <div className="px-4 py-3">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-base font-semibold text-[#636E72]">
+                揀選漢字
+                <span className="text-sm text-[#B2BEC3] ml-2">（共 {allCharacters.length} 字）</span>
+              </span>
+              {allCharacters.length > 20 && (
+                <button
+                  onClick={() => setShowCharList(!showCharList)}
+                  className="text-sm text-[#FF6B6B] hover:text-[#E55555] font-medium flex items-center gap-1"
+                >
+                  {showCharList ? "收起" : "展開全部"}
+                  <span className={`transition-transform ${showCharList ? 'rotate-180' : ''}`}>▼</span>
+                </button>
+              )}
+            </div>
+            <div className={`flex gap-2 flex-wrap ${!showCharList && allCharacters.length > 20 ? 'max-h-[88px] overflow-hidden' : ''}`}>
               {allCharacters.map((c, idx) => (
                 <button
                   key={idx}
@@ -137,7 +140,7 @@ export default function CharacterExploration({ character, grade, onCharacterChan
                 </button>
               ))}
             </div>
-          )}
+          </div>
         </div>
       )}
 

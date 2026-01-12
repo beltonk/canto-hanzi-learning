@@ -2,6 +2,8 @@
 
 import { useState, useEffect, useCallback } from "react";
 import type { Character, Decomposition, Example } from "@/types/character";
+import Button from "@/app/components/ui/Button";
+import Mascot from "@/app/components/ui/Mascot";
 
 interface CharacterExplorationProps {
   character: string;
@@ -79,16 +81,18 @@ export default function CharacterExploration({ character, grade, onCharacterChan
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center p-8">
-        <div className="text-lg text-gray-600 dark:text-gray-300">正在載入...</div>
+      <div className="flex flex-col items-center justify-center p-12">
+        <div className="text-6xl mb-4 animate-float">🐼</div>
+        <div className="text-xl text-[#636E72]">正在載入...</div>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="flex items-center justify-center p-8">
-        <div className="text-red-600">錯誤：{error}</div>
+      <div className="flex flex-col items-center justify-center p-12">
+        <div className="text-5xl mb-4">😢</div>
+        <div className="text-xl text-[#E55555]">錯誤：{error}</div>
       </div>
     );
   }
@@ -100,20 +104,20 @@ export default function CharacterExploration({ character, grade, onCharacterChan
   const { character: char, decomposition, examples } = data;
 
   return (
-    <div className="max-w-4xl mx-auto p-6 space-y-6">
+    <div className="max-w-4xl mx-auto space-y-6">
       {/* Character Navigation */}
       {allCharacters.length > 1 && (
-        <div className="border-b pb-4">
-          <h3 className="text-sm font-semibold mb-2 text-gray-600 dark:text-gray-400">揀選漢字：</h3>
-          <div className="flex gap-2 flex-wrap">
+        <div className="bg-white rounded-3xl shadow-[0_8px_24px_rgba(0,0,0,0.08)] p-6">
+          <h3 className="text-lg font-semibold mb-3 text-[#636E72]">揀選漢字：</h3>
+          <div className="flex gap-3 flex-wrap">
             {allCharacters.map((c, idx) => (
               <button
                 key={idx}
                 onClick={() => onCharacterChange?.(c.character)}
-                className={`text-2xl px-3 py-2 rounded border transition-colors hanzi-display ${
+                className={`text-3xl px-4 py-3 rounded-2xl border-3 transition-all hanzi-display min-h-[56px] ${
                   c.character === character
-                    ? "bg-blue-500 text-white border-blue-500"
-                    : "bg-gray-50 dark:bg-gray-700 border-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-600"
+                    ? "bg-[#FF6B6B] text-white border-[#FF6B6B] shadow-lg"
+                    : "bg-white border-[#FFE5B4] text-[#2D3436] hover:border-[#FF8E8E] hover:bg-[#FFF5F5]"
                 }`}
               >
                 {c.character}
@@ -124,28 +128,44 @@ export default function CharacterExploration({ character, grade, onCharacterChan
       )}
 
       {/* Main Character Display */}
-      <div className="text-center space-y-4 bg-white dark:bg-gray-800 rounded-lg p-8 shadow">
-        <div className="text-9xl hanzi-display mb-4">{char.character}</div>
-        <div className="space-y-2">
-          <div className="text-2xl text-blue-600 dark:text-blue-400 font-mono">{char.jyutping}</div>
-          <div className="text-sm text-gray-500 dark:text-gray-400">
-            {char.strokeCount} 筆 • 部首：{char.radical}
+      <div className="text-center bg-white rounded-3xl p-10 shadow-[0_8px_24px_rgba(0,0,0,0.08)]">
+        {/* Mascot */}
+        <div className="mb-4">
+          <Mascot type="panda" size="sm" message="一起學習漢字！" />
+        </div>
+        
+        <div className="text-[180px] hanzi-display leading-none text-[#2D3436] mb-6">
+          {char.character}
+        </div>
+        
+        <div className="space-y-3 mb-6">
+          <div className="jyutping text-[#7EC8E3]">{char.jyutping}</div>
+          <div className="text-lg text-[#636E72]">
+            {char.strokeCount} 筆 • 部首：<span className="hanzi-display text-2xl">{char.radical}</span>
           </div>
         </div>
+        
         <button
           onClick={() => speakCantonese(char.character)}
-          className="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors text-lg"
+          className="px-8 py-4 bg-gradient-to-br from-[#FF6B6B] to-[#E55555] text-white 
+                   rounded-full text-xl font-semibold
+                   shadow-[0_4px_16px_rgba(255,107,107,0.4)]
+                   hover:scale-105 active:scale-95 transition-all
+                   flex items-center gap-3 mx-auto min-h-[56px]"
         >
-          🔊 聽發音
+          <span className="text-2xl">🔊</span> 聽發音
         </button>
       </div>
 
       {/* Meanings */}
-      <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow">
-        <h3 className="text-lg font-semibold mb-3 text-gray-900 dark:text-white">意思</h3>
-        <ul className="list-disc list-inside space-y-1">
+      <div className="bg-white rounded-3xl p-8 shadow-[0_8px_24px_rgba(0,0,0,0.08)]">
+        <h3 className="text-xl font-bold mb-4 text-[#2D3436] flex items-center gap-2">
+          <span className="text-2xl">📖</span> 意思
+        </h3>
+        <ul className="space-y-2">
           {char.meanings.map((meaning, idx) => (
-            <li key={idx} className="text-gray-700 dark:text-gray-300 text-lg">
+            <li key={idx} className="text-xl text-[#4A4A4A] flex items-center gap-3">
+              <span className="w-2 h-2 bg-[#FF6B6B] rounded-full flex-shrink-0"></span>
               {meaning}
             </li>
           ))}
@@ -154,13 +174,15 @@ export default function CharacterExploration({ character, grade, onCharacterChan
 
       {/* Tags */}
       {char.tags.length > 0 && (
-        <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow">
-          <h3 className="text-lg font-semibold mb-3 text-gray-900 dark:text-white">分類</h3>
-          <div className="flex flex-wrap gap-2">
+        <div className="bg-white rounded-3xl p-8 shadow-[0_8px_24px_rgba(0,0,0,0.08)]">
+          <h3 className="text-xl font-bold mb-4 text-[#2D3436] flex items-center gap-2">
+            <span className="text-2xl">🏷️</span> 分類
+          </h3>
+          <div className="flex flex-wrap gap-3">
             {char.tags.map((tag, idx) => (
               <span
                 key={idx}
-                className="px-4 py-2 bg-gray-100 dark:bg-gray-700 rounded-full text-sm text-gray-700 dark:text-gray-300"
+                className="px-5 py-3 bg-[#F0F9FF] text-[#5BB8D8] rounded-full text-lg font-medium border-2 border-[#A5DBF0]"
               >
                 {tag}
               </span>
@@ -171,27 +193,29 @@ export default function CharacterExploration({ character, grade, onCharacterChan
 
       {/* Components/Decomposition */}
       {decomposition && (
-        <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow">
-          <h3 className="text-lg font-semibold mb-3 text-gray-900 dark:text-white">部件拆解</h3>
-          <div className="space-y-3">
-            <div className="flex gap-3 flex-wrap items-center">
+        <div className="bg-white rounded-3xl p-8 shadow-[0_8px_24px_rgba(0,0,0,0.08)]">
+          <h3 className="text-xl font-bold mb-4 text-[#2D3436] flex items-center gap-2">
+            <span className="text-2xl">🧩</span> 部件拆解
+          </h3>
+          <div className="space-y-4">
+            <div className="flex gap-4 flex-wrap items-center justify-center">
               {decomposition.components.map((component, idx) => (
-                <span key={idx}>
-                  <span className="text-3xl px-4 py-3 bg-yellow-50 dark:bg-yellow-900/30 rounded border-2 border-yellow-200 dark:border-yellow-700 inline-block hanzi-display">
+                <span key={idx} className="flex items-center">
+                  <span className="text-4xl px-5 py-4 bg-[#FFFBEB] rounded-2xl border-3 border-[#FFE566] inline-block hanzi-display">
                     {component}
                   </span>
                   {idx < decomposition.components.length - 1 && (
-                    <span className="text-2xl text-gray-400 mx-2">+</span>
+                    <span className="text-3xl text-[#B2BEC3] mx-3">+</span>
                   )}
                 </span>
               ))}
-              <span className="text-2xl text-gray-400 mx-2">=</span>
-              <span className="text-3xl px-4 py-3 bg-green-50 dark:bg-green-900/30 rounded border-2 border-green-200 dark:border-green-700 hanzi-display">
+              <span className="text-3xl text-[#B2BEC3] mx-3">=</span>
+              <span className="text-4xl px-5 py-4 bg-[#F0FFF4] rounded-2xl border-3 border-[#B8E8C4] hanzi-display">
                 {char.character}
               </span>
             </div>
-            <div className="text-sm text-gray-500 dark:text-gray-400">
-              結構：<span className="font-semibold">{decomposition.structureType}</span>
+            <div className="text-lg text-[#636E72] text-center">
+              結構：<span className="font-semibold text-[#98D8AA]">{decomposition.structureType}</span>
             </div>
           </div>
         </div>
@@ -199,19 +223,23 @@ export default function CharacterExploration({ character, grade, onCharacterChan
 
       {/* Example Sentences */}
       {examples.length > 0 && (
-        <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow">
-          <h3 className="text-lg font-semibold mb-3 text-gray-900 dark:text-white">例句</h3>
+        <div className="bg-white rounded-3xl p-8 shadow-[0_8px_24px_rgba(0,0,0,0.08)]">
+          <h3 className="text-xl font-bold mb-4 text-[#2D3436] flex items-center gap-2">
+            <span className="text-2xl">✏️</span> 例句
+          </h3>
           <div className="space-y-4">
             {examples.map((example, idx) => (
-              <div key={idx} className="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+              <div key={idx} className="p-5 bg-[#FFF5F5] rounded-2xl border-2 border-[#FFE5E5]">
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1">
-                    <div className="text-xl mb-2 text-gray-900 dark:text-white hanzi-sentence">{example.sentence}</div>
-                    <div className="text-blue-600 dark:text-blue-400 text-sm font-mono">{example.jyutping}</div>
+                    <div className="text-2xl mb-2 text-[#2D3436] hanzi-sentence">{example.sentence}</div>
+                    <div className="text-[#7EC8E3] text-base font-mono">{example.jyutping}</div>
                   </div>
                   <button
                     onClick={() => speakCantonese(example.sentence)}
-                    className="px-3 py-2 bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300 rounded hover:bg-blue-200 dark:hover:bg-blue-800 transition-colors"
+                    className="px-4 py-3 bg-[#7EC8E3] text-white rounded-full
+                             hover:bg-[#5BB8D8] transition-colors min-h-[48px] min-w-[48px]
+                             flex items-center justify-center text-xl"
                   >
                     🔊
                   </button>

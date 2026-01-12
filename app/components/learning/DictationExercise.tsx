@@ -2,6 +2,8 @@
 
 import { useState, useEffect, useCallback } from "react";
 import type { Character } from "@/types/character";
+import Button from "@/app/components/ui/Button";
+import Mascot, { MascotCelebration } from "@/app/components/ui/Mascot";
 
 interface DictationExerciseProps {
   grade?: "KS1" | "KS2";
@@ -107,54 +109,57 @@ export default function DictationExercise({ grade }: DictationExerciseProps) {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center p-8">
-        <div className="text-lg text-gray-600 dark:text-gray-300">正在載入...</div>
+      <div className="flex flex-col items-center justify-center p-12">
+        <div className="text-6xl mb-4 animate-float">🦉</div>
+        <div className="text-xl text-[#636E72]">正在載入...</div>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="flex flex-col items-center justify-center p-8 gap-4">
-        <div className="text-red-600">錯誤：{error}</div>
-        <button
-          onClick={loadQuestions}
-          className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
-        >
+      <div className="flex flex-col items-center justify-center p-12 gap-4">
+        <div className="text-5xl mb-2">😢</div>
+        <div className="text-xl text-[#E55555]">錯誤：{error}</div>
+        <Button onClick={loadQuestions} variant="primary">
           再試一次
-        </button>
+        </Button>
       </div>
     );
   }
 
   if (questions.length === 0) {
     return (
-      <div className="flex items-center justify-center p-8">
-        <div className="text-gray-600 dark:text-gray-300">沒有可用的題目</div>
+      <div className="flex flex-col items-center justify-center p-12">
+        <div className="text-5xl mb-4">🤔</div>
+        <div className="text-xl text-[#636E72]">沒有可用的題目</div>
       </div>
     );
   }
 
+  const progress = ((currentIndex + 1) / questions.length) * 100;
+
   return (
-    <div className="max-w-2xl mx-auto p-6 space-y-6">
+    <div className="max-w-2xl mx-auto space-y-6">
       {/* Progress & Score */}
-      <div className="flex justify-between items-center text-gray-600 dark:text-gray-400">
+      <div className="flex justify-between items-center text-lg font-medium text-[#636E72]">
         <span>題目 {currentIndex + 1} / {questions.length}</span>
-        <span>得分：{score.correct} / {score.total}</span>
+        <span>得分：<span className="text-[#FFD93D]">{score.correct}</span> / {score.total}</span>
       </div>
 
       {/* Progress Bar */}
-      <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+      <div className="w-full bg-[#FFE5B4] rounded-full h-4 shadow-inner">
         <div 
-          className="bg-blue-500 h-2 rounded-full transition-all"
-          style={{ width: `${((currentIndex + 1) / questions.length) * 100}%` }}
+          className="bg-gradient-to-r from-[#FFD93D] to-[#F5C800] h-4 rounded-full transition-all duration-300"
+          style={{ width: `${progress}%` }}
         />
       </div>
 
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6 space-y-6">
+      <div className="bg-white rounded-3xl shadow-[0_8px_24px_rgba(0,0,0,0.08)] p-8 space-y-6">
         <div className="text-center">
-          <h2 className="text-2xl font-bold mb-2 text-gray-900 dark:text-white">默書練習</h2>
-          <p className="text-gray-600 dark:text-gray-400">
+          <Mascot type="owl" size="md" message="專心聆聽！" />
+          <h2 className="text-2xl font-bold mb-2 text-[#2D3436] mt-4">默書練習</h2>
+          <p className="text-lg text-[#636E72]">
             聽發音，寫出正確的漢字
           </p>
         </div>
@@ -163,30 +168,36 @@ export default function DictationExercise({ grade }: DictationExerciseProps) {
         <div className="flex flex-col items-center gap-4">
           <button
             onClick={() => speakCantonese(currentQuestion.character)}
-            className="w-full max-w-xs px-8 py-6 bg-blue-500 text-white rounded-xl hover:bg-blue-600 transition-colors text-xl font-semibold flex items-center justify-center gap-3"
+            className="w-full max-w-sm px-8 py-6 bg-gradient-to-br from-[#FFD93D] to-[#F5C800]
+                     text-[#2D3436] rounded-2xl text-2xl font-bold
+                     flex items-center justify-center gap-3
+                     shadow-[0_4px_16px_rgba(255,217,61,0.4)]
+                     hover:scale-105 active:scale-95 transition-all
+                     min-h-[72px]"
           >
             🔊 聽發音
           </button>
-          <p className="text-sm text-gray-500 dark:text-gray-400">按這裏聽粵語讀音</p>
+          <p className="text-base text-[#B2BEC3]">按這裏聽粵語讀音</p>
         </div>
 
         {/* Hint Toggle */}
         <div className="flex justify-center">
           <button
             onClick={() => setShowHint(!showHint)}
-            className="text-sm text-blue-600 dark:text-blue-400 hover:underline"
+            className="text-lg text-[#7EC8E3] hover:text-[#5BB8D8] font-medium transition-colors"
           >
-            {showHint ? "隱藏提示" : "需要提示？"}
+            {showHint ? "隱藏提示 👀" : "需要提示？💡"}
           </button>
         </div>
 
         {/* Hint */}
         {showHint && (
-          <div className="text-center p-4 bg-yellow-50 dark:bg-yellow-900/30 rounded-lg">
-            <p className="text-gray-700 dark:text-gray-300">
-              <span className="font-semibold">粵拼：</span>{currentQuestion.jyutping}
+          <div className="text-center p-5 bg-[#F0F9FF] border-2 border-[#A5DBF0] rounded-2xl">
+            <p className="text-lg text-[#2D3436] mb-2">
+              <span className="font-semibold">粵拼：</span>
+              <span className="font-mono text-[#5BB8D8]">{currentQuestion.jyutping}</span>
             </p>
-            <p className="text-gray-600 dark:text-gray-400 text-sm mt-1">
+            <p className="text-base text-[#636E72]">
               <span className="font-semibold">意思：</span>{currentQuestion.meanings.join("、")}
             </p>
           </div>
@@ -194,7 +205,7 @@ export default function DictationExercise({ grade }: DictationExerciseProps) {
 
         {/* Input */}
         <div className="space-y-3">
-          <label htmlFor="answer" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+          <label htmlFor="answer" className="block text-lg font-semibold text-[#2D3436]">
             寫出漢字：
           </label>
           <input
@@ -208,8 +219,12 @@ export default function DictationExercise({ grade }: DictationExerciseProps) {
               }
             }}
             disabled={submitted}
-            className="w-full px-4 py-4 text-4xl text-center border-2 border-gray-300 dark:border-gray-600 rounded-lg focus:border-blue-500 focus:outline-none disabled:bg-gray-100 dark:disabled:bg-gray-700 dark:bg-gray-800 dark:text-white hanzi-display"
-            placeholder="在這裏寫"
+            className="w-full px-6 py-5 text-5xl text-center border-4 border-[#FFE5B4] 
+                     rounded-2xl focus:border-[#FFD93D] focus:ring-4 focus:ring-[#FFD93D]/30
+                     focus:outline-none disabled:bg-[#FFF8E7]
+                     text-[#2D3436] hanzi-display transition-all
+                     min-h-[100px]"
+            placeholder="寫"
             maxLength={1}
             autoComplete="off"
           />
@@ -218,59 +233,60 @@ export default function DictationExercise({ grade }: DictationExerciseProps) {
         {/* Submit Button */}
         {!submitted && (
           <div className="flex justify-center">
-            <button
+            <Button
               onClick={handleSubmit}
               disabled={!userAnswer.trim()}
-              className="px-8 py-4 bg-green-500 text-white rounded-lg hover:bg-green-600 disabled:opacity-50 disabled:cursor-not-allowed text-xl font-semibold transition-colors"
+              variant="golden"
+              size="xl"
             >
-              提交答案
-            </button>
+              提交答案 ✓
+            </Button>
           </div>
         )}
 
         {/* Feedback */}
         {submitted && (
           <div
-            className={`p-6 rounded-lg ${
+            className={`p-8 rounded-3xl ${
               isCorrect 
-                ? "bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300" 
-                : "bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300"
+                ? "bg-[#F0FFF4] border-3 border-[#98D8AA]" 
+                : "bg-[#FFF5F5] border-3 border-[#FF8E8E]"
             }`}
           >
             <div className="text-center space-y-4">
-              <div className="text-5xl">{isCorrect ? "✓" : "✗"}</div>
-              <div className="text-2xl font-semibold">
-                {isCorrect ? "答對了！" : "不對"}
-              </div>
-              <div className="space-y-2 text-lg">
+              {isCorrect ? (
+                <MascotCelebration type="owl" message="答對了！" />
+              ) : (
+                <>
+                  <div className="text-6xl">😅</div>
+                  <div className="text-3xl font-bold text-[#E55555]">不對</div>
+                </>
+              )}
+              
+              <div className="space-y-3 text-xl">
                 <div>
-                  <span className="font-medium">你的答案：</span>
-                  <span className="text-2xl ml-2 hanzi-display">{userAnswer || "（沒有填）"}</span>
+                  <span className="font-medium text-[#636E72]">你的答案：</span>
+                  <span className="text-3xl ml-2 hanzi-display text-[#2D3436]">{userAnswer || "（沒有填）"}</span>
                 </div>
                 <div>
-                  <span className="font-medium">正確答案：</span>
-                  <span className="text-2xl ml-2 hanzi-display">{currentQuestion.character}</span>
+                  <span className="font-medium text-[#636E72]">正確答案：</span>
+                  <span className="text-3xl ml-2 hanzi-display text-[#2D3436]">{currentQuestion.character}</span>
                 </div>
-                <div className="text-base">
-                  <span className="font-medium">粵拼：</span>{currentQuestion.jyutping}
+                <div className="text-lg text-[#636E72]">
+                  <span className="font-medium">粵拼：</span>
+                  <span className="font-mono text-[#5BB8D8]">{currentQuestion.jyutping}</span>
                 </div>
               </div>
               
               <div className="flex justify-center gap-4 mt-6">
                 {currentIndex < questions.length - 1 ? (
-                  <button
-                    onClick={handleNext}
-                    className="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
-                  >
+                  <Button onClick={handleNext} variant="sky">
                     下一題 →
-                  </button>
+                  </Button>
                 ) : (
-                  <button
-                    onClick={handleRestart}
-                    className="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
-                  >
-                    重新開始
-                  </button>
+                  <Button onClick={handleRestart} variant="primary">
+                    重新開始 🔄
+                  </Button>
                 )}
               </div>
             </div>
@@ -280,13 +296,13 @@ export default function DictationExercise({ grade }: DictationExerciseProps) {
 
       {/* Final Score */}
       {submitted && currentIndex === questions.length - 1 && (
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6 text-center">
-          <h3 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">練習完成！</h3>
-          <div className="text-4xl font-bold text-blue-600 dark:text-blue-400 mb-2">
+        <div className="bg-white rounded-3xl shadow-[0_8px_24px_rgba(0,0,0,0.08)] p-8 text-center">
+          <h3 className="text-2xl font-bold mb-4 text-[#2D3436]">練習完成！🎉</h3>
+          <div className="text-5xl font-bold text-[#FFD93D] mb-3">
             {score.correct} / {score.total}
           </div>
-          <p className="text-gray-600 dark:text-gray-400">
-            {score.correct === score.total ? "完美！全部答對！🎉" :
+          <p className="text-xl text-[#636E72]">
+            {score.correct === score.total ? "完美！全部答對！🌟" :
              score.correct >= score.total * 0.8 ? "很好！繼續努力！👍" :
              score.correct >= score.total * 0.6 ? "不錯！再多練習！💪" :
              "加油！多練習會進步！📚"}

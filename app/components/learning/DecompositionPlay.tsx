@@ -2,6 +2,8 @@
 
 import { useState, useEffect, useCallback } from "react";
 import type { Character, Decomposition } from "@/types/character";
+import Button from "@/app/components/ui/Button";
+import Mascot, { MascotCelebration } from "@/app/components/ui/Mascot";
 
 interface DecompositionPlayProps {
   character: string;
@@ -154,16 +156,18 @@ export default function DecompositionPlay({ character, grade, onCharacterChange 
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center p-8">
-        <div className="text-lg text-gray-600 dark:text-gray-300">正在載入...</div>
+      <div className="flex flex-col items-center justify-center p-12">
+        <div className="text-6xl mb-4 animate-float">🐵</div>
+        <div className="text-xl text-[#636E72]">正在載入...</div>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="flex items-center justify-center p-8">
-        <div className="text-red-600">錯誤：{error}</div>
+      <div className="flex flex-col items-center justify-center p-12">
+        <div className="text-5xl mb-4">😢</div>
+        <div className="text-xl text-[#E55555]">錯誤：{error}</div>
       </div>
     );
   }
@@ -173,27 +177,27 @@ export default function DecompositionPlay({ character, grade, onCharacterChange 
   }
 
   return (
-    <div className="max-w-4xl mx-auto p-6 space-y-6">
+    <div className="max-w-4xl mx-auto space-y-6">
       {/* Score */}
       {score.total > 0 && (
-        <div className="text-center text-gray-600 dark:text-gray-400">
-          得分：{score.correct} / {score.total}
+        <div className="text-center text-xl font-semibold text-[#636E72]">
+          得分：<span className="text-[#98D8AA]">{score.correct}</span> / {score.total}
         </div>
       )}
 
       {/* Character Navigation */}
       {allCharacters.length > 1 && (
-        <div className="border-b pb-4">
-          <h3 className="text-sm font-semibold mb-2 text-gray-600 dark:text-gray-400">揀選漢字：</h3>
-          <div className="flex gap-2 flex-wrap">
+        <div className="bg-white rounded-3xl shadow-[0_8px_24px_rgba(0,0,0,0.08)] p-6">
+          <h3 className="text-lg font-semibold mb-3 text-[#636E72]">揀選漢字：</h3>
+          <div className="flex gap-3 flex-wrap">
             {allCharacters.map((c, idx) => (
               <button
                 key={idx}
                 onClick={() => onCharacterChange?.(c.character)}
-                className={`text-2xl px-3 py-2 rounded border transition-colors hanzi-display ${
+                className={`text-3xl px-4 py-3 rounded-2xl border-3 transition-all hanzi-display min-h-[56px] ${
                   c.character === character
-                    ? "bg-blue-500 text-white border-blue-500"
-                    : "bg-gray-50 dark:bg-gray-700 border-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-600"
+                    ? "bg-[#98D8AA] text-white border-[#98D8AA] shadow-lg"
+                    : "bg-white border-[#FFE5B4] text-[#2D3436] hover:border-[#B8E8C4] hover:bg-[#F0FFF4]"
                 }`}
               >
                 {c.character}
@@ -203,14 +207,22 @@ export default function DecompositionPlay({ character, grade, onCharacterChange 
         </div>
       )}
 
-      <div className="text-center bg-white dark:bg-gray-800 rounded-lg p-6 shadow">
-        <h2 className="text-2xl font-bold mb-2 text-gray-900 dark:text-white">拆字遊戲</h2>
-        <p className="text-gray-600 dark:text-gray-400">將部件排列成：</p>
-        <div className="flex items-center justify-center gap-4 mt-4">
-          <div className="text-7xl hanzi-display">{character}</div>
+      <div className="text-center bg-white rounded-3xl p-8 shadow-[0_8px_24px_rgba(0,0,0,0.08)]">
+        {/* Mascot */}
+        <div className="mb-4">
+          <Mascot type="monkey" size="md" message="拆字真有趣！" />
+        </div>
+        
+        <h2 className="text-2xl font-bold mb-2 text-[#2D3436]">拆字遊戲</h2>
+        <p className="text-lg text-[#636E72]">將部件排列成：</p>
+        
+        <div className="flex items-center justify-center gap-4 mt-6">
+          <div className="text-[100px] hanzi-display text-[#2D3436]">{character}</div>
           <button
             onClick={() => speakCantonese(character)}
-            className="px-3 py-2 bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300 rounded hover:bg-blue-200 dark:hover:bg-blue-800 transition-colors"
+            className="px-4 py-4 bg-[#98D8AA] text-white rounded-full 
+                     hover:bg-[#7BC88E] transition-colors
+                     min-h-[56px] min-w-[56px] text-2xl"
           >
             🔊
           </button>
@@ -218,44 +230,52 @@ export default function DecompositionPlay({ character, grade, onCharacterChange 
       </div>
 
       {/* Controls */}
-      <div className="flex justify-center gap-4">
+      <div className="flex justify-center gap-4 flex-wrap">
         <button
           onClick={() => setShowHint(!showHint)}
-          className="px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+          className="px-6 py-3 bg-white border-3 border-[#FFE5B4] text-[#636E72] 
+                   rounded-2xl text-lg font-medium min-h-[56px]
+                   hover:border-[#7EC8E3] hover:bg-[#F0F9FF] transition-all"
         >
-          {showHint ? "隱藏提示" : "顯示提示"}
+          {showHint ? "隱藏提示 👀" : "顯示提示 💡"}
         </button>
         <button
           onClick={reset}
-          className="px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+          className="px-6 py-3 bg-white border-3 border-[#FFE5B4] text-[#636E72] 
+                   rounded-2xl text-lg font-medium min-h-[56px]
+                   hover:border-[#FF8E8E] hover:bg-[#FFF5F5] transition-all"
         >
-          重新開始
+          重新開始 🔄
         </button>
       </div>
 
       {showHint && (
-        <div className="text-center p-4 bg-blue-50 dark:bg-blue-900/30 rounded-lg">
-          <p className="text-gray-700 dark:text-gray-300">
-            結構類型：<strong>{puzzle.structureType}</strong>
+        <div className="text-center p-5 bg-[#F0F9FF] border-2 border-[#A5DBF0] rounded-2xl">
+          <p className="text-lg text-[#2D3436]">
+            結構類型：<strong className="text-[#5BB8D8]">{puzzle.structureType}</strong>
           </p>
         </div>
       )}
 
       {/* Arranged Components Area */}
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow">
-        <div className="p-4 border-b border-gray-200 dark:border-gray-700">
-          <div className="text-center text-sm text-gray-500 dark:text-gray-400">將部件放到這裏：</div>
+      <div className="bg-white rounded-3xl shadow-[0_8px_24px_rgba(0,0,0,0.08)]">
+        <div className="p-5 border-b border-[#FFE5B4]">
+          <div className="text-center text-lg font-medium text-[#636E72]">將部件放到這裏：</div>
         </div>
-        <div className="p-6 min-h-[120px] border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg m-4">
-          <div className="flex gap-3 flex-wrap justify-center items-center min-h-[80px]">
+        <div className="p-6 min-h-[140px] border-4 border-dashed border-[#B8E8C4] rounded-2xl m-5 bg-[#F0FFF4]/50">
+          <div className="flex gap-4 flex-wrap justify-center items-center min-h-[100px]">
             {puzzle.arranged.length === 0 ? (
-              <div className="text-gray-400 dark:text-gray-500">按下面的部件</div>
+              <div className="text-xl text-[#B2BEC3]">按下面的部件</div>
             ) : (
               puzzle.arranged.map((component, idx) => (
                 <button
                   key={idx}
                   onClick={() => moveComponent(component, true)}
-                  className="text-4xl px-5 py-4 bg-blue-100 dark:bg-blue-900 rounded-lg border-2 border-blue-300 dark:border-blue-700 hover:bg-blue-200 dark:hover:bg-blue-800 cursor-pointer transition-colors hanzi-display"
+                  className="text-5xl px-6 py-5 bg-[#98D8AA] text-white rounded-2xl 
+                           border-3 border-[#7BC88E] 
+                           hover:bg-[#7BC88E] cursor-pointer transition-all 
+                           hanzi-display shadow-lg hover:scale-105 active:scale-95
+                           min-h-[80px]"
                 >
                   {component}
                 </button>
@@ -266,14 +286,18 @@ export default function DecompositionPlay({ character, grade, onCharacterChange 
       </div>
 
       {/* Available Components */}
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-        <div className="text-center text-sm text-gray-500 dark:text-gray-400 mb-4">可用部件：</div>
-        <div className="flex gap-3 flex-wrap justify-center">
+      <div className="bg-white rounded-3xl shadow-[0_8px_24px_rgba(0,0,0,0.08)] p-8">
+        <div className="text-center text-lg font-medium text-[#636E72] mb-5">可用部件：</div>
+        <div className="flex gap-4 flex-wrap justify-center">
           {puzzle.components.map((component, idx) => (
             <button
               key={idx}
               onClick={() => moveComponent(component, false)}
-              className="text-4xl px-5 py-4 bg-yellow-50 dark:bg-yellow-900/30 rounded-lg border-2 border-yellow-200 dark:border-yellow-700 hover:bg-yellow-100 dark:hover:bg-yellow-900/50 cursor-pointer transition-colors hanzi-display"
+              className="text-5xl px-6 py-5 bg-[#FFFBEB] rounded-2xl 
+                       border-3 border-[#FFD93D] 
+                       hover:bg-[#FFE566] cursor-pointer transition-all 
+                       hanzi-display shadow-lg hover:scale-105 active:scale-95
+                       min-h-[80px] text-[#2D3436]"
             >
               {component}
             </button>
@@ -283,31 +307,37 @@ export default function DecompositionPlay({ character, grade, onCharacterChange 
 
       {/* Validation */}
       <div className="flex justify-center">
-        <button
+        <Button
           onClick={checkAnswer}
           disabled={puzzle.arranged.length !== data.components.length}
-          className="px-8 py-4 bg-green-500 text-white rounded-lg hover:bg-green-600 disabled:opacity-50 disabled:cursor-not-allowed text-xl font-semibold transition-colors"
+          variant="mint"
+          size="xl"
         >
-          檢查答案
-        </button>
+          檢查答案 ✓
+        </Button>
       </div>
 
       {/* Feedback */}
       {puzzle.correct !== null && (
         <div
-          className={`text-center p-6 rounded-lg ${
-            puzzle.correct ? "bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300" : "bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300"
+          className={`text-center p-8 rounded-3xl ${
+            puzzle.correct 
+              ? "bg-[#F0FFF4] border-3 border-[#98D8AA]" 
+              : "bg-[#FFF5F5] border-3 border-[#FF8E8E]"
           }`}
         >
           {puzzle.correct ? (
             <div>
-              <div className="text-4xl mb-2">✓ 全對！</div>
-              <div className="text-lg">你成功將部件排列正確！</div>
+              <MascotCelebration type="monkey" message="全對！太棒了！" />
+              <div className="text-xl text-[#7BC88E] mt-4">你成功將部件排列正確！</div>
             </div>
           ) : (
             <div>
-              <div className="text-4xl mb-2">✗ 不對</div>
-              <div className="text-lg">正確答案是：{data.components.join(" + ")}</div>
+              <div className="text-6xl mb-3">😅</div>
+              <div className="text-3xl mb-2 text-[#E55555] font-bold">再試一次</div>
+              <div className="text-xl text-[#636E72]">
+                正確答案是：<span className="hanzi-display text-2xl">{data.components.join(" + ")}</span>
+              </div>
             </div>
           )}
         </div>

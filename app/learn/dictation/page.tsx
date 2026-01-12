@@ -16,38 +16,43 @@ function DictationContent() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <div className="container mx-auto px-4 py-8">
+    <div className="min-h-screen bg-gradient-to-br from-[#FFF8E7] via-[#FFF2D9] to-[#FFE5B4]">
+      <div className="container mx-auto px-6 py-8 md:py-12">
         <div className="mb-6">
           <Link
             href="/"
-            className="text-blue-600 dark:text-blue-400 hover:underline mb-4 inline-block"
+            className="inline-flex items-center gap-2 text-lg text-[#FFD93D] hover:text-[#F5C800] 
+                     font-medium transition-colors mb-4"
           >
             ← 返回主頁
           </Link>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-            默書練習
-          </h1>
-          <p className="text-gray-600 dark:text-gray-400">
+          <div className="flex items-center gap-3 mb-2">
+            <span className="text-4xl">🦉</span>
+            <h1 className="text-3xl md:text-4xl font-bold text-[#2D3436]">
+              默書練習
+            </h1>
+          </div>
+          <p className="text-xl text-[#636E72]">
             聽粵語讀音，寫出正確的漢字
           </p>
         </div>
 
-        <div className="mb-6 flex gap-4 flex-wrap">
-          <div>
-            <label className="block text-sm text-gray-600 dark:text-gray-400 mb-1">年級</label>
-            <select
-              value={grade}
-              onChange={(e) => {
-                const newGrade = e.target.value as "KS1" | "KS2";
-                router.push(`/learn/dictation?grade=${newGrade}`);
-              }}
-              className="px-4 py-2 border border-gray-300 rounded-lg dark:bg-gray-800 dark:text-white dark:border-gray-600"
-            >
-              <option value="KS1">{gradeLabels.KS1}</option>
-              <option value="KS2">{gradeLabels.KS2}</option>
-            </select>
-          </div>
+        <div className="mb-6">
+          <label className="block text-lg font-semibold text-[#2D3436] mb-2">學習階段</label>
+          <select
+            value={grade}
+            onChange={(e) => {
+              const newGrade = e.target.value as "KS1" | "KS2";
+              router.push(`/learn/dictation?grade=${newGrade}`);
+            }}
+            className="px-5 py-3 text-lg border-3 border-[#FFE5B4] rounded-2xl 
+                     bg-white text-[#2D3436]
+                     focus:ring-4 focus:ring-[#FFD93D]/30 focus:border-[#FFD93D]
+                     transition-all cursor-pointer min-h-[56px]"
+          >
+            <option value="KS1">{gradeLabels.KS1}</option>
+            <option value="KS2">{gradeLabels.KS2}</option>
+          </select>
         </div>
 
         <DictationExercise grade={grade} />
@@ -59,8 +64,11 @@ function DictationContent() {
 export default function DictationPage() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
-        <div className="text-lg text-gray-600 dark:text-gray-300">正在載入...</div>
+      <div className="min-h-screen bg-gradient-to-br from-[#FFF8E7] via-[#FFF2D9] to-[#FFE5B4] flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-6xl mb-4 animate-float">🦉</div>
+          <div className="text-xl text-[#636E72]">正在載入...</div>
+        </div>
       </div>
     }>
       <DictationContent />

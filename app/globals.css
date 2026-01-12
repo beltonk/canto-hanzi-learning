@@ -9,10 +9,56 @@
   font-display: swap;
 }
 
+/* ============================================
+   Child-Friendly Color Palette
+   Warm, vibrant colors for young learners
+   ============================================ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Primary Colors */
+  --color-coral: #FF6B6B;
+  --color-coral-light: #FF8E8E;
+  --color-coral-dark: #E55555;
+  
+  /* Warm Backgrounds */
+  --color-peach: #FFE5B4;
+  --color-peach-light: #FFF2D9;
+  --color-cream: #FFF8E7;
+  --color-cream-dark: #FFF0D0;
+  
+  /* Success/Correct */
+  --color-mint: #98D8AA;
+  --color-mint-light: #B8E8C4;
+  --color-mint-dark: #7BC88E;
+  
+  /* Info/Links */
+  --color-sky: #7EC8E3;
+  --color-sky-light: #A5DBF0;
+  --color-sky-dark: #5BB8D8;
+  
+  /* Achievement/Highlight */
+  --color-golden: #FFD93D;
+  --color-golden-light: #FFE566;
+  --color-golden-dark: #F5C800;
+  
+  /* Text Colors */
+  --color-charcoal: #2D3436;
+  --color-charcoal-light: #4A4A4A;
+  --color-gray: #636E72;
+  --color-gray-light: #B2BEC3;
+  
+  /* Semantic Colors */
+  --background: var(--color-cream);
+  --foreground: var(--color-charcoal);
+  --card-bg: #FFFFFF;
+  --card-shadow: rgba(0, 0, 0, 0.08);
+  
+  /* Typography */
   --font-chinese: 'Free HK Kai', 'Noto Serif TC', 'PMingLiU', serif;
+  
+  /* Spacing for touch */
+  --touch-target-min: 48px;
+  --touch-target-lg: 72px;
+  --spacing-touch: 12px;
 }
 
 @theme inline {
@@ -22,34 +68,352 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* Light mode is always default - no dark mode auto-switch */
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  font-size: 18px;
+  line-height: 1.6;
 }
 
+/* ============================================
+   Typography Scale for Young Readers
+   ============================================ */
 @layer utilities {
   /* 漢字顯示專用樣式 */
   .font-chinese {
     font-family: 'Free HK Kai', 'Noto Serif TC', 'PMingLiU', serif !important;
   }
 
-  /* 大字顯示 - 用於字符學習 */
+  /* 大字顯示 - 用於字符學習 (160px+) */
   .hanzi-display {
     font-family: 'Free HK Kai', 'Noto Serif TC', 'PMingLiU', serif !important;
+    line-height: 1.1;
+  }
+  
+  /* 中等漢字顯示 (80px) */
+  .hanzi-medium {
+    font-family: 'Free HK Kai', 'Noto Serif TC', 'PMingLiU', serif !important;
+    font-size: 80px;
     line-height: 1.2;
   }
 
   /* 例句顯示 */
   .hanzi-sentence {
     font-family: 'Free HK Kai', 'Noto Serif TC', 'PMingLiU', serif !important;
+    font-size: 20px;
+    line-height: 1.8;
+  }
+  
+  /* Child-friendly text sizes */
+  .text-child-body {
+    font-size: 18px;
     line-height: 1.6;
+  }
+  
+  .text-child-lg {
+    font-size: 20px;
+    line-height: 1.5;
+  }
+  
+  .text-child-xl {
+    font-size: 24px;
+    line-height: 1.4;
+  }
+  
+  .text-child-2xl {
+    font-size: 28px;
+    line-height: 1.3;
+  }
+  
+  .text-child-3xl {
+    font-size: 32px;
+    line-height: 1.2;
+  }
+  
+  /* Jyutping display */
+  .jyutping {
+    font-family: var(--font-geist-mono), monospace;
+    font-size: 26px;
+    letter-spacing: 0.05em;
+  }
+  
+  /* Touch-friendly spacing */
+  .space-touch {
+    gap: var(--spacing-touch);
+  }
+  
+  .pad-child {
+    padding: 24px;
+  }
+  
+  .pad-child-lg {
+    padding: 32px;
+  }
+  
+  /* Touch target minimum */
+  .touch-target {
+    min-width: var(--touch-target-min);
+    min-height: var(--touch-target-min);
+  }
+  
+  .touch-target-lg {
+    min-width: var(--touch-target-lg);
+    min-height: var(--touch-target-lg);
+  }
+}
+
+/* ============================================
+   Child-Friendly Color Classes
+   ============================================ */
+@layer utilities {
+  /* Background colors */
+  .bg-coral { background-color: var(--color-coral); }
+  .bg-coral-light { background-color: var(--color-coral-light); }
+  .bg-peach { background-color: var(--color-peach); }
+  .bg-peach-light { background-color: var(--color-peach-light); }
+  .bg-cream { background-color: var(--color-cream); }
+  .bg-mint { background-color: var(--color-mint); }
+  .bg-mint-light { background-color: var(--color-mint-light); }
+  .bg-sky { background-color: var(--color-sky); }
+  .bg-sky-light { background-color: var(--color-sky-light); }
+  .bg-golden { background-color: var(--color-golden); }
+  .bg-golden-light { background-color: var(--color-golden-light); }
+  
+  /* Text colors */
+  .text-coral { color: var(--color-coral); }
+  .text-coral-dark { color: var(--color-coral-dark); }
+  .text-mint { color: var(--color-mint); }
+  .text-mint-dark { color: var(--color-mint-dark); }
+  .text-sky { color: var(--color-sky); }
+  .text-sky-dark { color: var(--color-sky-dark); }
+  .text-golden { color: var(--color-golden); }
+  .text-charcoal { color: var(--color-charcoal); }
+  .text-gray { color: var(--color-gray); }
+  
+  /* Border colors */
+  .border-coral { border-color: var(--color-coral); }
+  .border-mint { border-color: var(--color-mint); }
+  .border-sky { border-color: var(--color-sky); }
+  .border-golden { border-color: var(--color-golden); }
+  .border-peach { border-color: var(--color-peach); }
+}
+
+/* ============================================
+   Button Styles
+   ============================================ */
+@layer components {
+  .btn-primary {
+    background: linear-gradient(135deg, var(--color-coral) 0%, var(--color-coral-dark) 100%);
+    color: white;
+    font-weight: 600;
+    font-size: 20px;
+    padding: 16px 32px;
+    border-radius: 16px;
+    min-height: var(--touch-target-min);
+    box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
+    transition: all 0.2s ease;
+  }
+  
+  .btn-primary:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 16px rgba(255, 107, 107, 0.4);
+  }
+  
+  .btn-primary:active {
+    transform: scale(0.98);
+  }
+  
+  .btn-secondary {
+    background: white;
+    color: var(--color-charcoal);
+    font-weight: 600;
+    font-size: 20px;
+    padding: 16px 32px;
+    border-radius: 16px;
+    border: 3px solid var(--color-peach);
+    min-height: var(--touch-target-min);
+    transition: all 0.2s ease;
+  }
+  
+  .btn-secondary:hover {
+    background: var(--color-peach-light);
+    border-color: var(--color-coral-light);
+    transform: scale(1.02);
+  }
+  
+  .btn-mint {
+    background: linear-gradient(135deg, var(--color-mint) 0%, var(--color-mint-dark) 100%);
+    color: white;
+    font-weight: 600;
+    font-size: 20px;
+    padding: 16px 32px;
+    border-radius: 16px;
+    min-height: var(--touch-target-min);
+    box-shadow: 0 4px 12px rgba(152, 216, 170, 0.3);
+    transition: all 0.2s ease;
+  }
+  
+  .btn-mint:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 16px rgba(152, 216, 170, 0.4);
+  }
+  
+  .btn-sky {
+    background: linear-gradient(135deg, var(--color-sky) 0%, var(--color-sky-dark) 100%);
+    color: white;
+    font-weight: 600;
+    font-size: 20px;
+    padding: 16px 32px;
+    border-radius: 16px;
+    min-height: var(--touch-target-min);
+    box-shadow: 0 4px 12px rgba(126, 200, 227, 0.3);
+    transition: all 0.2s ease;
+  }
+  
+  .btn-sky:hover {
+    transform: scale(1.02);
+  }
+}
+
+/* ============================================
+   Card Styles
+   ============================================ */
+@layer components {
+  .card-child {
+    background: white;
+    border-radius: 24px;
+    padding: 28px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+  }
+  
+  .card-child:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+  }
+  
+  .card-activity {
+    background: white;
+    border-radius: 24px;
+    padding: 32px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    border: 3px solid transparent;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+  
+  .card-activity:hover {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.15);
+  }
+  
+  .card-activity-coral:hover {
+    border-color: var(--color-coral-light);
+    background: linear-gradient(135deg, white 0%, #FFF5F5 100%);
+  }
+  
+  .card-activity-sky:hover {
+    border-color: var(--color-sky-light);
+    background: linear-gradient(135deg, white 0%, #F0F9FF 100%);
+  }
+  
+  .card-activity-mint:hover {
+    border-color: var(--color-mint-light);
+    background: linear-gradient(135deg, white 0%, #F0FFF4 100%);
+  }
+  
+  .card-activity-golden:hover {
+    border-color: var(--color-golden-light);
+    background: linear-gradient(135deg, white 0%, #FFFBEB 100%);
+  }
+}
+
+/* ============================================
+   Navigation Arrows
+   ============================================ */
+@layer components {
+  .nav-arrow {
+    width: var(--touch-target-lg);
+    height: var(--touch-target-lg);
+    border-radius: 50%;
+    background: white;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    color: var(--color-charcoal);
+    transition: all 0.2s ease;
+    cursor: pointer;
+  }
+  
+  .nav-arrow:hover:not(:disabled) {
+    transform: scale(1.1);
+    background: var(--color-peach-light);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  }
+  
+  .nav-arrow:active:not(:disabled) {
+    transform: scale(0.95);
+  }
+  
+  .nav-arrow:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+}
+
+/* ============================================
+   Celebration Animations
+   ============================================ */
+@keyframes bounce-in {
+  0% { transform: scale(0); opacity: 0; }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes star-burst {
+  0% { transform: scale(0) rotate(0deg); opacity: 0; }
+  50% { transform: scale(1.3) rotate(180deg); opacity: 1; }
+  100% { transform: scale(1) rotate(360deg); opacity: 1; }
+}
+
+@keyframes gentle-shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@layer utilities {
+  .animate-bounce-in {
+    animation: bounce-in 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+  
+  .animate-star-burst {
+    animation: star-burst 0.6s ease-out;
+  }
+  
+  .animate-gentle-shake {
+    animation: gentle-shake 0.4s ease-in-out;
+  }
+  
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+}
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }

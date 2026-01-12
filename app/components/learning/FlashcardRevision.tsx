@@ -2,6 +2,9 @@
 
 import { useState, useEffect, useCallback } from "react";
 import type { Character, Decomposition, Example, LearningStage } from "@/types/character";
+import Button from "@/app/components/ui/Button";
+import NavArrow from "@/app/components/ui/NavArrow";
+import Mascot from "@/app/components/ui/Mascot";
 
 interface CharacterData {
   character: Character;
@@ -147,23 +150,28 @@ export default function FlashcardRevision({ initialGrade = "ALL" }: FlashcardRev
   if (!isStarted) {
     return (
       <div className="max-w-lg mx-auto">
-        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 text-center">
+        <div className="bg-white rounded-3xl shadow-[0_8px_32px_rgba(0,0,0,0.08)] p-8 md:p-10">
+          {/* Mascot */}
+          <div className="flex justify-center mb-6">
+            <Mascot type="rabbit" size="lg" message="選擇學習範圍！" />
+          </div>
+
+          <h2 className="text-2xl md:text-3xl font-bold text-[#2D3436] mb-8 text-center">
             字卡設定
           </h2>
 
           {/* Learning Stage Selection */}
           <div className="mb-6">
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label className="block text-lg font-semibold text-[#2D3436] mb-3">
               學習階段
             </label>
             <select
               value={grade}
               onChange={(e) => setGrade(e.target.value as LearningStage | "ALL")}
-              className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 
-                       bg-white dark:bg-gray-700 text-gray-900 dark:text-white
-                       focus:ring-2 focus:ring-blue-500 focus:border-transparent
-                       text-lg"
+              className="w-full px-5 py-4 rounded-2xl border-3 border-[#FFE5B4] 
+                       bg-white text-[#2D3436] text-xl
+                       focus:ring-4 focus:ring-[#7EC8E3]/30 focus:border-[#7EC8E3]
+                       transition-all cursor-pointer"
             >
               <option value="ALL">全部</option>
               <option value="KS1">第一學習階段（小一至小三）</option>
@@ -173,18 +181,19 @@ export default function FlashcardRevision({ initialGrade = "ALL" }: FlashcardRev
 
           {/* Stroke Count Selection */}
           <div className="mb-8">
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label className="block text-lg font-semibold text-[#2D3436] mb-3">
               筆劃數目
             </label>
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-2 gap-3">
               {STROKE_RANGES.map((range, index) => (
                 <button
                   key={index}
                   onClick={() => setStrokeRange(range)}
-                  className={`px-4 py-3 rounded-lg border-2 transition-all text-lg
+                  className={`px-4 py-4 rounded-2xl border-3 transition-all text-xl font-medium
+                    min-h-[56px]
                     ${strokeRange === range
-                      ? "border-blue-500 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 font-semibold"
-                      : "border-gray-200 dark:border-gray-600 hover:border-gray-300 dark:hover:border-gray-500 text-gray-700 dark:text-gray-300"
+                      ? "border-[#7EC8E3] bg-[#F0F9FF] text-[#5BB8D8]"
+                      : "border-[#FFE5B4] bg-white text-[#636E72] hover:border-[#FF8E8E] hover:bg-[#FFF5F5]"
                     }`}
                 >
                   {range.label}
@@ -195,23 +204,23 @@ export default function FlashcardRevision({ initialGrade = "ALL" }: FlashcardRev
 
           {/* Error Message */}
           {error && (
-            <div className="mb-4 p-4 bg-red-50 dark:bg-red-900/30 text-red-700 dark:text-red-300 rounded-lg text-center">
+            <div className="mb-6 p-5 bg-[#FFF5F5] border-2 border-[#FF6B6B] text-[#E55555] rounded-2xl text-center text-lg">
               {error}
             </div>
           )}
 
           {/* Start Button */}
-          <button
+          <Button
             onClick={fetchCharacters}
             disabled={isLoading}
-            className="w-full py-4 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400
-                     text-white font-bold text-xl rounded-xl transition-colors
-                     shadow-lg hover:shadow-xl"
+            variant="primary"
+            size="xl"
+            fullWidth
           >
-            {isLoading ? "載入中..." : "開始温習"}
-          </button>
+            {isLoading ? "載入中..." : "開始温習 🎯"}
+          </Button>
 
-          <p className="mt-4 text-sm text-gray-500 dark:text-gray-400 text-center">
+          <p className="mt-6 text-base text-[#B2BEC3] text-center">
             按 ← → 鍵切換字卡，按空白鍵播放讀音
           </p>
         </div>
@@ -225,64 +234,60 @@ export default function FlashcardRevision({ initialGrade = "ALL" }: FlashcardRev
 
   const isFirst = currentIndex === 0;
   const isLast = currentIndex === characters.length - 1;
+  const progress = ((currentIndex + 1) / characters.length) * 100;
 
   return (
-    <div className="max-w-2xl mx-auto">
+    <div className="max-w-3xl mx-auto px-4">
       {/* Progress Indicator */}
-      <div className="text-center mb-4">
-        <span className="text-lg text-gray-600 dark:text-gray-400">
+      <div className="text-center mb-6">
+        <span className="text-xl font-semibold text-[#636E72]">
           {currentIndex + 1} / {characters.length}
         </span>
-        <div className="mt-2 h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+        <div className="mt-3 h-4 bg-[#FFE5B4] rounded-full overflow-hidden shadow-inner">
           <div 
-            className="h-full bg-blue-500 transition-all duration-300"
-            style={{ width: `${((currentIndex + 1) / characters.length) * 100}%` }}
+            className="h-full bg-gradient-to-r from-[#7EC8E3] to-[#5BB8D8] transition-all duration-300 rounded-full"
+            style={{ width: `${progress}%` }}
           />
         </div>
       </div>
 
       {/* Flashcard */}
-      <div className="relative">
+      <div className="relative flex items-center justify-center">
         {/* Previous Button */}
-        <button
-          onClick={goToPrevious}
-          disabled={isFirst}
-          className={`absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-16
-                    w-14 h-14 md:w-16 md:h-16 rounded-full shadow-lg
-                    flex items-center justify-center text-3xl md:text-4xl
-                    transition-all z-10
-                    ${isFirst 
-                      ? "bg-gray-200 dark:bg-gray-700 text-gray-400 dark:text-gray-500 cursor-not-allowed"
-                      : "bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 hover:scale-110"
-                    }`}
-          aria-label="上一張"
-        >
-          ←
-        </button>
+        <div className="absolute left-0 md:-left-20 z-10">
+          <NavArrow
+            direction="left"
+            onClick={goToPrevious}
+            disabled={isFirst}
+          />
+        </div>
 
         {/* Card */}
-        <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-2xl p-8 md:p-12 mx-8 md:mx-0">
+        <div className="bg-white rounded-[32px] shadow-[0_12px_40px_rgba(0,0,0,0.1)] p-8 md:p-12 mx-16 md:mx-0 w-full max-w-xl">
           {/* Character */}
           <div className="text-center mb-6">
-            <span className="hanzi-display text-[120px] md:text-[160px] leading-none text-gray-900 dark:text-white">
+            <span className="hanzi-display text-[140px] md:text-[180px] leading-none text-[#2D3436]">
               {current.character.character}
             </span>
           </div>
 
           {/* Jyutping */}
           <div className="text-center mb-6">
-            <span className="text-3xl md:text-4xl text-blue-600 dark:text-blue-400 font-mono">
+            <span className="jyutping text-[#7EC8E3]">
               {current.character.jyutping}
             </span>
           </div>
 
           {/* Play Button */}
-          <div className="flex justify-center mb-6">
+          <div className="flex justify-center mb-8">
             <button
               onClick={playPronunciation}
-              className="px-6 py-3 bg-blue-100 dark:bg-blue-900/50 hover:bg-blue-200 dark:hover:bg-blue-900
-                       text-blue-700 dark:text-blue-300 rounded-full transition-colors
-                       flex items-center gap-2 text-lg"
+              className="px-8 py-4 bg-gradient-to-br from-[#7EC8E3] to-[#5BB8D8] 
+                       text-white text-xl font-semibold rounded-full
+                       shadow-[0_4px_16px_rgba(126,200,227,0.4)]
+                       hover:scale-105 active:scale-95
+                       transition-all flex items-center gap-3
+                       min-h-[56px]"
             >
               <span className="text-2xl">🔊</span>
               播放讀音
@@ -290,19 +295,19 @@ export default function FlashcardRevision({ initialGrade = "ALL" }: FlashcardRev
           </div>
 
           {/* Divider */}
-          <div className="border-t border-gray-200 dark:border-gray-700 my-6" />
+          <div className="border-t-2 border-[#FFE5B4] my-6" />
 
           {/* Details Grid */}
           <div className="grid grid-cols-2 gap-4 text-center">
-            <div className="bg-gray-50 dark:bg-gray-700/50 rounded-xl p-4">
-              <div className="text-sm text-gray-500 dark:text-gray-400 mb-1">部首</div>
-              <div className="text-2xl hanzi-display text-gray-900 dark:text-white">
+            <div className="bg-[#FFF5F5] rounded-2xl p-5">
+              <div className="text-base text-[#FF6B6B] mb-2 font-medium">部首</div>
+              <div className="text-3xl hanzi-display text-[#2D3436]">
                 {current.character.radical || "—"}
               </div>
             </div>
-            <div className="bg-gray-50 dark:bg-gray-700/50 rounded-xl p-4">
-              <div className="text-sm text-gray-500 dark:text-gray-400 mb-1">筆劃</div>
-              <div className="text-2xl text-gray-900 dark:text-white">
+            <div className="bg-[#F0FFF4] rounded-2xl p-5">
+              <div className="text-base text-[#7BC88E] mb-2 font-medium">筆劃</div>
+              <div className="text-3xl text-[#2D3436] font-bold">
                 {current.character.strokeCount} 劃
               </div>
             </div>
@@ -310,9 +315,9 @@ export default function FlashcardRevision({ initialGrade = "ALL" }: FlashcardRev
 
           {/* Meanings */}
           {current.character.meanings.length > 0 && (
-            <div className="mt-6 bg-gray-50 dark:bg-gray-700/50 rounded-xl p-4">
-              <div className="text-sm text-gray-500 dark:text-gray-400 mb-2">意思</div>
-              <div className="text-lg text-gray-900 dark:text-white">
+            <div className="mt-5 bg-[#F0F9FF] rounded-2xl p-5">
+              <div className="text-base text-[#5BB8D8] mb-2 font-medium">意思</div>
+              <div className="text-xl text-[#2D3436]">
                 {current.character.meanings.join("、")}
               </div>
             </div>
@@ -320,9 +325,9 @@ export default function FlashcardRevision({ initialGrade = "ALL" }: FlashcardRev
 
           {/* Example Sentence */}
           {current.examples.length > 0 && (
-            <div className="mt-4 bg-amber-50 dark:bg-amber-900/20 rounded-xl p-4">
-              <div className="text-sm text-amber-600 dark:text-amber-400 mb-2">例句</div>
-              <div className="text-lg hanzi-sentence text-gray-900 dark:text-white">
+            <div className="mt-4 bg-[#FFFBEB] rounded-2xl p-5 border-2 border-[#FFE566]">
+              <div className="text-base text-[#F5C800] mb-2 font-medium">例句</div>
+              <div className="text-xl hanzi-sentence text-[#2D3436]">
                 {current.examples[0].sentence}
               </div>
             </div>
@@ -330,36 +335,28 @@ export default function FlashcardRevision({ initialGrade = "ALL" }: FlashcardRev
         </div>
 
         {/* Next Button */}
-        <button
-          onClick={goToNext}
-          disabled={isLast}
-          className={`absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-16
-                    w-14 h-14 md:w-16 md:h-16 rounded-full shadow-lg
-                    flex items-center justify-center text-3xl md:text-4xl
-                    transition-all z-10
-                    ${isLast 
-                      ? "bg-gray-200 dark:bg-gray-700 text-gray-400 dark:text-gray-500 cursor-not-allowed"
-                      : "bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 hover:scale-110"
-                    }`}
-          aria-label="下一張"
-        >
-          →
-        </button>
+        <div className="absolute right-0 md:-right-20 z-10">
+          <NavArrow
+            direction="right"
+            onClick={goToNext}
+            disabled={isLast}
+          />
+        </div>
       </div>
 
       {/* Back to Settings */}
-      <div className="text-center mt-6">
+      <div className="text-center mt-8">
         <button
           onClick={() => setIsStarted(false)}
-          className="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200
-                   underline transition-colors"
+          className="text-lg text-[#7EC8E3] hover:text-[#5BB8D8] font-medium
+                   underline underline-offset-4 transition-colors"
         >
-          返回設定
+          ← 返回設定
         </button>
       </div>
 
       {/* Keyboard Hint */}
-      <div className="text-center mt-4 text-sm text-gray-400 dark:text-gray-500">
+      <div className="text-center mt-4 text-base text-[#B2BEC3]">
         ← → 切換字卡 | 空白鍵播放讀音
       </div>
     </div>

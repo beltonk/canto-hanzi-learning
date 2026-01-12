@@ -7,24 +7,20 @@ import FlashcardRevision from "@/app/components/learning/FlashcardRevision";
 function FlashcardContent() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#FFECD2] via-[#FFE4C4] to-[#FFD8B8]">
-      <div className="container mx-auto px-6 py-8 md:py-12">
-        <div className="mb-8">
+      <div className="container mx-auto px-4 py-3 md:py-4">
+        {/* Compact Header */}
+        <div className="flex items-center gap-2 mb-4">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 text-lg text-[#7EC8E3] hover:text-[#5BB8D8] 
-                     font-medium transition-colors mb-4"
+            className="text-base text-[#7EC8E3] hover:text-[#5BB8D8] font-medium"
           >
-            ← 返回主頁
+            ← 主頁
           </Link>
-          <div className="flex items-center gap-3 mb-2">
-            <span className="text-4xl">🐰</span>
-            <h1 className="text-3xl md:text-4xl font-bold text-[#2D3436]">
-              字卡温習
-            </h1>
-          </div>
-          <p className="text-xl text-[#636E72]">
-            隨機字卡，温習漢字讀音和意思
-          </p>
+          <span className="text-[#B2BEC3]">|</span>
+          <span className="text-2xl">🐰</span>
+          <h1 className="text-xl md:text-2xl font-bold text-[#2D3436]">
+            字卡温習
+          </h1>
         </div>
 
         <FlashcardRevision />
@@ -38,8 +34,8 @@ export default function FlashcardPage() {
     <Suspense fallback={
       <div className="min-h-screen bg-gradient-to-br from-[#FFECD2] via-[#FFE4C4] to-[#FFD8B8] flex items-center justify-center">
         <div className="text-center">
-          <div className="text-6xl mb-4 animate-float">🐰</div>
-          <div className="text-xl text-[#636E72]">正在載入...</div>
+          <div className="text-5xl mb-3 animate-float">🐰</div>
+          <div className="text-lg text-[#636E72]">正在載入...</div>
         </div>
       </div>
     }>

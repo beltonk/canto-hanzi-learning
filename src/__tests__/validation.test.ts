@@ -22,7 +22,7 @@ export const validationTests = {
   "validateCharacter should accept valid character": () => {
     const char: Character = {
       character: "人",
-      grade: "P1",
+      grade: "KS1",
       radical: "人",
       strokeCount: 2,
       jyutping: "jan4",
@@ -38,7 +38,7 @@ export const validationTests = {
   "validateCharacter should reject invalid grade": () => {
     const char: Character = {
       character: "人",
-      grade: "P4" as "P1", // Invalid grade
+      grade: "P4" as "KS1", // Invalid grade
       radical: "人",
       strokeCount: 2,
       jyutping: "jan4",

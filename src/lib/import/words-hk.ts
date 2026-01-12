@@ -62,12 +62,12 @@ export function parseWordsHkData(data: unknown): WordsHkEntry[] {
  * Convert Words.hk entries to Character entities
  * 
  * @param entries - Parsed Words.hk entries
- * @param grade - Grade level to assign (defaults to P1 if not specified in data)
+ * @param grade - Learning stage to assign (defaults to KS1 if not specified in data)
  * @returns Array of Character entities
  */
 export function convertToCharacters(
   entries: WordsHkEntry[],
-  grade: "P1" | "P2" | "P3" = "P1"
+  grade: "KS1" | "KS2" = "KS1"
 ): Character[] {
   const characters: Character[] = [];
   const errors: string[] = [];
@@ -154,12 +154,12 @@ export function convertToExamples(entries: WordsHkEntry[]): Example[] {
  * Import Words.hk dataset and return Character and Example entities
  * 
  * @param data - Raw dataset data
- * @param grade - Grade level to assign
+ * @param grade - Learning stage to assign
  * @returns Object with characters and examples arrays
  */
 export function importWordsHk(
   data: unknown,
-  grade: "P1" | "P2" | "P3" = "P1"
+  grade: "KS1" | "KS2" = "KS1"
 ): { characters: Character[]; examples: Example[]; errors: string[] } {
   const errors: string[] = [];
 

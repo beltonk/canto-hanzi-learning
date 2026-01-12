@@ -75,15 +75,15 @@ export function mergeCharacterData(sources: {
 }
 
 /**
- * Filter data by grade level
+ * Filter data by learning stage
  * 
  * @param data - Merged character data
- * @param grades - Array of grade levels to include (e.g., ["P1", "P2"])
- * @returns Filtered data containing only specified grades
+ * @param grades - Array of learning stages to include (e.g., ["KS1", "KS2"])
+ * @returns Filtered data containing only specified stages
  */
 export function filterByGrade(
   data: MergedCharacterData,
-  grades: ("P1" | "P2" | "P3")[]
+  grades: ("KS1" | "KS2")[]
 ): MergedCharacterData {
   const gradeSet = new Set(grades);
 

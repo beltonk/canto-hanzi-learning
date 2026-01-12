@@ -177,7 +177,7 @@ export default function DictationExercise({ grade }: DictationExerciseProps) {
           >
             🔊 聽發音
           </button>
-          <p className="text-base text-[#B2BEC3]">按這裏聽粵語讀音</p>
+          <p className="text-base text-[#7A8288]">按這裏聽粵語讀音</p>
         </div>
 
         {/* Hint Toggle */}

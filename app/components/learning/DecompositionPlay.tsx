@@ -265,7 +265,7 @@ export default function DecompositionPlay({ character, grade, onCharacterChange 
         <div className="p-6 min-h-[140px] border-4 border-dashed border-[#B8E8C4] rounded-2xl m-5 bg-[#F0FFF4]/50">
           <div className="flex gap-4 flex-wrap justify-center items-center min-h-[100px]">
             {puzzle.arranged.length === 0 ? (
-              <div className="text-xl text-[#B2BEC3]">按下面的部件</div>
+              <div className="text-xl text-[#7A8288]">按下面的部件</div>
             ) : (
               puzzle.arranged.map((component, idx) => (
                 <button

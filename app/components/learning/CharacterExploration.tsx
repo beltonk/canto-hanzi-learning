@@ -205,11 +205,11 @@ export default function CharacterExploration({ character, grade, onCharacterChan
                     {component}
                   </span>
                   {idx < decomposition.components.length - 1 && (
-                    <span className="text-3xl text-[#B2BEC3] mx-3">+</span>
+                    <span className="text-3xl text-[#7A8288] mx-3">+</span>
                   )}
                 </span>
               ))}
-              <span className="text-3xl text-[#B2BEC3] mx-3">=</span>
+              <span className="text-3xl text-[#7A8288] mx-3">=</span>
               <span className="text-4xl px-5 py-4 bg-[#F0FFF4] rounded-2xl border-3 border-[#B8E8C4] hanzi-display">
                 {char.character}
               </span>

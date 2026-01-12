@@ -220,7 +220,7 @@ export default function FlashcardRevision({ initialGrade = "ALL" }: FlashcardRev
             {isLoading ? "載入中..." : "開始温習 🎯"}
           </Button>
 
-          <p className="mt-6 text-base text-[#B2BEC3] text-center">
+          <p className="mt-6 text-base text-[#7A8288] text-center">
             按 ← → 鍵切換字卡，按空白鍵播放讀音
           </p>
         </div>
@@ -356,7 +356,7 @@ export default function FlashcardRevision({ initialGrade = "ALL" }: FlashcardRev
       </div>
 
       {/* Keyboard Hint */}
-      <div className="text-center mt-4 text-base text-[#B2BEC3]">
+      <div className="text-center mt-4 text-base text-[#7A8288]">
         ← → 切換字卡 | 空白鍵播放讀音
       </div>
     </div>

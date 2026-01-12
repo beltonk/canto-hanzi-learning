@@ -12,7 +12,7 @@ export default function Home() {
           <p className="text-xl md:text-2xl text-[#636E72] mb-2">
             香港小學中文字學習
           </p>
-          <p className="text-lg text-[#B2BEC3]">
+          <p className="text-lg text-[#7A8288]">
             互動學習繁體字、粵語發音、部首拆解
           </p>
         </div>
@@ -126,8 +126,8 @@ export default function Home() {
         </div>
 
         {/* Footer */}
-        <div className="text-center mt-12 text-[#B2BEC3]">
-          <p className="text-base">根據《香港小學學習字詞表》</p>
+        <div className="text-center mt-12">
+          <p className="text-base text-[#7A8288]">根據《香港小學學習字詞表》</p>
         </div>
       </main>
     </div>

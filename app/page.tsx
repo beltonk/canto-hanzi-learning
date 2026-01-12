@@ -16,7 +16,7 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto mb-12">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto mb-12">
           {/* Character Exploration */}
           <Link
             href="/learn/explore"
@@ -28,6 +28,20 @@ export default function Home() {
             </h2>
             <p className="text-gray-600 dark:text-gray-300">
               學習漢字的讀音、意思、部首和例句
+            </p>
+          </Link>
+
+          {/* Flashcard Revision */}
+          <Link
+            href="/learn/flashcard"
+            className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow"
+          >
+            <div className="text-6xl mb-4 text-center hanzi-display">卡</div>
+            <h2 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">
+              字卡温習
+            </h2>
+            <p className="text-gray-600 dark:text-gray-300">
+              隨機字卡，温習漢字讀音和意思
             </p>
           </Link>
 
@@ -76,7 +90,15 @@ export default function Home() {
             </div>
             <div>
               <h3 className="font-semibold text-gray-900 dark:text-white mb-2">
-                2. 拆字遊戲
+                2. 字卡温習
+              </h3>
+              <p>
+                用隨機字卡來温習學過的漢字。可以選擇學習階段和筆劃數目。
+              </p>
+            </div>
+            <div>
+              <h3 className="font-semibold text-gray-900 dark:text-white mb-2">
+                3. 拆字遊戲
               </h3>
               <p>
                 將漢字拆開來看，了解它是怎樣組成的。這可以幫助你記住這個字怎麼寫。
@@ -84,7 +106,7 @@ export default function Home() {
             </div>
             <div>
               <h3 className="font-semibold text-gray-900 dark:text-white mb-2">
-                3. 默書練習
+                4. 默書練習
               </h3>
               <p>
                 聽粵語讀音，然後寫出正確的漢字。測試一下你學了多少！

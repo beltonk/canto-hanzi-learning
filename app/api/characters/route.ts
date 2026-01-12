@@ -3,6 +3,18 @@ import { getCharactersByGrade, getCharactersByList, getAllCharactersWithData } f
 import type { LearningStage } from "@/types/character";
 
 /**
+ * Fisher-Yates shuffle algorithm
+ */
+function shuffleArray<T>(array: T[]): T[] {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+}
+
+/**
  * GET /api/characters
  * 
  * Query parameters:
@@ -10,6 +22,9 @@ import type { LearningStage } from "@/types/character";
  *   - KS1: 第一學習階段 (小一至小三)
  *   - KS2: 第二學習階段 (小四至小六)
  * - chars: Comma-separated list of characters (e.g., "人,水,火") - returns specific characters
+ * - minStrokes: Minimum stroke count (inclusive)
+ * - maxStrokes: Maximum stroke count (inclusive)
+ * - shuffle: Set to "true" to randomize the order
  * 
  * If neither parameter is provided, returns all characters.
  */
@@ -18,6 +33,38 @@ export async function GET(request: NextRequest) {
     const searchParams = request.nextUrl.searchParams;
     const gradeParam = searchParams.get("grade");
     const charsParam = searchParams.get("chars");
+    const minStrokesParam = searchParams.get("minStrokes");
+    const maxStrokesParam = searchParams.get("maxStrokes");
+    const shuffleParam = searchParams.get("shuffle");
+
+    // Parse stroke count filters
+    const minStrokes = minStrokesParam ? parseInt(minStrokesParam, 10) : undefined;
+    const maxStrokes = maxStrokesParam ? parseInt(maxStrokesParam, 10) : undefined;
+    const shouldShuffle = shuffleParam === "true";
+
+    // Validate stroke parameters
+    if (minStrokesParam && (isNaN(minStrokes!) || minStrokes! < 1)) {
+      return NextResponse.json(
+        { error: "minStrokes must be a positive integer" },
+        { status: 400 }
+      );
+    }
+    if (maxStrokesParam && (isNaN(maxStrokes!) || maxStrokes! < 1)) {
+      return NextResponse.json(
+        { error: "maxStrokes must be a positive integer" },
+        { status: 400 }
+      );
+    }
+
+    // Helper function to apply stroke count filtering
+    const applyStrokeFilter = <T extends { character: { strokeCount: number } }>(items: T[]): T[] => {
+      return items.filter((item) => {
+        const strokes = item.character.strokeCount;
+        if (minStrokes !== undefined && strokes < minStrokes) return false;
+        if (maxStrokes !== undefined && strokes > maxStrokes) return false;
+        return true;
+      });
+    };
 
     // Validate grade parameter (learning stage)
     if (gradeParam) {
@@ -29,7 +76,12 @@ export async function GET(request: NextRequest) {
         );
       }
 
-      const characters = getAllCharactersWithData(grade);
+      let characters = getAllCharactersWithData(grade);
+      characters = applyStrokeFilter(characters);
+      if (shouldShuffle) {
+        characters = shuffleArray(characters);
+      }
+
       return NextResponse.json({
         grade,
         stageName: grade === "KS1" ? "第一學習階段（小一至小三）" : "第二學習階段（小四至小六）",
@@ -52,9 +104,13 @@ export async function GET(request: NextRequest) {
         );
       }
 
-      const characters = getAllCharactersWithData().filter((item) =>
+      let characters = getAllCharactersWithData().filter((item) =>
         charList.includes(item.character.character)
       );
+      characters = applyStrokeFilter(characters);
+      if (shouldShuffle) {
+        characters = shuffleArray(characters);
+      }
 
       return NextResponse.json({
         requested: charList,
@@ -63,8 +119,13 @@ export async function GET(request: NextRequest) {
       });
     }
 
-    // No parameters - return all characters
-    const characters = getAllCharactersWithData();
+    // No parameters - return all characters (with optional filters)
+    let characters = getAllCharactersWithData();
+    characters = applyStrokeFilter(characters);
+    if (shouldShuffle) {
+      characters = shuffleArray(characters);
+    }
+
     return NextResponse.json({
       count: characters.length,
       characters,

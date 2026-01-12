@@ -3,10 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -H 127.0.0.1",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "import:csv": "tsx scripts/import-wordlist.ts --csv",
+    "import:json": "tsx scripts/import-wordlist.ts --json",
+    "import:words-hk": "tsx scripts/import/import-data.ts words-hk",
+    "import:cjk-decomp": "tsx scripts/import/import-data.ts cjk-decomp",
+    "import:merge": "tsx scripts/import/import-data.ts merge",
+    "data:stats": "node -e \"const d=require('./data/characters.json');console.log('字符:',d.characters.length,'覆蓋率:',(d.characters.length/3171*100).toFixed(1)+'%')\""
   },
   "dependencies": {
     "next": "16.1.1",
@@ -21,6 +27,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.1.1",
     "tailwindcss": "^4",
+    "tsx": "^4.7.0",
     "typescript": "^5"
   }
 }

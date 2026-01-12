@@ -1,8 +1,18 @@
 @import "tailwindcss";
 
+/* Free HK Kai - 香港開源楷書字體 */
+@font-face {
+  font-family: 'Free HK Kai';
+  src: url('/fonts/Free-HK-Kai.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --font-chinese: 'Free HK Kai', 'Noto Serif TC', 'PMingLiU', serif;
 }
 
 @theme inline {
@@ -23,4 +33,23 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+@layer utilities {
+  /* 漢字顯示專用樣式 */
+  .font-chinese {
+    font-family: 'Free HK Kai', 'Noto Serif TC', 'PMingLiU', serif !important;
+  }
+
+  /* 大字顯示 - 用於字符學習 */
+  .hanzi-display {
+    font-family: 'Free HK Kai', 'Noto Serif TC', 'PMingLiU', serif !important;
+    line-height: 1.2;
+  }
+
+  /* 例句顯示 */
+  .hanzi-sentence {
+    font-family: 'Free HK Kai', 'Noto Serif TC', 'PMingLiU', serif !important;
+    line-height: 1.6;
+  }
 }

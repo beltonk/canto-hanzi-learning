@@ -1,6 +1,6 @@
 # 粵語漢字學習系統 (Cantonese Hanzi Learning System)
 
-An interactive Traditional Chinese character learning system for Hong Kong **P1–P6** (Primary 1-6) students. This web application helps students learn Cantonese pronunciation, character recognition, decomposition, and dictation through engaging activities.
+An interactive Traditional Chinese character learning system for Hong Kong **P1–P6** (Primary 1-6) students. This web application helps students learn Cantonese pronunciation, character recognition, decomposition, and dictation through engaging activities with a child-friendly interface.
 
 ## 語言標準 (Language Standard)
 
@@ -29,47 +29,29 @@ An interactive Traditional Chinese character learning system for Hong Kong **P1�
 > 
 > **如需完整數據，請參閱下方「數據導入」部分。**
 
-## 數據來源 (Data Sources)
-
-### 官方來源 (Official Sources)
-- [香港小學學習字詞表](https://www.edb.gov.hk/tc/curriculum-development/kla/chi-edu/resources/primary/lang/index.html) - 教育局官方網站
-- [常用字字形表](https://www.edb.gov.hk/tc/curriculum-development/kla/chi-edu/resources/primary/lang/index.html) - 4,762 個常用字
-
-### 數據導入 (Data Import)
-本系統支援從以下格式導入完整字詞表：
-
-```bash
-# 導入 CSV 格式
-npm run import:csv -- --file=/path/to/wordlist.csv
-
-# 導入 JSON 格式  
-npm run import:json -- --file=/path/to/wordlist.json
-```
-
-CSV 格式要求：
-```csv
-character,grade,radical,strokeCount,jyutping,meanings,tags
-人,P1,人,2,jan4,人類;人物,基礎;人物
-```
-
-> 📝 **獲取完整數據**
-> 
-> 1. 從教育局網站下載《香港小學學習字詞表》PDF
-> 2. 使用 OCR 或手動輸入轉換為 CSV
-> 3. 運行導入腳本
-
 ## Features
 
 ### Learning Activities
 
-- **認識漢字 (Character Exploration)**: Interactive character display with pronunciation, stroke count, components, and example sentences in 書面語
-- **拆字遊戲 (Decomposition Play)**: Puzzle-based activity where students arrange character components to form complete characters
-- **默書練習 (Dictation Exercises)**: Audio-based dictation exercises with immediate feedback
+- **🐼 認識漢字 (Character Exploration)**: Interactive character display with pronunciation, stroke count, components, and example sentences
+- **🐰 字卡温習 (Flashcard Revision)**: Randomized flashcards with filters for learning stage and stroke count, featuring large navigation arrows and audio pronunciation
+- **🐵 拆字遊戲 (Decomposition Play)**: Puzzle-based activity where students arrange character components to form complete characters
+- **🦉 默書練習 (Dictation Exercises)**: Audio-based dictation exercises with immediate feedback
+
+### Child-Friendly Design
+
+The interface is specifically designed for primary school students:
+- **Light mode default** with warm, inviting color palette (coral, mint, sky blue, golden)
+- **Large, touch-friendly buttons** (48-72px touch targets) for iPad users
+- **Animal mascots** for each activity providing encouraging feedback in 書面語
+- **Large character display** (120-200px) using Free HK Kai font
+- **Compact layouts** to show main content without scrolling
+- **Collapsible word lists** showing 2 rows by default with "展開全部" option
 
 ### Core Capabilities
 
-- **Traditional Characters Only**: Focuses exclusively on Traditional Chinese characters aligned with Hong Kong P1–P3 curricula
-- **書面語 Content**: All educational content (meanings, examples) in Standard Written Chinese
+- **Traditional Characters Only**: Focuses exclusively on Traditional Chinese characters aligned with Hong Kong curricula
+- **書面語 Content**: All educational content (meanings, examples, UI) in Standard Written Chinese
 - **Cantonese Support**: Full Jyutping pronunciation with Web Speech API audio playback (zh-HK)
 - **Authoritative Source**: Character data based on HK Education Bureau (教育局) standards
 - **Visual Learning Aids**: Character decomposition visualization with structure types
@@ -80,21 +62,20 @@ character,grade,radical,strokeCount,jyutping,meanings,tags
 - **UI Library**: React 19.2.3
 - **Language**: TypeScript 5 (strict mode)
 - **Styling**: Tailwind CSS 4
+- **Font**: Free HK Kai (Traditional Chinese Kaishu)
 - **Linting**: ESLint with Next.js configs
-- **Fonts**: Geist Sans and Geist Mono
 
 ## Getting Started
 
 ### Prerequisites
 
 - Node.js 18+ and npm
-- (Optional) Access to Cantonese TTS service (CUTalk, Aivoov, or cantonese.ai)
 
 ### Installation
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
+git clone https://github.com/beltonk/canto-hanzi-learning.git
 cd canto-hanzi-learning
 ```
 
@@ -103,27 +84,22 @@ cd canto-hanzi-learning
 npm install
 ```
 
-3. Create sample data (optional):
-```bash
-# The project includes sample data in data/characters.json
-# For production, import real data using the import scripts (see Data Import section)
-```
-
-4. Start the development server:
+3. Start the development server:
 ```bash
 npm run dev
 ```
 
-5. Open [http://localhost:3000](http://localhost:3000) in your browser
+4. Open [http://localhost:3000](http://localhost:3000) in your browser
 
 ### Available Pages
 
 Once the server is running, you can access:
 
-- **Home Page**: [http://localhost:3000](http://localhost:3000) - Overview and navigation
-- **Character Exploration**: [http://localhost:3000/learn/explore?char=人&grade=P1](http://localhost:3000/learn/explore?char=人&grade=P1)
-- **Decomposition Play**: [http://localhost:3000/learn/decompose?char=人&grade=P1](http://localhost:3000/learn/decompose?char=人&grade=P1)
-- **Dictation Exercises**: [http://localhost:3000/learn/dictation?grade=P1&category=audio](http://localhost:3000/learn/dictation?grade=P1&category=audio)
+- **Home Page**: [http://localhost:3000](http://localhost:3000) - Overview and navigation with 4 activity cards
+- **Character Exploration**: [http://localhost:3000/learn/explore](http://localhost:3000/learn/explore) - Learn characters with meanings, decomposition, and examples
+- **Flashcard Revision**: [http://localhost:3000/learn/flashcard](http://localhost:3000/learn/flashcard) - Random flashcards with filters
+- **Decomposition Play**: [http://localhost:3000/learn/decompose](http://localhost:3000/learn/decompose) - Drag-and-drop character puzzles
+- **Dictation Exercises**: [http://localhost:3000/learn/dictation](http://localhost:3000/learn/dictation) - Listen and write dictation practice
 
 ### Building for Production
 
@@ -141,69 +117,87 @@ canto-hanzi-learning/
 │   │   ├── characters/       # Character retrieval endpoints
 │   │   └── exercises/        # Exercise generation endpoints
 │   ├── components/          # React components
-│   │   └── learning/        # Learning activity components
+│   │   ├── learning/        # Learning activity components
+│   │   │   ├── CharacterExploration.tsx
+│   │   │   ├── FlashcardRevision.tsx
+│   │   │   ├── DecompositionPlay.tsx
+│   │   │   └── DictationExercise.tsx
+│   │   └── ui/              # Reusable UI components
+│   │       ├── Button.tsx
+│   │       ├── Card.tsx
+│   │       ├── NavArrow.tsx
+│   │       └── Mascot.tsx
 │   ├── learn/               # Learning activity pages
 │   │   ├── explore/         # Character exploration page
+│   │   ├── flashcard/       # Flashcard revision page
 │   │   ├── decompose/       # Decomposition puzzle page
 │   │   └── dictation/       # Dictation exercises page
+│   ├── globals.css          # Global styles and CSS variables
 │   ├── layout.tsx           # Root layout
 │   └── page.tsx             # Home page
 ├── src/
 │   ├── types/                # TypeScript type definitions
-│   │   └── character.ts     # Character, Example, Decomposition, AudioAsset types
-│   ├── lib/
-│   │   ├── validation/      # Data validation utilities
-│   │   ├── import/          # Data import pipeline
-│   │   │   ├── words-hk.ts  # Words.hk dataset importer
-│   │   │   ├── cjk-decomp.ts # CJK decomposition importer
-│   │   │   └── merger.ts    # Data merging utilities
-│   │   ├── tts/             # TTS service integration
-│   │   │   ├── service.ts   # TTS service manager
-│   │   │   ├── cache.ts     # Audio caching
-│   │   │   └── providers/  # TTS provider implementations
-│   │   └── data/            # Data loading utilities
-│   └── __tests__/           # Test files
+│   │   └── character.ts     # Character, Example, Decomposition types
+│   └── lib/
+│       ├── validation/      # Data validation utilities
+│       └── import/          # Data import pipeline
 ├── data/                     # Character data storage
-│   └── characters.json      # Processed character data
-├── scripts/
-│   └── import/              # Data import CLI scripts
-│       └── import-data.ts   # Main import script
+│   └── characters.json      # 205 sample characters
+├── public/
+│   └── fonts/               # Custom fonts (Free HK Kai)
 └── openspec/                 # OpenSpec documentation
-    ├── project.md           # Project context and conventions
-    └── changes/             # Change proposals
+    ├── project.md           # Project context
+    └── specs/               # Feature specifications
+        ├── character-exploration/
+        ├── flashcard-revision/
+        ├── decomposition-play/
+        ├── dictation/
+        └── ux-design/
 ```
 
 ## API Documentation
 
 ### Character Retrieval
 
-#### Get Characters by Grade
+#### Get Characters by Learning Stage
 ```http
-GET /api/characters?grade=P1
+GET /api/characters?grade=KS1
+GET /api/characters?grade=KS2
 ```
 
-Returns all characters for the specified grade level (P1, P2, or P3).
+Returns all characters for the specified learning stage.
+
+#### Get Characters with Filters
+```http
+GET /api/characters?grade=KS1&minStrokes=1&maxStrokes=5&shuffle=true
+```
+
+**Query Parameters:**
+- `grade`: Learning stage (KS1 or KS2)
+- `minStrokes`: Minimum stroke count
+- `maxStrokes`: Maximum stroke count
+- `shuffle`: Randomize order (true/false)
 
 **Response:**
 ```json
 {
-  "grade": "P1",
+  "grade": "KS1",
   "count": 50,
   "characters": [
     {
       "character": {
         "character": "人",
-        "grade": "P1",
+        "grade": "KS1",
         "radical": "人",
         "strokeCount": 2,
         "jyutping": "jan4",
-        "meanings": ["person", "people"],
-        "tags": ["basic", "people"]
+        "meanings": ["人類", "人物"],
+        "tags": ["基礎", "人物"]
       },
       "decomposition": {
         "character": "人",
         "components": ["人"],
-        "structureType": "single"
+        "structureType": "獨體字"
       },
       "examples": [...]
     }
@@ -211,203 +205,70 @@ Returns all characters for the specified grade level (P1, P2, or P3).
 }
 ```
 
-#### Get Characters by List
-```http
-GET /api/characters?chars=人,水,火
-```
-
-Returns specific characters from the provided comma-separated list.
-
-### Exercise Generation
-
-#### Get Dictation Exercises
-```http
-GET /api/exercises?type=dictation&grade=P1&limit=10
-```
-
-Generates dictation exercises for the specified grade.
-
-**Response:**
-```json
-{
-  "type": "dictation",
-  "grade": "P1",
-  "count": 10,
-  "exercises": [
-    {
-      "type": "dictation",
-      "id": "dictation-audio-人-0",
-      "character": "人",
-      "jyutping": "jan4",
-      "audioUrl": "/api/audio/...",
-      "correctAnswer": "人",
-      "category": "audio"
-    }
-  ]
-}
-```
-
-#### Get Decomposition Exercises
-```http
-GET /api/exercises?type=decomposition&grade=P1&limit=10
-```
-
-Generates decomposition puzzle exercises.
-
 ## Data Import
 
-The project includes CLI scripts for importing data from external sources. These scripts use `tsx` to run TypeScript files directly.
-
-### Importing from Words.hk Dataset
+The system supports importing character data from external sources:
 
 ```bash
-# Import Words.hk data for P1 grade
-npm run import:words-hk <path-to-words-hk-data.json> P1
+# Import CSV format
+npm run import:csv -- --file=/path/to/wordlist.csv
 
-# Example:
-npm run import:words-hk ./data/words-hk-raw.json P1
-
-# Output will be saved to data/words-hk-P1.json
+# CSV format requirement:
+# character,grade,radical,strokeCount,jyutping,meanings,tags
+# 人,KS1,人,2,jan4,人類;人物,基礎;人物
 ```
 
-### Importing from CJK Decomposition Datasets
+### Data Sources
 
-```bash
-# Import CJK decomposition data
-npm run import:cjk-decomp <path-to-cjk-decomp-data.json>
+#### Official Sources
+- [香港小學學習字詞表](https://www.edb.gov.hk/tc/curriculum-development/kla/chi-edu/resources/primary/lang/index.html) - 教育局官方網站
+- [常用字字形表](https://www.edb.gov.hk/tc/curriculum-development/kla/chi-edu/resources/primary/lang/index.html) - 4,762 個常用字
 
-# Example:
-npm run import:cjk-decomp ./data/cjk-decomp-raw.json
-
-# Output will be saved to data/cjk-decomp.json
-```
-
-### Merging Data Sources
-
-```bash
-# Merge Words.hk and CJK decomposition data
-npm run import:merge \
-  <words-hk-file> \
-  <cjk-decomp-file> \
-  <output-file> \
-  [grades...]
-
-# Example:
-npm run import:merge \
-  data/words-hk-P1.json \
-  data/cjk-decomp.json \
-  data/characters.json \
-  P1 P2 P3
-```
-
-**Note**: The import scripts require the `tsx` package (included in devDependencies) to run TypeScript files directly.
+#### Supplementary Datasets
+- **Words.hk**: Comprehensive Cantonese dictionary dataset
+- **CJK Decomposition Datasets**: Character component analysis
 
 ## Using Learning Components
-
-The learning components are already integrated into the application pages, but you can also use them in your own pages:
 
 ### Character Exploration
 
 ```tsx
 import CharacterExploration from "@/app/components/learning/CharacterExploration";
 
-export default function CharacterPage() {
-  return <CharacterExploration character="人" grade="P1" />;
-}
+<CharacterExploration 
+  character="人" 
+  grade="KS1" 
+  onCharacterChange={(char) => console.log(char)}
+/>
 ```
 
-**Props:**
-- `character` (string, required): The Traditional Chinese character to explore
-- `grade` (optional): Grade level filter ("P1" | "P2" | "P3")
+### Flashcard Revision
+
+```tsx
+import FlashcardRevision from "@/app/components/learning/FlashcardRevision";
+
+<FlashcardRevision initialGrade="KS1" />
+```
 
 ### Decomposition Play
 
 ```tsx
 import DecompositionPlay from "@/app/components/learning/DecompositionPlay";
 
-export default function PuzzlePage() {
-  return <DecompositionPlay character="人" grade="P1" />;
-}
+<DecompositionPlay 
+  character="明" 
+  grade="KS1"
+  onCharacterChange={(char) => console.log(char)}
+/>
 ```
-
-**Props:**
-- `character` (string, required): The character to decompose
-- `grade` (optional): Grade level filter ("P1" | "P2" | "P3")
 
 ### Dictation Exercise
 
 ```tsx
 import DictationExercise from "@/app/components/learning/DictationExercise";
 
-export default function DictationPage() {
-  return <DictationExercise grade="P1" category="audio" />;
-}
+<DictationExercise grade="KS1" />
 ```
-
-**Props:**
-- `exerciseId` (optional): Specific exercise ID
-- `grade` (optional): Grade level filter ("P1" | "P2" | "P3")
-- `category` (optional): Exercise type ("audio" | "image")
-
-### Pre-built Pages
-
-The application includes ready-to-use pages at:
-- `/learn/explore` - Character exploration with character and grade selectors
-- `/learn/decompose` - Decomposition puzzle with character and grade selectors
-- `/learn/dictation` - Dictation exercises with grade and category selectors
-
-## Data Sources
-
-### Authoritative References
-
-- **香港教育局《香港小學學習字詞表》** (HK Education Bureau Primary School Word Lists)
-  - Official character lists for P1-P3 levels
-  - [EDB Curriculum Resources](https://www.edb.gov.hk)
-
-- **香港教育局《常用字字形表》** (HK Education Bureau Common Character List)
-  - Standard character forms for Hong Kong education
-
-### Supplementary Datasets
-
-- **Words.hk**: Comprehensive Cantonese dictionary dataset
-  - [Repository](https://repository.eduhk.hk/en/publications/wordshk-a-comprehensive-cantonese-dictionary-dataset-with-definit-2/)
-  - [Website](https://words.hk)
-
-- **CJK Decomposition Datasets**:
-  - [amake/cjk-decomp](https://github.com/amake/cjk-decomp)
-  - [gundramleifert/CJK-decomposition](https://github.com/gundramleifert/CJK-decomposition)
-  - [djuretic/Hanzi](https://github.com/djuretic/Hanzi)
-
-### Audio
-
-- **Web Speech API**: Browser-based Cantonese TTS (zh-HK locale)
-- Future TTS Services (optional):
-  - [CUTalk](http://dsp.ee.cuhk.edu.hk/license_cutalk.php)
-  - [Aivoov](https://aivoov.com/text-to-speech-api/chinese-cantonese)
-  - [cantonese.ai](https://cantonese.ai/tts)
-
-## Configuration
-
-### TTS Service Setup
-
-Configure TTS providers in your environment or config file:
-
-```typescript
-import { createTTSService } from "@/lib/tts/service";
-
-const ttsService = createTTSService([
-  {
-    name: "cutalk",
-    endpoint: "https://api.cutalk.example.com/tts",
-    apiKey: process.env.CUTALK_API_KEY,
-    defaultVoice: "default",
-  },
-]);
-```
-
-### Data File Location
-
-By default, character data is loaded from `data/characters.json`. You can specify a custom path in the data loader.
 
 ## Development
 
@@ -416,12 +277,8 @@ By default, character data is loaded from `data/characters.json`. You can specif
 - TypeScript strict mode enabled
 - ESLint with Next.js configs
 - Components use PascalCase
-- Files use kebab-case or match component names
+- Files use kebab-case
 - Path aliases: `@/*` maps to `src/*`
-
-### Running Tests
-
-Test framework setup is pending. Test examples are in `src/__tests__/`.
 
 ### Available Scripts
 
@@ -429,25 +286,15 @@ Test framework setup is pending. Test examples are in `src/__tests__/`.
 - `npm run build` - Build for production
 - `npm run start` - Start production server
 - `npm run lint` - Run ESLint
-- `npm run import:words-hk <file> [grade]` - Import Words.hk dataset
-- `npm run import:cjk-decomp <file>` - Import CJK decomposition dataset
-- `npm run import:merge <words-hk> <cjk-decomp> <output> [grades...]` - Merge datasets
-
-### Linting
-
-```bash
-npm run lint
-```
 
 ## Future Enhancements
 
+- [ ] Complete character data import (3,171 characters)
 - [ ] Progress tracking and user accounts
 - [ ] Stroke order animation
-- [ ] Advanced character search and filtering
 - [ ] Spaced repetition system
-- [ ] Multiplayer/social features
 - [ ] Mobile app version
-- [ ] Database migration (from file-based storage)
+- [ ] Dark mode option
 
 ## Contributing
 
@@ -455,11 +302,11 @@ This project uses OpenSpec for specification-driven development. See `openspec/A
 
 ## License
 
-[Add your license here]
+MIT License
 
 ## Acknowledgments
 
+- Hong Kong Education Bureau for the official word lists
 - Words.hk dataset contributors
 - CJK decomposition dataset maintainers
-- CUTalk and other TTS service providers
-- Hong Kong education community
+- Free HK Fonts project for the Kai font

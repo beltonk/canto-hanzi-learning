@@ -1,7 +1,7 @@
 # flashcard-revision Specification
 
 ## Purpose
-TBD - created by archiving change add-flashcard-revision. Update Purpose after archive.
+Provide a flashcard-based revision activity where students can review characters in a randomized order with customizable filters for learning stage and stroke count. The flashcard interface features large navigation arrows, audio pronunciation, and a card-style display optimized for touch devices.
 ## Requirements
 ### Requirement: Flashcard Display
 The system SHALL display characters in a card-style format showing:

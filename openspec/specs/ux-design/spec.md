@@ -1,4 +1,9 @@
-## ADDED Requirements
+# ux-design Specification
+
+## Purpose
+Define the user experience design requirements for a child-friendly educational interface optimized for Hong Kong primary school students (P1-P6). The design emphasizes large touch targets for iPad users, warm inviting colors, friendly animal mascots, and layouts that avoid unnecessary scrolling.
+
+## Requirements
 
 ### Requirement: Light Mode Default
 The system SHALL use light mode as the default theme. Dark mode MAY be available as an optional accessibility setting but SHALL NOT be the default.

@@ -6,7 +6,7 @@ import FlashcardRevision from "@/app/components/learning/FlashcardRevision";
 
 function FlashcardContent() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#FFF8E7] via-[#FFF2D9] to-[#FFE5B4]">
+    <div className="min-h-screen bg-gradient-to-br from-[#FFECD2] via-[#FFE4C4] to-[#FFD8B8]">
       <div className="container mx-auto px-6 py-8 md:py-12">
         <div className="mb-8">
           <Link
@@ -36,7 +36,7 @@ function FlashcardContent() {
 export default function FlashcardPage() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen bg-gradient-to-br from-[#FFF8E7] via-[#FFF2D9] to-[#FFE5B4] flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-[#FFECD2] via-[#FFE4C4] to-[#FFD8B8] flex items-center justify-center">
         <div className="text-center">
           <div className="text-6xl mb-4 animate-float">🐰</div>
           <div className="text-xl text-[#636E72]">正在載入...</div>

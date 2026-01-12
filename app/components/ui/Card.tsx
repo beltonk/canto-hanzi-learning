@@ -22,7 +22,8 @@ export default function Card({ children, className = "", padding = "lg" }: CardP
       className={`
         bg-white
         rounded-3xl
-        shadow-[0_8px_24px_rgba(0,0,0,0.08)]
+        shadow-[0_8px_32px_rgba(0,0,0,0.12)]
+        border-2 border-white/80
         ${PADDING_CLASSES[padding]}
         ${className}
       `}
@@ -72,11 +73,11 @@ export function ActivityCard({
         bg-white
         rounded-3xl
         p-8
-        shadow-[0_8px_24px_rgba(0,0,0,0.08)]
-        border-3 border-transparent
+        shadow-[0_8px_32px_rgba(0,0,0,0.12)]
+        border-2 border-[#E8E0D8]
         transition-all duration-300
         hover:translate-y-[-6px] hover:scale-[1.02]
-        hover:shadow-[0_16px_40px_rgba(0,0,0,0.15)]
+        hover:shadow-[0_16px_40px_rgba(0,0,0,0.18)]
         ${THEME_HOVER_CLASSES[colorTheme]}
       `}
     >

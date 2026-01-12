@@ -2,7 +2,7 @@ import { ActivityCard } from "@/app/components/ui/Card";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#FFF8E7] via-[#FFF2D9] to-[#FFE5B4]">
+    <div className="min-h-screen bg-gradient-to-br from-[#FFECD2] via-[#FFE4C4] to-[#FFD8B8]">
       <main className="container mx-auto px-6 py-12 md:py-16">
         {/* Header */}
         <div className="text-center mb-12 md:mb-16">
@@ -57,7 +57,7 @@ export default function Home() {
         </div>
 
         {/* How to Start Section */}
-        <div className="max-w-4xl mx-auto bg-white rounded-3xl shadow-[0_8px_32px_rgba(0,0,0,0.08)] p-8 md:p-12">
+        <div className="max-w-4xl mx-auto bg-white rounded-3xl shadow-[0_8px_32px_rgba(0,0,0,0.12)] border-2 border-[#E8E0D8] p-8 md:p-12">
           <h2 className="text-2xl md:text-3xl font-bold mb-8 text-[#2D3436] text-center">
             如何開始？
           </h2>

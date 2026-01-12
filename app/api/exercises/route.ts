@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getAllCharactersWithData } from "@/lib/data/loader";
-import type { GradeLevel } from "@/types/character";
+import type { LearningStage } from "@/types/character";
 
 /**
  * Exercise types
@@ -40,7 +40,7 @@ type ExerciseTask = DictationTask | DecompositionTask;
  * 
  * Query parameters:
  * - type: Exercise type ("dictation" or "decomposition")
- * - grade: Grade level (P1, P2, or P3) - optional, defaults to all grades
+ * - grade: Learning stage (KS1 or KS2) - optional, defaults to all stages
  * - limit: Maximum number of exercises to return (optional)
  */
 export async function GET(request: NextRequest) {
@@ -66,13 +66,13 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    // Validate grade parameter
-    let grade: GradeLevel | undefined;
+    // Validate grade parameter (learning stage)
+    let grade: LearningStage | undefined;
     if (gradeParam) {
-      const gradeUpper = gradeParam.toUpperCase() as GradeLevel;
-      if (gradeUpper !== "P1" && gradeUpper !== "P2" && gradeUpper !== "P3") {
+      const gradeUpper = gradeParam.toUpperCase() as LearningStage;
+      if (gradeUpper !== "KS1" && gradeUpper !== "KS2") {
         return NextResponse.json(
-          { error: `Invalid grade. Must be one of: P1, P2, P3` },
+          { error: `Invalid grade. Must be one of: KS1, KS2` },
           { status: 400 }
         );
       }

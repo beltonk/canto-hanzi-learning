@@ -7,23 +7,24 @@ import { MascotIcon, MascotType } from "./Mascot";
 interface CardProps {
   children: ReactNode;
   className?: string;
-  padding?: "md" | "lg" | "xl";
+  padding?: "sm" | "md" | "lg" | "xl";
 }
 
 const PADDING_CLASSES = {
+  sm: "p-4",
   md: "p-6",
   lg: "p-8",
   xl: "p-10",
 };
 
-export default function Card({ children, className = "", padding = "lg" }: CardProps) {
+export default function Card({ children, className = "", padding = "md" }: CardProps) {
   return (
     <div
       className={`
         bg-white
-        rounded-3xl
-        shadow-[0_8px_32px_rgba(0,0,0,0.12)]
-        border-2 border-white/80
+        rounded-2xl
+        shadow-[0_4px_20px_rgba(0,0,0,0.1)]
+        border border-[#E8E0D8]
         ${PADDING_CLASSES[padding]}
         ${className}
       `}
@@ -33,13 +34,12 @@ export default function Card({ children, className = "", padding = "lg" }: CardP
   );
 }
 
-// Activity Card for homepage
+// Activity Card for homepage - Compact version
 interface ActivityCardProps {
   href: string;
   mascot: MascotType;
   character: string;
   title: string;
-  description: string;
   colorTheme: "coral" | "sky" | "mint" | "golden";
 }
 
@@ -62,7 +62,6 @@ export function ActivityCard({
   mascot,
   character,
   title,
-  description,
   colorTheme,
 }: ActivityCardProps) {
   return (
@@ -71,34 +70,29 @@ export function ActivityCard({
       className={`
         block
         bg-white
-        rounded-3xl
-        p-8
-        shadow-[0_8px_32px_rgba(0,0,0,0.12)]
-        border-2 border-[#E8E0D8]
-        transition-all duration-300
-        hover:translate-y-[-6px] hover:scale-[1.02]
-        hover:shadow-[0_16px_40px_rgba(0,0,0,0.18)]
+        rounded-2xl
+        p-4 md:p-5
+        shadow-[0_4px_20px_rgba(0,0,0,0.1)]
+        border border-[#E8E0D8]
+        transition-all duration-200
+        hover:translate-y-[-4px] hover:scale-[1.02]
+        hover:shadow-[0_8px_30px_rgba(0,0,0,0.15)]
         ${THEME_HOVER_CLASSES[colorTheme]}
       `}
     >
       <div className="flex flex-col items-center text-center">
-        {/* Mascot and Character */}
-        <div className={`relative w-32 h-32 ${MASCOT_BG_CLASSES[colorTheme]} rounded-full flex items-center justify-center mb-4`}>
-          <span className="hanzi-display text-7xl text-[#2D3436]">{character}</span>
-          <span className="absolute -bottom-1 -right-1 text-4xl">
+        {/* Mascot and Character - Compact */}
+        <div className={`relative w-16 h-16 md:w-20 md:h-20 ${MASCOT_BG_CLASSES[colorTheme]} rounded-full flex items-center justify-center mb-2`}>
+          <span className="hanzi-display text-4xl md:text-5xl text-[#2D3436]">{character}</span>
+          <span className="absolute -bottom-0.5 -right-0.5 text-xl md:text-2xl">
             <MascotIcon type={mascot} size="sm" />
           </span>
         </div>
         
         {/* Title */}
-        <h2 className="text-2xl font-bold text-[#2D3436] mb-2">
+        <h2 className="text-base md:text-lg font-bold text-[#2D3436]">
           {title}
         </h2>
-        
-        {/* Description */}
-        <p className="text-lg text-[#636E72]">
-          {description}
-        </p>
       </div>
     </Link>
   );

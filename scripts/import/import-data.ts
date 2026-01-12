@@ -17,7 +17,7 @@ import { join } from "path";
 import { importWordsHk } from "@/lib/import/words-hk";
 import { importCJKDecomp } from "@/lib/import/cjk-decomp";
 import { mergeCharacterData, filterByGrade, exportToJSON } from "@/lib/import/merger";
-import type { GradeLevel } from "@/types/character";
+import type { LearningStage } from "@/types/character";
 
 // Simple CLI argument parsing
 const args = process.argv.slice(2);
@@ -34,7 +34,7 @@ if (!command) {
 try {
   if (command === "words-hk") {
     const filePath = args[1];
-    const grade = (args[2] as GradeLevel) || "P1";
+    const grade = (args[2] as LearningStage) || "KS1";
 
     if (!filePath) {
       console.error("Error: Words.hk file path required");
@@ -83,7 +83,7 @@ try {
     const wordsHkPath = args[1];
     const cjkDecompPath = args[2];
     const outputPath = args[3];
-    const grades = (args.slice(4) as GradeLevel[]) || ["P1", "P2", "P3"];
+    const grades = (args.slice(4) as LearningStage[]) || ["KS1", "KS2"];
 
     if (!wordsHkPath || !cjkDecompPath || !outputPath) {
       console.error("Error: All file paths required for merge");
@@ -94,8 +94,8 @@ try {
     const wordsHkData = JSON.parse(readFileSync(wordsHkPath, "utf-8"));
     const cjkDecompData = JSON.parse(readFileSync(cjkDecompPath, "utf-8"));
 
-    // Import all grades from Words.hk (we'll filter later)
-    const wordsHkResult = importWordsHk(wordsHkData, "P1"); // Grade will be set per entry
+    // Import all stages from Words.hk (we'll filter later)
+    const wordsHkResult = importWordsHk(wordsHkData, "KS1"); // Stage will be set per entry
     const cjkDecompResult = importCJKDecomp(cjkDecompData);
 
     // Merge data

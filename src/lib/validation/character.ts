@@ -1,9 +1,9 @@
-import type { Character, GradeLevel, Example, Decomposition, AudioAsset, AudioCategory, StructureType } from "@/types/character";
+import type { Character, LearningStage, Example, Decomposition, AudioAsset, AudioCategory, StructureType } from "@/types/character";
 
 /**
- * Valid grade levels
+ * Valid learning stages
  */
-const VALID_GRADES: GradeLevel[] = ["P1", "P2", "P3"];
+const VALID_STAGES: LearningStage[] = ["KS1", "KS2"];
 
 /**
  * Valid structure types
@@ -46,8 +46,8 @@ export function validateCharacter(char: Character): { valid: boolean; errors: st
     errors.push("Character must be a Traditional Chinese character");
   }
 
-  if (!VALID_GRADES.includes(char.grade)) {
-    errors.push(`Grade must be one of: ${VALID_GRADES.join(", ")}`);
+  if (!VALID_STAGES.includes(char.grade)) {
+    errors.push(`Learning stage must be one of: ${VALID_STAGES.join(", ")}`);
   }
 
   if (!char.radical || char.radical.length === 0) {

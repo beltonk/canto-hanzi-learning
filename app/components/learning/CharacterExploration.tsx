@@ -22,6 +22,7 @@ export default function CharacterExploration({ character, grade, onCharacterChan
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [allCharacters, setAllCharacters] = useState<Character[]>([]);
+  const [showCharList, setShowCharList] = useState(false);
 
   const loadCharacterData = useCallback(async () => {
     try {
@@ -105,25 +106,38 @@ export default function CharacterExploration({ character, grade, onCharacterChan
 
   return (
     <div className="max-w-4xl mx-auto space-y-6">
-      {/* Character Navigation */}
+      {/* Character Navigation - Collapsible */}
       {allCharacters.length > 1 && (
-        <div className="bg-white rounded-3xl shadow-[0_8px_24px_rgba(0,0,0,0.08)] p-6">
-          <h3 className="text-lg font-semibold mb-3 text-[#636E72]">揀選漢字：</h3>
-          <div className="flex gap-3 flex-wrap">
-            {allCharacters.map((c, idx) => (
-              <button
-                key={idx}
-                onClick={() => onCharacterChange?.(c.character)}
-                className={`text-3xl px-4 py-3 rounded-2xl border-3 transition-all hanzi-display min-h-[56px] ${
-                  c.character === character
-                    ? "bg-[#FF6B6B] text-white border-[#FF6B6B] shadow-lg"
-                    : "bg-white border-[#FFE5B4] text-[#2D3436] hover:border-[#FF8E8E] hover:bg-[#FFF5F5]"
-                }`}
-              >
-                {c.character}
-              </button>
-            ))}
-          </div>
+        <div className="bg-white rounded-2xl shadow-[0_4px_16px_rgba(0,0,0,0.06)] overflow-hidden">
+          <button
+            onClick={() => setShowCharList(!showCharList)}
+            className="w-full px-4 py-3 flex items-center justify-between text-left hover:bg-[#FFF5F5] transition-colors"
+          >
+            <span className="text-base font-semibold text-[#636E72] flex items-center gap-2">
+              揀選漢字
+              <span className="text-sm text-[#B2BEC3]">（共 {allCharacters.length} 字）</span>
+            </span>
+            <span className={`text-xl text-[#FF6B6B] transition-transform ${showCharList ? 'rotate-180' : ''}`}>
+              ▼
+            </span>
+          </button>
+          {showCharList && (
+            <div className="px-4 pb-4 flex gap-2 flex-wrap border-t border-[#F0F0F0] pt-3">
+              {allCharacters.map((c, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => onCharacterChange?.(c.character)}
+                  className={`text-2xl px-3 py-2 rounded-xl border-2 transition-all hanzi-display ${
+                    c.character === character
+                      ? "bg-[#FF6B6B] text-white border-[#FF6B6B] shadow-md"
+                      : "bg-white border-[#FFE5B4] text-[#2D3436] hover:border-[#FF8E8E] hover:bg-[#FFF5F5]"
+                  }`}
+                >
+                  {c.character}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
       )}
 

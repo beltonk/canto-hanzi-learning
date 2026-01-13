@@ -22,9 +22,15 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const saved = localStorage.getItem(STORAGE_KEY) as Theme | null;
     if (saved && (saved === "light" || saved === "dark")) {
-      setThemeState(saved);
+      // Schedule state update to avoid synchronous setState in effect
+      setTimeout(() => {
+        setThemeState(saved);
+      }, 0);
     }
-    setMounted(true);
+    // Schedule mounted state update to avoid synchronous setState in effect
+    setTimeout(() => {
+      setMounted(true);
+    }, 0);
   }, []);
 
   // Apply theme to document

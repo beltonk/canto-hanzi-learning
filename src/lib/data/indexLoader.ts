@@ -381,7 +381,8 @@ export function loadStageIndex(): GroupedWordIndex | null {
 /**
  * @deprecated Stage applies to words, not characters. Use getWordsByStage() instead.
  */
-export function getCharactersByStage(stage: "1" | "2"): IndexEntry[] {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function getCharactersByStage(_stage: "1" | "2"): IndexEntry[] {
   console.warn("getCharactersByStage() is deprecated. Stage applies to words, not characters.");
   // Return empty array - stage no longer applies to characters
   return [];

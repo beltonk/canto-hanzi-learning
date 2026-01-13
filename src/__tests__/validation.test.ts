@@ -10,12 +10,9 @@
 
 import {
   validateCharacter,
-  validateExample,
-  validateDecomposition,
-  validateAudioAsset,
   isTraditional,
 } from "@/lib/validation/character";
-import type { Character, Example, Decomposition, AudioAsset } from "@/types/character";
+import type { Character } from "@/types/character";
 
 // Example test structure (requires test framework setup)
 export const validationTests = {

@@ -16,8 +16,8 @@
  * and re-fetches their data from edbchinese.hk
  */
 
-import { readFileSync, writeFileSync, mkdirSync } from 'fs';
-import { join, dirname } from 'path';
+import { readFileSync, writeFileSync, mkdirSync, readdirSync } from 'fs';
+import { join } from 'path';
 import { execSync } from 'child_process';
 import * as cheerio from 'cheerio';
 
@@ -92,7 +92,6 @@ for (let i = 0; i < args.length; i++) {
 // Each file is named {id}.json and contains the character data
 function loadWordListFromExistingData(): WordEntry[] {
   const charactersDir = join(process.cwd(), 'data', 'characters');
-  const { readdirSync } = require('fs');
   
   const files = readdirSync(charactersDir)
     .filter((f: string) => f.endsWith('.json'))
@@ -604,7 +603,6 @@ function extractWordsFromSection($: cheerio.CheerioAPI, sectionTitle: string, st
   // Find the table that contains the section header
   $('table').each((i, table) => {
     const $table = $(table);
-    const tableText = $table.text();
     
     // Check if this table contains the section header
     let hasSectionHeader = false;
@@ -980,14 +978,14 @@ async function extractData(html: string, wordId: string, word: string): Promise<
           if (htmlResponse.ok) {
             htmlContent = await htmlResponse.text();
           }
-        } catch (fetchError) {
+        } catch {
           // Fallback to curl for HTML
           try {
             htmlContent = execSync(`curl -s -L "${htmlUrl}" -H "User-Agent: Mozilla/5.0" --max-time 5`, {
               encoding: 'utf-8',
               maxBuffer: 5 * 1024 * 1024,
             });
-          } catch (curlError) {
+          } catch {
             // Skip if both fail
           }
         }
@@ -1001,14 +999,14 @@ async function extractData(html: string, wordId: string, word: string): Promise<
           if (jsResponse.ok) {
             jsContent = await jsResponse.text();
           }
-        } catch (fetchError) {
+        } catch {
           // Fallback to curl for JS
           try {
             jsContent = execSync(`curl -s -L "${jsUrl}" -H "User-Agent: Mozilla/5.0" --max-time 5`, {
               encoding: 'utf-8',
               maxBuffer: 5 * 1024 * 1024,
             });
-          } catch (curlError) {
+          } catch {
             // Skip if both fail
           }
         }
@@ -1031,7 +1029,7 @@ async function extractData(html: string, wordId: string, word: string): Promise<
             data.strokeVectors = strokeVectors;
           }
         }
-      } catch (error) {
+      } catch {
         // If extraction fails, just store the iframe URL
       }
     }
@@ -1107,6 +1105,7 @@ async function extractData(html: string, wordId: string, word: string): Promise<
   
   $('table').each((i, table) => {
     const $table = $(table);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const tableText = $table.text();
     
     // Check if this table contains the section header
@@ -1170,7 +1169,7 @@ async function extractData(html: string, wordId: string, word: string): Promise<
             }
             
             // Extract pronunciations from pinyinGreen/pinyinPurple and jyutpingGreen/jyutpingPurple divs (if available)
-            let pronunciations: { jyutping?: string; pinyin?: string } = {};
+            const pronunciations: { jyutping?: string; pinyin?: string } = {};
             
             const $pinyinDiv = $row.find('div.pinyinGreen, div.pinyinPurple');
             if ($pinyinDiv.length > 0) {
@@ -1269,7 +1268,7 @@ async function extractData(html: string, wordId: string, word: string): Promise<
 }
 
 // Convert extracted data to JSON format
-function convertToCharacterFormat(data: ExtractedData): any {
+function convertToCharacterFormat(data: ExtractedData): Record<string, unknown> {
   return {
     id: data.id,
     character: data.word,
@@ -1310,10 +1309,8 @@ async function crawlWords() {
     
     let retries = 2; // 2 retries = 3 total attempts (initial + 2 retries)
     let success = false;
-    let attemptNumber = 0;
     
     while (retries >= 0 && !success) {
-      attemptNumber++;
       try {
         const attemptLabel = retries === 2 ? '1/3' : retries === 1 ? '2/3' : '3/3';
         console.log(`[${i + 1}/${wordsToProcess.length}] Fetching ${wordEntry.word} (${wordEntry.id})... (${attemptLabel})`);
@@ -1392,7 +1389,8 @@ async function crawlWords() {
           } else if (error.message.includes('fetch failed')) {
             // Get more details about the fetch error
             const errorDetails = error.cause ? ` (cause: ${error.cause})` : '';
-            const errorCode = (error as any).code ? ` [code: ${(error as any).code}]` : '';
+            const errorWithCode = error as { code?: string };
+            const errorCode = errorWithCode.code ? ` [code: ${errorWithCode.code}]` : '';
             errorMsg = `Network error: ${errorMsg}${errorDetails}${errorCode}. This might be due to SSL/TLS certificate issues. Try running with: NODE_TLS_REJECT_UNAUTHORIZED=0 npm run crawl:edbchinese:json`;
           }
         } else {

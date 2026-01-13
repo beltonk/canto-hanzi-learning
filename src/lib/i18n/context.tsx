@@ -21,9 +21,15 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const saved = localStorage.getItem(STORAGE_KEY) as Language | null;
     if (saved && (saved === "zh-HK" || saved === "en")) {
-      setLanguageState(saved);
+      // Schedule state update to avoid synchronous setState in effect
+      setTimeout(() => {
+        setLanguageState(saved);
+      }, 0);
     }
-    setMounted(true);
+    // Schedule mounted state update to avoid synchronous setState in effect
+    setTimeout(() => {
+      setMounted(true);
+    }, 0);
   }, []);
 
   // Save language preference

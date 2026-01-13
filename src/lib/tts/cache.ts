@@ -1,5 +1,4 @@
 import type { AudioCategory } from "@/types/character";
-import type { AudioAsset } from "@/types/character";
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from "fs";
 import { join } from "path";
 

@@ -177,7 +177,7 @@ export default function CharacterExploration({
     return (
       <div className="flex flex-col items-center justify-center p-12">
         <div className="text-6xl mb-4 animate-float">🐼</div>
-        <div className="text-xl text-[#636E72]">{t("loading")}</div>
+        <div className="text-xl text-[var(--color-gray)]">{t("loading")}</div>
       </div>
     );
   }
@@ -187,7 +187,7 @@ export default function CharacterExploration({
     return (
       <div className="flex flex-col items-center justify-center p-12">
         <div className="text-5xl mb-4">😢</div>
-        <div className="text-xl text-[#E55555]">{t("error")}: {error}</div>
+        <div className="text-xl text-[var(--color-coral-dark)]">{t("error")}: {error}</div>
       </div>
     );
   }
@@ -399,8 +399,8 @@ export default function CharacterExploration({
 
       {/* Quick Word Preview */}
       {totalWords > 0 && (
-        <div className="bg-white rounded-2xl p-4 shadow-[0_4px_16px_rgba(0,0,0,0.06)]">
-          <h3 className="text-base font-bold mb-3 text-[#2D3436] flex items-center gap-2">
+        <div className="bg-[var(--card-bg)] rounded-2xl p-4 shadow-[0_4px_16px_var(--card-shadow)]">
+          <h3 className="text-base font-bold mb-3 text-[var(--color-charcoal)] flex items-center gap-2">
             <span className="text-lg">📝</span> {t("commonWords")}
           </h3>
           <div className="flex flex-wrap gap-2">
@@ -411,9 +411,9 @@ export default function CharacterExploration({
               <button
                 key={`${word.word}-${idx}`}
                 onClick={() => speakCantonese(word.word)}
-                className="px-3 py-2 bg-[#FFFBF5] border-2 border-[#FFE5B4] rounded-xl
-                         text-lg hanzi-display text-[#2D3436]
-                         hover:border-[#FF8E8E] hover:bg-[#FFF5F5] transition-colors"
+                className="px-3 py-2 bg-[var(--color-peach)]/10 border-2 border-[var(--color-peach)] rounded-xl
+                         text-lg hanzi-display text-[var(--color-charcoal)]
+                         hover:border-[var(--color-coral-light)] hover:bg-[var(--color-coral)]/5 transition-colors"
               >
                 {word.word}
               </button>

@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback, useMemo } from "react";
 import type { FullCharacterData, IndexEntry } from "@/types/fullCharacter";
+import { useLanguage } from "@/lib/i18n/context";
 import StrokeAnimation from "./StrokeAnimation";
 import RelatedWords from "./RelatedWords";
 
@@ -41,6 +42,9 @@ export default function CharacterExploration({
   const [filterStrokeCount, setFilterStrokeCount] = useState<number | "">("");
   const [filterJyutping, setFilterJyutping] = useState("");
 
+  // Translations
+  const { t } = useLanguage();
+
   // Load character list (index entries for navigation)
   const loadCharacterList = useCallback(async () => {
     try {
@@ -73,7 +77,7 @@ export default function CharacterExploration({
 
       const response = await fetch(`/api/characters?char=${encodeURIComponent(char)}`);
       if (!response.ok) {
-        throw new Error(`找不到「${char}」這個字`);
+        throw new Error("Character not found");
       }
 
       const result = await response.json();
@@ -173,7 +177,7 @@ export default function CharacterExploration({
     return (
       <div className="flex flex-col items-center justify-center p-12">
         <div className="text-6xl mb-4 animate-float">🐼</div>
-        <div className="text-xl text-[#636E72]">正在載入...</div>
+        <div className="text-xl text-[#636E72]">{t("loading")}</div>
       </div>
     );
   }
@@ -183,7 +187,7 @@ export default function CharacterExploration({
     return (
       <div className="flex flex-col items-center justify-center p-12">
         <div className="text-5xl mb-4">😢</div>
-        <div className="text-xl text-[#E55555]">錯誤：{error}</div>
+        <div className="text-xl text-[#E55555]">{t("error")}: {error}</div>
       </div>
     );
   }
@@ -211,10 +215,10 @@ export default function CharacterExploration({
             <div className="flex items-center justify-between mb-1">
               <div className="flex items-center gap-2">
                 <span className="text-sm font-semibold text-[#636E72]">
-                  選擇漢字
+                  {t("selectCharacter")}
                 </span>
                 <span className="text-xs text-[#B2BEC3]">
-                  {hasActiveFilters ? `${filteredCharacterList.length} / ${characterList.length}` : `共 ${characterList.length}`} 字
+                  {hasActiveFilters ? `${filteredCharacterList.length} / ${characterList.length}` : `${t("total")} ${characterList.length}`} {t("characters")}
                 </span>
                 <button
                   onClick={() => setShowFilters(!showFilters)}
@@ -223,9 +227,9 @@ export default function CharacterExploration({
                       ? "text-[#FF6B6B] hover:bg-[#FFF5F5]" 
                       : "text-[#B2BEC3] hover:text-[#FF6B6B]"
                   }`}
-                  title={showFilters ? "隱藏篩選" : "顯示篩選"}
+                  title={showFilters ? t("hideFilter") : t("filter")}
                 >
-                  {showFilters ? "▲ 收起篩選" : "▼ 篩選"}
+                  {showFilters ? `▲ ${t("hideFilter")}` : `▼ ${t("filter")}`}
                 </button>
               </div>
               {characterList.length > 20 && (
@@ -233,7 +237,7 @@ export default function CharacterExploration({
                   onClick={() => setShowCharList(!showCharList)}
                   className="text-xs text-[#FF6B6B] hover:text-[#E55555] font-medium flex items-center gap-1"
                 >
-                  {showCharList ? "收起列表" : "展開列表"}
+                  {showCharList ? t("collapseList") : t("expandList")}
                   <span className={`transition-transform ${showCharList ? "rotate-180" : ""}`}>
                     ▼
                   </span>
@@ -246,14 +250,14 @@ export default function CharacterExploration({
               <div className="mb-2 flex flex-wrap items-center gap-2 text-sm">
                 {/* Radical filter */}
                 <div className="flex items-center gap-1">
-                  <label className="text-xs text-[#636E72] whitespace-nowrap">部首</label>
+                  <label className="text-xs text-[#636E72] whitespace-nowrap">{t("radical")}</label>
                   <select
                     value={filterRadical}
                     onChange={(e) => setFilterRadical(e.target.value)}
                     className="px-2 py-1 text-sm border border-[#DFE6E9] rounded-lg 
                              bg-white focus:border-[#FF6B6B] focus:outline-none hanzi-display"
                   >
-                    <option value="">全部</option>
+                    <option value="">{t("all")}</option>
                     {uniqueRadicals.map(radical => (
                       <option key={radical} value={radical}>{radical}</option>
                     ))}
@@ -262,14 +266,14 @@ export default function CharacterExploration({
                 
                 {/* Stroke count filter */}
                 <div className="flex items-center gap-1">
-                  <label className="text-xs text-[#636E72] whitespace-nowrap">筆畫</label>
+                  <label className="text-xs text-[#636E72] whitespace-nowrap">{t("strokeCount")}</label>
                   <select
                     value={filterStrokeCount}
                     onChange={(e) => setFilterStrokeCount(e.target.value ? Number(e.target.value) : "")}
                     className="px-2 py-1 text-sm border border-[#DFE6E9] rounded-lg 
                              bg-white focus:border-[#FF6B6B] focus:outline-none"
                   >
-                    <option value="">全部</option>
+                    <option value="">{t("all")}</option>
                     {uniqueStrokeCounts.map(count => (
                       <option key={count} value={count}>{count}</option>
                     ))}
@@ -278,7 +282,7 @@ export default function CharacterExploration({
                 
                 {/* Jyutping filter */}
                 <div className="flex items-center gap-1">
-                  <label className="text-xs text-[#636E72] whitespace-nowrap">粵拼</label>
+                  <label className="text-xs text-[#636E72] whitespace-nowrap">{t("jyutping")}</label>
                   <input
                     type="text"
                     value={filterJyutping}
@@ -295,7 +299,7 @@ export default function CharacterExploration({
                     onClick={clearFilters}
                     className="text-xs text-[#FF6B6B] hover:text-[#E55555] font-medium ml-1"
                   >
-                    ✕ 清除
+                    ✕ {t("clear")}
                   </button>
                 )}
               </div>
@@ -323,7 +327,7 @@ export default function CharacterExploration({
                 ))
               ) : (
                 <div className="w-full text-center py-4 text-[#B2BEC3]">
-                  找不到符合條件的漢字
+                  {t("noResults")}
                 </div>
               )}
             </div>
@@ -331,7 +335,7 @@ export default function CharacterExploration({
             {/* Scroll hint */}
             {filteredCharacterList.length > 15 && !showCharList && (
               <div className="text-center text-xs text-[#B2BEC3] mt-1">
-                ↕ 可上下滾動查看更多
+                ↕ {t("scrollHint")}
               </div>
             )}
           </div>
@@ -365,10 +369,10 @@ export default function CharacterExploration({
                 onClick={() => speakMandarin(data.character)}
                 className="text-sm text-[#B2BEC3] mt-1 hover:text-[#7A8288] transition-colors
                          inline-flex items-center gap-1 group"
-                title="聽普通話發音"
+                title={t("mandarinPronunciation")}
               >
                 <span className="text-xs opacity-60 group-hover:opacity-100">🔊</span>
-                普通話：{data.pinyin}
+                {t("mandarinPronunciation")}: {data.pinyin}
               </button>
             )}
           </div>
@@ -376,8 +380,8 @@ export default function CharacterExploration({
           {/* Character Details Row */}
           <div className="mt-4 flex flex-wrap items-center justify-center gap-4">
             <div className="text-base text-[#636E72]">
-              {data.strokeCount} 筆 • 部首：
-              <span className="hanzi-display text-xl">{data.radical}</span>
+              {data.strokeCount} {t("strokes")} • {t("radical")}: 
+              <span className="hanzi-display text-xl ml-1">{data.radical}</span>
             </div>
             <button
               onClick={() => speakCantonese(data.character)}
@@ -387,7 +391,7 @@ export default function CharacterExploration({
                        hover:scale-105 active:scale-95 transition-all
                        flex items-center gap-2"
             >
-              <span className="text-lg">🔊</span> 聽發音
+              <span className="text-lg">🔊</span> {t("listenPronunciation")}
             </button>
           </div>
         </div>
@@ -397,7 +401,7 @@ export default function CharacterExploration({
       {totalWords > 0 && (
         <div className="bg-white rounded-2xl p-4 shadow-[0_4px_16px_rgba(0,0,0,0.06)]">
           <h3 className="text-base font-bold mb-3 text-[#2D3436] flex items-center gap-2">
-            <span className="text-lg">📝</span> 常用詞語
+            <span className="text-lg">📝</span> {t("commonWords")}
           </h3>
           <div className="flex flex-wrap gap-2">
             {[

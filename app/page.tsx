@@ -1,16 +1,27 @@
+"use client";
+
 import { ActivityCard } from "@/app/components/ui/Card";
+import LanguageSwitcher from "@/app/components/ui/LanguageSwitcher";
+import { useLanguage } from "@/lib/i18n/context";
 
 export default function Home() {
+  const { t } = useLanguage();
+  
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#FFECD2] via-[#FFE4C4] to-[#FFD8B8]">
       <main className="container mx-auto px-4 md:px-6 py-6 md:py-8">
+        {/* Language Switcher - Top Right */}
+        <div className="flex justify-end mb-2">
+          <LanguageSwitcher compact />
+        </div>
+
         {/* Header */}
         <div className="text-center mb-6">
           <h1 className="text-3xl md:text-4xl font-bold text-[#2D3436] mb-2 font-chinese">
-            粵語漢字學習系統
+            {t("appTitle")}
           </h1>
           <p className="text-base md:text-lg text-[#636E72]">
-            香港小學中文字學習 · 根據《香港小學學習字詞表》
+            {t("appSubtitle")}
           </p>
         </div>
 
@@ -20,7 +31,7 @@ export default function Home() {
             href="/learn/explore"
             mascot="panda"
             character="字"
-            title="認識漢字"
+            title={t("exploreCharacters")}
             colorTheme="coral"
           />
 
@@ -28,7 +39,7 @@ export default function Home() {
             href="/learn/flashcard"
             mascot="rabbit"
             character="卡"
-            title="字卡温習"
+            title={t("flashcardRevision")}
             colorTheme="sky"
           />
 
@@ -36,7 +47,7 @@ export default function Home() {
             href="/learn/decompose"
             mascot="monkey"
             character="拆"
-            title="拆字遊戲"
+            title={t("decompositionGame")}
             colorTheme="mint"
           />
 
@@ -44,7 +55,7 @@ export default function Home() {
             href="/learn/dictation"
             mascot="owl"
             character="聽"
-            title="默書練習"
+            title={t("dictationPractice")}
             colorTheme="golden"
           />
         </div>
@@ -52,7 +63,7 @@ export default function Home() {
         {/* How to Start Section - Compact */}
         <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.1)] border border-[#E8E0D8] p-4 md:p-6">
           <h2 className="text-xl md:text-2xl font-bold mb-4 text-[#2D3436] text-center">
-            如何開始？
+            {t("howToStart")}
           </h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -63,10 +74,10 @@ export default function Home() {
               </div>
               <div>
                 <h3 className="text-base font-bold text-[#2D3436] flex items-center gap-1">
-                  認識漢字 <span className="text-lg">🐼</span>
+                  {t("exploreCharacters")} <span className="text-lg">🐼</span>
                 </h3>
                 <p className="text-sm text-[#636E72]">
-                  學習漢字的粵語讀音、筆畫、部首、意思和例句
+                  {t("exploreDesc")}
                 </p>
               </div>
             </div>
@@ -78,10 +89,10 @@ export default function Home() {
               </div>
               <div>
                 <h3 className="text-base font-bold text-[#2D3436] flex items-center gap-1">
-                  字卡温習 <span className="text-lg">🐰</span>
+                  {t("flashcardRevision")} <span className="text-lg">🐰</span>
                 </h3>
                 <p className="text-sm text-[#636E72]">
-                  用隨機字卡温習學過的漢字，可選學習階段和筆劃
+                  {t("flashcardDesc")}
                 </p>
               </div>
             </div>
@@ -93,10 +104,10 @@ export default function Home() {
               </div>
               <div>
                 <h3 className="text-base font-bold text-[#2D3436] flex items-center gap-1">
-                  拆字遊戲 <span className="text-lg">🐵</span>
+                  {t("decompositionGame")} <span className="text-lg">🐵</span>
                 </h3>
                 <p className="text-sm text-[#636E72]">
-                  將漢字拆開來看，了解它的結構和組成部件
+                  {t("decomposeDesc")}
                 </p>
               </div>
             </div>
@@ -108,10 +119,10 @@ export default function Home() {
               </div>
               <div>
                 <h3 className="text-base font-bold text-[#2D3436] flex items-center gap-1">
-                  默書練習 <span className="text-lg">🦉</span>
+                  {t("dictationPractice")} <span className="text-lg">🦉</span>
                 </h3>
                 <p className="text-sm text-[#636E72]">
-                  聽粵語讀音，寫出正確的漢字，測試學習成果
+                  {t("dictationDesc")}
                 </p>
               </div>
             </div>

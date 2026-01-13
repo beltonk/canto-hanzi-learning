@@ -48,9 +48,15 @@
   
   /* Semantic Colors */
   --background: var(--color-cream);
+  --background-gradient-from: #FFECD2;
+  --background-gradient-via: #FFE4C4;
+  --background-gradient-to: #FFD8B8;
   --foreground: var(--color-charcoal);
   --card-bg: #FFFFFF;
+  --card-border: #E8E0D8;
   --card-shadow: rgba(0, 0, 0, 0.08);
+  --input-bg: #FFFFFF;
+  --input-border: #DFE6E9;
   
   /* Typography */
   --font-chinese: 'Free HK Kai', 'Noto Serif TC', 'PMingLiU', serif;
@@ -61,6 +67,55 @@
   --spacing-touch: 12px;
 }
 
+/* ============================================
+   Dark Mode Color Palette
+   ============================================ */
+[data-theme="dark"] {
+  /* Primary Colors - slightly muted for dark mode */
+  --color-coral: #FF7B7B;
+  --color-coral-light: #FF9E9E;
+  --color-coral-dark: #E56565;
+  
+  /* Dark Backgrounds */
+  --color-peach: #4A3F35;
+  --color-peach-light: #5A4F45;
+  --color-cream: #1A1A1A;
+  --color-cream-dark: #252525;
+  
+  /* Success/Correct - brighter for visibility */
+  --color-mint: #7ED89A;
+  --color-mint-light: #98E8B4;
+  --color-mint-dark: #6BC88E;
+  
+  /* Info/Links */
+  --color-sky: #8ED8F3;
+  --color-sky-light: #B5EBF8;
+  --color-sky-dark: #6BC8E8;
+  
+  /* Achievement/Highlight */
+  --color-golden: #FFE94D;
+  --color-golden-light: #FFF576;
+  --color-golden-dark: #F5D800;
+  
+  /* Text Colors - inverted */
+  --color-charcoal: #E8E0D8;
+  --color-charcoal-light: #D0C8C0;
+  --color-gray: #A8B0B4;
+  --color-gray-light: #98A0A4;
+  
+  /* Semantic Colors */
+  --background: #1A1A1A;
+  --background-gradient-from: #1A1A1A;
+  --background-gradient-via: #252525;
+  --background-gradient-to: #2A2A2A;
+  --foreground: #E8E0D8;
+  --card-bg: #2D2D2D;
+  --card-border: #3D3D3D;
+  --card-shadow: rgba(0, 0, 0, 0.3);
+  --input-bg: #3D3D3D;
+  --input-border: #4D4D4D;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -68,13 +123,19 @@
   --font-mono: var(--font-geist-mono);
 }
 
-/* Light mode is always default - no dark mode auto-switch */
+/* Base body styles with theme support */
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
   font-size: 18px;
   line-height: 1.6;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Theme transition for smooth switching */
+*, *::before, *::after {
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 /* ============================================

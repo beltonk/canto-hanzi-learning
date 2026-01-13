@@ -34,7 +34,7 @@ export default function CharacterExploration({
   // UI state
   const [showCharList, setShowCharList] = useState(false);
   const [showStrokeAnimation, setShowStrokeAnimation] = useState(false);
-  const [showFilters, setShowFilters] = useState(false);
+  const [showFilters, setShowFilters] = useState(true);
   
   // Filter state
   const [filterRadical, setFilterRadical] = useState("");
@@ -206,98 +206,96 @@ export default function CharacterExploration({
       {/* Character Navigation */}
       {characterList.length > 1 && (
         <div className="bg-white rounded-2xl shadow-[0_4px_16px_rgba(0,0,0,0.06)] overflow-hidden">
-          <div className="px-4 py-3">
+          <div className="px-4 py-2">
             {/* Header */}
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-base font-semibold text-[#636E72]">
-                選擇漢字
-                <span className="text-sm text-[#B2BEC3] ml-2">
-                  （{hasActiveFilters ? `${filteredCharacterList.length} / ` : "共 "}{characterList.length} 字）
-                </span>
-              </span>
+            <div className="flex items-center justify-between mb-1">
               <div className="flex items-center gap-2">
+                <span className="text-sm font-semibold text-[#636E72]">
+                  選擇漢字
+                </span>
+                <span className="text-xs text-[#B2BEC3]">
+                  {hasActiveFilters ? `${filteredCharacterList.length} / ${characterList.length}` : `共 ${characterList.length}`} 字
+                </span>
                 <button
                   onClick={() => setShowFilters(!showFilters)}
-                  className={`text-sm font-medium flex items-center gap-1 px-2 py-1 rounded-lg transition-colors ${
-                    showFilters || hasActiveFilters 
-                      ? "bg-[#FF6B6B] text-white" 
-                      : "text-[#636E72] hover:bg-[#FFF5F5] hover:text-[#FF6B6B]"
+                  className={`text-xs px-1.5 py-0.5 rounded transition-colors ${
+                    showFilters 
+                      ? "text-[#FF6B6B] hover:bg-[#FFF5F5]" 
+                      : "text-[#B2BEC3] hover:text-[#FF6B6B]"
                   }`}
+                  title={showFilters ? "隱藏篩選" : "顯示篩選"}
                 >
-                  <span>🔍</span> 篩選
-                  {hasActiveFilters && <span className="bg-white text-[#FF6B6B] text-xs px-1.5 rounded-full">!</span>}
+                  {showFilters ? "▲ 收起篩選" : "▼ 篩選"}
                 </button>
-                {characterList.length > 20 && (
-                  <button
-                    onClick={() => setShowCharList(!showCharList)}
-                    className="text-sm text-[#FF6B6B] hover:text-[#E55555] font-medium flex items-center gap-1"
-                  >
-                    {showCharList ? "收起" : "展開"}
-                    <span className={`transition-transform ${showCharList ? "rotate-180" : ""}`}>
-                      ▼
-                    </span>
-                  </button>
-                )}
               </div>
+              {characterList.length > 20 && (
+                <button
+                  onClick={() => setShowCharList(!showCharList)}
+                  className="text-xs text-[#FF6B6B] hover:text-[#E55555] font-medium flex items-center gap-1"
+                >
+                  {showCharList ? "收起列表" : "展開列表"}
+                  <span className={`transition-transform ${showCharList ? "rotate-180" : ""}`}>
+                    ▼
+                  </span>
+                </button>
+              )}
             </div>
 
-            {/* Filter Panel */}
+            {/* Filter Panel - Compact inline layout */}
             {showFilters && (
-              <div className="mb-3 p-3 bg-[#FFFBF5] rounded-xl border border-[#FFE5B4]">
-                <div className="grid grid-cols-3 gap-2">
-                  {/* Radical filter */}
-                  <div>
-                    <label className="text-xs text-[#636E72] block mb-1">部首</label>
-                    <select
-                      value={filterRadical}
-                      onChange={(e) => setFilterRadical(e.target.value)}
-                      className="w-full px-2 py-1.5 text-sm border border-[#DFE6E9] rounded-lg 
-                               bg-white focus:border-[#FF6B6B] focus:outline-none hanzi-display"
-                    >
-                      <option value="">全部</option>
-                      {uniqueRadicals.map(radical => (
-                        <option key={radical} value={radical}>{radical}</option>
-                      ))}
-                    </select>
-                  </div>
-                  
-                  {/* Stroke count filter */}
-                  <div>
-                    <label className="text-xs text-[#636E72] block mb-1">筆畫數</label>
-                    <select
-                      value={filterStrokeCount}
-                      onChange={(e) => setFilterStrokeCount(e.target.value ? Number(e.target.value) : "")}
-                      className="w-full px-2 py-1.5 text-sm border border-[#DFE6E9] rounded-lg 
-                               bg-white focus:border-[#FF6B6B] focus:outline-none"
-                    >
-                      <option value="">全部</option>
-                      {uniqueStrokeCounts.map(count => (
-                        <option key={count} value={count}>{count} 畫</option>
-                      ))}
-                    </select>
-                  </div>
-                  
-                  {/* Jyutping filter */}
-                  <div>
-                    <label className="text-xs text-[#636E72] block mb-1">粵拼</label>
-                    <input
-                      type="text"
-                      value={filterJyutping}
-                      onChange={(e) => setFilterJyutping(e.target.value)}
-                      placeholder="例：jat1"
-                      className="w-full px-2 py-1.5 text-sm border border-[#DFE6E9] rounded-lg 
-                               bg-white focus:border-[#FF6B6B] focus:outline-none jyutping"
-                    />
-                  </div>
+              <div className="mb-2 flex flex-wrap items-center gap-2 text-sm">
+                {/* Radical filter */}
+                <div className="flex items-center gap-1">
+                  <label className="text-xs text-[#636E72] whitespace-nowrap">部首</label>
+                  <select
+                    value={filterRadical}
+                    onChange={(e) => setFilterRadical(e.target.value)}
+                    className="px-2 py-1 text-sm border border-[#DFE6E9] rounded-lg 
+                             bg-white focus:border-[#FF6B6B] focus:outline-none hanzi-display"
+                  >
+                    <option value="">全部</option>
+                    {uniqueRadicals.map(radical => (
+                      <option key={radical} value={radical}>{radical}</option>
+                    ))}
+                  </select>
+                </div>
+                
+                {/* Stroke count filter */}
+                <div className="flex items-center gap-1">
+                  <label className="text-xs text-[#636E72] whitespace-nowrap">筆畫</label>
+                  <select
+                    value={filterStrokeCount}
+                    onChange={(e) => setFilterStrokeCount(e.target.value ? Number(e.target.value) : "")}
+                    className="px-2 py-1 text-sm border border-[#DFE6E9] rounded-lg 
+                             bg-white focus:border-[#FF6B6B] focus:outline-none"
+                  >
+                    <option value="">全部</option>
+                    {uniqueStrokeCounts.map(count => (
+                      <option key={count} value={count}>{count}</option>
+                    ))}
+                  </select>
+                </div>
+                
+                {/* Jyutping filter */}
+                <div className="flex items-center gap-1">
+                  <label className="text-xs text-[#636E72] whitespace-nowrap">粵拼</label>
+                  <input
+                    type="text"
+                    value={filterJyutping}
+                    onChange={(e) => setFilterJyutping(e.target.value)}
+                    placeholder="jat1"
+                    className="w-20 px-2 py-1 text-sm border border-[#DFE6E9] rounded-lg 
+                             bg-white focus:border-[#FF6B6B] focus:outline-none jyutping"
+                  />
                 </div>
                 
                 {/* Clear filters button */}
                 {hasActiveFilters && (
                   <button
                     onClick={clearFilters}
-                    className="mt-2 text-xs text-[#FF6B6B] hover:text-[#E55555] font-medium"
+                    className="text-xs text-[#FF6B6B] hover:text-[#E55555] font-medium ml-1"
                   >
-                    ✕ 清除篩選條件
+                    ✕ 清除
                   </button>
                 )}
               </div>

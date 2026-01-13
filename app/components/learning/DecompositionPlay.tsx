@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import type { Character, Decomposition } from "@/types/character";
 import Button from "@/app/components/ui/Button";
 import Mascot, { MascotCelebration } from "@/app/components/ui/Mascot";
+import { useLanguage } from "@/lib/i18n/context";
 
 interface DecompositionPlayProps {
   character: string;
@@ -19,6 +20,7 @@ interface PuzzleState {
 }
 
 export default function DecompositionPlay({ character, grade, onCharacterChange }: DecompositionPlayProps) {
+  const { t, language } = useLanguage();
   const [data, setData] = useState<Decomposition | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -40,7 +42,7 @@ export default function DecompositionPlay({ character, grade, onCharacterChange 
 
       const response = await fetch(`/api/characters?${params.toString()}`);
       if (!response.ok) {
-        throw new Error(`載入失敗: ${response.statusText}`);
+        throw new Error(`${t("loadFailed")}: ${response.statusText}`);
       }
 
       const result = await response.json();
@@ -69,18 +71,18 @@ export default function DecompositionPlay({ character, grade, onCharacterChange 
           onCharacterChange?.(firstWithDecomp.character.character);
           initPuzzle(firstWithDecomp.decomposition);
         } else {
-          throw new Error(`找不到適合的拆字遊戲`);
+          throw new Error(t("noQuestions"));
         }
       } else {
         setData(charData.decomposition);
         initPuzzle(charData.decomposition);
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : "載入資料失敗");
+      setError(err instanceof Error ? err.message : t("loadFailed"));
     } finally {
       setLoading(false);
     }
-  }, [character, grade, onCharacterChange]);
+  }, [character, grade, onCharacterChange, t]);
 
   useEffect(() => {
     loadDecompositionData();
@@ -159,7 +161,7 @@ export default function DecompositionPlay({ character, grade, onCharacterChange 
     return (
       <div className="flex flex-col items-center justify-center p-12">
         <div className="text-6xl mb-4 animate-float">🐵</div>
-        <div className="text-xl text-[#636E72]">正在載入...</div>
+        <div className="text-xl text-[var(--color-gray)]">{t("loading")}</div>
       </div>
     );
   }
@@ -168,7 +170,7 @@ export default function DecompositionPlay({ character, grade, onCharacterChange 
     return (
       <div className="flex flex-col items-center justify-center p-12">
         <div className="text-5xl mb-4">😢</div>
-        <div className="text-xl text-[#E55555]">錯誤：{error}</div>
+        <div className="text-xl text-[var(--color-coral-dark)]">{t("error")}: {error}</div>
       </div>
     );
   }
@@ -181,26 +183,26 @@ export default function DecompositionPlay({ character, grade, onCharacterChange 
     <div className="max-w-4xl mx-auto space-y-3">
       {/* Score */}
       {score.total > 0 && (
-        <div className="text-center text-base font-semibold text-[#636E72]">
-          得分：<span className="text-[#98D8AA]">{score.correct}</span> / {score.total}
+        <div className="text-center text-base font-semibold text-[var(--color-gray)]">
+          {t("score")}: <span className="text-[var(--color-mint)]">{score.correct}</span> / {score.total}
         </div>
       )}
 
       {/* Character Navigation - Show 2 rows by default, expand for all */}
       {allCharacters.length > 1 && (
-        <div className="bg-white rounded-2xl shadow-[0_4px_16px_rgba(0,0,0,0.06)] overflow-hidden">
+        <div className="bg-[var(--card-bg)] rounded-2xl shadow-[0_4px_16px_var(--card-shadow)] overflow-hidden">
           <div className="px-4 py-3">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-base font-semibold text-[#636E72]">
-                揀選漢字
-                <span className="text-sm text-[#B2BEC3] ml-2">（共 {allCharacters.length} 字）</span>
+              <span className="text-base font-semibold text-[var(--color-gray)]">
+                {t("selectCharacterToPlay")}
+                <span className="text-sm text-[var(--color-gray-light)] ml-2">({allCharacters.length})</span>
               </span>
               {allCharacters.length > 20 && (
                 <button
                   onClick={() => setShowCharList(!showCharList)}
-                  className="text-sm text-[#FF6B6B] hover:text-[#E55555] font-medium flex items-center gap-1"
+                  className="text-sm text-[var(--color-coral)] hover:text-[var(--color-coral-dark)] font-medium flex items-center gap-1"
                 >
-                  {showCharList ? "收起" : "展開全部"}
+                  {showCharList ? t("collapse") : t("expandAll")}
                   <span className={`transition-transform ${showCharList ? 'rotate-180' : ''}`}>▼</span>
                 </button>
               )}
@@ -212,8 +214,8 @@ export default function DecompositionPlay({ character, grade, onCharacterChange 
                   onClick={() => onCharacterChange?.(c.character)}
                   className={`text-2xl px-3 py-2 rounded-xl border-2 transition-all hanzi-display ${
                     c.character === character
-                      ? "bg-[#98D8AA] text-white border-[#98D8AA] shadow-md"
-                      : "bg-white border-[#FFE5B4] text-[#2D3436] hover:border-[#B8E8C4] hover:bg-[#F0FFF4]"
+                      ? "bg-[var(--color-mint)] text-white border-[var(--color-mint)] shadow-md"
+                      : "bg-[var(--card-bg)] border-[var(--color-peach)] text-[var(--color-charcoal)] hover:border-[var(--color-mint)]/50 hover:bg-[var(--color-mint)]/10"
                   }`}
                 >
                   {c.character}
@@ -225,13 +227,13 @@ export default function DecompositionPlay({ character, grade, onCharacterChange 
       )}
 
       {/* Target Character + Controls */}
-      <div className="bg-white rounded-2xl p-4 shadow-[0_4px_16px_rgba(0,0,0,0.06)]">
+      <div className="bg-[var(--card-bg)] rounded-2xl p-4 shadow-[0_4px_16px_var(--card-shadow)]">
         <div className="flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="text-[60px] md:text-[80px] hanzi-display text-[#2D3436] leading-none">{character}</div>
+            <div className="text-[60px] md:text-[80px] hanzi-display text-[var(--color-charcoal)] leading-none">{character}</div>
             <button
               onClick={() => speakCantonese(character)}
-              className="px-3 py-2 bg-[#98D8AA] text-white rounded-full hover:bg-[#7BC88E] transition-colors"
+              className="px-3 py-2 bg-[var(--color-mint)] text-white rounded-full hover:bg-[var(--color-mint-dark)] transition-colors"
             >
               🔊
             </button>
@@ -239,23 +241,23 @@ export default function DecompositionPlay({ character, grade, onCharacterChange 
           <div className="flex gap-2">
             <button
               onClick={() => setShowHint(!showHint)}
-              className="px-3 py-2 bg-white border-2 border-[#FFE5B4] text-[#636E72] 
-                       rounded-xl text-sm font-medium hover:border-[#7EC8E3] hover:bg-[#F0F9FF] transition-all"
+              className="px-3 py-2 bg-[var(--card-bg)] border-2 border-[var(--color-peach)] text-[var(--color-gray)] 
+                       rounded-xl text-sm font-medium hover:border-[var(--color-sky)] hover:bg-[var(--color-sky)]/10 transition-all"
             >
-              {showHint ? "隱藏提示" : "提示 💡"}
+              {showHint ? t("hideHint") : `${t("hint")} 💡`}
             </button>
             <button
               onClick={reset}
-              className="px-3 py-2 bg-white border-2 border-[#FFE5B4] text-[#636E72] 
-                       rounded-xl text-sm font-medium hover:border-[#FF8E8E] hover:bg-[#FFF5F5] transition-all"
+              className="px-3 py-2 bg-[var(--card-bg)] border-2 border-[var(--color-peach)] text-[var(--color-gray)] 
+                       rounded-xl text-sm font-medium hover:border-[var(--color-coral-light)] hover:bg-[var(--color-coral)]/5 transition-all"
             >
               🔄
             </button>
           </div>
         </div>
         {showHint && (
-          <div className="mt-2 text-center p-2 bg-[#F0F9FF] border border-[#A5DBF0] rounded-xl">
-            <span className="text-sm text-[#2D3436]">結構：<strong className="text-[#5BB8D8]">{puzzle.structureType}</strong></span>
+          <div className="mt-2 text-center p-2 bg-[var(--color-sky)]/10 border border-[var(--color-sky)]/30 rounded-xl">
+            <span className="text-sm text-[var(--color-charcoal)]">{t("structure")}: <strong className="text-[var(--color-sky-dark)]">{puzzle.structureType}</strong></span>
           </div>
         )}
       </div>
@@ -263,19 +265,19 @@ export default function DecompositionPlay({ character, grade, onCharacterChange 
       {/* Game Area - Compact */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
         {/* Drop Zone */}
-        <div className="bg-white rounded-2xl shadow-[0_4px_16px_rgba(0,0,0,0.06)] p-4">
-          <div className="text-sm font-medium text-[#636E72] mb-2 text-center">放到這裏：</div>
-          <div className="min-h-[80px] border-3 border-dashed border-[#B8E8C4] rounded-xl bg-[#F0FFF4]/50 p-3">
+        <div className="bg-[var(--card-bg)] rounded-2xl shadow-[0_4px_16px_var(--card-shadow)] p-4">
+          <div className="text-sm font-medium text-[var(--color-gray)] mb-2 text-center">{t("dropHere")}</div>
+          <div className="min-h-[80px] border-3 border-dashed border-[var(--color-mint)]/50 rounded-xl bg-[var(--color-mint)]/5 p-3">
             <div className="flex gap-2 flex-wrap justify-center items-center min-h-[60px]">
               {puzzle.arranged.length === 0 ? (
-                <div className="text-base text-[#7A8288]">按部件</div>
+                <div className="text-base text-[var(--color-gray)]">{t("byComponent")}</div>
               ) : (
                 puzzle.arranged.map((component, idx) => (
                   <button
                     key={idx}
                     onClick={() => moveComponent(component, true)}
-                    className="text-3xl px-4 py-3 bg-[#98D8AA] text-white rounded-xl 
-                             border-2 border-[#7BC88E] hover:bg-[#7BC88E] cursor-pointer 
+                    className="text-3xl px-4 py-3 bg-[var(--color-mint)] text-white rounded-xl 
+                             border-2 border-[var(--color-mint-dark)] hover:bg-[var(--color-mint-dark)] cursor-pointer 
                              hanzi-display shadow-md hover:scale-105 active:scale-95 transition-all"
                   >
                     {component}
@@ -287,16 +289,16 @@ export default function DecompositionPlay({ character, grade, onCharacterChange 
         </div>
 
         {/* Available Components */}
-        <div className="bg-white rounded-2xl shadow-[0_4px_16px_rgba(0,0,0,0.06)] p-4">
-          <div className="text-sm font-medium text-[#636E72] mb-2 text-center">可用部件：</div>
+        <div className="bg-[var(--card-bg)] rounded-2xl shadow-[0_4px_16px_var(--card-shadow)] p-4">
+          <div className="text-sm font-medium text-[var(--color-gray)] mb-2 text-center">{t("availableComponents")}</div>
           <div className="flex gap-2 flex-wrap justify-center min-h-[80px] items-center">
             {puzzle.components.map((component, idx) => (
               <button
                 key={idx}
                 onClick={() => moveComponent(component, false)}
-                className="text-3xl px-4 py-3 bg-[#FFFBEB] rounded-xl 
-                         border-2 border-[#FFD93D] hover:bg-[#FFE566] cursor-pointer 
-                         hanzi-display shadow-md hover:scale-105 active:scale-95 transition-all text-[#2D3436]"
+                className="text-3xl px-4 py-3 bg-[var(--color-golden)]/10 rounded-xl 
+                         border-2 border-[var(--color-golden)] hover:bg-[var(--color-golden)]/30 cursor-pointer 
+                         hanzi-display shadow-md hover:scale-105 active:scale-95 transition-all text-[var(--color-charcoal)]"
               >
                 {component}
               </button>
@@ -313,7 +315,7 @@ export default function DecompositionPlay({ character, grade, onCharacterChange 
           variant="mint"
           size="lg"
         >
-          檢查答案 ✓
+          {t("checkAnswer")} ✓
         </Button>
       </div>
 
@@ -322,20 +324,20 @@ export default function DecompositionPlay({ character, grade, onCharacterChange 
         <div
           className={`text-center p-4 rounded-2xl ${
             puzzle.correct 
-              ? "bg-[#F0FFF4] border-2 border-[#98D8AA]" 
-              : "bg-[#FFF5F5] border-2 border-[#FF8E8E]"
+              ? "bg-[var(--color-mint)]/10 border-2 border-[var(--color-mint)]" 
+              : "bg-[var(--color-coral)]/10 border-2 border-[var(--color-coral-light)]"
           }`}
         >
           {puzzle.correct ? (
             <div className="flex items-center justify-center gap-3">
               <span className="text-3xl">🎉</span>
-              <span className="text-lg text-[#7BC88E] font-bold">答對了！</span>
+              <span className="text-lg text-[var(--color-mint-dark)] font-bold">{t("correctAnswer")}</span>
             </div>
           ) : (
             <div>
-              <div className="text-lg text-[#E55555] font-bold mb-1">再試一次 😅</div>
-              <div className="text-base text-[#636E72]">
-                正確：<span className="hanzi-display text-lg">{data.components.join(" + ")}</span>
+              <div className="text-lg text-[var(--color-coral-dark)] font-bold mb-1">{t("tryAgainAnswer")} 😅</div>
+              <div className="text-base text-[var(--color-gray)]">
+                {t("correctIs")}: <span className="hanzi-display text-lg">{data.components.join(" + ")}</span>
               </div>
             </div>
           )}

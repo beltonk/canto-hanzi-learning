@@ -54,7 +54,7 @@ export default function CharacterExploration({
       
       const response = await fetch(`/api/characters?${params.toString()}`);
       if (!response.ok) {
-        throw new Error("載入字表失敗");
+        throw new Error(t("loadFailed"));
       }
       
       const result = await response.json();
@@ -84,7 +84,7 @@ export default function CharacterExploration({
       setData(result.character);
       setShowStrokeAnimation(false); // Reset animation state when character changes
     } catch (err) {
-      setError(err instanceof Error ? err.message : "載入資料失敗");
+      setError(err instanceof Error ? err.message : t("loadFailed"));
       setData(null);
     } finally {
       setLoading(false);
@@ -349,7 +349,7 @@ export default function CharacterExploration({
           <div 
             onClick={() => hasStrokeData && setShowStrokeAnimation(!showStrokeAnimation)}
             className={`${hasStrokeData ? 'cursor-pointer' : ''}`}
-            title={hasStrokeData ? "點擊顯示筆順動畫" : ""}
+            title={hasStrokeData ? t("clickForAnimation") : ""}
           >
             <StrokeAnimation
               strokeVectors={data.strokeVectors}

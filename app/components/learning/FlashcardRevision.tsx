@@ -7,16 +7,19 @@ import NavArrow from "@/app/components/ui/NavArrow";
 import Mascot from "@/app/components/ui/Mascot";
 import Button from "@/app/components/ui/Button";
 import StrokeAnimation from "./StrokeAnimation";
+import { useLanguage } from "@/lib/i18n/context";
 
 const STROKE_RANGES = [
-  { label: "全部", min: 1, max: 32 },
-  { label: "1-5 劃", min: 1, max: 5 },
-  { label: "6-10 劃", min: 6, max: 10 },
-  { label: "11-15 劃", min: 11, max: 15 },
-  { label: "16+ 劃", min: 16, max: 32 },
+  { labelKey: "all" as const, label: "全部", min: 1, max: 32 },
+  { labelKey: null, label: "1-5", min: 1, max: 5 },
+  { labelKey: null, label: "6-10", min: 6, max: 10 },
+  { labelKey: null, label: "11-15", min: 11, max: 15 },
+  { labelKey: null, label: "16+", min: 16, max: 32 },
 ];
 
 export default function FlashcardRevision() {
+  const { t, language } = useLanguage();
+  
   // Filter state
   const [strokeRange, setStrokeRange] = useState(STROKE_RANGES[0]);
   const [summary, setSummary] = useState<IndexSummary | null>(null);
@@ -77,11 +80,11 @@ export default function FlashcardRevision() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || "無法載入字卡資料");
+        throw new Error(data.error || t("loadFailed"));
       }
 
       if (!data.characters || data.characters.length === 0) {
-        setError("沒有符合條件的漢字，請嘗試其他篩選條件");
+        setError(t("noMatchingChars"));
         setCharacters([]);
       } else {
         setCharacters(data.characters);
@@ -91,7 +94,7 @@ export default function FlashcardRevision() {
         setIsStarted(true);
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : "載入失敗");
+      setError(err instanceof Error ? err.message : t("loadFailed"));
     } finally {
       setIsLoading(false);
     }
@@ -166,7 +169,7 @@ export default function FlashcardRevision() {
 
   // Get estimated count based on filters
   const getEstimatedCount = () => {
-    if (!summary) return "載入中...";
+    if (!summary) return t("loadingData");
     
     // Use lexical lists HK count as base
     let count = summary.lexicalListsHKCount;
@@ -180,27 +183,33 @@ export default function FlashcardRevision() {
       count = Math.round((strokesInRange / summary.totalCharacters) * count);
     }
     
-    return `約 ${count} 字`;
+    return language === "en" ? `~${count} chars` : `約 ${count} 字`;
+  };
+  
+  // Get stroke range label
+  const getStrokeRangeLabel = (range: typeof STROKE_RANGES[0]) => {
+    if (range.labelKey === "all") return t("all");
+    return range.label;
   };
 
   // Render filter selection panel
   if (!isStarted) {
     return (
       <div className="max-w-lg mx-auto">
-        <div className="bg-white rounded-3xl shadow-[0_8px_32px_rgba(0,0,0,0.08)] p-8 md:p-10">
+        <div className="bg-[var(--card-bg)] rounded-3xl shadow-[0_8px_32px_var(--card-shadow)] p-8 md:p-10">
           {/* Mascot */}
           <div className="flex justify-center mb-6">
-            <Mascot type="rabbit" size="lg" message="選擇學習範圍！" />
+            <Mascot type="rabbit" size="lg" message={t("selectRange")} />
           </div>
 
-          <h2 className="text-2xl md:text-3xl font-bold text-[#2D3436] mb-8 text-center">
-            字卡設定
+          <h2 className="text-2xl md:text-3xl font-bold text-[var(--color-charcoal)] mb-8 text-center">
+            {t("flashcardSettings")}
           </h2>
 
           {/* Stroke Count Selection */}
           <div className="mb-8">
-            <label className="block text-lg font-semibold text-[#2D3436] mb-3">
-              筆劃數目
+            <label className="block text-lg font-semibold text-[var(--color-charcoal)] mb-3">
+              {t("strokeCountLabel")}
             </label>
             <div className="grid grid-cols-2 gap-3">
               {STROKE_RANGES.map((range, index) => (
@@ -210,29 +219,29 @@ export default function FlashcardRevision() {
                   className={`px-4 py-4 rounded-2xl border-3 transition-all text-xl font-medium
                     min-h-[56px]
                     ${strokeRange === range
-                      ? "border-[#7EC8E3] bg-[#F0F9FF] text-[#5BB8D8]"
-                      : "border-[#FFE5B4] bg-white text-[#636E72] hover:border-[#FF8E8E] hover:bg-[#FFF5F5]"
+                      ? "border-[var(--color-sky)] bg-[var(--color-sky)]/10 text-[var(--color-sky-dark)]"
+                      : "border-[var(--color-peach)] bg-[var(--card-bg)] text-[var(--color-gray)] hover:border-[var(--color-coral-light)] hover:bg-[var(--color-coral)]/5"
                     }`}
                 >
-                  {range.label}
+                  {getStrokeRangeLabel(range)}
                 </button>
               ))}
             </div>
           </div>
 
           {/* Estimated Count */}
-          <div className="mb-6 text-center text-[#7A8288]">
+          <div className="mb-6 text-center text-[var(--color-gray)]">
             {getEstimatedCount()}
           </div>
 
           {/* Info */}
-          <div className="mb-6 p-4 bg-[#F0F9FF] rounded-xl text-sm text-[#5BB8D8]">
-            📚 使用《香港小學學習字詞表》收錄的漢字
+          <div className="mb-6 p-4 bg-[var(--color-sky)]/10 rounded-xl text-sm text-[var(--color-sky-dark)]">
+            📚 {t("usingHkWordList")}
           </div>
 
           {/* Error Message */}
           {error && (
-            <div className="mb-6 p-5 bg-[#FFF5F5] border-2 border-[#FF6B6B] text-[#E55555] rounded-2xl text-center text-lg">
+            <div className="mb-6 p-5 bg-[var(--color-coral)]/10 border-2 border-[var(--color-coral)] text-[var(--color-coral-dark)] rounded-2xl text-center text-lg">
               {error}
             </div>
           )}
@@ -245,11 +254,11 @@ export default function FlashcardRevision() {
             size="xl"
             fullWidth
           >
-            {isLoading ? "載入中..." : "開始温習 🎯"}
+            {isLoading ? t("loadingData") : `${t("startRevision")} 🎯`}
           </Button>
 
-          <p className="mt-6 text-base text-[#7A8288] text-center">
-            ← → 切換字卡 | 空白鍵播放讀音 | Enter 顯示詳情
+          <p className="mt-6 text-base text-[var(--color-gray)] text-center">
+            {t("keyboardHints")}
           </p>
         </div>
       </div>
@@ -271,26 +280,26 @@ export default function FlashcardRevision() {
   return (
     <div className="max-w-3xl mx-auto px-4">
       {/* Filter Bar */}
-      <div className="flex items-center justify-between mb-4 bg-white rounded-2xl px-4 py-3 shadow-sm">
+      <div className="flex items-center justify-between mb-4 bg-[var(--card-bg)] rounded-2xl px-4 py-3 shadow-sm">
         <div className="flex items-center gap-3">
-          <span className="text-sm text-[#7A8288]">範圍：</span>
-          <span className="px-3 py-1 bg-[#F0FFF4] rounded-full text-sm font-medium text-[#7BC88E]">
-            {strokeRange.label}
+          <span className="text-sm text-[var(--color-gray)]">{t("range")}:</span>
+          <span className="px-3 py-1 bg-[var(--color-mint)]/10 rounded-full text-sm font-medium text-[var(--color-mint-dark)]">
+            {getStrokeRangeLabel(strokeRange)}
           </span>
         </div>
         <button
           onClick={() => setShowFilters(!showFilters)}
-          className="px-3 py-1.5 text-sm font-medium text-[#FF6B6B] hover:bg-[#FFF5F5] rounded-lg transition-colors"
+          className="px-3 py-1.5 text-sm font-medium text-[var(--color-coral)] hover:bg-[var(--color-coral)]/5 rounded-lg transition-colors"
         >
-          {showFilters ? "取消" : "更改範圍"}
+          {showFilters ? t("cancel") : t("changeRange")}
         </button>
       </div>
 
       {/* Inline Filter Panel */}
       {showFilters && (
-        <div className="mb-4 bg-white rounded-2xl p-4 shadow-[0_4px_16px_rgba(0,0,0,0.06)]">
+        <div className="mb-4 bg-[var(--card-bg)] rounded-2xl p-4 shadow-[0_4px_16px_var(--card-shadow)]">
           <div>
-            <label className="block text-sm font-medium text-[#636E72] mb-2">筆劃數目</label>
+            <label className="block text-sm font-medium text-[var(--color-gray)] mb-2">{t("strokeCountLabel")}</label>
             <div className="grid grid-cols-3 gap-2">
               {STROKE_RANGES.map((range, idx) => (
                 <button
@@ -298,11 +307,11 @@ export default function FlashcardRevision() {
                   onClick={() => setStrokeRange(range)}
                   className={`px-3 py-2 rounded-xl text-sm font-medium transition-all
                     ${strokeRange === range
-                      ? "bg-[#7EC8E3] text-white"
-                      : "bg-[#F5F5F5] text-[#636E72] hover:bg-[#E0F0FF]"
+                      ? "bg-[var(--color-sky)] text-white"
+                      : "bg-[var(--input-bg)] text-[var(--color-gray)] hover:bg-[var(--color-sky)]/10"
                     }`}
                 >
-                  {range.label}
+                  {getStrokeRangeLabel(range)}
                 </button>
               ))}
             </div>
@@ -310,22 +319,22 @@ export default function FlashcardRevision() {
           <button
             onClick={() => handleFilterChange(strokeRange)}
             disabled={isLoading}
-            className="mt-3 w-full py-2 bg-[#FF6B6B] text-white rounded-xl font-medium
-                     hover:bg-[#E55555] disabled:opacity-50 transition-colors"
+            className="mt-3 w-full py-2 bg-[var(--color-coral)] text-white rounded-xl font-medium
+                     hover:bg-[var(--color-coral-dark)] disabled:opacity-50 transition-colors"
           >
-            {isLoading ? "載入中..." : "套用並重新開始"}
+            {isLoading ? t("loadingData") : t("applyAndRestart")}
           </button>
         </div>
       )}
 
       {/* Progress Indicator */}
       <div className="text-center mb-6">
-        <span className="text-xl font-semibold text-[#636E72]">
+        <span className="text-xl font-semibold text-[var(--color-gray)]">
           {currentIndex + 1} / {characters.length}
         </span>
-        <div className="mt-3 h-4 bg-[#FFE5B4] rounded-full overflow-hidden shadow-inner">
+        <div className="mt-3 h-4 bg-[var(--color-peach)] rounded-full overflow-hidden shadow-inner">
           <div 
-            className="h-full bg-gradient-to-r from-[#7EC8E3] to-[#5BB8D8] transition-all duration-300 rounded-full"
+            className="h-full bg-gradient-to-r from-[var(--color-sky)] to-[var(--color-sky-dark)] transition-all duration-300 rounded-full"
             style={{ width: `${progress}%` }}
           />
         </div>
@@ -343,13 +352,13 @@ export default function FlashcardRevision() {
         </div>
 
         {/* Card */}
-        <div className="bg-white rounded-[32px] shadow-[0_12px_40px_rgba(0,0,0,0.1)] p-6 md:p-10 mx-16 md:mx-0 w-full max-w-xl">
+        <div className="bg-[var(--card-bg)] rounded-[32px] shadow-[0_12px_40px_var(--card-shadow)] p-6 md:p-10 mx-16 md:mx-0 w-full max-w-xl">
           {/* Character rendered using strokes - clickable */}
           <div className="flex justify-center mb-4">
             <div 
               onClick={() => hasStrokeData && setShowStrokeAnimation(!showStrokeAnimation)}
               className={`${hasStrokeData ? 'cursor-pointer' : ''}`}
-              title={hasStrokeData ? "點擊顯示筆順動畫" : ""}
+              title={hasStrokeData ? t("clickForAnimation") : ""}
             >
               <StrokeAnimation
                 strokeVectors={current.strokeVectors}
@@ -364,11 +373,11 @@ export default function FlashcardRevision() {
 
           {/* Jyutping & Pinyin */}
           <div className="text-center mb-4">
-            <span className="jyutping text-[#7EC8E3]">
+            <span className="jyutping text-[var(--color-sky)]">
               {current.jyutping}
             </span>
             {current.pinyin && (
-              <span className="text-sm text-[#B2BEC3] ml-2">
+              <span className="text-sm text-[var(--color-gray-light)] ml-2">
                 ({current.pinyin})
               </span>
             )}
@@ -378,7 +387,7 @@ export default function FlashcardRevision() {
           <div className="flex justify-center mb-6">
             <button
               onClick={() => playPronunciation()}
-              className="px-6 py-3 bg-gradient-to-br from-[#7EC8E3] to-[#5BB8D8] 
+              className="px-6 py-3 bg-gradient-to-br from-[var(--color-sky)] to-[var(--color-sky-dark)] 
                        text-white text-lg font-semibold rounded-full
                        shadow-[0_4px_16px_rgba(126,200,227,0.4)]
                        hover:scale-105 active:scale-95
@@ -386,25 +395,25 @@ export default function FlashcardRevision() {
                        min-h-[48px]"
             >
               <span className="text-xl">🔊</span>
-              播放讀音
+              {t("playPronunciation")}
             </button>
           </div>
 
           {/* Divider */}
-          <div className="border-t-2 border-[#FFE5B4] my-4" />
+          <div className="border-t-2 border-[var(--color-peach)] my-4" />
 
           {/* Details Grid */}
           <div className="grid grid-cols-2 gap-3 text-center">
-            <div className="bg-[#FFF5F5] rounded-2xl p-4">
-              <div className="text-sm text-[#FF6B6B] mb-1 font-medium">部首</div>
-              <div className="text-2xl hanzi-display text-[#2D3436]">
+            <div className="bg-[var(--color-coral)]/10 rounded-2xl p-4">
+              <div className="text-sm text-[var(--color-coral)] mb-1 font-medium">{t("radical")}</div>
+              <div className="text-2xl hanzi-display text-[var(--color-charcoal)]">
                 {current.radical || "—"}
               </div>
             </div>
-            <div className="bg-[#F0FFF4] rounded-2xl p-4">
-              <div className="text-sm text-[#7BC88E] mb-1 font-medium">筆劃</div>
-              <div className="text-2xl text-[#2D3436] font-bold">
-                {current.strokeCount} 劃
+            <div className="bg-[var(--color-mint)]/10 rounded-2xl p-4">
+              <div className="text-sm text-[var(--color-mint-dark)] mb-1 font-medium">{t("strokeCount")}</div>
+              <div className="text-2xl text-[var(--color-charcoal)] font-bold">
+                {current.strokeCount} {t("strokesUnit")}
               </div>
             </div>
           </div>
@@ -413,11 +422,11 @@ export default function FlashcardRevision() {
           {hasWords && (
             <button
               onClick={() => setShowDetails(!showDetails)}
-              className="mt-4 w-full py-2.5 rounded-xl border-2 border-[#FFE5B4] 
-                       text-[#636E72] font-medium
-                       hover:bg-[#FFF5F5] hover:border-[#FF8E8E] transition-all"
+              className="mt-4 w-full py-2.5 rounded-xl border-2 border-[var(--color-peach)] 
+                       text-[var(--color-gray)] font-medium
+                       hover:bg-[var(--color-coral)]/5 hover:border-[var(--color-coral-light)] transition-all"
             >
-              {showDetails ? "隱藏詞語 ↑" : "顯示詞語 ↓"}
+              {showDetails ? `${t("hideDetails")} ↑` : `${t("showDetails")} ↓`}
             </button>
           )}
 
@@ -427,21 +436,21 @@ export default function FlashcardRevision() {
               {current.stage1Words && current.stage1Words.length > 0 && (
                 <CompactWordList
                   words={current.stage1Words}
-                  title="第一學習階段"
+                  title={t("stage1")}
                   icon="📗"
                 />
               )}
               {current.stage2Words && current.stage2Words.length > 0 && (
                 <CompactWordList
                   words={current.stage2Words}
-                  title="第二學習階段"
+                  title={t("stage2")}
                   icon="📘"
                 />
               )}
               {current.fourCharacterPhrases && current.fourCharacterPhrases.length > 0 && (
                 <CompactWordList
                   words={current.fourCharacterPhrases}
-                  title="四字詞語"
+                  title={t("fourCharPhrases")}
                   icon="✨"
                 />
               )}
@@ -463,16 +472,16 @@ export default function FlashcardRevision() {
       <div className="text-center mt-8">
         <button
           onClick={() => setIsStarted(false)}
-          className="text-lg text-[#7EC8E3] hover:text-[#5BB8D8] font-medium
+          className="text-lg text-[var(--color-sky)] hover:text-[var(--color-sky-dark)] font-medium
                    underline underline-offset-4 transition-colors"
         >
-          ← 返回設定
+          {t("backToSettings")}
         </button>
       </div>
 
       {/* Keyboard Hint */}
-      <div className="text-center mt-4 text-base text-[#7A8288]">
-        ← → 切換字卡 | 空白鍵播放讀音 | Enter 顯示詳情
+      <div className="text-center mt-4 text-base text-[var(--color-gray)]">
+        {t("keyboardHints")}
       </div>
     </div>
   );

@@ -3,6 +3,7 @@
 import { useState, useEffect, useMemo, useRef, useCallback } from "react";
 import type { StrokeVector } from "@/types/fullCharacter";
 import Script from "next/script";
+import { useLanguage } from "@/lib/i18n/context";
 
 interface StrokeAnimationProps {
   strokeVectors?: StrokeVector[];
@@ -60,6 +61,7 @@ export default function StrokeAnimation({
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const stageRef = useRef<CreateJSStage | null>(null);
   const [createJSLoaded, setCreateJSLoaded] = useState(createJSLoadedGlobal);
+  const { t } = useLanguage();
   
   // Group strokes by strokeNumber
   const strokeGroups = useMemo((): StrokeGroup[] => {
@@ -264,10 +266,10 @@ export default function StrokeAnimation({
 
   if (!strokeVectors || strokeVectors.length === 0) {
     return (
-      <div className="bg-[#FFFBF0] rounded-xl border-2 border-[#FFE5B4] flex items-center justify-center" style={{ width: size, height: size }}>
-        <div className="text-center text-[#B2BEC3]">
+      <div className="bg-[var(--color-peach)]/20 rounded-xl border-2 border-[var(--color-peach)] flex items-center justify-center" style={{ width: size, height: size }}>
+        <div className="text-center text-[var(--color-gray-light)]">
           <div className="text-4xl mb-2">✏️</div>
-          <div className="text-sm">暫無筆順資料</div>
+          <div className="text-sm">{t("noStrokeData")}</div>
         </div>
       </div>
     );
@@ -293,19 +295,19 @@ export default function StrokeAnimation({
         />
 
         {!createJSLoaded && (
-          <div className="absolute inset-0 flex items-center justify-center bg-[#FFFBF0]/80">
-            <div className="text-sm text-[#636E72]">載入中...</div>
+          <div className="absolute inset-0 flex items-center justify-center bg-[var(--color-peach)]/20">
+            <div className="text-sm text-[var(--color-gray)]">{t("loadingData")}</div>
           </div>
         )}
 
         {/* Stroke counter during animation */}
         {isAnimating && (
           <>
-            <div className="absolute top-2 right-2 bg-white/90 rounded-full px-2.5 py-0.5 text-xs font-bold text-[#636E72]">
+            <div className="absolute top-2 right-2 bg-[var(--card-bg)]/90 rounded-full px-2.5 py-0.5 text-xs font-bold text-[var(--color-gray)]">
               {currentStroke + 1}/{totalStrokes}
             </div>
-            <div className="absolute top-2 left-2 bg-[#FF6B6B] rounded-full px-2 py-0.5 text-xs text-white">
-              播放中
+            <div className="absolute top-2 left-2 bg-[var(--color-coral)] rounded-full px-2 py-0.5 text-xs text-white">
+              {t("playing")}
             </div>
           </>
         )}
@@ -315,12 +317,12 @@ export default function StrokeAnimation({
       <div className="mt-3 flex items-center gap-2">
         <button 
           onClick={isAnimating ? stopAnimation : startAnimation} 
-          className="px-4 py-2 rounded-lg bg-[#FF6B6B] text-white text-sm font-medium hover:bg-[#E55555] transition-colors"
+          className="px-4 py-2 rounded-lg bg-[var(--color-coral)] text-white text-sm font-medium hover:bg-[var(--color-coral-dark)] transition-colors"
         >
-          {isAnimating ? "⏹ 停止" : "✏️ 顯示筆順"}
+          {isAnimating ? `⏹ ${t("stop")}` : `✏️ ${t("showStrokes")}`}
         </button>
       </div>
-      <p className="text-xs text-[#7A8288] mt-1.5">共 {totalStrokes} 筆</p>
+      <p className="text-xs text-[var(--color-gray)] mt-1.5">{totalStrokes} {t("strokes")}</p>
     </div>
   );
 }

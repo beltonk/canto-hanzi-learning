@@ -209,23 +209,23 @@ export default function CharacterExploration({
     <div className="max-w-4xl mx-auto space-y-3">
       {/* Character Navigation */}
       {characterList.length > 1 && (
-        <div className="bg-white rounded-2xl shadow-[0_4px_16px_rgba(0,0,0,0.06)] overflow-hidden">
+        <div className="bg-[var(--card-bg)] rounded-2xl shadow-[0_4px_16px_var(--card-shadow)] overflow-hidden">
           <div className="px-4 py-2">
             {/* Header */}
             <div className="flex items-center justify-between mb-1">
               <div className="flex items-center gap-2">
-                <span className="text-sm font-semibold text-[#636E72]">
+                <span className="text-sm font-semibold text-[var(--color-gray)]">
                   {t("selectCharacter")}
                 </span>
-                <span className="text-xs text-[#B2BEC3]">
+                <span className="text-xs text-[var(--color-gray-light)]">
                   {hasActiveFilters ? `${filteredCharacterList.length} / ${characterList.length}` : `${t("total")} ${characterList.length}`} {t("characters")}
                 </span>
                 <button
                   onClick={() => setShowFilters(!showFilters)}
                   className={`text-xs px-1.5 py-0.5 rounded transition-colors ${
                     showFilters 
-                      ? "text-[#FF6B6B] hover:bg-[#FFF5F5]" 
-                      : "text-[#B2BEC3] hover:text-[#FF6B6B]"
+                      ? "text-[var(--color-coral)] hover:bg-[var(--color-coral)]/10" 
+                      : "text-[var(--color-gray-light)] hover:text-[var(--color-coral)]"
                   }`}
                   title={showFilters ? t("hideFilter") : t("filter")}
                 >
@@ -235,7 +235,7 @@ export default function CharacterExploration({
               {characterList.length > 20 && (
                 <button
                   onClick={() => setShowCharList(!showCharList)}
-                  className="text-xs text-[#FF6B6B] hover:text-[#E55555] font-medium flex items-center gap-1"
+                  className="text-xs text-[var(--color-coral)] hover:text-[var(--color-coral-dark)] font-medium flex items-center gap-1"
                 >
                   {showCharList ? t("collapseList") : t("expandList")}
                   <span className={`transition-transform ${showCharList ? "rotate-180" : ""}`}>
@@ -250,12 +250,12 @@ export default function CharacterExploration({
               <div className="mb-2 flex flex-wrap items-center gap-2 text-sm">
                 {/* Radical filter */}
                 <div className="flex items-center gap-1">
-                  <label className="text-xs text-[#636E72] whitespace-nowrap">{t("radical")}</label>
+                  <label className="text-xs text-[var(--color-gray)] whitespace-nowrap">{t("radical")}</label>
                   <select
                     value={filterRadical}
                     onChange={(e) => setFilterRadical(e.target.value)}
-                    className="px-2 py-1 text-sm border border-[#DFE6E9] rounded-lg 
-                             bg-white focus:border-[#FF6B6B] focus:outline-none hanzi-display"
+                    className="px-2 py-1 text-sm border border-[var(--input-border)] rounded-lg 
+                             bg-[var(--input-bg)] text-[var(--color-charcoal)] focus:border-[var(--color-coral)] focus:outline-none hanzi-display"
                   >
                     <option value="">{t("all")}</option>
                     {uniqueRadicals.map(radical => (
@@ -266,12 +266,12 @@ export default function CharacterExploration({
                 
                 {/* Stroke count filter */}
                 <div className="flex items-center gap-1">
-                  <label className="text-xs text-[#636E72] whitespace-nowrap">{t("strokeCount")}</label>
+                  <label className="text-xs text-[var(--color-gray)] whitespace-nowrap">{t("strokeCount")}</label>
                   <select
                     value={filterStrokeCount}
                     onChange={(e) => setFilterStrokeCount(e.target.value ? Number(e.target.value) : "")}
-                    className="px-2 py-1 text-sm border border-[#DFE6E9] rounded-lg 
-                             bg-white focus:border-[#FF6B6B] focus:outline-none"
+                    className="px-2 py-1 text-sm border border-[var(--input-border)] rounded-lg 
+                             bg-[var(--input-bg)] text-[var(--color-charcoal)] focus:border-[var(--color-coral)] focus:outline-none"
                   >
                     <option value="">{t("all")}</option>
                     {uniqueStrokeCounts.map(count => (
@@ -282,14 +282,14 @@ export default function CharacterExploration({
                 
                 {/* Jyutping filter */}
                 <div className="flex items-center gap-1">
-                  <label className="text-xs text-[#636E72] whitespace-nowrap">{t("jyutping")}</label>
+                  <label className="text-xs text-[var(--color-gray)] whitespace-nowrap">{t("jyutping")}</label>
                   <input
                     type="text"
                     value={filterJyutping}
                     onChange={(e) => setFilterJyutping(e.target.value)}
                     placeholder="jat1"
-                    className="w-20 px-2 py-1 text-sm border border-[#DFE6E9] rounded-lg 
-                             bg-white focus:border-[#FF6B6B] focus:outline-none jyutping"
+                    className="w-20 px-2 py-1 text-sm border border-[var(--input-border)] rounded-lg 
+                             bg-[var(--input-bg)] text-[var(--color-charcoal)] focus:border-[var(--color-coral)] focus:outline-none jyutping"
                   />
                 </div>
                 
@@ -297,7 +297,7 @@ export default function CharacterExploration({
                 {hasActiveFilters && (
                   <button
                     onClick={clearFilters}
-                    className="text-xs text-[#FF6B6B] hover:text-[#E55555] font-medium ml-1"
+                    className="text-xs text-[var(--color-coral)] hover:text-[var(--color-coral-dark)] font-medium ml-1"
                   >
                     ✕ {t("clear")}
                   </button>
@@ -307,7 +307,7 @@ export default function CharacterExploration({
 
             {/* Character Grid - Scrollable */}
             <div 
-              className={`flex gap-2 flex-wrap overflow-y-auto scrollbar-thin scrollbar-thumb-[#FFE5B4] scrollbar-track-transparent ${
+              className={`flex gap-2 flex-wrap overflow-y-auto scrollbar-thin scrollbar-thumb-[var(--color-peach)] scrollbar-track-transparent ${
                 showCharList ? "max-h-[300px]" : "max-h-[120px]"
               }`}
             >
@@ -318,15 +318,15 @@ export default function CharacterExploration({
                     onClick={() => onCharacterChange?.(entry.character)}
                     className={`text-2xl px-3 py-2 rounded-xl border-2 transition-all hanzi-display ${
                       entry.character === character
-                        ? "bg-[#FF6B6B] text-white border-[#FF6B6B] shadow-md"
-                        : "bg-white border-[#FFE5B4] text-[#2D3436] hover:border-[#FF8E8E] hover:bg-[#FFF5F5]"
+                        ? "bg-[var(--color-coral)] text-white border-[var(--color-coral)] shadow-md"
+                        : "bg-[var(--card-bg)] border-[var(--color-peach)] text-[var(--color-charcoal)] hover:border-[var(--color-coral-light)] hover:bg-[var(--color-coral)]/10"
                     }`}
                   >
                     {entry.character}
                   </button>
                 ))
               ) : (
-                <div className="w-full text-center py-4 text-[#B2BEC3]">
+                <div className="w-full text-center py-4 text-[var(--color-gray-light)]">
                   {t("noResults")}
                 </div>
               )}
@@ -334,7 +334,7 @@ export default function CharacterExploration({
             
             {/* Scroll hint */}
             {filteredCharacterList.length > 15 && !showCharList && (
-              <div className="text-center text-xs text-[#B2BEC3] mt-1">
+              <div className="text-center text-xs text-[var(--color-gray-light)] mt-1">
                 ↕ {t("scrollHint")}
               </div>
             )}
@@ -343,7 +343,7 @@ export default function CharacterExploration({
       )}
 
       {/* Main Character Display */}
-      <div className="bg-white rounded-2xl p-4 md:p-6 shadow-[0_4px_16px_rgba(0,0,0,0.06)]">
+      <div className="bg-[var(--card-bg)] rounded-2xl p-4 md:p-6 shadow-[0_4px_16px_var(--card-shadow)]">
         <div className="flex flex-col items-center">
           {/* Character rendered using strokes - clickable */}
           <div 
@@ -363,11 +363,11 @@ export default function CharacterExploration({
 
           {/* Character Info */}
           <div className="mt-4 text-center">
-            <div className="jyutping text-[#7EC8E3] text-2xl">{data.jyutping}</div>
+            <div className="jyutping text-[var(--color-sky)] text-2xl">{data.jyutping}</div>
             {data.pinyin && (
               <button
                 onClick={() => speakMandarin(data.character)}
-                className="text-sm text-[#B2BEC3] mt-1 hover:text-[#7A8288] transition-colors
+                className="text-sm text-[var(--color-gray-light)] mt-1 hover:text-[var(--color-gray)] transition-colors
                          inline-flex items-center gap-1 group"
                 title={t("mandarinPronunciation")}
               >
@@ -379,13 +379,13 @@ export default function CharacterExploration({
 
           {/* Character Details Row */}
           <div className="mt-4 flex flex-wrap items-center justify-center gap-4">
-            <div className="text-base text-[#636E72]">
+            <div className="text-base text-[var(--color-gray)]">
               {data.strokeCount} {t("strokes")} • {t("radical")}: 
               <span className="hanzi-display text-xl ml-1">{data.radical}</span>
             </div>
             <button
               onClick={() => speakCantonese(data.character)}
-              className="px-6 py-2 bg-gradient-to-br from-[#FF6B6B] to-[#E55555] text-white 
+              className="px-6 py-2 bg-gradient-to-br from-[var(--color-coral)] to-[var(--color-coral-dark)] text-white 
                        rounded-full text-base font-semibold
                        shadow-[0_4px_12px_rgba(255,107,107,0.3)]
                        hover:scale-105 active:scale-95 transition-all

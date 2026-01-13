@@ -163,7 +163,7 @@ export default function DictationExercise({ grade }: DictationExerciseProps) {
           <button
             onClick={() => speakCantonese(currentQuestion.character)}
             className="flex-1 px-6 py-4 bg-gradient-to-br from-[var(--color-golden)] to-[var(--color-golden-dark)]
-                     text-[var(--color-charcoal)] rounded-xl text-xl font-bold
+                     text-[#2D3436] rounded-xl text-xl font-bold
                      flex items-center justify-center gap-2
                      shadow-[0_4px_12px_rgba(255,217,61,0.3)]
                      hover:scale-105 active:scale-95 transition-all"

@@ -1,6 +1,7 @@
 "use client";
 
 import { useTheme } from "@/lib/theme";
+import { useLanguage } from "@/lib/i18n/context";
 
 interface ThemeSwitcherProps {
   /** Compact mode - just show icon */
@@ -9,6 +10,7 @@ interface ThemeSwitcherProps {
 
 export default function ThemeSwitcher({ compact = false }: ThemeSwitcherProps) {
   const { theme, toggleTheme } = useTheme();
+  const { t } = useLanguage();
 
   if (compact) {
     return (
@@ -17,8 +19,8 @@ export default function ThemeSwitcher({ compact = false }: ThemeSwitcherProps) {
         className="w-8 h-8 flex items-center justify-center rounded-full 
                    bg-white/80 dark:bg-[#2D3436]/80 shadow-sm
                    hover:bg-white dark:hover:bg-[#3D4446] transition-colors"
-        title={theme === "light" ? "切換深色模式" : "切換淺色模式"}
-        aria-label={theme === "light" ? "Switch to dark mode" : "Switch to light mode"}
+        title={theme === "light" ? t("switchToDark") : t("switchToLight")}
+        aria-label={theme === "light" ? t("switchToDark") : t("switchToLight")}
       >
         {theme === "light" ? (
           <span className="text-lg">🌙</span>

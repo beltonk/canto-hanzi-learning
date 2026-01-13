@@ -2,6 +2,8 @@
 
 import { useState, useEffect, useRef } from "react";
 import type { Word, Phrase } from "@/types/fullCharacter";
+import { useLanguage } from "@/lib/i18n/context";
+import type { TranslationKey } from "@/lib/i18n/translations";
 
 interface RelatedWordsProps {
   /** Stage 1 (KS1) words */
@@ -28,13 +30,13 @@ type WordCategory =
   | "idioms" 
   | "properNouns";
 
-const CATEGORIES: { key: WordCategory; label: string; icon: string }[] = [
-  { key: "stage1", label: "第一學習階段", icon: "📗" },
-  { key: "stage2", label: "第二學習階段", icon: "📘" },
-  { key: "fourChar", label: "四字詞語", icon: "✨" },
-  { key: "idioms", label: "成語", icon: "📜" },
-  { key: "classical", label: "文言詞語", icon: "📿" },
-  { key: "properNouns", label: "專有名詞", icon: "🏷️" },
+const CATEGORY_KEYS: { key: WordCategory; labelKey: TranslationKey; icon: string }[] = [
+  { key: "stage1", labelKey: "stage1", icon: "📗" },
+  { key: "stage2", labelKey: "stage2", icon: "📘" },
+  { key: "fourChar", labelKey: "fourCharPhrases", icon: "✨" },
+  { key: "idioms", labelKey: "idioms", icon: "📜" },
+  { key: "classical", labelKey: "classicalPhrases", icon: "📿" },
+  { key: "properNouns", labelKey: "properNouns", icon: "🏷️" },
 ];
 
 /**
@@ -53,6 +55,7 @@ export default function RelatedWords({
   compact = false,
 }: RelatedWordsProps) {
   const [activeCategory, setActiveCategory] = useState<WordCategory>("stage1");
+  const { t } = useLanguage();
 
   // Get words for active category
   const getActiveWords = (): (Word | Phrase)[] => {
@@ -95,7 +98,7 @@ export default function RelatedWords({
   };
 
   // Filter categories that have words
-  const availableCategories = CATEGORIES.filter(cat => getCategoryCount(cat.key) > 0);
+  const availableCategories = CATEGORY_KEYS.filter(cat => getCategoryCount(cat.key) > 0);
 
   // Play word pronunciation
   const speakWord = (word: string) => {
@@ -144,19 +147,19 @@ export default function RelatedWords({
   }, [activeWords, activeCategory]);
 
   return (
-    <div className="bg-white rounded-2xl shadow-[0_4px_16px_rgba(0,0,0,0.06)] overflow-hidden">
+    <div className="bg-[var(--card-bg)] rounded-2xl shadow-[0_4px_16px_var(--card-shadow)] overflow-hidden">
       {/* Header */}
-      <div className="px-4 py-3 bg-gradient-to-r from-[#FFF5F5] to-[#FFF9F5] border-b border-[#FFE5E5]">
-        <h3 className="text-base font-bold text-[#2D3436] flex items-center gap-2">
-          <span className="text-lg">📚</span> 相關詞語
-          <span className="text-sm text-[#7A8288] font-normal">
-            （共 {totalWords} 個）
+      <div className="px-4 py-3 bg-gradient-to-r from-[var(--color-coral)]/5 to-[var(--color-peach)]/20 border-b border-[var(--color-coral)]/10">
+        <h3 className="text-base font-bold text-[var(--color-charcoal)] flex items-center gap-2">
+          <span className="text-lg">📚</span> {t("relatedWords")}
+          <span className="text-sm text-[var(--color-gray)] font-normal">
+            ({totalWords})
           </span>
         </h3>
       </div>
 
       {/* Category Tabs */}
-      <div className="px-3 py-2 border-b border-[#F0F0F0] overflow-x-auto">
+      <div className="px-3 py-2 border-b border-[var(--card-border)] overflow-x-auto">
         <div className="flex gap-2 min-w-max">
           {availableCategories.map(cat => (
             <button
@@ -164,12 +167,12 @@ export default function RelatedWords({
               onClick={() => setActiveCategory(cat.key)}
               className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all whitespace-nowrap
                 ${activeCategory === cat.key
-                  ? "bg-[#FF6B6B] text-white shadow-md"
-                  : "bg-[#F5F5F5] text-[#636E72] hover:bg-[#FFE5E5] hover:text-[#FF6B6B]"
+                  ? "bg-[var(--color-coral)] text-white shadow-md"
+                  : "bg-[var(--input-bg)] text-[var(--color-gray)] hover:bg-[var(--color-coral)]/10 hover:text-[var(--color-coral)]"
                 }`}
             >
               <span className="mr-1">{cat.icon}</span>
-              {cat.label}
+              {t(cat.labelKey)}
               <span className="ml-1 opacity-75">({getCategoryCount(cat.key)})</span>
             </button>
           ))}
@@ -183,8 +186,8 @@ export default function RelatedWords({
           className="p-3 max-h-[400px] overflow-y-auto"
         >
           {activeWords.length === 0 ? (
-            <p className="text-center text-[#7A8288] py-4">
-              此分類暫無詞語
+            <p className="text-center text-[var(--color-gray)] py-4">
+              {t("noPhrases")}
             </p>
           ) : (
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
@@ -196,20 +199,20 @@ export default function RelatedWords({
                   <button
                     key={`${word}-${idx}`}
                     onClick={() => speakWord(word)}
-                    className="group p-3 rounded-xl border-2 border-[#FFE5B4] bg-[#FFFBF5]
-                             hover:border-[#FF8E8E] hover:bg-[#FFF5F5] transition-all
+                    className="group p-3 rounded-xl border-2 border-[var(--color-peach)] bg-[var(--color-peach)]/10
+                             hover:border-[var(--color-coral-light)] hover:bg-[var(--color-coral)]/5 transition-all
                              text-left"
                   >
                     <div className="flex items-start justify-between gap-1">
-                      <span className="hanzi-display text-lg text-[#2D3436] leading-tight">
+                      <span className="hanzi-display text-lg text-[var(--color-charcoal)] leading-tight">
                         {word}
                       </span>
-                      <span className="text-[#FF6B6B] opacity-0 group-hover:opacity-100 transition-opacity text-sm">
+                      <span className="text-[var(--color-coral)] opacity-0 group-hover:opacity-100 transition-opacity text-sm">
                         🔊
                       </span>
                     </div>
                     {jyutping && (
-                      <span className="text-xs text-[#7EC8E3] font-mono mt-1 block truncate">
+                      <span className="text-xs text-[var(--color-sky)] font-mono mt-1 block truncate">
                         {jyutping}
                       </span>
                     )}
@@ -222,12 +225,12 @@ export default function RelatedWords({
         
         {/* Scroll hint */}
         {showScrollHint && (
-          <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-white via-white/90 to-transparent pointer-events-none flex items-end justify-center pb-1">
-            <span className="text-xs text-[#7A8288] flex items-center gap-1 animate-bounce">
+          <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-[var(--card-bg)] via-[var(--card-bg)]/90 to-transparent pointer-events-none flex items-end justify-center pb-1">
+            <span className="text-xs text-[var(--color-gray)] flex items-center gap-1 animate-bounce">
               <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor">
                 <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
               </svg>
-              向下捲動查看更多
+              {t("scrollDown")}
             </span>
           </div>
         )}
@@ -261,11 +264,11 @@ export function CompactWordList({
   };
 
   return (
-    <div className="bg-[#FFFBF5] rounded-xl p-3 border border-[#FFE5B4]">
+    <div className="bg-[var(--color-peach)]/10 rounded-xl p-3 border border-[var(--color-peach)]">
       <div className="flex items-center gap-2 mb-2">
         <span>{icon}</span>
-        <span className="text-sm font-medium text-[#636E72]">{title}</span>
-        <span className="text-xs text-[#B2BEC3]">({words.length})</span>
+        <span className="text-sm font-medium text-[var(--color-gray)]">{title}</span>
+        <span className="text-xs text-[var(--color-gray-light)]">({words.length})</span>
       </div>
       <div className="flex flex-wrap gap-1.5">
         {words.map((item, idx) => {
@@ -274,9 +277,9 @@ export function CompactWordList({
             <button
               key={`${word}-${idx}`}
               onClick={() => speakWord(word)}
-              className="px-2 py-1 bg-white rounded-lg border border-[#FFE5B4] 
-                       text-sm hanzi-display text-[#2D3436]
-                       hover:border-[#FF8E8E] hover:bg-[#FFF5F5] transition-colors"
+              className="px-2 py-1 bg-[var(--card-bg)] rounded-lg border border-[var(--color-peach)] 
+                       text-sm hanzi-display text-[var(--color-charcoal)]
+                       hover:border-[var(--color-coral-light)] hover:bg-[var(--color-coral)]/5 transition-colors"
             >
               {word}
             </button>

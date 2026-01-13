@@ -3,7 +3,6 @@
 import { useState, useEffect, useCallback } from "react";
 import type { Character, Decomposition } from "@/types/character";
 import Button from "@/app/components/ui/Button";
-import Mascot, { MascotCelebration } from "@/app/components/ui/Mascot";
 import { useLanguage } from "@/lib/i18n/context";
 
 interface DecompositionPlayProps {
@@ -20,7 +19,7 @@ interface PuzzleState {
 }
 
 export default function DecompositionPlay({ character, grade, onCharacterChange }: DecompositionPlayProps) {
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
   const [data, setData] = useState<Decomposition | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);

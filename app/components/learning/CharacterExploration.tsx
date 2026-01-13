@@ -56,7 +56,7 @@ export default function CharacterExploration({
       if (!response.ok) {
         throw new Error(t("loadFailed"));
       }
-      
+
       const result = await response.json();
       setCharacterList(result.entries || []);
       
@@ -67,7 +67,7 @@ export default function CharacterExploration({
     } catch (err) {
       console.error("Error loading character list:", err);
     }
-  }, [character, onCharacterChange]);
+  }, [character, onCharacterChange, t]);
 
   // Load full character data
   const loadCharacterData = useCallback(async (char: string) => {
@@ -89,7 +89,7 @@ export default function CharacterExploration({
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [t]);
 
   // Load character list on mount/stage change
   useEffect(() => {

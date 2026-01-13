@@ -98,7 +98,7 @@ export default function FlashcardRevision() {
     } finally {
       setIsLoading(false);
     }
-  }, [strokeRange]);
+  }, [strokeRange, t]);
 
   // Handle filter change while viewing cards
   const handleFilterChange = (newStrokeRange: typeof STROKE_RANGES[0]) => {

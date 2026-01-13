@@ -3,7 +3,6 @@
 import { useState, useEffect, useCallback } from "react";
 import type { Character } from "@/types/character";
 import Button from "@/app/components/ui/Button";
-import Mascot, { MascotCelebration } from "@/app/components/ui/Mascot";
 import { useLanguage } from "@/lib/i18n/context";
 
 interface DictationExerciseProps {

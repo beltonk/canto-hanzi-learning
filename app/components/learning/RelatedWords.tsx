@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import type { Word, Phrase } from "@/types/fullCharacter";
 import { useLanguage } from "@/lib/i18n/context";
 import type { TranslationKey } from "@/lib/i18n/translations";
@@ -52,10 +52,36 @@ export default function RelatedWords({
   classicalPhrases = [],
   multiCharacterIdioms = [],
   properNouns = [],
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   compact = false,
 }: RelatedWordsProps) {
   const [activeCategory, setActiveCategory] = useState<WordCategory>("stage1");
   const { t } = useLanguage();
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [showScrollHint, setShowScrollHint] = useState(false);
+
+  // Get count for each category
+  const getCategoryCount = useCallback((key: WordCategory): number => {
+    switch (key) {
+      case "stage1":
+        return stage1Words.length;
+      case "stage2":
+        return stage2Words.length;
+      case "fourChar":
+        return fourCharacterPhrases.length;
+      case "classical":
+        return classicalPhrases.length;
+      case "idioms":
+        return multiCharacterIdioms.length;
+      case "properNouns":
+        return properNouns.length;
+      default:
+        return 0;
+    }
+  }, [stage1Words, stage2Words, fourCharacterPhrases, classicalPhrases, multiCharacterIdioms, properNouns]);
+
+  // Filter categories that have words
+  const availableCategories = CATEGORY_KEYS.filter(cat => getCategoryCount(cat.key) > 0);
 
   // Get words for active category
   const getActiveWords = (): (Word | Phrase)[] => {
@@ -77,29 +103,6 @@ export default function RelatedWords({
     }
   };
 
-  // Get count for each category
-  const getCategoryCount = (key: WordCategory): number => {
-    switch (key) {
-      case "stage1":
-        return stage1Words.length;
-      case "stage2":
-        return stage2Words.length;
-      case "fourChar":
-        return fourCharacterPhrases.length;
-      case "classical":
-        return classicalPhrases.length;
-      case "idioms":
-        return multiCharacterIdioms.length;
-      case "properNouns":
-        return properNouns.length;
-      default:
-        return 0;
-    }
-  };
-
-  // Filter categories that have words
-  const availableCategories = CATEGORY_KEYS.filter(cat => getCategoryCount(cat.key) > 0);
-
   // Play word pronunciation
   const speakWord = (word: string) => {
     if ("speechSynthesis" in window) {
@@ -111,22 +114,17 @@ export default function RelatedWords({
     }
   };
 
-  // If no words at all, return null
-  const totalWords = availableCategories.reduce((sum, cat) => sum + getCategoryCount(cat.key), 0);
-  if (totalWords === 0) {
-    return null;
-  }
-
   // Set initial active category to one with words
   useEffect(() => {
     if (getCategoryCount(activeCategory) === 0 && availableCategories.length > 0) {
-      setActiveCategory(availableCategories[0].key);
+      // Schedule state update to avoid synchronous setState in effect
+      setTimeout(() => {
+        setActiveCategory(availableCategories[0].key);
+      }, 0);
     }
-  }, [activeCategory, availableCategories]);
+  }, [activeCategory, availableCategories, getCategoryCount]);
 
   const activeWords = getActiveWords();
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const [showScrollHint, setShowScrollHint] = useState(false);
 
   // Check if content overflows and show scroll hint
   useEffect(() => {
@@ -145,6 +143,12 @@ export default function RelatedWords({
       return () => container.removeEventListener("scroll", handleScroll);
     }
   }, [activeWords, activeCategory]);
+
+  // If no words at all, return null
+  const totalWords = availableCategories.reduce((sum, cat) => sum + getCategoryCount(cat.key), 0);
+  if (totalWords === 0) {
+    return null;
+  }
 
   return (
     <div className="bg-[var(--card-bg)] rounded-2xl shadow-[0_4px_16px_var(--card-shadow)] overflow-hidden">

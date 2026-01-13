@@ -197,9 +197,12 @@ export default function StrokeAnimation({
     
     const group = strokeGroups[currentStroke];
     if (!group) {
-      setIsAnimating(false);
-      setCurrentStroke(-1);
-      onAnimationEnd?.();
+      // Schedule state updates to avoid synchronous setState in effect
+      setTimeout(() => {
+        setIsAnimating(false);
+        setCurrentStroke(-1);
+        onAnimationEnd?.();
+      }, 0);
       return;
     }
     
@@ -251,10 +254,15 @@ export default function StrokeAnimation({
   // Handle showAnimation prop - start or stop based on prop
   useEffect(() => {
     if (showAnimation && createJSLoaded && stageRef.current && !isAnimating) {
-      startAnimation();
+      // Schedule state update to avoid synchronous setState in effect
+      setTimeout(() => {
+        startAnimation();
+      }, 0);
     } else if (!showAnimation && isAnimating) {
-      // Stop animation when showAnimation becomes false
-      stopAnimation();
+      // Schedule state update to avoid synchronous setState in effect
+      setTimeout(() => {
+        stopAnimation();
+      }, 0);
     }
   }, [showAnimation, createJSLoaded, startAnimation, stopAnimation, isAnimating]);
 
@@ -263,9 +271,12 @@ export default function StrokeAnimation({
     if (timerRef.current) {
       clearTimeout(timerRef.current);
     }
-    setIsAnimating(false);
-    setCurrentStroke(-1);
-    setCurrentSegment(0);
+    // Schedule state updates to avoid synchronous setState in effect
+    setTimeout(() => {
+      setIsAnimating(false);
+      setCurrentStroke(-1);
+      setCurrentSegment(0);
+    }, 0);
   }, [character]);
 
   // Handle CreateJS load

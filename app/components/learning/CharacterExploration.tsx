@@ -254,7 +254,7 @@ export default function CharacterExploration({
                   <select
                     value={filterRadical}
                     onChange={(e) => setFilterRadical(e.target.value)}
-                    className="px-2 py-1 text-sm border border-[var(--input-border)] rounded-lg 
+                    className="w-20 px-2 py-1 text-sm border border-[var(--input-border)] rounded-lg 
                              bg-[var(--input-bg)] text-[var(--color-charcoal)] focus:border-[var(--color-coral)] focus:outline-none hanzi-display"
                   >
                     <option value="">{t("all")}</option>
@@ -270,7 +270,7 @@ export default function CharacterExploration({
                   <select
                     value={filterStrokeCount}
                     onChange={(e) => setFilterStrokeCount(e.target.value ? Number(e.target.value) : "")}
-                    className="px-2 py-1 text-sm border border-[var(--input-border)] rounded-lg 
+                    className="w-20 px-2 py-1 text-sm border border-[var(--input-border)] rounded-lg 
                              bg-[var(--input-bg)] text-[var(--color-charcoal)] focus:border-[var(--color-coral)] focus:outline-none"
                   >
                     <option value="">{t("all")}</option>

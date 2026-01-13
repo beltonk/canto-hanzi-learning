@@ -4,6 +4,7 @@ import { useState, useEffect, useMemo, useRef, useCallback } from "react";
 import type { StrokeVector } from "@/types/fullCharacter";
 import Script from "next/script";
 import { useLanguage } from "@/lib/i18n/context";
+import { useTheme } from "@/lib/theme";
 
 interface StrokeAnimationProps {
   strokeVectors?: StrokeVector[];
@@ -62,6 +63,15 @@ export default function StrokeAnimation({
   const stageRef = useRef<CreateJSStage | null>(null);
   const [createJSLoaded, setCreateJSLoaded] = useState(createJSLoadedGlobal);
   const { t } = useLanguage();
+  const { theme } = useTheme();
+  
+  // Theme-aware colors for canvas
+  const canvasColors = useMemo(() => ({
+    background: theme === 'dark' ? '#3D3D3D' : '#FFFBF0',
+    grid: theme === 'dark' ? '#5A5A5A' : '#E8D5C4',
+    guide: theme === 'dark' ? '#666666' : '#CCCCCC',
+    stroke: theme === 'dark' ? '#E8E0D8' : '#2D3436',
+  }), [theme]);
   
   // Group strokes by strokeNumber
   const strokeGroups = useMemo((): StrokeGroup[] => {
@@ -110,9 +120,9 @@ export default function StrokeAnimation({
     const ctx = canvas.getContext('2d');
     if (ctx) {
       ctx.clearRect(0, 0, 1080, 1080);
-      ctx.fillStyle = '#FFFBF0';
+      ctx.fillStyle = canvasColors.background;
       ctx.fillRect(0, 0, 1080, 1080);
-      ctx.strokeStyle = '#E8D5C4';
+      ctx.strokeStyle = canvasColors.grid;
       ctx.lineWidth = 2;
       ctx.setLineDash([12, 8]);
       ctx.beginPath();
@@ -130,7 +140,7 @@ export default function StrokeAnimation({
         const seg = group.segments[group.segments.length - 1];
         const shape = new window.createjs.Shape();
         const g = shape.graphics;
-        g.f('#CCCCCC'); // Light grey guide
+        g.f(canvasColors.guide);
         g.p(seg.pathData);
         shape.x = seg.transform.x;
         shape.y = seg.transform.y;
@@ -164,7 +174,7 @@ export default function StrokeAnimation({
     toDraw.forEach(({ segment }) => {
       const shape = new window.createjs.Shape();
       const g = shape.graphics;
-      g.f('#2D3436'); // Black stroke
+      g.f(canvasColors.stroke);
       g.p(segment.pathData);
       shape.x = segment.transform.x;
       shape.y = segment.transform.y;
@@ -172,7 +182,7 @@ export default function StrokeAnimation({
     });
     
     stage.update();
-  }, [createJSLoaded, strokeGroups]);
+  }, [createJSLoaded, strokeGroups, canvasColors]);
 
   // Draw complete character when loaded or character changes
   useEffect(() => {
@@ -284,7 +294,7 @@ export default function StrokeAnimation({
         strategy="afterInteractive"
       />
       
-      <div className="relative bg-[#FFFBF0] rounded-xl border-2 border-[#FFE5B4] overflow-hidden" style={{ width: size, height: size }}>
+      <div className="relative bg-[var(--input-bg)] rounded-xl border-2 border-[var(--color-peach)] overflow-hidden" style={{ width: size, height: size }}>
         {/* Canvas for stroke rendering */}
         <canvas 
           ref={canvasRef}

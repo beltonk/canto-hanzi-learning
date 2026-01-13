@@ -287,7 +287,7 @@ body {
   }
   
   .btn-secondary {
-    background: white;
+    background: var(--card-bg);
     color: var(--color-charcoal);
     font-weight: 600;
     font-size: 20px;
@@ -343,23 +343,23 @@ body {
    ============================================ */
 @layer components {
   .card-child {
-    background: white;
+    background: var(--card-bg);
     border-radius: 24px;
     padding: 28px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 8px 24px var(--card-shadow);
     transition: all 0.3s ease;
   }
   
   .card-child:hover {
     transform: translateY(-4px);
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 12px 32px var(--card-shadow);
   }
   
   .card-activity {
-    background: white;
+    background: var(--card-bg);
     border-radius: 24px;
     padding: 32px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 8px 24px var(--card-shadow);
     border: 3px solid transparent;
     transition: all 0.3s ease;
     cursor: pointer;
@@ -367,27 +367,31 @@ body {
   
   .card-activity:hover {
     transform: translateY(-6px) scale(1.02);
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 16px 40px var(--card-shadow);
   }
   
   .card-activity-coral:hover {
     border-color: var(--color-coral-light);
-    background: linear-gradient(135deg, white 0%, #FFF5F5 100%);
+    background: linear-gradient(135deg, var(--card-bg) 0%, var(--color-coral-light) 100%);
+    background-size: 200% 200%;
   }
   
   .card-activity-sky:hover {
     border-color: var(--color-sky-light);
-    background: linear-gradient(135deg, white 0%, #F0F9FF 100%);
+    background: linear-gradient(135deg, var(--card-bg) 0%, var(--color-sky-light) 100%);
+    background-size: 200% 200%;
   }
   
   .card-activity-mint:hover {
     border-color: var(--color-mint-light);
-    background: linear-gradient(135deg, white 0%, #F0FFF4 100%);
+    background: linear-gradient(135deg, var(--card-bg) 0%, var(--color-mint-light) 100%);
+    background-size: 200% 200%;
   }
   
   .card-activity-golden:hover {
     border-color: var(--color-golden-light);
-    background: linear-gradient(135deg, white 0%, #FFFBEB 100%);
+    background: linear-gradient(135deg, var(--card-bg) 0%, var(--color-golden-light) 100%);
+    background-size: 200% 200%;
   }
 }
 
@@ -399,8 +403,8 @@ body {
     width: var(--touch-target-lg);
     height: var(--touch-target-lg);
     border-radius: 50%;
-    background: white;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    background: var(--card-bg);
+    box-shadow: 0 4px 16px var(--card-shadow);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -413,7 +417,7 @@ body {
   .nav-arrow:hover:not(:disabled) {
     transform: scale(1.1);
     background: var(--color-peach-light);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 6px 20px var(--card-shadow);
   }
   
   .nav-arrow:active:not(:disabled) {

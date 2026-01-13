@@ -7,15 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "import:csv": "tsx scripts/import-wordlist.ts --csv",
-    "import:json": "tsx scripts/import-wordlist.ts --json",
-    "import:words-hk": "tsx scripts/import/import-data.ts words-hk",
-    "import:cjk-decomp": "tsx scripts/import/import-data.ts cjk-decomp",
-    "import:merge": "tsx scripts/import/import-data.ts merge",
-    "data:stats": "node -e \"const d=require('./data/characters.json');console.log('字符:',d.characters.length,'覆蓋率:',(d.characters.length/3171*100).toFixed(1)+'%')\"",
-        "crawl:edbchinese": "tsx scripts/crawl-edbchinese.ts",
-        "crawl:edbchinese:json": "NODE_TLS_REJECT_UNAUTHORIZED=0 tsx scripts/crawl-edbchinese-json.ts",
-        "index:generate": "tsx scripts/generate-indexes.ts"
+    "index:generate": "tsx scripts/generate-indexes.ts",
+    "crawl:edbchinese": "NODE_TLS_REJECT_UNAUTHORIZED=0 tsx scripts/crawl-edbchinese-json.ts"
   },
   "dependencies": {
     "next": "16.1.1",

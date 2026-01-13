@@ -3,13 +3,17 @@
 /**
  * EDB Chinese Dictionary Crawler (JSON Output)
  * 
- * Crawls data from edbchinese.hk for each word in all_words.json
+ * Re-crawls data from edbchinese.hk for characters in data/characters/
  * Extracts comprehensive data including: radical, strokes, pronunciations, 
  * stroke order images, word lists, four-character phrases, classical phrases,
  * idioms, proper nouns, and transliterated foreign words
  * 
  * Usage:
- *   tsx scripts/crawl-edbchinese-json.ts [--limit N] [--start N] [--output file.json]
+ *   npm run crawl:edbchinese [-- --limit N] [-- --start N]
+ *   tsx scripts/crawl-edbchinese-json.ts [--limit N] [--start N] [--output-dir path]
+ * 
+ * The script loads character IDs from existing data/characters/*.json files
+ * and re-fetches their data from edbchinese.hk
  */
 
 import { readFileSync, writeFileSync, mkdirSync } from 'fs';
@@ -84,10 +88,28 @@ for (let i = 0; i < args.length; i++) {
   }
 }
 
-// Load word list
-const wordsDataPath = join(process.cwd(), 'references/edbchinese.hk/words_data/all_words.json');
-const wordsData = JSON.parse(readFileSync(wordsDataPath, 'utf-8'));
-const words: WordEntry[] = wordsData.words;
+// Load word list from existing data/characters/ files
+// Each file is named {id}.json and contains the character data
+function loadWordListFromExistingData(): WordEntry[] {
+  const charactersDir = join(process.cwd(), 'data', 'characters');
+  const { readdirSync } = require('fs');
+  
+  const files = readdirSync(charactersDir)
+    .filter((f: string) => f.endsWith('.json'))
+    .sort();
+  
+  return files.map((file: string) => {
+    const id = file.replace('.json', '');
+    const content = JSON.parse(readFileSync(join(charactersDir, file), 'utf-8'));
+    return {
+      id,
+      word: content.character || content.word || id,
+    };
+  });
+}
+
+const words: WordEntry[] = loadWordListFromExistingData();
+console.log(`Loaded ${words.length} characters from existing data`);
 
 // Helper function to delay requests
 function delay(ms: number): Promise<void> {

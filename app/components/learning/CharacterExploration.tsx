@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import type { FullCharacterData, IndexEntry } from "@/types/fullCharacter";
 import StrokeAnimation from "./StrokeAnimation";
 import RelatedWords from "./RelatedWords";
@@ -19,7 +19,7 @@ interface CharacterExplorationProps {
  * - Character display using stroke rendering (clickable for animation)
  * - Character info (radical, stroke count, jyutping, pinyin)
  * - Related words and phrases
- * - Character navigation
+ * - Character navigation with search/filter
  */
 export default function CharacterExploration({ 
   character, 
@@ -34,6 +34,12 @@ export default function CharacterExploration({
   // UI state
   const [showCharList, setShowCharList] = useState(false);
   const [showStrokeAnimation, setShowStrokeAnimation] = useState(false);
+  const [showFilters, setShowFilters] = useState(false);
+  
+  // Filter state
+  const [filterRadical, setFilterRadical] = useState("");
+  const [filterStrokeCount, setFilterStrokeCount] = useState<number | "">("");
+  const [filterJyutping, setFilterJyutping] = useState("");
 
   // Load character list (index entries for navigation)
   const loadCharacterList = useCallback(async () => {
@@ -115,6 +121,53 @@ export default function CharacterExploration({
     }
   };
 
+  // Get unique radicals for filter dropdown
+  const uniqueRadicals = useMemo(() => {
+    const radicals = new Set<string>();
+    characterList.forEach(entry => {
+      if (entry.radical) radicals.add(entry.radical);
+    });
+    return Array.from(radicals).sort();
+  }, [characterList]);
+
+  // Get unique stroke counts for filter dropdown
+  const uniqueStrokeCounts = useMemo(() => {
+    const counts = new Set<number>();
+    characterList.forEach(entry => {
+      if (entry.strokeCount) counts.add(entry.strokeCount);
+    });
+    return Array.from(counts).sort((a, b) => a - b);
+  }, [characterList]);
+
+  // Filter character list based on search criteria
+  const filteredCharacterList = useMemo(() => {
+    return characterList.filter(entry => {
+      // Filter by radical
+      if (filterRadical && entry.radical !== filterRadical) {
+        return false;
+      }
+      // Filter by stroke count
+      if (filterStrokeCount !== "" && entry.strokeCount !== filterStrokeCount) {
+        return false;
+      }
+      // Filter by jyutping (partial match)
+      if (filterJyutping && !entry.jyutping?.toLowerCase().includes(filterJyutping.toLowerCase())) {
+        return false;
+      }
+      return true;
+    });
+  }, [characterList, filterRadical, filterStrokeCount, filterJyutping]);
+
+  // Check if any filters are active
+  const hasActiveFilters = filterRadical || filterStrokeCount !== "" || filterJyutping;
+
+  // Clear all filters
+  const clearFilters = () => {
+    setFilterRadical("");
+    setFilterStrokeCount("");
+    setFilterJyutping("");
+  };
+
   // Loading state
   if (loading && !data) {
     return (
@@ -154,42 +207,135 @@ export default function CharacterExploration({
       {characterList.length > 1 && (
         <div className="bg-white rounded-2xl shadow-[0_4px_16px_rgba(0,0,0,0.06)] overflow-hidden">
           <div className="px-4 py-3">
+            {/* Header */}
             <div className="flex items-center justify-between mb-2">
               <span className="text-base font-semibold text-[#636E72]">
-                揀選漢字
+                選擇漢字
                 <span className="text-sm text-[#B2BEC3] ml-2">
-                  （共 {characterList.length} 字）
+                  （{hasActiveFilters ? `${filteredCharacterList.length} / ` : "共 "}{characterList.length} 字）
                 </span>
               </span>
-              {characterList.length > 20 && (
+              <div className="flex items-center gap-2">
                 <button
-                  onClick={() => setShowCharList(!showCharList)}
-                  className="text-sm text-[#FF6B6B] hover:text-[#E55555] font-medium flex items-center gap-1"
-                >
-                  {showCharList ? "收起" : "展開全部"}
-                  <span className={`transition-transform ${showCharList ? "rotate-180" : ""}`}>
-                    ▼
-                  </span>
-                </button>
-              )}
-            </div>
-            <div className={`flex gap-2 flex-wrap ${
-              !showCharList && characterList.length > 20 ? "max-h-[100px] overflow-hidden" : ""
-            }`}>
-              {characterList.map((entry) => (
-                <button
-                  key={entry.id}
-                  onClick={() => onCharacterChange?.(entry.character)}
-                  className={`text-2xl px-3 py-2 rounded-xl border-2 transition-all hanzi-display ${
-                    entry.character === character
-                      ? "bg-[#FF6B6B] text-white border-[#FF6B6B] shadow-md"
-                      : "bg-white border-[#FFE5B4] text-[#2D3436] hover:border-[#FF8E8E] hover:bg-[#FFF5F5]"
+                  onClick={() => setShowFilters(!showFilters)}
+                  className={`text-sm font-medium flex items-center gap-1 px-2 py-1 rounded-lg transition-colors ${
+                    showFilters || hasActiveFilters 
+                      ? "bg-[#FF6B6B] text-white" 
+                      : "text-[#636E72] hover:bg-[#FFF5F5] hover:text-[#FF6B6B]"
                   }`}
                 >
-                  {entry.character}
+                  <span>🔍</span> 篩選
+                  {hasActiveFilters && <span className="bg-white text-[#FF6B6B] text-xs px-1.5 rounded-full">!</span>}
                 </button>
-              ))}
+                {characterList.length > 20 && (
+                  <button
+                    onClick={() => setShowCharList(!showCharList)}
+                    className="text-sm text-[#FF6B6B] hover:text-[#E55555] font-medium flex items-center gap-1"
+                  >
+                    {showCharList ? "收起" : "展開"}
+                    <span className={`transition-transform ${showCharList ? "rotate-180" : ""}`}>
+                      ▼
+                    </span>
+                  </button>
+                )}
+              </div>
             </div>
+
+            {/* Filter Panel */}
+            {showFilters && (
+              <div className="mb-3 p-3 bg-[#FFFBF5] rounded-xl border border-[#FFE5B4]">
+                <div className="grid grid-cols-3 gap-2">
+                  {/* Radical filter */}
+                  <div>
+                    <label className="text-xs text-[#636E72] block mb-1">部首</label>
+                    <select
+                      value={filterRadical}
+                      onChange={(e) => setFilterRadical(e.target.value)}
+                      className="w-full px-2 py-1.5 text-sm border border-[#DFE6E9] rounded-lg 
+                               bg-white focus:border-[#FF6B6B] focus:outline-none hanzi-display"
+                    >
+                      <option value="">全部</option>
+                      {uniqueRadicals.map(radical => (
+                        <option key={radical} value={radical}>{radical}</option>
+                      ))}
+                    </select>
+                  </div>
+                  
+                  {/* Stroke count filter */}
+                  <div>
+                    <label className="text-xs text-[#636E72] block mb-1">筆畫數</label>
+                    <select
+                      value={filterStrokeCount}
+                      onChange={(e) => setFilterStrokeCount(e.target.value ? Number(e.target.value) : "")}
+                      className="w-full px-2 py-1.5 text-sm border border-[#DFE6E9] rounded-lg 
+                               bg-white focus:border-[#FF6B6B] focus:outline-none"
+                    >
+                      <option value="">全部</option>
+                      {uniqueStrokeCounts.map(count => (
+                        <option key={count} value={count}>{count} 畫</option>
+                      ))}
+                    </select>
+                  </div>
+                  
+                  {/* Jyutping filter */}
+                  <div>
+                    <label className="text-xs text-[#636E72] block mb-1">粵拼</label>
+                    <input
+                      type="text"
+                      value={filterJyutping}
+                      onChange={(e) => setFilterJyutping(e.target.value)}
+                      placeholder="例：jat1"
+                      className="w-full px-2 py-1.5 text-sm border border-[#DFE6E9] rounded-lg 
+                               bg-white focus:border-[#FF6B6B] focus:outline-none jyutping"
+                    />
+                  </div>
+                </div>
+                
+                {/* Clear filters button */}
+                {hasActiveFilters && (
+                  <button
+                    onClick={clearFilters}
+                    className="mt-2 text-xs text-[#FF6B6B] hover:text-[#E55555] font-medium"
+                  >
+                    ✕ 清除篩選條件
+                  </button>
+                )}
+              </div>
+            )}
+
+            {/* Character Grid - Scrollable */}
+            <div 
+              className={`flex gap-2 flex-wrap overflow-y-auto scrollbar-thin scrollbar-thumb-[#FFE5B4] scrollbar-track-transparent ${
+                showCharList ? "max-h-[300px]" : "max-h-[120px]"
+              }`}
+            >
+              {filteredCharacterList.length > 0 ? (
+                filteredCharacterList.map((entry) => (
+                  <button
+                    key={entry.id}
+                    onClick={() => onCharacterChange?.(entry.character)}
+                    className={`text-2xl px-3 py-2 rounded-xl border-2 transition-all hanzi-display ${
+                      entry.character === character
+                        ? "bg-[#FF6B6B] text-white border-[#FF6B6B] shadow-md"
+                        : "bg-white border-[#FFE5B4] text-[#2D3436] hover:border-[#FF8E8E] hover:bg-[#FFF5F5]"
+                    }`}
+                  >
+                    {entry.character}
+                  </button>
+                ))
+              ) : (
+                <div className="w-full text-center py-4 text-[#B2BEC3]">
+                  找不到符合條件的漢字
+                </div>
+              )}
+            </div>
+            
+            {/* Scroll hint */}
+            {filteredCharacterList.length > 15 && !showCharList && (
+              <div className="text-center text-xs text-[#B2BEC3] mt-1">
+                ↕ 可上下滾動查看更多
+              </div>
+            )}
           </div>
         </div>
       )}

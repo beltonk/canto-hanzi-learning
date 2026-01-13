@@ -17,24 +17,29 @@ interface StrokeGroup {
   segments: StrokeVector[];
 }
 
+// CreateJS types
+interface CreateJSStage {
+  addChild: (child: unknown) => void;
+  removeAllChildren: () => void;
+  update: () => void;
+  clear: () => void;
+}
+
+interface CreateJSShape {
+  graphics: {
+    f: (color: string) => unknown;
+    s: (color: string, width?: number) => unknown;
+    p: (pathData: string) => unknown;
+  };
+  x: number;
+  y: number;
+}
+
 declare global {
   interface Window {
     createjs: {
-      Stage: new (canvas: HTMLCanvasElement) => {
-        addChild: (child: unknown) => void;
-        removeAllChildren: () => void;
-        update: () => void;
-        clear: () => void;
-      };
-      Shape: new () => {
-        graphics: {
-          f: (color: string) => unknown;
-          s: (color: string, width?: number) => unknown;
-          p: (pathData: string) => unknown;
-        };
-        x: number;
-        y: number;
-      };
+      Stage: new (canvas: HTMLCanvasElement) => CreateJSStage;
+      Shape: new () => CreateJSShape;
     };
   }
 }
@@ -53,7 +58,7 @@ export default function StrokeAnimation({
   onAnimationEnd,
 }: StrokeAnimationProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const stageRef = useRef<ReturnType<typeof window.createjs.Stage> | null>(null);
+  const stageRef = useRef<CreateJSStage | null>(null);
   const [createJSLoaded, setCreateJSLoaded] = useState(createJSLoadedGlobal);
   
   // Group strokes by strokeNumber

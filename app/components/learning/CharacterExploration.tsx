@@ -254,8 +254,9 @@ export default function CharacterExploration({
                   <select
                     value={filterRadical}
                     onChange={(e) => setFilterRadical(e.target.value)}
-                    className="w-20 px-2 py-1 text-sm border border-[var(--input-border)] rounded-lg 
-                             bg-[var(--input-bg)] text-[var(--color-charcoal)] focus:border-[var(--color-coral)] focus:outline-none hanzi-display"
+                    className="w-20 h-8 px-2 text-sm border border-[var(--input-border)] rounded-lg 
+                             bg-[var(--input-bg)] text-[var(--color-charcoal)] focus:border-[var(--color-coral)] focus:outline-none
+                             font-sans leading-normal"
                   >
                     <option value="">{t("all")}</option>
                     {uniqueRadicals.map(radical => (
@@ -270,8 +271,9 @@ export default function CharacterExploration({
                   <select
                     value={filterStrokeCount}
                     onChange={(e) => setFilterStrokeCount(e.target.value ? Number(e.target.value) : "")}
-                    className="w-20 px-2 py-1 text-sm border border-[var(--input-border)] rounded-lg 
-                             bg-[var(--input-bg)] text-[var(--color-charcoal)] focus:border-[var(--color-coral)] focus:outline-none"
+                    className="w-20 h-8 px-2 text-sm border border-[var(--input-border)] rounded-lg 
+                             bg-[var(--input-bg)] text-[var(--color-charcoal)] focus:border-[var(--color-coral)] focus:outline-none
+                             font-sans leading-normal"
                   >
                     <option value="">{t("all")}</option>
                     {uniqueStrokeCounts.map(count => (
@@ -288,8 +290,9 @@ export default function CharacterExploration({
                     value={filterJyutping}
                     onChange={(e) => setFilterJyutping(e.target.value)}
                     placeholder="jat1"
-                    className="w-20 px-2 py-1 text-sm border border-[var(--input-border)] rounded-lg 
-                             bg-[var(--input-bg)] text-[var(--color-charcoal)] focus:border-[var(--color-coral)] focus:outline-none jyutping"
+                    className="w-20 h-8 px-2 text-sm border border-[var(--input-border)] rounded-lg 
+                             bg-[var(--input-bg)] text-[var(--color-charcoal)] focus:border-[var(--color-coral)] focus:outline-none
+                             font-mono leading-normal"
                   />
                 </div>
                 

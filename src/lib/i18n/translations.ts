@@ -200,8 +200,8 @@ export const translations = {
     scrollHint: "Scroll to see more",
     scrollDown: "Scroll down for more",
     clickForAnimation: "Click to show stroke animation",
-    hkWordList: "Characters from Lexical Lists for Chinese Learning in Hong Kong",
-    usingHkWordList: "Using characters from Lexical Lists for Chinese Learning in Hong Kong",
+    hkWordList: "Based on \"Lexical Lists for Chinese Learning in Hong Kong\"",
+    usingHkWordList: "Based on \"Lexical Lists for Chinese Learning in Hong Kong\"",
     
     // Character info
     strokes: "strokes",

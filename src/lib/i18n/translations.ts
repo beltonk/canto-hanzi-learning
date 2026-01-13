@@ -157,7 +157,7 @@ export const translations = {
   "en": {
     // App
     appTitle: "Cantonese Hanzi Learning",
-    appSubtitle: "HK Primary School Chinese · Based on HK Primary Word List",
+    appSubtitle: "HK Primary School Chinese · Based on Lexical Lists for Chinese Learning in Hong Kong",
     
     // Navigation
     home: "Home",
@@ -200,8 +200,8 @@ export const translations = {
     scrollHint: "Scroll to see more",
     scrollDown: "Scroll down for more",
     clickForAnimation: "Click to show stroke animation",
-    hkWordList: "Characters from HK Primary Word List",
-    usingHkWordList: "Using characters from HK Primary Word List",
+    hkWordList: "Characters from Lexical Lists for Chinese Learning in Hong Kong",
+    usingHkWordList: "Using characters from Lexical Lists for Chinese Learning in Hong Kong",
     
     // Character info
     strokes: "strokes",

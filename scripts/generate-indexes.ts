@@ -1,32 +1,59 @@
 #!/usr/bin/env tsx
 
 /**
- * Generate index files for efficient character lookup
- * - By learning stage (1/2) - merged into stage.json
- * - By stroke count (1-32) - merged into strokes.json
- * - By radical (organized by radical's stroke count) - merged into radical.json
+ * Generate index files for efficient character and word lookup
+ * 
+ * Character indexes (no stage field - stage applies to words only):
+ * - all.json - All characters
+ * - strokes.json - By stroke count (1-32)
+ * - radical.json - By radical (organized by radical's stroke count)
+ * - lexical-lists-hk.json - Characters in HK Lexical Lists (inLexicalListsHK == true)
+ * 
+ * Word indexes:
+ * - stage.json - Words grouped by learning stage (1 = 第一學習階段, 2 = 第二學習階段)
  */
 
-import { readFileSync, writeFileSync, readdirSync } from 'fs';
+import { readFileSync, writeFileSync, readdirSync, mkdirSync } from 'fs';
 import { join } from 'path';
 
-interface CharacterEntry {
-  key: string | number;
+// ============================================================
+// Types
+// ============================================================
+
+/** Character index entry - no stage field */
+interface CharacterIndexEntry {
+  key: string;
   id: string;
   character: string;
-  radical?: string;
-  strokeCount?: number;
-  jyutping?: string;
-  stage?: '1' | '2' | 'both';  // 1 = stage 1 only, 2 = stage 2 only, both = both stages
+  radical: string;
+  strokeCount: number;
+  jyutping: string;
   inLexicalListsHK: boolean;
 }
 
-interface IndexGroup {
-  key: string | number;
-  entries: CharacterEntry[];
+/** Word index entry for stage.json */
+interface WordIndexEntry {
+  word: string;
+  jyutping: string;
+  pinyin: string;
+  characterId: string;
+  character: string;
 }
 
-// Radical mapping: radical character -> stroke count of the radical
+interface CharacterIndexGroup {
+  key: string | number;
+  entries: CharacterIndexEntry[];
+}
+
+interface WordIndexGroup {
+  key: string;
+  entries: WordIndexEntry[];
+}
+
+// ============================================================
+// Radical mapping: radical character -> stroke count
+// ============================================================
+
 const RADICAL_STROKES: { [radical: string]: number } = {
   // 1 畫
   '一': 1, '丨': 1, '丶': 1, '丿': 1, '乙': 1, '亅': 1,
@@ -68,6 +95,17 @@ function getRadicalStrokeCount(radical: string): number {
   return RADICAL_STROKES[radical] || 0;
 }
 
+// ============================================================
+// Data loading
+// ============================================================
+
+interface Word {
+  word: string;
+  jyutping?: string;
+  pinyin?: string;
+  stage?: string;
+}
+
 interface LoadedCharacter {
   id: string;
   character: string;
@@ -75,8 +113,8 @@ interface LoadedCharacter {
   strokeCount?: number;
   jyutping?: string;
   inLexicalListsHK: boolean;
-  stage1Words?: any[];
-  stage2Words?: any[];
+  stage1Words?: Word[];
+  stage2Words?: Word[];
 }
 
 function loadAllCharacters(): LoadedCharacter[] {
@@ -107,61 +145,37 @@ function loadAllCharacters(): LoadedCharacter[] {
   return characters;
 }
 
-// Helper to determine stage for a character
-function getStage(char: LoadedCharacter): '1' | '2' | 'both' | undefined {
-  const hasStage1 = char.stage1Words && char.stage1Words.length > 0;
-  const hasStage2 = char.stage2Words && char.stage2Words.length > 0;
-  
-  if (hasStage1 && hasStage2) return 'both';
-  if (hasStage1) return '1';
-  if (hasStage2) return '2';
-  return undefined;
+// ============================================================
+// Character index generators (no stage field)
+// ============================================================
+
+function toCharacterEntry(char: LoadedCharacter): CharacterIndexEntry {
+  return {
+    key: char.id,
+    id: char.id,
+    character: char.character,
+    radical: char.radical || '',
+    strokeCount: char.strokeCount || 0,
+    jyutping: char.jyutping || '',
+    inLexicalListsHK: char.inLexicalListsHK,
+  };
 }
 
-function generateStageIndex(characters: LoadedCharacter[]): IndexGroup[] {
-  const stage1: CharacterEntry[] = [];
-  const stage2: CharacterEntry[] = [];
-  
-  characters.forEach(char => {
-    const hasStage1 = char.stage1Words && char.stage1Words.length > 0;
-    const hasStage2 = char.stage2Words && char.stage2Words.length > 0;
-    const stage = getStage(char);
-    
-    if (hasStage1) {
-      stage1.push({
-        key: '1',
-        id: char.id,
-        character: char.character,
-        radical: char.radical,
-        strokeCount: char.strokeCount,
-        jyutping: char.jyutping,
-        stage: stage,
-        inLexicalListsHK: char.inLexicalListsHK,
-      });
-    }
-    
-    if (hasStage2) {
-      stage2.push({
-        key: '2',
-        id: char.id,
-        character: char.character,
-        radical: char.radical,
-        strokeCount: char.strokeCount,
-        jyutping: char.jyutping,
-        stage: stage,
-        inLexicalListsHK: char.inLexicalListsHK,
-      });
-    }
-  });
-  
-  return [
-    { key: '1', entries: stage1.sort((a, b) => a.id.localeCompare(b.id)) },
-    { key: '2', entries: stage2.sort((a, b) => a.id.localeCompare(b.id)) },
-  ];
+function generateAllCharactersIndex(characters: LoadedCharacter[]): CharacterIndexEntry[] {
+  return characters
+    .map(toCharacterEntry)
+    .sort((a, b) => a.id.localeCompare(b.id));
 }
 
-function generateStrokeIndex(characters: LoadedCharacter[]): IndexGroup[] {
-  const byStrokes: { [strokes: number]: CharacterEntry[] } = {};
+function generateLexicalListsHKIndex(characters: LoadedCharacter[]): CharacterIndexEntry[] {
+  return characters
+    .filter(char => char.inLexicalListsHK)
+    .map(toCharacterEntry)
+    .sort((a, b) => a.id.localeCompare(b.id));
+}
+
+function generateStrokeIndex(characters: LoadedCharacter[]): CharacterIndexGroup[] {
+  const byStrokes: { [strokes: number]: CharacterIndexEntry[] } = {};
   
   characters.forEach(char => {
     const strokes = char.strokeCount || 0;
@@ -169,20 +183,13 @@ function generateStrokeIndex(characters: LoadedCharacter[]): IndexGroup[] {
       if (!byStrokes[strokes]) {
         byStrokes[strokes] = [];
       }
-      byStrokes[strokes].push({
-        key: strokes,
-        id: char.id,
-        character: char.character,
-        radical: char.radical,
-        strokeCount: char.strokeCount,
-        jyutping: char.jyutping,
-        stage: getStage(char),
-        inLexicalListsHK: char.inLexicalListsHK,
-      });
+      const entry = toCharacterEntry(char);
+      entry.key = String(strokes);
+      byStrokes[strokes].push(entry);
     }
   });
   
-  const indexes: IndexGroup[] = [];
+  const indexes: CharacterIndexGroup[] = [];
   for (let strokes = 1; strokes <= 32; strokes++) {
     if (byStrokes[strokes]) {
       indexes.push({
@@ -195,29 +202,22 @@ function generateStrokeIndex(characters: LoadedCharacter[]): IndexGroup[] {
   return indexes;
 }
 
-function generateRadicalIndex(characters: LoadedCharacter[]): IndexGroup[] {
-  const byRadical: { [radical: string]: CharacterEntry[] } = {};
+function generateRadicalIndex(characters: LoadedCharacter[]): CharacterIndexGroup[] {
+  const byRadical: { [radical: string]: CharacterIndexEntry[] } = {};
   
   characters.forEach(char => {
     if (char.radical) {
       if (!byRadical[char.radical]) {
         byRadical[char.radical] = [];
       }
-      byRadical[char.radical].push({
-        key: char.radical,
-        id: char.id,
-        character: char.character,
-        radical: char.radical,
-        strokeCount: char.strokeCount,
-        jyutping: char.jyutping,
-        stage: getStage(char),
-        inLexicalListsHK: char.inLexicalListsHK,
-      });
+      const entry = toCharacterEntry(char);
+      entry.key = char.radical;
+      byRadical[char.radical].push(entry);
     }
   });
   
-  // Group by radical stroke count, then sort radicals within each group
-  const byRadicalStrokes: { [strokeCount: number]: { radical: string; entries: CharacterEntry[] }[] } = {};
+  // Group by radical stroke count
+  const byRadicalStrokes: { [strokeCount: number]: { radical: string; entries: CharacterIndexEntry[] }[] } = {};
   
   Object.keys(byRadical).forEach(radical => {
     const radicalStrokes = getRadicalStrokeCount(radical);
@@ -233,7 +233,6 @@ function generateRadicalIndex(characters: LoadedCharacter[]): IndexGroup[] {
   // Sort radicals within each stroke count group
   Object.keys(byRadicalStrokes).forEach(strokeCount => {
     byRadicalStrokes[parseInt(strokeCount, 10)].sort((a, b) => {
-      // Sort by radical stroke count first, then by radical character
       const aStrokes = getRadicalStrokeCount(a.radical);
       const bStrokes = getRadicalStrokeCount(b.radical);
       if (aStrokes !== bStrokes) return aStrokes - bStrokes;
@@ -241,9 +240,9 @@ function generateRadicalIndex(characters: LoadedCharacter[]): IndexGroup[] {
     });
   });
   
-  // Create merged index - all radicals in one file, grouped by radical stroke count
-  const indexes: IndexGroup[] = [];
-  for (let strokeCount = 1; strokeCount <= 18; strokeCount++) {
+  // Create merged index
+  const indexes: CharacterIndexGroup[] = [];
+  for (let strokeCount = 0; strokeCount <= 18; strokeCount++) {
     if (byRadicalStrokes[strokeCount]) {
       byRadicalStrokes[strokeCount].forEach(({ radical, entries }) => {
         indexes.push({
@@ -257,18 +256,65 @@ function generateRadicalIndex(characters: LoadedCharacter[]): IndexGroup[] {
   return indexes;
 }
 
-function generateAllCharactersIndex(characters: LoadedCharacter[]): CharacterEntry[] {
-  return characters.map(char => ({
-    key: char.id,
-    id: char.id,
-    character: char.character,
-    radical: char.radical,
-    strokeCount: char.strokeCount,
-    jyutping: char.jyutping,
-    stage: getStage(char),
-    inLexicalListsHK: char.inLexicalListsHK,
-  })).sort((a, b) => a.id.localeCompare(b.id));
+// ============================================================
+// Word index generator (stage.json - words by learning stage)
+// ============================================================
+
+function generateWordStageIndex(characters: LoadedCharacter[]): WordIndexGroup[] {
+  const stage1Words: WordIndexEntry[] = [];
+  const stage2Words: WordIndexEntry[] = [];
+  
+  // Track unique words to avoid duplicates
+  const stage1Set = new Set<string>();
+  const stage2Set = new Set<string>();
+  
+  characters.forEach(char => {
+    // Stage 1 words
+    if (char.stage1Words && char.stage1Words.length > 0) {
+      char.stage1Words.forEach(w => {
+        if (!stage1Set.has(w.word)) {
+          stage1Set.add(w.word);
+          stage1Words.push({
+            word: w.word,
+            jyutping: w.jyutping || '',
+            pinyin: w.pinyin || '',
+            characterId: char.id,
+            character: char.character,
+          });
+        }
+      });
+    }
+    
+    // Stage 2 words
+    if (char.stage2Words && char.stage2Words.length > 0) {
+      char.stage2Words.forEach(w => {
+        if (!stage2Set.has(w.word)) {
+          stage2Set.add(w.word);
+          stage2Words.push({
+            word: w.word,
+            jyutping: w.jyutping || '',
+            pinyin: w.pinyin || '',
+            characterId: char.id,
+            character: char.character,
+          });
+        }
+      });
+    }
+  });
+  
+  // Sort words alphabetically by word
+  stage1Words.sort((a, b) => a.word.localeCompare(b.word, 'zh-Hant'));
+  stage2Words.sort((a, b) => a.word.localeCompare(b.word, 'zh-Hant'));
+  
+  return [
+    { key: '1', entries: stage1Words },
+    { key: '2', entries: stage2Words },
+  ];
 }
+
+// ============================================================
+// Main
+// ============================================================
 
 function main() {
   console.log('Loading all characters...');
@@ -277,40 +323,53 @@ function main() {
   
   const indexesDir = join(process.cwd(), 'data', 'indexes');
   
-  // Create indexes directory if it doesn't exist
-  try {
-    require('fs').mkdirSync(indexesDir, { recursive: true });
-  } catch (e) {
-    // Directory might already exist
-  }
+  // Create indexes directory
+  mkdirSync(indexesDir, { recursive: true });
   
-  // Generate stage index (merged into one file)
-  console.log('\nGenerating stage index...');
-  const stageIndexes = generateStageIndex(characters);
-  const stageFile = {
-    groups: stageIndexes,
-  };
-  writeFileSync(join(indexesDir, 'stage.json'), JSON.stringify(stageFile, null, 2), 'utf-8');
-  console.log(`  ✓ stage.json: ${stageIndexes[0].entries.length} stage 1, ${stageIndexes[1].entries.length} stage 2`);
+  // --------------------------------------------------------
+  // CHARACTER INDEXES (no stage field)
+  // --------------------------------------------------------
   
-  // Generate stroke index (merged into one file)
+  // 1. All characters index
+  console.log('\nGenerating all characters index...');
+  const allCharactersIndex = generateAllCharactersIndex(characters);
+  writeFileSync(
+    join(indexesDir, 'all.json'),
+    JSON.stringify({ entries: allCharactersIndex }, null, 2),
+    'utf-8'
+  );
+  console.log(`  ✓ all.json: ${allCharactersIndex.length} characters`);
+  
+  // 2. Lexical Lists HK index
+  console.log('\nGenerating lexical-lists-hk index...');
+  const lexicalListsHKIndex = generateLexicalListsHKIndex(characters);
+  writeFileSync(
+    join(indexesDir, 'lexical-lists-hk.json'),
+    JSON.stringify({ entries: lexicalListsHKIndex }, null, 2),
+    'utf-8'
+  );
+  console.log(`  ✓ lexical-lists-hk.json: ${lexicalListsHKIndex.length} characters`);
+  
+  // 3. Stroke index
   console.log('\nGenerating stroke index...');
   const strokeIndexes = generateStrokeIndex(characters);
-  const strokeFile = {
-    groups: strokeIndexes,
-  };
-  writeFileSync(join(indexesDir, 'strokes.json'), JSON.stringify(strokeFile, null, 2), 'utf-8');
+  writeFileSync(
+    join(indexesDir, 'strokes.json'),
+    JSON.stringify({ groups: strokeIndexes }, null, 2),
+    'utf-8'
+  );
   console.log(`  ✓ strokes.json: ${strokeIndexes.length} stroke groups`);
   
-  // Generate radical index (merged into one file)
+  // 4. Radical index
   console.log('\nGenerating radical index...');
   const radicalIndexes = generateRadicalIndex(characters);
-  const radicalFile = {
-    groups: radicalIndexes,
-  };
-  writeFileSync(join(indexesDir, 'radical.json'), JSON.stringify(radicalFile, null, 2), 'utf-8');
+  writeFileSync(
+    join(indexesDir, 'radical.json'),
+    JSON.stringify({ groups: radicalIndexes }, null, 2),
+    'utf-8'
+  );
   
-  // Group by radical stroke count for summary
+  // Radical summary
   const byRadicalStrokes: { [strokeCount: number]: number } = {};
   radicalIndexes.forEach(index => {
     const radicalStrokes = getRadicalStrokeCount(index.key as string);
@@ -318,46 +377,69 @@ function main() {
   });
   
   console.log('\nRadical indexes by stroke count:');
-  for (let strokeCount = 1; strokeCount <= 18; strokeCount++) {
+  for (let strokeCount = 0; strokeCount <= 18; strokeCount++) {
     if (byRadicalStrokes[strokeCount]) {
       console.log(`  ${strokeCount} 畫: ${byRadicalStrokes[strokeCount]} radicals`);
     }
   }
+  console.log(`  ✓ radical.json: ${radicalIndexes.length} radical groups`);
   
-  console.log(`\n✓ radical.json: ${radicalIndexes.length} radical groups`);
+  // --------------------------------------------------------
+  // WORD INDEX (stage.json - words by learning stage)
+  // --------------------------------------------------------
   
-  // Generate all characters index (flat, no grouping)
-  console.log('\nGenerating all characters index...');
-  const allCharactersIndex = generateAllCharactersIndex(characters);
-  const allFile = {
-    entries: allCharactersIndex,
-  };
-  writeFileSync(join(indexesDir, 'all.json'), JSON.stringify(allFile, null, 2), 'utf-8');
-  console.log(`  ✓ all.json: ${allCharactersIndex.length} characters`);
+  console.log('\nGenerating word stage index...');
+  const wordStageIndexes = generateWordStageIndex(characters);
+  writeFileSync(
+    join(indexesDir, 'stage.json'),
+    JSON.stringify({ groups: wordStageIndexes }, null, 2),
+    'utf-8'
+  );
+  console.log(`  ✓ stage.json: ${wordStageIndexes[0].entries.length} stage 1 words, ${wordStageIndexes[1].entries.length} stage 2 words`);
   
-  console.log(`\nAll indexes written to: ${indexesDir}`);
+  // --------------------------------------------------------
+  // SUMMARY
+  // --------------------------------------------------------
   
-  // Calculate lexicalListsHKCount
-  const lexicalListsHKCount = characters.filter(c => c.inLexicalListsHK).length;
+  console.log('\nGenerating summary...');
   
-  // Generate summary
   const summary = {
+    // Character counts
     totalCharacters: characters.length,
-    lexicalListsHKCount: lexicalListsHKCount,
-    stage1Count: stageIndexes[0].entries.length,
-    stage2Count: stageIndexes[1].entries.length,
+    lexicalListsHKCount: lexicalListsHKIndex.length,
+    
+    // Word counts by stage
+    stage1WordCount: wordStageIndexes[0].entries.length,
+    stage2WordCount: wordStageIndexes[1].entries.length,
+    
+    // Stroke distribution
     strokeCounts: strokeIndexes.map(idx => ({
       strokes: idx.key,
       count: idx.entries.length,
     })),
+    
+    // Radical distribution
     radicalCounts: Object.keys(byRadicalStrokes).map(strokes => ({
       strokes: parseInt(strokes, 10),
       radicalCount: byRadicalStrokes[parseInt(strokes, 10)],
     })).sort((a, b) => a.strokes - b.strokes),
   };
   
-  writeFileSync(join(indexesDir, 'summary.json'), JSON.stringify(summary, null, 2), 'utf-8');
-  console.log(`\n✓ Generated summary.json (lexicalListsHKCount: ${lexicalListsHKCount})`);
+  writeFileSync(
+    join(indexesDir, 'summary.json'),
+    JSON.stringify(summary, null, 2),
+    'utf-8'
+  );
+  console.log(`  ✓ summary.json`);
+  
+  console.log(`\n✅ All indexes written to: ${indexesDir}`);
+  console.log('\nIndex files:');
+  console.log('  - all.json (all characters)');
+  console.log('  - lexical-lists-hk.json (HK lexical list characters)');
+  console.log('  - strokes.json (by stroke count)');
+  console.log('  - radical.json (by radical)');
+  console.log('  - stage.json (words by learning stage)');
+  console.log('  - summary.json (statistics)');
 }
 
 main();

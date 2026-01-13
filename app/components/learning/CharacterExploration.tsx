@@ -1,86 +1,122 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import type { Character, Decomposition, Example } from "@/types/character";
-import Button from "@/app/components/ui/Button";
-import Mascot from "@/app/components/ui/Mascot";
+import type { FullCharacterData, IndexEntry } from "@/types/fullCharacter";
+import StrokeAnimation from "./StrokeAnimation";
+import RelatedWords from "./RelatedWords";
 
 interface CharacterExplorationProps {
-  character: string;
-  grade?: "KS1" | "KS2";
+  /** Initial character to display */
+  character?: string;
+  /** Callback when character changes */
   onCharacterChange?: (char: string) => void;
 }
 
-interface CharacterData {
-  character: Character;
-  decomposition?: Decomposition;
-  examples: Example[];
-}
-
-export default function CharacterExploration({ character, grade, onCharacterChange }: CharacterExplorationProps) {
-  const [data, setData] = useState<CharacterData | null>(null);
+/**
+ * CharacterExploration Component
+ * 
+ * Full-featured character exploration with:
+ * - Character display using stroke rendering (clickable for animation)
+ * - Character info (radical, stroke count, jyutping, pinyin)
+ * - Related words and phrases
+ * - Character navigation
+ */
+export default function CharacterExploration({ 
+  character, 
+  onCharacterChange 
+}: CharacterExplorationProps) {
+  // Data state
+  const [data, setData] = useState<FullCharacterData | null>(null);
+  const [characterList, setCharacterList] = useState<IndexEntry[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [allCharacters, setAllCharacters] = useState<Character[]>([]);
+  
+  // UI state
   const [showCharList, setShowCharList] = useState(false);
+  const [showStrokeAnimation, setShowStrokeAnimation] = useState(false);
 
-  const loadCharacterData = useCallback(async () => {
+  // Load character list (index entries for navigation)
+  const loadCharacterList = useCallback(async () => {
+    try {
+      const params = new URLSearchParams();
+      params.set("indexOnly", "true");
+      params.set("inLexicalListsHK", "true"); // Only show HK lexical list characters
+      
+      const response = await fetch(`/api/characters?${params.toString()}`);
+      if (!response.ok) {
+        throw new Error("載入字表失敗");
+      }
+      
+      const result = await response.json();
+      setCharacterList(result.entries || []);
+      
+      // If no character specified, use first one
+      if (!character && result.entries.length > 0) {
+        onCharacterChange?.(result.entries[0].character);
+      }
+    } catch (err) {
+      console.error("Error loading character list:", err);
+    }
+  }, [character, onCharacterChange]);
+
+  // Load full character data
+  const loadCharacterData = useCallback(async (char: string) => {
     try {
       setLoading(true);
       setError(null);
 
-      const params = new URLSearchParams();
-      if (grade) {
-        params.set("grade", grade);
-      }
-
-      const response = await fetch(`/api/characters?${params.toString()}`);
+      const response = await fetch(`/api/characters?char=${encodeURIComponent(char)}`);
       if (!response.ok) {
-        throw new Error(`載入失敗: ${response.statusText}`);
+        throw new Error(`找不到「${char}」這個字`);
       }
 
       const result = await response.json();
-      
-      // Store all characters for navigation
-      const chars = result.characters.map((item: { character: Character }) => item.character);
-      setAllCharacters(chars);
-
-      const charData = result.characters.find(
-        (item: { character: { character: string } }) => item.character.character === character
-      );
-
-      if (!charData) {
-        // If character not found, try to load the first one
-        if (result.characters.length > 0) {
-          setData(result.characters[0]);
-          onCharacterChange?.(result.characters[0].character.character);
-        } else {
-          throw new Error(`找不到「${character}」這個字`);
-        }
-      } else {
-        setData(charData);
-      }
+      setData(result.character);
+      setShowStrokeAnimation(false); // Reset animation state when character changes
     } catch (err) {
       setError(err instanceof Error ? err.message : "載入資料失敗");
+      setData(null);
     } finally {
       setLoading(false);
     }
-  }, [character, grade, onCharacterChange]);
+  }, []);
 
+  // Load character list on mount/stage change
   useEffect(() => {
-    loadCharacterData();
-  }, [loadCharacterData]);
+    loadCharacterList();
+  }, [loadCharacterList]);
 
-  function speakCantonese(text: string) {
-    if ('speechSynthesis' in window) {
+  // Load character data when character changes
+  useEffect(() => {
+    if (character) {
+      loadCharacterData(character);
+    }
+  }, [character, loadCharacterData]);
+
+  // Speak character using TTS (Cantonese)
+  const speakCantonese = (text: string) => {
+    if ("speechSynthesis" in window) {
+      window.speechSynthesis.cancel();
       const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = 'zh-HK';
+      utterance.lang = "zh-HK";
       utterance.rate = 0.8;
       window.speechSynthesis.speak(utterance);
     }
-  }
+  };
 
-  if (loading) {
+  // Speak character using TTS (Mandarin)
+  const speakMandarin = (text: string) => {
+    if ("speechSynthesis" in window) {
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = "zh-CN";
+      utterance.rate = 0.8;
+      window.speechSynthesis.speak(utterance);
+    }
+  };
+
+  // Loading state
+  if (loading && !data) {
     return (
       <div className="flex flex-col items-center justify-center p-12">
         <div className="text-6xl mb-4 animate-float">🐼</div>
@@ -89,6 +125,7 @@ export default function CharacterExploration({ character, grade, onCharacterChan
     );
   }
 
+  // Error state
   if (error) {
     return (
       <div className="flex flex-col items-center justify-center p-12">
@@ -102,41 +139,54 @@ export default function CharacterExploration({ character, grade, onCharacterChan
     return null;
   }
 
-  const { character: char, decomposition, examples } = data;
+  // Calculate word counts
+  const totalWords = 
+    (data.stage1Words?.length || 0) + 
+    (data.stage2Words?.length || 0) +
+    (data.fourCharacterPhrases?.length || 0) +
+    (data.multiCharacterIdioms?.length || 0);
+
+  const hasStrokeData = data.strokeVectors && data.strokeVectors.length > 0;
 
   return (
     <div className="max-w-4xl mx-auto space-y-3">
-      {/* Character Navigation - Show 2 rows by default, expand for all */}
-      {allCharacters.length > 1 && (
+      {/* Character Navigation */}
+      {characterList.length > 1 && (
         <div className="bg-white rounded-2xl shadow-[0_4px_16px_rgba(0,0,0,0.06)] overflow-hidden">
           <div className="px-4 py-3">
             <div className="flex items-center justify-between mb-2">
               <span className="text-base font-semibold text-[#636E72]">
                 揀選漢字
-                <span className="text-sm text-[#B2BEC3] ml-2">（共 {allCharacters.length} 字）</span>
+                <span className="text-sm text-[#B2BEC3] ml-2">
+                  （共 {characterList.length} 字）
+                </span>
               </span>
-              {allCharacters.length > 20 && (
+              {characterList.length > 20 && (
                 <button
                   onClick={() => setShowCharList(!showCharList)}
                   className="text-sm text-[#FF6B6B] hover:text-[#E55555] font-medium flex items-center gap-1"
                 >
                   {showCharList ? "收起" : "展開全部"}
-                  <span className={`transition-transform ${showCharList ? 'rotate-180' : ''}`}>▼</span>
+                  <span className={`transition-transform ${showCharList ? "rotate-180" : ""}`}>
+                    ▼
+                  </span>
                 </button>
               )}
             </div>
-            <div className={`flex gap-2 flex-wrap ${!showCharList && allCharacters.length > 20 ? 'max-h-[100px] overflow-hidden' : ''}`}>
-              {allCharacters.map((c, idx) => (
+            <div className={`flex gap-2 flex-wrap ${
+              !showCharList && characterList.length > 20 ? "max-h-[100px] overflow-hidden" : ""
+            }`}>
+              {characterList.map((entry) => (
                 <button
-                  key={idx}
-                  onClick={() => onCharacterChange?.(c.character)}
+                  key={entry.id}
+                  onClick={() => onCharacterChange?.(entry.character)}
                   className={`text-2xl px-3 py-2 rounded-xl border-2 transition-all hanzi-display ${
-                    c.character === character
+                    entry.character === character
                       ? "bg-[#FF6B6B] text-white border-[#FF6B6B] shadow-md"
                       : "bg-white border-[#FFE5B4] text-[#2D3436] hover:border-[#FF8E8E] hover:bg-[#FFF5F5]"
                   }`}
                 >
-                  {c.character}
+                  {entry.character}
                 </button>
               ))}
             </div>
@@ -144,27 +194,54 @@ export default function CharacterExploration({ character, grade, onCharacterChan
         </div>
       )}
 
-      {/* Main Character Display - Compact */}
-      <div className="text-center bg-white rounded-2xl p-4 md:p-6 shadow-[0_4px_16px_rgba(0,0,0,0.06)]">
-        <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8">
-          {/* Character */}
-          <div className="text-[100px] md:text-[120px] hanzi-display leading-none text-[#2D3436]">
-            {char.character}
+      {/* Main Character Display */}
+      <div className="bg-white rounded-2xl p-4 md:p-6 shadow-[0_4px_16px_rgba(0,0,0,0.06)]">
+        <div className="flex flex-col items-center">
+          {/* Character rendered using strokes - clickable */}
+          <div 
+            onClick={() => hasStrokeData && setShowStrokeAnimation(!showStrokeAnimation)}
+            className={`${hasStrokeData ? 'cursor-pointer' : ''}`}
+            title={hasStrokeData ? "點擊顯示筆順動畫" : ""}
+          >
+            <StrokeAnimation
+              strokeVectors={data.strokeVectors}
+              character={data.character}
+              size={220}
+              showAnimation={showStrokeAnimation}
+              onAnimationEnd={() => setShowStrokeAnimation(false)}
+            />
           </div>
-          
-          {/* Info */}
-          <div className="text-center md:text-left space-y-2">
-            <div className="jyutping text-[#7EC8E3] text-xl">{char.jyutping}</div>
+
+
+          {/* Character Info */}
+          <div className="mt-4 text-center">
+            <div className="jyutping text-[#7EC8E3] text-2xl">{data.jyutping}</div>
+            {data.pinyin && (
+              <button
+                onClick={() => speakMandarin(data.character)}
+                className="text-sm text-[#B2BEC3] mt-1 hover:text-[#7A8288] transition-colors
+                         inline-flex items-center gap-1 group"
+                title="聽普通話發音"
+              >
+                <span className="text-xs opacity-60 group-hover:opacity-100">🔊</span>
+                普通話：{data.pinyin}
+              </button>
+            )}
+          </div>
+
+          {/* Character Details Row */}
+          <div className="mt-4 flex flex-wrap items-center justify-center gap-4">
             <div className="text-base text-[#636E72]">
-              {char.strokeCount} 筆 • 部首：<span className="hanzi-display text-xl">{char.radical}</span>
+              {data.strokeCount} 筆 • 部首：
+              <span className="hanzi-display text-xl">{data.radical}</span>
             </div>
             <button
-              onClick={() => speakCantonese(char.character)}
+              onClick={() => speakCantonese(data.character)}
               className="px-6 py-2 bg-gradient-to-br from-[#FF6B6B] to-[#E55555] text-white 
                        rounded-full text-base font-semibold
                        shadow-[0_4px_12px_rgba(255,107,107,0.3)]
                        hover:scale-105 active:scale-95 transition-all
-                       flex items-center gap-2 mx-auto md:mx-0"
+                       flex items-center gap-2"
             >
               <span className="text-lg">🔊</span> 聽發音
             </button>
@@ -172,97 +249,40 @@ export default function CharacterExploration({ character, grade, onCharacterChan
         </div>
       </div>
 
-      {/* Meanings & Tags - Combined row */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+      {/* Quick Word Preview */}
+      {totalWords > 0 && (
         <div className="bg-white rounded-2xl p-4 shadow-[0_4px_16px_rgba(0,0,0,0.06)]">
-          <h3 className="text-base font-bold mb-2 text-[#2D3436] flex items-center gap-2">
-            <span className="text-lg">📖</span> 意思
+          <h3 className="text-base font-bold mb-3 text-[#2D3436] flex items-center gap-2">
+            <span className="text-lg">📝</span> 常用詞語
           </h3>
-          <ul className="space-y-1">
-            {char.meanings.map((meaning, idx) => (
-              <li key={idx} className="text-base text-[#4A4A4A] flex items-center gap-2">
-                <span className="w-1.5 h-1.5 bg-[#FF6B6B] rounded-full flex-shrink-0"></span>
-                {meaning}
-              </li>
+          <div className="flex flex-wrap gap-2">
+            {[
+              ...(data.stage1Words?.slice(0, 6) || []),
+              ...(data.stage2Words?.slice(0, 4) || []),
+            ].map((word, idx) => (
+              <button
+                key={`${word.word}-${idx}`}
+                onClick={() => speakCantonese(word.word)}
+                className="px-3 py-2 bg-[#FFFBF5] border-2 border-[#FFE5B4] rounded-xl
+                         text-lg hanzi-display text-[#2D3436]
+                         hover:border-[#FF8E8E] hover:bg-[#FFF5F5] transition-colors"
+              >
+                {word.word}
+              </button>
             ))}
-          </ul>
+          </div>
         </div>
+      )}
 
-        {char.tags.length > 0 && (
-          <div className="bg-white rounded-2xl p-4 shadow-[0_4px_16px_rgba(0,0,0,0.06)]">
-            <h3 className="text-base font-bold mb-2 text-[#2D3436] flex items-center gap-2">
-              <span className="text-lg">🏷️</span> 分類
-            </h3>
-            <div className="flex flex-wrap gap-2">
-              {char.tags.map((tag, idx) => (
-                <span
-                  key={idx}
-                  className="px-3 py-1.5 bg-[#F0F9FF] text-[#5BB8D8] rounded-full text-sm font-medium border border-[#A5DBF0]"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-          </div>
-        )}
-      </div>
-
-      {/* Components/Decomposition & Examples - Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-        {decomposition && (
-          <div className="bg-white rounded-2xl p-4 shadow-[0_4px_16px_rgba(0,0,0,0.06)]">
-            <h3 className="text-base font-bold mb-2 text-[#2D3436] flex items-center gap-2">
-              <span className="text-lg">🧩</span> 部件拆解
-            </h3>
-            <div className="flex gap-2 flex-wrap items-center justify-center">
-              {decomposition.components.map((component, idx) => (
-                <span key={idx} className="flex items-center">
-                  <span className="text-2xl px-3 py-2 bg-[#FFFBEB] rounded-xl border-2 border-[#FFE566] hanzi-display">
-                    {component}
-                  </span>
-                  {idx < decomposition.components.length - 1 && (
-                    <span className="text-xl text-[#7A8288] mx-1">+</span>
-                  )}
-                </span>
-              ))}
-              <span className="text-xl text-[#7A8288] mx-1">=</span>
-              <span className="text-2xl px-3 py-2 bg-[#F0FFF4] rounded-xl border-2 border-[#B8E8C4] hanzi-display">
-                {char.character}
-              </span>
-            </div>
-            <div className="text-sm text-[#636E72] text-center mt-2">
-              結構：<span className="font-semibold text-[#98D8AA]">{decomposition.structureType}</span>
-            </div>
-          </div>
-        )}
-
-        {examples.length > 0 && (
-          <div className="bg-white rounded-2xl p-4 shadow-[0_4px_16px_rgba(0,0,0,0.06)]">
-            <h3 className="text-base font-bold mb-2 text-[#2D3436] flex items-center gap-2">
-              <span className="text-lg">✏️</span> 例句
-            </h3>
-            <div className="space-y-2">
-              {examples.slice(0, 2).map((example, idx) => (
-                <div key={idx} className="p-3 bg-[#FFF5F5] rounded-xl border border-[#FFE5E5]">
-                  <div className="flex items-center justify-between gap-2">
-                    <div className="flex-1 min-w-0">
-                      <div className="text-lg text-[#2D3436] hanzi-sentence truncate">{example.sentence}</div>
-                      <div className="text-[#7EC8E3] text-sm font-mono truncate">{example.jyutping}</div>
-                    </div>
-                    <button
-                      onClick={() => speakCantonese(example.sentence)}
-                      className="px-3 py-2 bg-[#7EC8E3] text-white rounded-full
-                               hover:bg-[#5BB8D8] transition-colors flex-shrink-0"
-                    >
-                      🔊
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-      </div>
+      {/* Related Words Full Section */}
+      <RelatedWords
+        stage1Words={data.stage1Words}
+        stage2Words={data.stage2Words}
+        fourCharacterPhrases={data.fourCharacterPhrases}
+        classicalPhrases={data.classicalPhrases}
+        multiCharacterIdioms={data.multiCharacterIdioms}
+        properNouns={data.properNouns}
+      />
     </div>
   );
 }

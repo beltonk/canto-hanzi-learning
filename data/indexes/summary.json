@@ -1,8 +1,8 @@
 {
   "totalCharacters": 4762,
   "lexicalListsHKCount": 3129,
-  "stage1Count": 2157,
-  "stage2Count": 2477,
+  "stage1WordCount": 5018,
+  "stage2WordCount": 4856,
   "strokeCounts": [
     {
       "strokes": 1,
@@ -130,6 +130,10 @@
     }
   ],
   "radicalCounts": [
+    {
+      "strokes": 0,
+      "radicalCount": 2
+    },
     {
       "strokes": 1,
       "radicalCount": 6

@@ -8,8 +8,7 @@ import CharacterExploration from "@/app/components/learning/CharacterExploration
 function ExploreContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const char = searchParams.get("char") || "人";
-  const grade = (searchParams.get("grade") as "KS1" | "KS2") || "KS1";
+  const char = searchParams.get("char") || undefined;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#FFECD2] via-[#FFE4C4] to-[#FFD8B8]">
@@ -29,27 +28,17 @@ function ExploreContent() {
               認識漢字
             </h1>
           </div>
-          <select
-            value={grade}
-            onChange={(e) => {
-              const newGrade = e.target.value as "KS1" | "KS2";
-              router.push(`/learn/explore?char=${char}&grade=${newGrade}`);
-            }}
-            className="px-3 py-2 text-sm border-2 border-[#FFE5B4] rounded-xl 
-                     bg-white text-[#2D3436]
-                     focus:ring-2 focus:ring-[#FF6B6B]/30 focus:border-[#FF6B6B]
-                     cursor-pointer"
-          >
-            <option value="KS1">第一學習階段</option>
-            <option value="KS2">第二學習階段</option>
-          </select>
+          <div className="text-sm text-[#7A8288]">
+            《香港小學學習字詞表》收錄字
+          </div>
         </div>
 
         <CharacterExploration 
-          character={char} 
-          grade={grade}
+          character={char}
           onCharacterChange={(newChar) => {
-            router.push(`/learn/explore?char=${newChar}&grade=${grade}`);
+            const params = new URLSearchParams();
+            params.set("char", newChar);
+            router.push(`/learn/explore?${params.toString()}`);
           }}
         />
       </div>

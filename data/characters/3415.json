@@ -1,0 +1,698 @@
+{
+  "id": "3415",
+  "character": "花",
+  "sourceUrl": "https://www.edbchinese.hk/lexlist_ch/result.jsp?id=3415&sortBy=ks&jpC=lshk",
+  "radical": "艸",
+  "strokeCount": 8,
+  "jyutping": "faa1",
+  "pinyin": "huɑ̄",
+  "strokeOrderImages": [
+    "https://www.edbchinese.hk/EmbziciwebRes/stkdemo_js/3001-4000/3415.html?lang=ch"
+  ],
+  "strokeVectors": [
+    {
+      "strokeNumber": 1,
+      "segment": 1,
+      "frame": 24,
+      "pathData": "AlzCNQlHkxAAhoQAAhtCbAAQBEAACWAaQDVAVA5AAQBiAAETgaIAggGQJiBpnHGrQh+A0g/AnQiKBniCANIgOABQiBAAkUjtg",
+      "transform": {
+        "x": 242.6,
+        "y": 301.1
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 1,
+      "segment": 2,
+      "frame": 27,
+      "pathData": "AqFC/QlHkyAAhnQAAhtCbAAQBEAACWAaQDVAUA5AAQBjAAESgaIAggFIKOhyQGvB8lME5QmDB5jTBXQh+A0g/AoQiJBmiCANIgNABQiDAAkUjsg",
+      "transform": {
+        "x": 270,
+        "y": 296.1
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 1,
+      "segment": 3,
+      "frame": 30,
+      "pathData": "AvHEBQlHkxAAhoQAAhtCcAAQBDAACXAaQDVAVA5AAQBiAAEUgaIAfgGIKNhxIAGgBIAvgIIAwgJIAHgCIAYgFIIShmIAjgHQFaBwkcECIgPAEIlfBsIiHAoIifAxQmDB5jRBXQh/A0g+AnQiLBniCANIgNABQiDAAkUjtg",
+      "transform": {
+        "x": 302.1,
+        "y": 289.5
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 1,
+      "segment": 4,
+      "frame": 33,
+      "pathData": "A0ME3QlHkyAAhnQAAhtCcAAQBDAACXAaQDVAVA5AAQBiAAEUgaIAfgGIKNhxIAGgBIAvgJIAwgJIAHgBIAYgFIIShmIAjgHQFFhABAgOQB1gaCkgDQClgEAFB2QAEB2j6BPQiYAwl8B1IgPAFIlfBrIiHApIifAxQmCB5jSBXQh+Azg/AoQiLBniCANIgNABQiDAAkUjtg",
+      "transform": {
+        "x": 334.6,
+        "y": 284.1
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 2,
+      "segment": 1,
+      "frame": 48,
+      "pathData": "Ai6E7QhYjChKiBQiFjJgDh+QgEh+EAACQD+ACEgCOQCmBeAABtQAABjAJB8QiFFdjcAAQiMAAiyiRg",
+      "transform": {
+        "x": 353.1,
+        "y": 166.4
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 2,
+      "segment": 2,
+      "frame": 51,
+      "pathData": "AgSIuQhrkWhdjNQhXjChKiCQiFjJgEh+QgDh+D/ACQD/ACEgCOQCmBeAABtQAABkAJB9QAQDmAvE+QhnEZimAAQh2AAiUiPg",
+      "transform": {
+        "x": 356.2,
+        "y": 190.5
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 2,
+      "segment": 3,
+      "frame": 54,
+      "pathData": "ABuNsIgribIgNgxIgMgtIhjlAIgFgNIgOgiQhrkVhcjOQhYjChKiCQiFjJgDh+QgEh+D/ACQEAACEfCOQCmBeAABtQAABjAJB9QAQDoAvE9IAGAkIAHAvIAZCNIA5DiQALBXAJBQQhWEEiTAAQhlAAiCh7g",
+      "transform": {
+        "x": 362,
+        "y": 220.3
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 2,
+      "segment": 4,
+      "frame": 57,
+      "pathData": "AG1T2Qi2gKhtnEIgih6IgWhRIgqicIgNgwIgNguIhjk/IgFgOIgNghQhrkVhdjOQhXjChLiDQiFjJgDh+QgEh+EAADQD/ACEfCOQCmBdAABtQAABkAJB9QARDoAvE9IAFAkIAHAvIAZCNIA5DiQAMBWAJBRIAJBVQAaDtAECxQADEvidAAIgDAAg",
+      "transform": {
+        "x": 364,
+        "y": 247.4
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 3,
+      "segment": 1,
+      "frame": 72,
+      "pathData": "AmMCFQjVhoAAg9QAAhEC1gPQELgvE7g8IAxgKICPgeQHhB9mKEQIg3AMQjFAshvApQhNAfgfAAQhjAAkDiCg",
+      "transform": {
+        "x": 604.8,
+        "y": 258.8
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 3,
+      "segment": 2,
+      "frame": 75,
+      "pathData": "Ar5DSQjVhoAAg+QAAhDC1gPQELgvE8g8IAxgKICPgeICRgeIJah8QHWCSmsEeIitAVIgfAEQkkAxjPAtIg3AMQjEAshvApQhOAfgfAAQhjAAkDiCg",
+      "transform": {
+        "x": 641.3,
+        "y": 251.1
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 3,
+      "segment": 3,
+      "frame": 78,
+      "pathData": "AxpEjQjVhoAAg/QAAhDC2gQQELgtE7g9IAxgKICQgdICSgeIJZh8IA6gMQIBhqC8grQG/DvnFEbQknAVmgAyIiuAVIgeADQkkAxjPAtIg3AMQjFAthvAoQhOAfgfAAQhiAAkEiBg",
+      "transform": {
+        "x": 678.1,
+        "y": 243
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 3,
+      "segment": 4,
+      "frame": 81,
+      "pathData": "A3mE3QjVhoAAg/QAAhDC2gQQELguE7g8IAxgKICQgdICSgeIJah8IA5gMQIBhqC8grIBUgUQBzgYBWAEQBXAFEhB3QFCB7ABB2QABB1jSAoQhxANmYANQhzAEiRAKQknAWmgAxIitAVIgeADQklAyjPAsIg3ANQjFAshvAoQhOAfgfAAQhiAAkEiBg",
+      "transform": {
+        "x": 716.2,
+        "y": 241
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 4,
+      "segment": 1,
+      "frame": 96,
+      "pathData": "AmlC5QADg4gBgmQgLjjg+jGQgjjQDPgKQDPgKEiCxQFCDPAAChQAAA+iBDCQgkBJgsBiQi/CPiVAAQjwAAiDlwg",
+      "transform": {
+        "x": 710,
+        "y": 129.6
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 4,
+      "segment": 2,
+      "frame": 99,
+      "pathData": "AoKJHQBtoJAQjlQADg3gBgnQgKjjg/jHQgjjPDPgKQDPgKEiCwQFCDQAAChQAAA+iBDCQgkBKgsBgQhSC4hsEOIhgDzQipCYh7AAQi0AAhOlDg",
+      "transform": {
+        "x": 707.6,
+        "y": 164.9
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 4,
+      "segment": 3,
+      "frame": 102,
+      "pathData": "Ap3P8QAxigApibIAdhWQBJkjANg/IANg/QBtoIAQjmQADg4gBgmQgKjjg/jHQgjjQDPgKQDOgJEjCwQFCDQAAChQAAA+iBDCQgkBJgsBiQhRC4htEMIhgD0IggBTIgKAbIg0BwQiLFOiXEJQhxBdhSAAQiLAAgykLg",
+      "transform": {
+        "x": 696.7,
+        "y": 203
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 4,
+      "segment": 4,
+      "frame": 105,
+      "pathData": "AsAXsQCimlB4mJQAwihAqibIAdhWQBJkjANg9IANhAQBtoJAPjmQAEg3gCgnQgKjjg/jHQgjjQDQgJQDOgKEiCwQFCDQAAChQAAA+iBDCQgkBKgrBhQhSC4hsEOIhgDyIggBTIgLAbIgzBwQiMFOiXEJQjGFZjaDjQirCfg5AAQgrAAAWhag",
+      "transform": {
+        "x": 682.3,
+        "y": 234.9
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 5,
+      "segment": 1,
+      "frame": 120,
+      "pathData": "AoPD5QDpmjAAl0QAAjACCAAQByAADJCLQGDEDgEB2QgFB2hsBmQh3CCiHDFQhZB/iFCtQipBqhuAAQjpAAAonmg",
+      "transform": {
+        "x": 380.2,
+        "y": 460.8
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 5,
+      "segment": 2,
+      "frame": 123,
+      "pathData": "As5LyQFCmgEFm8IAcgxQDnmjAAl1QAAjACCAAQByAADKCLQGEEDgFB2QgFB3hsBmQh3CCiHDFQhZB+iFCtQiSC8jGDyQiGCjifC8IhFBRIgMAOQhzAohQAAQj6AABRmCg",
+      "transform": {
+        "x": 349,
+        "y": 501.3
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 5,
+      "segment": 3,
+      "frame": 126,
+      "pathData": "AxFRiIB1h+QD5kRDdkfQFCmhEEm8IAcgxQDomjAAl1QAAjACCAAQByAADKCLQGEEDgFB3QgFB2hrBmQh4CCiHDFQhZCAiFCsQiSC8jHDyQiGCjidC7IhFBSIgNAOQidCtiOCHQiyCrjHCgQh/AmhQAAQjuAACqlRg",
+      "transform": {
+        "x": 317.1,
+        "y": 533.1
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 5,
+      "segment": 4,
+      "frame": 129,
+      "pathData": "A5gbUQISm9H8oeIB1h+QD5kSDdkeQFBmgEFm9IAcgxQDomjAAl1QAAjACCAAQByAADKCLQGEEDgFB2QgEB3hsBmQh4CCiHDFQhZCAiFCsQiSC9jHDxQiGCjieC7IhFBRIgNAPQidCtiOCGQiwCsjICfQlpEimyD5QjQB7i8BIQhVAbgmAAQg+AAA/hIg",
+      "transform": {
+        "x": 267.2,
+        "y": 569.3
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 6,
+      "segment": 1,
+      "frame": 144,
+      "pathData": "AjqHbQgMozg6irQhcprGAEMIA3BFQEYFmAACCQAAAqg5DOQgXBfgPC/QhzDThyAAQh0AAh1jZg",
+      "transform": {
+        "x": 341.5,
+        "y": 627.8
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 6,
+      "segment": 2,
+      "frame": 147,
+      "pathData": "Aj1OEQAMjFACjaQABjtgEjAQgMozg6isQhcprGAENIA3BFQEYFmAACBQAAAqg5DQQgXBfgPC+QgYEtgFIfQh5DNhtAAQhwAAhmjTg",
+      "transform": {
+        "x": 341.5,
+        "y": 669.7
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 6,
+      "segment": 3,
+      "frame": 150,
+      "pathData": "Al1VRQCNmWAmpVQANjFABjZQABjtgDjAQgMo0g7isQhcprF/ENIA4BFQEYFmAACBQAAAqg5DQQgXBfgPC/QgYEtgEIeIgBEKIgEMAQizD/iWAAQiiAAiAkkg",
+      "transform": {
+        "x": 336.3,
+        "y": 723.9
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 6,
+      "segment": 4,
+      "frame": 153,
+      "pathData": "EgAOAhxQhpgOisl2Qirl3AXiWQAIhpBljdIAZhFQCNmWAmpUQANjFABjaQACjtgEjAQgMo0g7irQhcprGAEMIA3BFQEYFmAACCQAAAqg5DPQgWBfgQC/QgXEugFIeIgBEJIgFQBQAKGDh9FwQhoEDhiAAIgKAAg",
+      "transform": {
+        "x": 329.5,
+        "y": 774.7
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 7,
+      "segment": 1,
+      "frame": 168,
+      "pathData": "ApeAxQC7jjgKihQgskfGWBdQGXBeDWC7QDkDelMB/Qh3AzkGDOQhXBKhoBTQiaAthsAAQltAACPn7g",
+      "transform": {
+        "x": 824.3,
+        "y": 535.8
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 7,
+      "segment": 2,
+      "frame": 171,
+      "pathData": "AtyGYQFilHDRkNIAGgHQC7jkgKihQgtkfGWBeQGXBdDXC7QDkDelMCAQh3AzkGDNQhYBKhoBTIgaAVQlZEKlBDXQiBAhhZAAQkxAACjmJg",
+      "transform": {
+        "x": 795,
+        "y": 560.3
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 7,
+      "segment": 3,
+      "frame": 174,
+      "pathData": "AygLJQEtjyDwjZIBIhCQFilGDRkOIAGgHQC6jkgKihQgskfGWBdQGXBdDXC8QDkDelMCAQh3AzkGDOQhYBKhoBSIgaAVQlaEJlADYIhTA2QlbDkk8CoQhdAYg/AAQjoAAChk1g",
+      "transform": {
+        "x": 763.9,
+        "y": 582.3
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 7,
+      "segment": 4,
+      "frame": 177,
+      "pathData": "A1kPBQEqjdD+jMQEtjxDwjaIBIhBQFhlHDRkOIAGgGQC7jkgKiiQgtkeGXBdQGXBdDXC7QDkDelMCAQh3A0kGDOQhYBKhoBTIgaAVQlaEIlBDXIhTA3QlaDkk8CoQmjDeluB1Qh8Alg2AAQiKAAFCjtg",
+      "transform": {
+        "x": 728.3,
+        "y": 600
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 8,
+      "segment": 1,
+      "frame": 192,
+      "pathData": "AlcMmIABgiQAZp6AAnHQAAkLg+jDQhJiFAQhXQAQhWCSADQCTADD+CSQFDDTAACzQAABDhTDrQg+EqhNMFQiMD9iLAAQiSAAiSkVg",
+      "transform": {
+        "x": 573.3,
+        "y": 537.4
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 8,
+      "segment": 2,
+      "frame": 195,
+      "pathData": "AlVcPQgmj+AAk8QAAnAAfuNIABgiQAZp6AAnJQAAkKg+jEQhJiFAQhWQAQhWCSADQCTADD+CSQFDDSAAC0QAABChTDsQg+ErhNMFQgTC4gTDUIgBADQgKCugFC3IgGDIQgDC5AADAQAADmAjCvQh/FwicAAQh2AAiHjLg",
+      "transform": {
+        "x": 573.3,
+        "y": 630.1
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 8,
+      "segment": 3,
+      "frame": 198,
+      "pathData": "EADVAnDQqciuk4mgQi8j8hFm+Qgnj9AAk8QAAnAAguNIABgiQAZp6AAnJQAAkKg/jEQhIiFAQhWQAQhWCSADQCTACD/CTQFDDSAAC0QAABChTDsQg+ErhNMFQgTC5gUDUIAAADQgKCugGC2IgFDIQgEC4AADBQAADlAkCvQAnDBBRB/QDfFNGfCBQDQBIGKAYQI0GXqsETQkOgnkOhEg",
+      "transform": {
+        "x": 641.6,
+        "y": 689.6
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 8,
+      "segment": 4,
+      "frame": 201,
+      "pathData": "EgCHAoWQkOgmkOhFQqeiuk3mgQi9j8hEm9Qgnj+AAk8QAAnAAfuNIABgiQAZp6AAnJQAAkKg+jEQhJiFAQhWQAQhWCTADQCSADD/CSQFDDSAAC0QAABChTDsQg9ErhOMFQgTC5gTDUIAAADQgKCugGC2IgFDIQgEC4AADBQAADmAjCvQAnDABRB/QDgFNGgCBQDPBIGKAYQB7AICOADQJTALFnh3QCcg6B8hMQN8DbpUJOQpYCXqBAAQlRAAlQgvg",
+      "transform": {
+        "x": 730.6,
+        "y": 692
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 8,
+      "segment": 5,
+      "frame": 204,
+      "pathData": "EgHlAoWQkOgmkNhFQqeiuk3mgQi9j8hFm9Qgmj+AAk8QAAnAAfuNIABgiQAZp6AAnJQAAkKg+jEQhJiFAQhWQAQhWCSADQCTADD/CSQFDDSAAC0QAABChTDsQg+ErhNMFQgTC5gTDUIgBADQgKCugFC2IgGDIQgDC4AADBQAADmAjCvQAnDABRB/QDgFNGgCBQDPBIGKAYQB8AICOADQJSALFnh3QCcg6B8hMQFvjgBal3ICSrjQAsi3AqACQApACA8ERIBDFMQBOG0BwDQQBvCsA7CpQA7CpigCzQjKDInwCbQg9ARg9AQQpYCXqBAAQlQAAlSgvg",
+      "transform": {
+        "x": 765.5,
+        "y": 692
+      },
+      "color": "#000000"
+    }
+  ],
+  "inLexicalListsHK": true,
+  "stage1Words": [
+    {
+      "word": "花",
+      "jyutping": "faa1",
+      "pinyin": "hu",
+      "stage": "1"
+    },
+    {
+      "word": "花木",
+      "jyutping": "faa1muk6",
+      "pinyin": "huɑ̄mù",
+      "stage": "1"
+    },
+    {
+      "word": "花卉",
+      "jyutping": "faa1wai2",
+      "pinyin": "huɑ̄huì",
+      "stage": "1"
+    },
+    {
+      "word": "花市",
+      "jyutping": "faa1si5",
+      "pinyin": "huɑ̄shì",
+      "stage": "1"
+    },
+    {
+      "word": "花生",
+      "jyutping": "faa1sang1",
+      "pinyin": "huɑ̄shēng",
+      "stage": "1"
+    },
+    {
+      "word": "花白",
+      "jyutping": "faa1baak6",
+      "pinyin": "huɑ̄bɑ́i",
+      "stage": "1"
+    },
+    {
+      "word": "花朵",
+      "jyutping": "faa1do2",
+      "pinyin": "huɑ̄duǒ",
+      "stage": "1"
+    },
+    {
+      "word": "花盆",
+      "jyutping": "faa1pun4",
+      "pinyin": "huɑ̄pén",
+      "stage": "1"
+    },
+    {
+      "word": "花圃",
+      "jyutping": "faa1pou2",
+      "pinyin": "huɑ̄pǔ",
+      "stage": "1"
+    },
+    {
+      "word": "花粉",
+      "jyutping": "faa1fan2",
+      "pinyin": "huɑ̄fěn",
+      "stage": "1"
+    },
+    {
+      "word": "花紋",
+      "jyutping": "faa1man4",
+      "pinyin": "huɑ̄wén",
+      "stage": "1"
+    },
+    {
+      "word": "花草",
+      "jyutping": "faa1cou2",
+      "pinyin": "huɑ̄cɑ̌o",
+      "stage": "1"
+    },
+    {
+      "word": "花瓶",
+      "jyutping": "faa1ping4",
+      "pinyin": "huɑ̄píng",
+      "stage": "1"
+    },
+    {
+      "word": "花園",
+      "jyutping": "faa1jyun4",
+      "pinyin": "huɑ̄yuɑ́n",
+      "stage": "1"
+    },
+    {
+      "word": "花樣",
+      "jyutping": "faa1joeng6",
+      "pinyin": "huɑ̄yɑ̀ng",
+      "stage": "1"
+    },
+    {
+      "word": "花燈",
+      "jyutping": "faa1dang1",
+      "pinyin": "huɑ̄dēng",
+      "stage": "1"
+    },
+    {
+      "word": "花蕊",
+      "jyutping": "faa1jeoi5",
+      "pinyin": "huɑ̄ruǐ",
+      "stage": "1"
+    },
+    {
+      "word": "花錢",
+      "jyutping": "faa1cin4",
+      "pinyin": "huɑ̄qiɑ́n",
+      "stage": "1"
+    },
+    {
+      "word": "花瓣",
+      "jyutping": "faa1faan6/faa1baan6",
+      "pinyin": "huɑ̄bɑ̀n",
+      "stage": "1"
+    },
+    {
+      "word": "天花板",
+      "jyutping": "tin1faa1baan2",
+      "pinyin": "tiɑ̄nhuɑ̄bɑ̌n",
+      "stage": "1"
+    },
+    {
+      "word": "火花",
+      "jyutping": "fo2faa1",
+      "pinyin": "huǒhuɑ̄",
+      "stage": "1"
+    },
+    {
+      "word": "年花",
+      "jyutping": "nin4faa1",
+      "pinyin": "niɑ́nhuɑ̄",
+      "stage": "1"
+    },
+    {
+      "word": "桃花",
+      "jyutping": "tou4faa1",
+      "pinyin": "tɑ́ohuɑ̄",
+      "stage": "1"
+    },
+    {
+      "word": "浪花",
+      "jyutping": "long6faa1",
+      "pinyin": "lɑ̀nghuɑ̄",
+      "stage": "1"
+    },
+    {
+      "word": "梅花",
+      "jyutping": "mui4faa1",
+      "pinyin": "méihuɑ̄",
+      "stage": "1"
+    },
+    {
+      "word": "荷花",
+      "jyutping": "ho4faa1",
+      "pinyin": "héhuɑ̄",
+      "stage": "1"
+    },
+    {
+      "word": "雪花",
+      "jyutping": "syut3faa1",
+      "pinyin": "xuěhuɑ̄",
+      "stage": "1"
+    },
+    {
+      "word": "棉花",
+      "jyutping": "min4faa1",
+      "pinyin": "miɑ́n•huɑ̄",
+      "stage": "1"
+    },
+    {
+      "word": "菊花",
+      "jyutping": "guk1faa1",
+      "pinyin": "júhuɑ̄",
+      "stage": "1"
+    },
+    {
+      "word": "開花",
+      "jyutping": "hoi1faa1",
+      "pinyin": "kɑ̄ihuɑ̄",
+      "stage": "1"
+    },
+    {
+      "word": "煙花",
+      "jyutping": "jin1faa1",
+      "pinyin": "yɑ̄nhuɑ̄",
+      "stage": "1"
+    },
+    {
+      "word": "蓮花",
+      "jyutping": "lin4faa1",
+      "pinyin": "liɑ́nhuɑ̄",
+      "stage": "1"
+    },
+    {
+      "word": "鮮花",
+      "jyutping": "sin1faa1",
+      "pinyin": "xiɑ̄nhuɑ̄",
+      "stage": "1"
+    }
+  ],
+  "stage2Words": [
+    {
+      "word": "花紅",
+      "jyutping": "faa1hung4",
+      "pinyin": "huɑ̄hóng",
+      "stage": "2"
+    },
+    {
+      "word": "花絮",
+      "jyutping": "faa1seoi5",
+      "pinyin": "huɑ̄xù",
+      "stage": "2"
+    },
+    {
+      "word": "花費",
+      "jyutping": "faa1fai3",
+      "pinyin": "huɑ̄fèi",
+      "stage": "2"
+    },
+    {
+      "word": "五花八門",
+      "jyutping": "ng5faa1baat3mun4",
+      "pinyin": "wǔ huɑ̄ bɑ̄ mén",
+      "stage": "2"
+    },
+    {
+      "word": "百花齊放",
+      "jyutping": "baak3faa1cai4fong3",
+      "pinyin": "bɑ̌i huɑ̄ qí fɑ̀ng",
+      "stage": "2"
+    },
+    {
+      "word": "眼花繚亂",
+      "jyutping": "ngaan5faa1liu4lyun6",
+      "pinyin": "yɑ̌n huɑ̄ liɑ́o luɑ̀n",
+      "stage": "2"
+    },
+    {
+      "word": "錦上添花",
+      "jyutping": "gam2soeng6tim1faa1",
+      "pinyin": "jǐn shɑ̀ng tiɑ̄n huɑ̄",
+      "stage": "2"
+    },
+    {
+      "word": "繡花",
+      "jyutping": "sau3faa1",
+      "pinyin": "xiùhuɑ̄",
+      "stage": "2"
+    },
+    {
+      "word": "櫻花",
+      "jyutping": "jing1faa1",
+      "pinyin": "yīnghuɑ̄",
+      "stage": "2"
+    },
+    {
+      "word": "蘭花",
+      "jyutping": "laan4faa1",
+      "pinyin": "lɑ́nhuɑ̄",
+      "stage": "2"
+    }
+  ],
+  "fourCharacterPhrases": [
+    {
+      "word": "心花怒放"
+    },
+    {
+      "word": "走馬看花"
+    },
+    {
+      "word": "奇花異卉"
+    },
+    {
+      "word": "奇花異草"
+    },
+    {
+      "word": "明日黃花"
+    },
+    {
+      "word": "花枝招展"
+    },
+    {
+      "word": "花花綠綠"
+    },
+    {
+      "word": "花言巧語"
+    },
+    {
+      "word": "春暖花開"
+    },
+    {
+      "word": "鳥語花香"
+    },
+    {
+      "word": "曇花一現"
+    },
+    {
+      "word": "頭昏眼花"
+    }
+  ],
+  "classicalPhrases": [
+    {
+      "word": "落花",
+      "jyutping": "lok6faa1",
+      "pinyin": "luòhuɑ̄"
+    }
+  ],
+  "multiCharacterIdioms": [
+    {
+      "word": "各花入各眼"
+    }
+  ],
+  "properNouns": [
+    {
+      "word": "花木蘭",
+      "jyutping": "faa1muk6laan4",
+      "pinyin": "Huɑ̄ Mùlɑ́n"
+    }
+  ],
+  "transliteratedWords": []
+}

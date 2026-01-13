@@ -1,0 +1,513 @@
+{
+  "id": "0265",
+  "character": "光",
+  "sourceUrl": "https://www.edbchinese.hk/lexlist_ch/result.jsp?id=0265&sortBy=ks&jpC=lshk",
+  "radical": "儿",
+  "strokeCount": 6,
+  "jyutping": "gwong1",
+  "pinyin": "guɑ̄ng",
+  "strokeOrderImages": [
+    "https://www.edbchinese.hk/EmbziciwebRes/stkdemo_js/0001-1000/0265.html?lang=ch"
+  ],
+  "strokeVectors": [
+    {
+      "strokeNumber": 1,
+      "segment": 1,
+      "frame": 24,
+      "pathData": "AhpC0Qgog2AAhjQAAh3A0hHQAzhGBUgBQAwAAAcAOIAAA1QgkgTgnABQg5gBgkAzQgjA0gBBYIABAAQAhg+BFAAQA7AAAjAmQAjAmAAA/QAABDgpArQgoAqg/AAQhEAAgng2gAg7AQQgYAaAAAlQAAAsAYAgQAYAgAnAAQAlAAAYgbQAXgcAAgsQAAgugWgaQgWgZgpgBQgmABgYAZg",
+      "transform": {
+        "x": 76.5,
+        "y": 62.8
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 2,
+      "segment": 1,
+      "frame": 24,
+      "pathData": "AlRHEQAKsZkYkBQgRlRJyCxQJUD7AED6QAkAqicCKQg4DDgkDPQj7Hvi+AAQilAAh5lwg",
+      "transform": {
+        "x": 535,
+        "y": 185.9
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 2,
+      "segment": 2,
+      "frame": 27,
+      "pathData": "AlbRgQgGqLAQrkQAKsakYkAQgRlSJyCyQJUD6AED6QAkAqicCKQg4DEgkDPQhLGsAHHeIgKD8QjoMQi2AAQiHgBhumng",
+      "transform": {
+        "x": 535,
+        "y": 258.2
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 2,
+      "segment": 3,
+      "frame": 30,
+      "pathData": "AkpfYQgqqVgIseQgGqJAQrmQAKsZkYkBQgRlRJyCxQJUD6AED6QAkAricCJQg4DEgkDQQhLGsAHHeIhQeUQicDsihAAQhuAAhwhqg",
+      "transform": {
+        "x": 535,
+        "y": 315.3
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 3,
+      "segment": 1,
+      "frame": 48,
+      "pathData": "AhCEmImaq7QhWi/NDEPQBwAaBbArQA1LlkAAAQiCAAjRi/g",
+      "transform": {
+        "x": 345.8,
+        "y": 343.7
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 3,
+      "segment": 2,
+      "frame": 51,
+      "pathData": "Aj/B8Imaq7QhXi/NEEPQBvAaBbArQFTChAxGPQAJIKlTgCIgTABQkKAAk6oTg",
+      "transform": {
+        "x": 364.7,
+        "y": 360.7
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 4,
+      "segment": 1,
+      "frame": 72,
+      "pathData": "AqcBqQEAlEBnkRQBzi5H4GBQH5FxiaCWIkiCDQnrDBkKAAQmTAAB5m+g",
+      "transform": {
+        "x": 766.2,
+        "y": 275.2
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 4,
+      "segment": 2,
+      "frame": 75,
+      "pathData": "AyAMfQJboKFSmtQD/lGBnkQQBzi6H5GCQH4FyiZCWIkiCCQ40LHlIAAQgrAAgVgMg",
+      "transform": {
+        "x": 720.5,
+        "y": 301.2
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 5,
+      "segment": 1,
+      "frame": 96,
+      "pathData": "AskCiQpTkLF3hSIVsh8QUrAPtRF4QnUBYnQByQg8AehaAAQjLAAlliWg",
+      "transform": {
+        "x": 295.5,
+        "y": 553.9
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 5,
+      "segment": 2,
+      "frame": 99,
+      "pathData": "A39DjQpTkLF3hSMArZgD4QTkgwobFWQs1BHsnCWQnUBYnQByQg8AehaAAQjLAAlliWg",
+      "transform": {
+        "x": 368.5,
+        "y": 547.4
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 5,
+      "segment": 3,
+      "frame": 102,
+      "pathData": "Egj7AE+QpSkMF2hRMArZgD4IANgBQOhhNMshuQRcBNsZFUQqvAFqlA7Qs0BHsmCXQnVBYnRByQg7AehbAAQjLAAlliWg",
+      "transform": {
+        "x": 445,
+        "y": 538.3
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 5,
+      "segment": 4,
+      "frame": 105,
+      "pathData": "EgyYAG9QpTkNF3hRMAragD4IANgBQOghMMshuQMthuK5iQQEnAFIhEnQEyEbkyBgI20gEQkdgHkbACQquAFqlA7QszBIsoCXQnUBYnRByQg8AehaAAQjLAAlliWg",
+      "transform": {
+        "x": 537.5,
+        "y": 525.6
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 6,
+      "segment": 1,
+      "frame": 120,
+      "pathData": "Am0DnQDrpHgtnGQGZjCFKHuQBbDIjnFnIhbCyQoEJ3ivAAQiuAACnp3g",
+      "transform": {
+        "x": 445.9,
+        "y": 618.8
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 6,
+      "segment": 2,
+      "frame": 123,
+      "pathData": "AsJOGQG4p6DUoOQDrpJgunFQGajDFKHvQBbDHjnFpIpOR9QhKBzhMBtQnRGfiyAAQi5AAB/nCg",
+      "transform": {
+        "x": 414.8,
+        "y": 667.9
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 6,
+      "segment": 3,
+      "frame": 126,
+      "pathData": "Aw6UiQE3lTE8mpQG4p4DToQQDrpIgtnGQGajCFKHuQBbDIjnFoIpOR+QhLBzhMBsQldH3loFsQmTD7imAAQjPAACemFg",
+      "transform": {
+        "x": 382.6,
+        "y": 703
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 6,
+      "segment": 4,
+      "frame": 129,
+      "pathData": "A5BdvQIhlMIspeQE4lTE6mpQG5p5DUoPQDrpJgunFQGajCFKHuQBbDHjnFpIpOR9QhLBzhLBtQleH3lpFrQn8ICoSDsQkpCajpAbQh/AUhGAAQi/AADuiWg",
+      "transform": {
+        "x": 324.3,
+        "y": 738
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 7,
+      "segment": 1,
+      "frame": 144,
+      "pathData": "AluiVQATlpiykIQhXjKH+BpQGhBWCeDiQCDCJiDDLQg5DagrDOQkWK/iwAAQjaAAhDwhg",
+      "transform": {
+        "x": 594.8,
+        "y": 617.1
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 7,
+      "segment": 2,
+      "frame": 147,
+      "pathData": "AlHTXQgWhxgRh4IAA9XQATlqiykHQhXjLH+BpQGhBWCeDjQCDCIiDDMQg5DZgrDQQjEOsBgLdQgwHeijAAQiTAAjymKg",
+      "transform": {
+        "x": 594.8,
+        "y": 689.6
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 7,
+      "segment": 3,
+      "frame": 150,
+      "pathData": "Anaa3Qlpl6iMrFQgWhwgRh5IAA9XQASlpiykIQhWjKH+BoQGhBXCfDiQCDCJiDDLQg5DagsDPQjDOtBfLcQANBiASBdQD9KnNUBaQNeHWtyEFQs7hvmEmZg",
+      "transform": {
+        "x": 659.7,
+        "y": 750.3
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 7,
+      "segment": 4,
+      "frame": 153,
+      "pathData": "EgELAirQs9hvmEmZQlpl6iMrFQgWhxgRh4IAA9XQASlqixkHQhXjLH+BpQGhBWCfDjQCDCIiDDMQg5DZgrDQQjEOtBgLcQAMBhASBeQD9KmNVBbQInA6Mji7QAqgMAogQQPIk9ApLpQrWHpyDAMQk8gFkLgkg",
+      "transform": {
+        "x": 760.6,
+        "y": 752.3
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 7,
+      "segment": 5,
+      "frame": 156,
+      "pathData": "EgHQAirQs8hvmFmZQlpl6iMrFQgWhxgRh4IAA9XQATlqiykHQhXjLH+BpQGiBWCeDjQCDCIiDDMQg5DZgrDQQjEOtBgLcQAMBhASBeQD9KmNVBbQInA6Mji7QAqgMAogQQG6izCcq1QB9n4Ato1QAlidBxEzQCiOXECJiQCXEfjJC3QiCB4iVBkQrWHpyDAMQk6gFkNgkg",
+      "transform": {
+        "x": 780.3,
+        "y": 752.3
+      },
+      "color": "#000000"
+    }
+  ],
+  "inLexicalListsHK": true,
+  "stage1Words": [
+    {
+      "word": "光",
+      "jyutping": "gwong1",
+      "pinyin": "guɑ̄ng",
+      "stage": "1"
+    },
+    {
+      "word": "光明",
+      "jyutping": "gwong1ming4",
+      "pinyin": "guɑ̄ngmíng",
+      "stage": "1"
+    },
+    {
+      "word": "光亮",
+      "jyutping": "gwong1loeng6",
+      "pinyin": "guɑ̄ngliɑ̀ng",
+      "stage": "1"
+    },
+    {
+      "word": "光陰",
+      "jyutping": "gwong1jam1",
+      "pinyin": "guɑ̄ngyīn",
+      "stage": "1"
+    },
+    {
+      "word": "光滑",
+      "jyutping": "gwong1waat6",
+      "pinyin": "guɑ̄nghuɑ́",
+      "stage": "1"
+    },
+    {
+      "word": "光盤",
+      "jyutping": "gwong1pun4",
+      "pinyin": "guɑ̄ngpɑ́n",
+      "stage": "1"
+    },
+    {
+      "word": "光碟",
+      "jyutping": "gwong1dip6",
+      "pinyin": "guɑ̄ngdié",
+      "stage": "1"
+    },
+    {
+      "word": "光線",
+      "jyutping": "gwong1sin3",
+      "pinyin": "guɑ̄ngxiɑ̀n",
+      "stage": "1"
+    },
+    {
+      "word": "五光十色",
+      "jyutping": "ng5gwong1sap6sik1",
+      "pinyin": "wǔ guɑ̄ng shí sè",
+      "stage": "1"
+    },
+    {
+      "word": "月光",
+      "jyutping": "jyut6gwong1",
+      "pinyin": "yuèguɑ̄ng",
+      "stage": "1"
+    },
+    {
+      "word": "火光",
+      "jyutping": "fo2gwong1",
+      "pinyin": "huǒguɑ̄ng",
+      "stage": "1"
+    },
+    {
+      "word": "目光",
+      "jyutping": "muk6gwong1",
+      "pinyin": "mùguɑ̄ng",
+      "stage": "1"
+    },
+    {
+      "word": "風光",
+      "jyutping": "fung1gwong1",
+      "pinyin": "fēngguɑ̄ng",
+      "stage": "1"
+    },
+    {
+      "word": "陽光",
+      "jyutping": "joeng4gwong1",
+      "pinyin": "yɑ́ngguɑ̄ng",
+      "stage": "1"
+    },
+    {
+      "word": "燈光",
+      "jyutping": "dang1gwong1",
+      "pinyin": "dēngguɑ̄ng",
+      "stage": "1"
+    },
+    {
+      "word": "燭光",
+      "jyutping": "zuk1gwong1",
+      "pinyin": "zhúguɑ̄ng",
+      "stage": "1"
+    },
+    {
+      "word": "觀光",
+      "jyutping": "gun1gwong1",
+      "pinyin": "guɑ̄nguɑ̄ng",
+      "stage": "1"
+    }
+  ],
+  "stage2Words": [
+    {
+      "word": "光禿禿",
+      "jyutping": "gwong1tuk1tuk1",
+      "pinyin": "guɑ̄ngtūtū",
+      "stage": "2"
+    },
+    {
+      "word": "光芒",
+      "jyutping": "gwong1mong4",
+      "pinyin": "guɑ̄ngmɑ́ng",
+      "stage": "2"
+    },
+    {
+      "word": "光彩",
+      "jyutping": "gwong1coi2",
+      "pinyin": "guɑ̄ngcɑ̌i",
+      "stage": "2"
+    },
+    {
+      "word": "光復",
+      "jyutping": "gwong1fuk6",
+      "pinyin": "guɑ̄ngfù",
+      "stage": "2"
+    },
+    {
+      "word": "光景",
+      "jyutping": "gwong1ging2",
+      "pinyin": "guɑ̄ngjǐng",
+      "stage": "2"
+    },
+    {
+      "word": "光榮",
+      "jyutping": "gwong1wing4",
+      "pinyin": "guɑ̄ngróng",
+      "stage": "2"
+    },
+    {
+      "word": "光輝",
+      "jyutping": "gwong1fai1",
+      "pinyin": "guɑ̄nghuī",
+      "stage": "2"
+    },
+    {
+      "word": "光澤",
+      "jyutping": "gwong1zaak6",
+      "pinyin": "guɑ̄ngzé",
+      "stage": "2"
+    },
+    {
+      "word": "X 光",
+      "pinyin": "X guɑ̄ng",
+      "stage": "2"
+    },
+    {
+      "word": "爭光",
+      "jyutping": "zang1gwong1",
+      "pinyin": "zhēngguɑ̄ng",
+      "stage": "2"
+    },
+    {
+      "word": "亮光",
+      "jyutping": "loeng6gwong1",
+      "pinyin": "liɑ̀ngguɑ̄ng",
+      "stage": "2"
+    },
+    {
+      "word": "時光",
+      "jyutping": "si4gwong1",
+      "pinyin": "shíguɑ̄ng",
+      "stage": "2"
+    },
+    {
+      "word": "眼光",
+      "jyutping": "ngaan5gwong1",
+      "pinyin": "yɑ̌nguɑ̄ng",
+      "stage": "2"
+    },
+    {
+      "word": "發揚光大",
+      "jyutping": "faat3joeng4gwong1daai6",
+      "pinyin": "fɑ̄yɑ́ng guɑ̄ngdɑ̀",
+      "stage": "2"
+    },
+    {
+      "word": "曙光",
+      "jyutping": "cyu5gwong1",
+      "pinyin": "shǔguɑ̄ng",
+      "stage": "2"
+    },
+    {
+      "word": "曝光",
+      "jyutping": "buk6gwong1",
+      "pinyin": "bɑ̀oguɑ̄ng",
+      "stage": "2"
+    },
+    {
+      "word": "鐳射",
+      "jyutping": "leoi4se6",
+      "pinyin": "léishè",
+      "stage": "2"
+    },
+    {
+      "word": "雷射",
+      "jyutping": "leoi4se6",
+      "pinyin": "léishè",
+      "stage": "2"
+    },
+    {
+      "word": "激光",
+      "jyutping": "gik1gwong1",
+      "pinyin": "jīguɑ̄ng",
+      "stage": "2"
+    }
+  ],
+  "fourCharacterPhrases": [
+    {
+      "word": "目光如炬"
+    },
+    {
+      "word": "光天化日"
+    },
+    {
+      "word": "光怪陸離"
+    },
+    {
+      "word": "光明正大"
+    },
+    {
+      "word": "光明磊落"
+    },
+    {
+      "word": "光芒萬丈"
+    },
+    {
+      "word": "春光明媚"
+    },
+    {
+      "word": "珠光寶氣"
+    },
+    {
+      "word": "湖光山色"
+    }
+  ],
+  "classicalPhrases": [],
+  "multiCharacterIdioms": [
+    {
+      "word": "一寸光陰一寸金"
+    }
+  ],
+  "properNouns": [
+    {
+      "word": "司馬光",
+      "jyutping": "si1maa5gwong1",
+      "pinyin": "Sīmɑ̌ Guɑ̄ng"
+    },
+    {
+      "word": "李四光",
+      "jyutping": "lei5sei3gwong1",
+      "pinyin": "Lǐ Sìguɑ̄ng"
+    }
+  ],
+  "transliteratedWords": []
+}

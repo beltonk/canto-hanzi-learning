@@ -1,0 +1,68 @@
+{
+  "id": "1232",
+  "character": "弓",
+  "sourceUrl": "https://www.edbchinese.hk/lexlist_ch/result.jsp?id=1232&sortBy=ks&jpC=lshk",
+  "radical": "弓",
+  "strokeCount": 3,
+  "jyutping": "gung1",
+  "pinyin": "gōng",
+  "strokeOrderImages": [
+    "https://www.edbchinese.hk/EmbziciwebRes/stkdemo_js/1001-2000/1232.html?lang=ch"
+  ],
+  "strokeVectors": [
+    {
+      "strokeNumber": 1,
+      "segment": 1,
+      "frame": 24,
+      "pathData": "AnDCoIj4ivQieiNGWAOQHzgRHLg6QHRBjnADkIn+BAQihAchvAAQiGAAg7gqg",
+      "transform": {
+        "x": 553.5,
+        "y": 233.2
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 2,
+      "segment": 1,
+      "frame": 48,
+      "pathData": "AocDCQgcgehOibQg1hVBqgFQILhAHQhHQIEBknUDgIkSAjQm6BKimAAQhdAAgHgXg",
+      "transform": {
+        "x": 524.8,
+        "y": 367.8
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 3,
+      "segment": 1,
+      "frame": 72,
+      "pathData": "AnSHUQDJnEg2rzQgOiSDrBXQGSCUCGCaQBqByhqCnIlLKUQlsGCiOAAQiKAABHlrg",
+      "transform": {
+        "x": 567.6,
+        "y": 690
+      },
+      "color": "#000000"
+    }
+  ],
+  "inLexicalListsHK": true,
+  "stage1Words": [
+    {
+      "word": "弓",
+      "jyutping": "gung1",
+      "pinyin": "gōng",
+      "stage": "1"
+    },
+    {
+      "word": "彈弓",
+      "jyutping": "daan6gung1",
+      "pinyin": "dɑ̀ngōng",
+      "stage": "1"
+    }
+  ],
+  "stage2Words": [],
+  "fourCharacterPhrases": [],
+  "classicalPhrases": [],
+  "multiCharacterIdioms": [],
+  "properNouns": [],
+  "transliteratedWords": []
+}

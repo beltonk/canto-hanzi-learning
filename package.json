@@ -12,7 +12,10 @@
     "import:words-hk": "tsx scripts/import/import-data.ts words-hk",
     "import:cjk-decomp": "tsx scripts/import/import-data.ts cjk-decomp",
     "import:merge": "tsx scripts/import/import-data.ts merge",
-    "data:stats": "node -e \"const d=require('./data/characters.json');console.log('字符:',d.characters.length,'覆蓋率:',(d.characters.length/3171*100).toFixed(1)+'%')\""
+    "data:stats": "node -e \"const d=require('./data/characters.json');console.log('字符:',d.characters.length,'覆蓋率:',(d.characters.length/3171*100).toFixed(1)+'%')\"",
+        "crawl:edbchinese": "tsx scripts/crawl-edbchinese.ts",
+        "crawl:edbchinese:json": "NODE_TLS_REJECT_UNAUTHORIZED=0 tsx scripts/crawl-edbchinese-json.ts",
+        "index:generate": "tsx scripts/generate-indexes.ts"
   },
   "dependencies": {
     "next": "16.1.1",
@@ -21,9 +24,11 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "@types/cheerio": "^0.22.35",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "cheerio": "^1.0.0",
     "eslint": "^9",
     "eslint-config-next": "16.1.1",
     "tailwindcss": "^4",

@@ -1,0 +1,521 @@
+{
+  "id": "4230",
+  "character": "金",
+  "sourceUrl": "https://www.edbchinese.hk/lexlist_ch/result.jsp?id=4230&sortBy=ks&jpC=lshk",
+  "radical": "金",
+  "strokeCount": 8,
+  "jyutping": "gam1",
+  "pinyin": "jīn",
+  "strokeOrderImages": [
+    "https://www.edbchinese.hk/EmbziciwebRes/stkdemo_js/4001-ZC/4230.html?lang=ch"
+  ],
+  "strokeVectors": [
+    {
+      "strokeNumber": 1,
+      "segment": 1,
+      "frame": 24,
+      "pathData": "AqNJrQDglJDQlaQCzl1gpoBQABkpEGB5QGKCtCjEtQAnCKi6DtIiREJQk3HylDG9QktDXiKAAQjYAAC/oXg",
+      "transform": {
+        "x": 489.5,
+        "y": 215.6
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 1,
+      "segment": 2,
+      "frame": 27,
+      "pathData": "A2rZ5QR/xyNi2mQCzl1gpoAQABkqEHB5QGKCuCjEtQAnCKi6DtIiREJQvyZTx/QaQhYBMhYBIQjEBShqAAQjhAAC0lwg",
+      "transform": {
+        "x": 410.7,
+        "y": 302.7
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 1,
+      "segment": 3,
+      "frame": 30,
+      "pathData": "Egk9An4UAj1gYfAW/gmZQCzl1gpoAQABkqEIB5QGJCuCkEtQAmCKi5DtIiREJQvyZTyAQaQsjK1r8GEQm8Dvi0AAQgxAAgegSg",
+      "transform": {
+        "x": 327.4,
+        "y": 357.2
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 2,
+      "segment": 1,
+      "frame": 48,
+      "pathData": "AHJKrQo5q5qSoyQhjj/EdA6QJdHDLALLQCXGIinAAQhVAAinhmg",
+      "transform": {
+        "x": 600.3,
+        "y": 261
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 2,
+      "segment": 2,
+      "frame": 51,
+      "pathData": "ANyXzIsLu7QsIxhvJs7QhjkAEdA6QKDHfLyMKQK5LnLiHHQJQLIpdAAQi4AAkphCg",
+      "transform": {
+        "x": 687.5,
+        "y": 341.5
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 2,
+      "segment": 3,
+      "frame": 54,
+      "pathData": "AFCYxIwf0OQsIxhvKs7QhjkAEeA6QKCHfLyMKQPHQGQSHbIUUJcQDSBVkLA/I0hDPIgmAAQl0AAk3kZg",
+      "transform": {
+        "x": 771.1,
+        "y": 369.2
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 3,
+      "segment": 1,
+      "frame": 72,
+      "pathData": "Am+CLQlvijD+gWIQTjEQE7CjjsDLQi+Asi2A4QhnAThjAAQjlAAjOhog",
+      "transform": {
+        "x": 421.5,
+        "y": 487.2
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 3,
+      "segment": 2,
+      "frame": 75,
+      "pathData": "AtwDaQluikD9gXIdelgQF7CrlEDWQp5BFosCpQhoAUhjAAQjmAAjOhog",
+      "transform": {
+        "x": 464.9,
+        "y": 479.3
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 3,
+      "segment": 3,
+      "frame": 78,
+      "pathData": "A2BEOQlvikD+gWMAlPgG+QDxgwEpCfQFmDRjNA1IswBOQssA2q3DUQhnAThjAAQjmAAjOhog",
+      "transform": {
+        "x": 517.8,
+        "y": 474.1
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 4,
+      "segment": 1,
+      "frame": 96,
+      "pathData": "AwPBFQi7htF2g5QM7hENGhlQIuDHoFDGIzoCIQk1gLlIi7g",
+      "transform": {
+        "x": 382.5,
+        "y": 643.4
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 4,
+      "segment": 2,
+      "frame": 99,
+      "pathData": "A4KCLQi8huF3g4QVAhuVdjHQH2DBnyDpMgjfAD3Qk2gLlHi7g",
+      "transform": {
+        "x": 433.2,
+        "y": 636.4
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 4,
+      "segment": 3,
+      "frame": 102,
+      "pathData": "EgkrADUQi8huF3g5QZNiDZ4kEQIfhdCYAtQFtBfDODrQBkBvizAdI62BVMgjwAD5Qk2gLlHi7g",
+      "transform": {
+        "x": 513.3,
+        "y": 629.1
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 5,
+      "segment": 1,
+      "frame": 120,
+      "pathData": "AjlJLQgPmAgTmEQgPlfjOjzQAqjjL/DeQDPBjg+CzQg/EbgOJaIgDCJQiuF7iiAAQiSAAiJk0g",
+      "transform": {
+        "x": 515.7,
+        "y": 576.2
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 5,
+      "segment": 2,
+      "frame": 123,
+      "pathData": "Ai+SeQgZu0gwvSQgPlfjOjzQAqjjL/DeQDPBjg+CzQg/EbgOJbIgaVBQiDEgiOAAQiIAAiUkQg",
+      "transform": {
+        "x": 515.7,
+        "y": 632.1
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 5,
+      "segment": 3,
+      "frame": 126,
+      "pathData": "AikelQgP5mhU7DQgPlejOjzQAqjjL/DdQDPBjg+C0Qg/EbgOJaMgAzApYQkUFAh+AAQhaAAgOikg",
+      "transform": {
+        "x": 515.7,
+        "y": 698.9
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 6,
+      "segment": 1,
+      "frame": 144,
+      "pathData": "Ah6D0Qidj1ick1QhMh8E9BNQFpBdDUB1QC1IXkUgBQiOAAkIiPg",
+      "transform": {
+        "x": 352.8,
+        "y": 774.9
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 6,
+      "segment": 2,
+      "frame": 147,
+      "pathData": "ABnHnQlSlwlJqPQhNh8E+BNQI3CTDHDMQCdDFgXF5QgUDMiZA+QgVAGgXAAQhtAAiUh/g",
+      "transform": {
+        "x": 365.8,
+        "y": 797.5
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 7,
+      "segment": 1,
+      "frame": 168,
+      "pathData": "AoJDQQCgkKBbkEQBOjpB+AnQDUBnEpEWQCdDGhHCYQg9BIizA9QiDA6iCA/QjEAtiBAAQlTAABzk2g",
+      "transform": {
+        "x": 702.7,
+        "y": 737.1
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 7,
+      "segment": 2,
+      "frame": 171,
+      "pathData": "AtZL4QKZq7DlqOQBOjpB+AnQDVBnEpEWQCdDHhHCYQg9BHizA9QpNECpMF7QixBQhAAAQgqAAAGgig",
+      "transform": {
+        "x": 671.9,
+        "y": 764.6
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 8,
+      "segment": 1,
+      "frame": 192,
+      "pathData": "As0EnQnnitiWiWQgyhbEEgnQShhASUhjQKzDDqJDBQr5BSssCSQhdAbhkAAQhkAAhqgbg",
+      "transform": {
+        "x": 337.3,
+        "y": 924.1
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 8,
+      "segment": 2,
+      "frame": 195,
+      "pathData": "A6RF6QnnitiViXQgzhaEEgnUAgbgBwAf2gDZQJoDso2C+QpzAeqiA2QvMBSwoC+QhcAbhkAAQhkAAhrgbg",
+      "transform": {
+        "x": 423.3,
+        "y": 915.7
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 8,
+      "segment": 3,
+      "frame": 198,
+      "pathData": "EgrrAHWQnnitiViXQgzhbEEgnUApigCPAoogE8IF8g0QDngNHvC6QC+BlBdB9QBcC2m4gDQ3/gm9tCZQvNBSwoC+QhdAbhjAAQhkAAhrgbg",
+      "transform": {
+        "x": 534.7,
+        "y": 906.5
+      },
+      "color": "#000000"
+    }
+  ],
+  "inLexicalListsHK": true,
+  "stage1Words": [
+    {
+      "word": "金子",
+      "jyutping": "gam1zi2",
+      "pinyin": "jīnzi",
+      "stage": "1"
+    },
+    {
+      "word": "金色",
+      "jyutping": "gam1sik1",
+      "pinyin": "jīnsè",
+      "stage": "1"
+    },
+    {
+      "word": "金魚",
+      "jyutping": "gam1jyu4",
+      "pinyin": "jīnyú",
+      "stage": "1"
+    },
+    {
+      "word": "金牌",
+      "jyutping": "gam1paai4",
+      "pinyin": "jīnpɑ́i",
+      "stage": "1"
+    },
+    {
+      "word": "金黃",
+      "jyutping": "gam1wong4",
+      "pinyin": "jīnhuɑ́ng",
+      "stage": "1"
+    },
+    {
+      "word": "金鋪",
+      "jyutping": "gam1pou3",
+      "pinyin": "jīnpù",
+      "stage": "1"
+    },
+    {
+      "word": "金舖",
+      "jyutping": "gam1pou3",
+      "pinyin": "jīnpù",
+      "stage": "1"
+    },
+    {
+      "word": "金錢",
+      "jyutping": "gam1cin4",
+      "pinyin": "jīnqiɑ́n",
+      "stage": "1"
+    },
+    {
+      "word": "金屬",
+      "jyutping": "gam1suk6",
+      "pinyin": "jīnshǔ",
+      "stage": "1"
+    },
+    {
+      "word": "公積金",
+      "jyutping": "gung1zik1gam1",
+      "pinyin": "gōngjījīn",
+      "stage": "1"
+    },
+    {
+      "word": "按金",
+      "jyutping": "on3gam1",
+      "pinyin": "ɑ̀njīn",
+      "stage": "1"
+    },
+    {
+      "word": "押金",
+      "jyutping": "aat3gam1",
+      "pinyin": "yɑ̄jīn",
+      "stage": "1"
+    },
+    {
+      "word": "美金",
+      "jyutping": "mei5gam1",
+      "pinyin": "měijīn",
+      "stage": "1"
+    },
+    {
+      "word": "現金",
+      "jyutping": "jin6gam1",
+      "pinyin": "xiɑ̀njīn",
+      "stage": "1"
+    },
+    {
+      "word": "黃金",
+      "jyutping": "wong4gam1",
+      "pinyin": "huɑ́ngjīn",
+      "stage": "1"
+    },
+    {
+      "word": "獎金",
+      "jyutping": "zoeng2gam1",
+      "pinyin": "jiɑ̌ngjīn",
+      "stage": "1"
+    }
+  ],
+  "stage2Words": [
+    {
+      "word": "金秋",
+      "jyutping": "gam1cau1",
+      "pinyin": "jīnqiū",
+      "stage": "2"
+    },
+    {
+      "word": "金碧輝煌",
+      "jyutping": "gam1bik1fai1wong4",
+      "pinyin": "jīnbì-huīhuɑ́ng",
+      "stage": "2"
+    },
+    {
+      "word": "金融",
+      "jyutping": "gam1jung4",
+      "pinyin": "jīnróng",
+      "stage": "2"
+    },
+    {
+      "word": "金額",
+      "jyutping": "gam1ngaak6",
+      "pinyin": "jīn’é",
+      "stage": "2"
+    },
+    {
+      "word": "佣金",
+      "jyutping": "jung2gam1",
+      "pinyin": "yòngjīn",
+      "stage": "2"
+    },
+    {
+      "word": "冶金",
+      "jyutping": "je5gam1",
+      "pinyin": "yějīn",
+      "stage": "2"
+    },
+    {
+      "word": "租金",
+      "jyutping": "zou1gam1",
+      "pinyin": "zūjīn",
+      "stage": "2"
+    },
+    {
+      "word": "基金",
+      "jyutping": "gei1gam1",
+      "pinyin": "jījīn",
+      "stage": "2"
+    },
+    {
+      "word": "資金",
+      "jyutping": "zi1gam1",
+      "pinyin": "zījīn",
+      "stage": "2"
+    },
+    {
+      "word": "獎學金",
+      "jyutping": "zoeng2hok6gam1",
+      "pinyin": "jiɑ̌ngxuéjīn",
+      "stage": "2"
+    },
+    {
+      "word": "薪金",
+      "jyutping": "san1gam1",
+      "pinyin": "xīnjīn",
+      "stage": "2"
+    },
+    {
+      "word": "薪水",
+      "jyutping": "san1seoi2",
+      "pinyin": "xīnshui",
+      "stage": "2"
+    },
+    {
+      "word": "贖金",
+      "jyutping": "suk6gam1",
+      "pinyin": "shújīn",
+      "stage": "2"
+    }
+  ],
+  "fourCharacterPhrases": [
+    {
+      "word": "金戈鐵馬"
+    },
+    {
+      "word": "金童玉女"
+    },
+    {
+      "word": "拾金不昧"
+    },
+    {
+      "word": "揮金如土"
+    }
+  ],
+  "classicalPhrases": [
+    {
+      "word": "金石",
+      "jyutping": "gam1sek6",
+      "pinyin": "jīnshí"
+    }
+  ],
+  "multiCharacterIdioms": [
+    {
+      "word": "一寸光陰一寸金"
+    },
+    {
+      "word": "金玉其外，敗絮其中"
+    },
+    {
+      "word": "家書抵萬金"
+    },
+    {
+      "word": "真金不怕紅爐火"
+    },
+    {
+      "word": "精誠所至，金石為開"
+    }
+  ],
+  "properNouns": [
+    {
+      "word": "五金",
+      "jyutping": "ng5gam1",
+      "pinyin": "wǔjīn"
+    },
+    {
+      "word": "公益金",
+      "jyutping": "gung1jik1gam1",
+      "pinyin": "Gōngyìjīn"
+    },
+    {
+      "word": "金代",
+      "jyutping": "gam1doi6",
+      "pinyin": "Jīn Dɑ̀i"
+    },
+    {
+      "word": "金木水火土",
+      "jyutping": "gam1muk6seoi2fo2tou2",
+      "pinyin": "jīn mù shuǐ huǒ tǔ"
+    },
+    {
+      "word": "金邊",
+      "jyutping": "gam1bin1",
+      "pinyin": "Jīnbiɑ̄n"
+    },
+    {
+      "word": "金銀銅鐵錫",
+      "jyutping": "gam1ngan4tung4tit3sek3",
+      "pinyin": "jīn yín tóng tiě xī"
+    },
+    {
+      "word": "金陵",
+      "jyutping": "gam1ling4",
+      "pinyin": "Jīnlíng"
+    },
+    {
+      "word": "非金屬",
+      "jyutping": "fei1gam1suk6",
+      "pinyin": "fēijīnshǔ"
+    },
+    {
+      "word": "紫金山",
+      "jyutping": "zi2gam1saan1",
+      "pinyin": "Zǐjīn Shɑ̄n"
+    }
+  ],
+  "transliteratedWords": []
+}

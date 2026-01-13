@@ -1,0 +1,626 @@
+{
+  "id": "2634",
+  "character": "當",
+  "sourceUrl": "https://www.edbchinese.hk/lexlist_ch/result.jsp?id=2634&sortBy=ks&jpC=lshk",
+  "radical": "田",
+  "strokeCount": 13,
+  "jyutping": "dong1",
+  "pinyin": "dɑ̄ng",
+  "strokeOrderImages": [
+    "https://www.edbchinese.hk/EmbziciwebRes/stkdemo_js/2001-3000/2634.html?lang=ch"
+  ],
+  "strokeVectors": [
+    {
+      "strokeNumber": 1,
+      "segment": 1,
+      "frame": 24,
+      "pathData": "AjVGnIgDiZQAAqOjMj0Qi+jWF0gPQF1gFExC6QBbBDhbC0QgjCqgcJWQikIIiaAAQiMgBiEmzg",
+      "transform": {
+        "x": 509.9,
+        "y": 165.1
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 1,
+      "segment": 2,
+      "frame": 27,
+      "pathData": "AilVrQgnsggMuqQAAqPjMj0Qi+jWF0gPQF1gFExC6QBbBDhbC0Qg0D6gkSNQgNJqgfFOQjzCkh3AAQhbAAgUhdg",
+      "transform": {
+        "x": 509.9,
+        "y": 227.3
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 2,
+      "segment": 1,
+      "frame": 48,
+      "pathData": "AgrDsQihjXiSkSQhWh5JsC9QBIAXA/AbQB+G0j1AAQheAAiVhBg",
+      "transform": {
+        "x": 340.3,
+        "y": 240.1
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 2,
+      "segment": 2,
+      "frame": 51,
+      "pathData": "ADTHZQmSk9lOpwQhVh5JrC9QIzC0gmGTQgIDRgwA2Qg7BGhMAAQg9AAhHgrg",
+      "transform": {
+        "x": 357.8,
+        "y": 261.6
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 3,
+      "segment": 1,
+      "frame": 72,
+      "pathData": "AmqhFQBvi8Bei+QBaiwJWHrQDiDPj9CFIkYCZQlaCGi3AAQl4AAE/o0g",
+      "transform": {
+        "x": 721.9,
+        "y": 186.9
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 3,
+      "segment": 2,
+      "frame": 75,
+      "pathData": "AutMIQK+rgGBsSQBZiwJYHrQDiDRj9CEIymKLQmTDohyAAQggAAgKgRg",
+      "transform": {
+        "x": 685.1,
+        "y": 216.8
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 4,
+      "segment": 1,
+      "frame": 96,
+      "pathData": "AkTC8QCIlEBpmCQBVjjCpG5QBnD1g5FUIgLA7IgEAUIAAAAQkKD0iHAAQiuAAAxmcg",
+      "transform": {
+        "x": 214.8,
+        "y": 400.7
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 4,
+      "segment": 2,
+      "frame": 99,
+      "pathData": "AmKNVQh/kYBXiOQFqoiDdszQBWjjCpG5QBnD1g5FVIgLA7IgEAUIgYBlQiuKskrDoQhHAyg/AAQhwAAhWifg",
+      "transform": {
+        "x": 196.4,
+        "y": 441.9
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 5,
+      "segment": 1,
+      "frame": 120,
+      "pathData": "AvdC5IAAlXQNjgaNFg8QILAYnXEPQlmA+luBIQkGA8kCAAQkCAAj+g8g",
+      "transform": {
+        "x": 331.5,
+        "y": 390.5
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 5,
+      "segment": 2,
+      "frame": 123,
+      "pathData": "EgjNAE+IAAlYUAiVgBAAfRgEfQJMAcoUDOQ3mB+6vFPQkGA8kDAAQkCAAj+g8g",
+      "transform": {
+        "x": 457.9,
+        "y": 377.3
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 5,
+      "segment": 3,
+      "frame": 126,
+      "pathData": "EgzsAHVIAAlZUAxpgBdArRgItQDTgUGeFLQDwIKvxk0Qg5hHjQAJUgf7AAygmdAHiQkHA7kCAAQkCAAj+g7g",
+      "transform": {
+        "x": 563.4,
+        "y": 362.2
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 5,
+      "segment": 4,
+      "frame": 129,
+      "pathData": "AbtLiIG5rXQDKkymmARUgf6AAygmfAHiQoNB3n8h3IAAlYUAxpgBdArSgIuQEQgZJhIsQIvIAqBBwQlQAWnAB6Qn6C5hxAAQgTAAgHgFg",
+      "transform": {
+        "x": 587,
+        "y": 383.7
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 6,
+      "segment": 1,
+      "frame": 144,
+      "pathData": "AgDDLQg+lykVjCQiHh+FIAdQHIAPAdDAIAuFLQg0GAhvAAQhcAAiCkFg",
+      "transform": {
+        "x": 395.5,
+        "y": 517.4
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 6,
+      "segment": 2,
+      "frame": 147,
+      "pathData": "ABaIkIiLqKQg+lzkVjDQiGh9FHAcQHIAQAdDAICFO1QAaEchrBMQgeATgeAAQhmAAhajfg",
+      "transform": {
+        "x": 400.1,
+        "y": 548
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 7,
+      "segment": 1,
+      "frame": 168,
+      "pathData": "AqbgXQJJhLIdhnQGXAZmCDGQn4BMoXBog",
+      "transform": {
+        "x": 467.2,
+        "y": 476.1
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 7,
+      "segment": 2,
+      "frame": 171,
+      "pathData": "AJ4BlQAIijiTgWQtZBdu3C6IhsjhQSAiUPYkAQDpgVGtE9QBwBciRCCQgwA5gxBCQkQDliXAAQi3AAgHlPg",
+      "transform": {
+        "x": 542.8,
+        "y": 476.8
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 7,
+      "segment": 3,
+      "frame": 174,
+      "pathData": "AHSJCICcrbQAyjsizgcQtZBfu3C5IhsjiQSAiUPYj/QDpgVGtE9QBwBciRCDQkQFCkpJNQidBohPABQhrAAAki/g",
+      "transform": {
+        "x": 542.8,
+        "y": 510
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 8,
+      "segment": 1,
+      "frame": 192,
+      "pathData": "An2CoIAAkSQFigHFsg5QItAkoLEXQkeAakOAAQhjAAhhgDg",
+      "transform": {
+        "x": 485.7,
+        "y": 591.4
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 8,
+      "segment": 2,
+      "frame": 195,
+      "pathData": "AwADuIAAkSQJ3gNKZiqQGyhbEqEtQBGBoiiABQjUgPmYA+QpRBioPAAQhjAAhhgDg",
+      "transform": {
+        "x": 537.9,
+        "y": 584.4
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 9,
+      "segment": 1,
+      "frame": 216,
+      "pathData": "AgvD1Qh9nej/jEQjSitHUAsQHQBDB0ClQAtCIAlFRQhlGliTAAQiBAAijlDg",
+      "transform": {
+        "x": 308.7,
+        "y": 735.1
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 9,
+      "segment": 2,
+      "frame": 219,
+      "pathData": "AAiJ8IgajfQhZulmAkmQjRitHUAsQHPBDB1ClQA+C6AuI8IAwHsQhvGeiGAAQh1AAiGk9g",
+      "transform": {
+        "x": 312.4,
+        "y": 773.6
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 9,
+      "segment": 3,
+      "frame": 222,
+      "pathData": "AGFX7QjHhkhOjmIih1WQhZulmAkmQjSiuHUAtQHQBCB0ClQA+C7AuI8ICiZpQAVGmjGAAIgUgBg",
+      "transform": {
+        "x": 318.2,
+        "y": 831.5
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 10,
+      "segment": 1,
+      "frame": 240,
+      "pathData": "AsFhNQKkhBJ+hLQHBAmmiC+QkGAskFA1IgFABQnYBqjtADg",
+      "transform": {
+        "x": 406.7,
+        "y": 697.8
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 10,
+      "segment": 2,
+      "frame": 243,
+      "pathData": "A6cAqQZ9igWijbQIoA2oUDWQx+BBx+DoIgFABQnZBqjtADg",
+      "transform": {
+        "x": 498.6,
+        "y": 685.8
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 10,
+      "segment": 3,
+      "frame": 246,
+      "pathData": "AZFGgQgDjYgNjjQgOkHkaAFQ3NAT3OEsIgFABQnZBrjtADIhskoQdzi4ZSkGQE4gqDShSQDRg2KWHTQCqBviqDKQhGCsgqDVQjxFSiyAAQiqAAhvk4g",
+      "transform": {
+        "x": 579.5,
+        "y": 705.1
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 10,
+      "segment": 4,
+      "frame": 249,
+      "pathData": "AY0L5QAkoSgjpyQgOkHkaAEQ3NAU3OEtIgFABQnZBqjtADIhskoQdzi4ZSkGQE4gqDShTQDRg1KWHTQCqBviqDKQilGYgMKBIgGBqQjWEwifAAQinAAhqlPg",
+      "transform": {
+        "x": 579.5,
+        "y": 742
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 10,
+      "segment": 5,
+      "frame": 252,
+      "pathData": "ASnbWIi5nkQguhZgchEIGRhVIAHgCQBEgQAhhIQDbtihHzoQgOkHkaAEQ3NAU3OEtIgFABQnZBqjtADIhskoQdzi4ZSkGQE4gqDShTQDRg1KWHTQCqBviqDKQilGZgMKBIgrLQQhZOdobEdQh0BBhUAAQh8AAg2iLg",
+      "transform": {
+        "x": 579.5,
+        "y": 821.3
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 11,
+      "segment": 1,
+      "frame": 264,
+      "pathData": "AtHCUQiEitDogiISxiOQNTBFtSEXQk4AakxATQi0AKiFAAQk3AAg9g2g",
+      "transform": {
+        "x": 479.9,
+        "y": 797.8
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 11,
+      "segment": 2,
+      "frame": 267,
+      "pathData": "A4FDlQiEiuDogiMAn6gEtQH9gggjENQgXBDjqAjIhMAKQxACNv+BAQi0AKiFAAQk3AAg9g3g",
+      "transform": {
+        "x": 550.1,
+        "y": 789.6
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 12,
+      "segment": 1,
+      "frame": 288,
+      "pathData": "AjJGtIgRlmQgIoKjejDQFElEIDGUQBhBUhADOQgbDXgYGrQivGpiUAAQiIAAhzlqg",
+      "transform": {
+        "x": 529.3,
+        "y": 754.7
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 12,
+      "segment": 2,
+      "frame": 291,
+      "pathData": "AiSRgIhI37QgIoLjejDQFElEIDGUQBhBUhADOQg5HHgsV4QjsCyh1AAQhuAAgGiag",
+      "transform": {
+        "x": 529.3,
+        "y": 803
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 13,
+      "segment": 1,
+      "frame": 312,
+      "pathData": "Ao/iAQGWgUGYgdQKTBXpzDZItOAzg",
+      "transform": {
+        "x": 426.8,
+        "y": 932.7
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 13,
+      "segment": 2,
+      "frame": 315,
+      "pathData": "A8WgcQV4hDWMi0QHOgbFbFkIlFAYMgzoADIg",
+      "transform": {
+        "x": 550.7,
+        "y": 922.7
+      },
+      "color": "#000000"
+    }
+  ],
+  "inLexicalListsHK": true,
+  "stage1Words": [
+    {
+      "word": "當",
+      "jyutping": "dong1",
+      "pinyin": "d",
+      "stage": "1"
+    },
+    {
+      "word": "當中",
+      "jyutping": "dong1zung1",
+      "pinyin": "dɑ̄ngzhōng",
+      "stage": "1"
+    },
+    {
+      "word": "當天",
+      "jyutping": "dong1tin1",
+      "pinyin": "dɑ̄ngtiɑ̄n",
+      "stage": "1"
+    },
+    {
+      "word": "當作",
+      "jyutping": "dong3zok3",
+      "pinyin": "dɑ̀ngzuò",
+      "stage": "1"
+    },
+    {
+      "word": "當做",
+      "jyutping": "dong3zou6",
+      "pinyin": "dɑ̀ngzuò",
+      "stage": "1"
+    },
+    {
+      "word": "當初",
+      "jyutping": "dong1co1",
+      "pinyin": "dɑ̄ngchū",
+      "stage": "1"
+    },
+    {
+      "word": "當值",
+      "jyutping": "dong1zik6",
+      "pinyin": "dɑ̄ngzhí",
+      "stage": "1"
+    },
+    {
+      "word": "當時",
+      "jyutping": "si4",
+      "pinyin": "d",
+      "stage": "1"
+    },
+    {
+      "word": "當然",
+      "jyutping": "dong1jin4",
+      "pinyin": "dɑ̄ngrɑ́n",
+      "stage": "1"
+    },
+    {
+      "word": "每當",
+      "jyutping": "mui5dong1",
+      "pinyin": "měidɑ̄ng",
+      "stage": "1"
+    },
+    {
+      "word": "恰當",
+      "jyutping": "hap1dong3",
+      "pinyin": "qiɑ̀dɑ̀ng",
+      "stage": "1"
+    },
+    {
+      "word": "相當",
+      "jyutping": "soeng1dong1",
+      "pinyin": "xiɑ̄ngdɑ̄ng",
+      "stage": "1"
+    },
+    {
+      "word": "適當",
+      "jyutping": "sik1dong3",
+      "pinyin": "shìdɑ̀ng",
+      "stage": "1"
+    },
+    {
+      "word": "應當",
+      "jyutping": "jing1dong1",
+      "pinyin": "yīngdɑ̄ng",
+      "stage": "1"
+    }
+  ],
+  "stage2Words": [
+    {
+      "word": "當今",
+      "jyutping": "dong1gam1",
+      "pinyin": "dɑ̄ngjīn",
+      "stage": "2"
+    },
+    {
+      "word": "當日",
+      "jyutping": "jat6",
+      "pinyin": "d",
+      "stage": "2"
+    },
+    {
+      "word": "當代",
+      "jyutping": "dong1doi6",
+      "pinyin": "dɑ̄ngdɑ̀i",
+      "stage": "2"
+    },
+    {
+      "word": "當地",
+      "jyutping": "dong1dei6",
+      "pinyin": "dɑ̄ngdì",
+      "stage": "2"
+    },
+    {
+      "word": "當年",
+      "jyutping": "nin4",
+      "pinyin": "d",
+      "stage": "2"
+    },
+    {
+      "word": "當成",
+      "jyutping": "dong3sing4",
+      "pinyin": "dɑ̀ngchéng",
+      "stage": "2"
+    },
+    {
+      "word": "當局",
+      "jyutping": "dong1guk6",
+      "pinyin": "dɑ̄ngjú",
+      "stage": "2"
+    },
+    {
+      "word": "當前",
+      "jyutping": "dong1cin4",
+      "pinyin": "dɑ̄ngqiɑ́n",
+      "stage": "2"
+    },
+    {
+      "word": "當面",
+      "jyutping": "dong1min6",
+      "pinyin": "dɑ̄ngmiɑ̀n",
+      "stage": "2"
+    },
+    {
+      "word": "當務之急",
+      "jyutping": "dong1mou6zi1gap1",
+      "pinyin": "dɑ̄ng wù zhī jí",
+      "stage": "2"
+    },
+    {
+      "word": "當場",
+      "jyutping": "dong1coeng4",
+      "pinyin": "dɑ̄ngchɑ̌ng",
+      "stage": "2"
+    },
+    {
+      "word": "當選",
+      "jyutping": "dong1syun2",
+      "pinyin": "dɑ̄ngxuɑ̌n",
+      "stage": "2"
+    },
+    {
+      "word": "上當",
+      "jyutping": "soeng5dong3",
+      "pinyin": "shɑ̀ngdɑ̀ng",
+      "stage": "2"
+    },
+    {
+      "word": "不敢當",
+      "jyutping": "bat1gam2dong1",
+      "pinyin": "bùgɑ̌ndɑ̄ng",
+      "stage": "2"
+    },
+    {
+      "word": "不當",
+      "jyutping": "bat1dong3",
+      "pinyin": "búdɑ̀ng",
+      "stage": "2"
+    },
+    {
+      "word": "正當",
+      "jyutping": "dong3",
+      "pinyin": "zhèngd",
+      "stage": "2"
+    },
+    {
+      "word": "妥當",
+      "jyutping": "to5dong3",
+      "pinyin": "tuǒdɑng",
+      "stage": "2"
+    },
+    {
+      "word": "首當其衝",
+      "jyutping": "sau2dong1kei4cung1",
+      "pinyin": "shǒu dɑ̄ng qí chōng",
+      "stage": "2"
+    },
+    {
+      "word": "得當",
+      "jyutping": "dak1dong3",
+      "pinyin": "dédɑ̀ng",
+      "stage": "2"
+    },
+    {
+      "word": "理所當然",
+      "jyutping": "lei5so2dong1jin4",
+      "pinyin": "lǐ suǒ dɑ̄ng rɑ́n",
+      "stage": "2"
+    },
+    {
+      "word": "擔當",
+      "jyutping": "daam1dong1",
+      "pinyin": "dɑ̄ndɑ̄ng",
+      "stage": "2"
+    }
+  ],
+  "fourCharacterPhrases": [
+    {
+      "word": "一馬當先"
+    },
+    {
+      "word": "老當益壯"
+    },
+    {
+      "word": "門當户對"
+    },
+    {
+      "word": "當之無愧"
+    },
+    {
+      "word": "當機立斷"
+    },
+    {
+      "word": "旗鼓相當"
+    },
+    {
+      "word": "銳不可當"
+    },
+    {
+      "word": "獨當一面"
+    }
+  ],
+  "classicalPhrases": [],
+  "multiCharacterIdioms": [
+    {
+      "word": "雞毛當令箭"
+    }
+  ],
+  "properNouns": [],
+  "transliteratedWords": []
+}

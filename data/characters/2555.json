@@ -1,0 +1,500 @@
+{
+  "id": "2555",
+  "character": "球",
+  "sourceUrl": "https://www.edbchinese.hk/lexlist_ch/result.jsp?id=2555&sortBy=ks&jpC=lshk",
+  "radical": "玉",
+  "strokeCount": 11,
+  "jyutping": "kau4",
+  "pinyin": "qiú",
+  "strokeOrderImages": [
+    "https://www.edbchinese.hk/EmbziciwebRes/stkdemo_js/2001-3000/2555.html?lang=ch"
+  ],
+  "strokeVectors": [
+    {
+      "strokeNumber": 1,
+      "segment": 1,
+      "frame": 24,
+      "pathData": "Aq6CUQkRiiCWgcQKnhDJihoIAEAAQMIBSrOEnQjVAVjVAOQi5APiVAAQk5AAibhCg",
+      "transform": {
+        "x": 193.5,
+        "y": 300.7
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 1,
+      "segment": 2,
+      "frame": 27,
+      "pathData": "A1UEHQkRijCWgcQUHh+QVkEQFbhCE0D2QCJCIk6A9QuvC6uuBBQi5APiWAAQk5AAiahCg",
+      "transform": {
+        "x": 260.1,
+        "y": 289.2
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 2,
+      "segment": 1,
+      "frame": 48,
+      "pathData": "AsDCSQihiTEJguQJuhXH9hsQLfBEraFJQk8Axk6AhQhZAGhOAAQkwAAiLhhg",
+      "transform": {
+        "x": 204,
+        "y": 509.2
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 2,
+      "segment": 2,
+      "frame": 51,
+      "pathData": "A1BD1QihiUEJguQRtidL4jlQDUglG5CbQD3BclhBxQvOD3vABmQhZAGhOAAQkwAAiLhig",
+      "transform": {
+        "x": 261.4,
+        "y": 499.2
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 3,
+      "segment": 1,
+      "frame": 72,
+      "pathData": "AjKEiIABkCQgIl8kUkAIK0g8QExBegdC1Qg9DngYF8QjSG7iaAAQiNAAhfl3g",
+      "transform": {
+        "x": 257.2,
+        "y": 375
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 3,
+      "segment": 2,
+      "frame": 75,
+      "pathData": "AjCTaQgNwtAGwgQgIl+kUj/IK0g9QExBfgdC1QhcFbgJKwIghVNQi2HviSAAQh3AAhglUg",
+      "transform": {
+        "x": 257.2,
+        "y": 466.6
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 3,
+      "segment": 3,
+      "frame": 78,
+      "pathData": "AipfJQgq7YAK66QgIl+kUj/IK0g9QExBfgdC1QhcFbgJKwMgBAAo2QkZGyh2AAQhPAAgJi7g",
+      "transform": {
+        "x": 257.2,
+        "y": 526.4
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 4,
+      "segment": 1,
+      "frame": 96,
+      "pathData": "AhHHSQjMgWlTkXQlHkcDTgiQFMgcJgjqQQbjwsLM0IkNC8QhuB1h+AAQgYAAgYgEg",
+      "transform": {
+        "x": 147.4,
+        "y": 788.9
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 4,
+      "segment": 2,
+      "frame": 99,
+      "pathData": "Ao2LQQjMgWlTkXQlHkdDTgiQFMgcJhjpITnoKQJsiooHIXQrvHypaGpQhuB1h/AAQgYAAgYgEg",
+      "transform": {
+        "x": 196.9,
+        "y": 763.5
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 4,
+      "segment": 3,
+      "frame": 102,
+      "pathData": "AvUOQQjMgWlSkXQlIkdDTgiQFMgcJhjqMAiNgOMQHEiCmtFCQz/M+uiKPQhuB1h/AAQgYAAgYgEg",
+      "transform": {
+        "x": 238.2,
+        "y": 744.3
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 5,
+      "segment": 1,
+      "frame": 120,
+      "pathData": "AqUBmQkHiVEHgnQI1g8I6hQQJkAzo3EYQkxA0kqA+Qg5AIg6AAQjeAAjwh9g",
+      "transform": {
+        "x": 518.4,
+        "y": 383
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 5,
+      "segment": 2,
+      "frame": 123,
+      "pathData": "A1TDTQkIiWEIgnQTJiATojmQLtBhrhENQvZBrujC/Qg5AJg6AAQjeAAjwh+g",
+      "transform": {
+        "x": 588.7,
+        "y": 372.1
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 5,
+      "segment": 3,
+      "frame": 126,
+      "pathData": "A+ZEiQkHiXEHgnQY/inZzlUQFKgwF0EUQD+DAqXAGQ4JBg2NEjQg5AJg6AAQjeAAjwh9g",
+      "transform": {
+        "x": 646.9,
+        "y": 364.3
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 6,
+      "segment": 1,
+      "frame": 144,
+      "pathData": "AjJRPQgCmIgImOQAFuXj/pGQhSjHCtgVQDQgMFFDFQFfDIgcDVQiZJygZJGQgSE5gOE2QiaGFh8AAQhvAAhYkzg",
+      "transform": {
+        "x": 639.7,
+        "y": 257.3
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 6,
+      "segment": 2,
+      "frame": 147,
+      "pathData": "EgDdAgEQAl16gb3KQAFuZj/pGQhSjGCtgWQDQgMFFDGQFfDHgcDWQiZJxgZJIQhQWQgZVeQiZH5hqAAQhqAAg7n4g",
+      "transform": {
+        "x": 639.7,
+        "y": 372
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 6,
+      "segment": 3,
+      "frame": 150,
+      "pathData": "EgEjAssUAB8gh+gAsglRQAFuZj/pGQhSjGCtgWQDQgMFFDGQFfDHgcDWQiZJxgZJIUgCAAjkAANAhiQicJoh6gBQh2AAhYozg",
+      "transform": {
+        "x": 639.7,
+        "y": 458.7
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 6,
+      "segment": 4,
+      "frame": 153,
+      "pathData": "EgAmBBOQlGnRmAlsQkajqCSAWIIhC0QEVBtBTiCQBMiTAWreUACmgl/gAygqRQAFuZj+pGQhSjGCsgWQDQgMFGDGQFfDHgcDWQiZJxgZJIUgCjAtiABCAqMQBJOTl/H+QglAzgyAAQh0AAi3kUg",
+      "transform": {
+        "x": 595,
+        "y": 561.3
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 7,
+      "segment": 1,
+      "frame": 168,
+      "pathData": "AgoEKQi1jbi0kpQguhuHWBuQB2AdBhAiQFYHtlpAAQhmAAifgog",
+      "transform": {
+        "x": 480.5,
+        "y": 538.1
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 7,
+      "segment": 2,
+      "frame": 171,
+      "pathData": "AC2G6QlqkYlnpRQgvhuHXBuQI9CLA8EPQBGEoh0CiQg6AyhLAAQhHAAhWgtg",
+      "transform": {
+        "x": 494.3,
+        "y": 556.2
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 8,
+      "segment": 1,
+      "frame": 192,
+      "pathData": "AheHPQiMgPkIknQi4j8C4hNQEngvFAirQNdkdq/N3QjbEAiLAAIgLgBg",
+      "transform": {
+        "x": 423.2,
+        "y": 789.6
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 8,
+      "segment": 2,
+      "frame": 195,
+      "pathData": "ApJO6QiMgPkIknQi4j9C4hNQHthOI0moQHTk4HimoQBehMgqB4QiIETkxFfItLO5QjcEAiLAAIgLgBg",
+      "transform": {
+        "x": 472.3,
+        "y": 740.5
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 9,
+      "segment": 1,
+      "frame": 216,
+      "pathData": "AlkhOQBdh/BaiJQBtjTCmB9QExDiBrDBQBHB0iZBKQiuBUjhBoQkOBqiOAAQlEAAFbopg",
+      "transform": {
+        "x": 788.3,
+        "y": 513.4
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 9,
+      "segment": 2,
+      "frame": 219,
+      "pathData": "AuiJoQJ3muIHseQBtjTCoB9QEwDiBsDBQBHB1iZBKQlJCfoBDiIgEACIj5CHQlnDOkvBpg",
+      "transform": {
+        "x": 748.8,
+        "y": 540.4
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 10,
+      "segment": 1,
+      "frame": 240,
+      "pathData": "ABcFDQkglfjch2IAAkrQEBA4H0HkQCSFfiIAAQhQAAizh7g",
+      "transform": {
+        "x": 696.7,
+        "y": 655.5
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 10,
+      "segment": 2,
+      "frame": 243,
+      "pathData": "AE/MvIphtCQltnhkIiNIAAksQEBA4H0HmQG/GkG+E6QFpJflIAAQiWAAknh/g",
+      "transform": {
+        "x": 747,
+        "y": 705.1
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 10,
+      "segment": 3,
+      "frame": 246,
+      "pathData": "AGpS4QkiADlDm3IsGwiQlsngkJiOIAAkrQEBA4H1HlQNjMvNaGgQFsC7EWB0QB5AziCBDQqODemnAAIgXAAg",
+      "transform": {
+        "x": 814.2,
+        "y": 731.7
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 11,
+      "segment": 1,
+      "frame": 264,
+      "pathData": "Amzj+QgchTJKBYQKQHyrHAuQkBjrj2k6g",
+      "transform": {
+        "x": 806.4,
+        "y": 216.4
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 11,
+      "segment": 2,
+      "frame": 267,
+      "pathData": "ACwGEQmqkqmNn7QgchTJLBYQKwCOApEgQAgDihZB9QhVBZhuAAQhhAAh0hGg",
+      "transform": {
+        "x": 827.6,
+        "y": 232.7
+      },
+      "color": "#000000"
+    }
+  ],
+  "inLexicalListsHK": true,
+  "stage1Words": [
+    {
+      "word": "球",
+      "jyutping": "kau4",
+      "pinyin": "qiú",
+      "stage": "1"
+    },
+    {
+      "word": "球員",
+      "jyutping": "kau4jyun4",
+      "pinyin": "qiúyuɑ́n",
+      "stage": "1"
+    },
+    {
+      "word": "球迷",
+      "jyutping": "kau4mai4",
+      "pinyin": "qiúmí",
+      "stage": "1"
+    },
+    {
+      "word": "球場",
+      "jyutping": "kau4coeng4",
+      "pinyin": "qiúchɑ̌ng",
+      "stage": "1"
+    },
+    {
+      "word": "球隊",
+      "jyutping": "kau4deoi6",
+      "pinyin": "qiúduì",
+      "stage": "1"
+    },
+    {
+      "word": "球賽",
+      "jyutping": "kau4coi3",
+      "pinyin": "qiúsɑ̀i",
+      "stage": "1"
+    },
+    {
+      "word": "球證",
+      "jyutping": "kau4zing3",
+      "pinyin": "qiúzhèng",
+      "stage": "1"
+    },
+    {
+      "word": "球體",
+      "jyutping": "kau4tai2",
+      "pinyin": "qiútǐ",
+      "stage": "1"
+    },
+    {
+      "word": "月球",
+      "jyutping": "jyut6kau4",
+      "pinyin": "yuèqiú",
+      "stage": "1"
+    },
+    {
+      "word": "北半球",
+      "jyutping": "bak1bun3kau4",
+      "pinyin": "běibɑ̀nqiú",
+      "stage": "1"
+    },
+    {
+      "word": "皮球",
+      "jyutping": "pei4kau4",
+      "pinyin": "píqiú",
+      "stage": "1"
+    },
+    {
+      "word": "地球",
+      "jyutping": "dei6kau4",
+      "pinyin": "dìqiú",
+      "stage": "1"
+    },
+    {
+      "word": "羽毛球",
+      "jyutping": "jyu5mou4kau4",
+      "pinyin": "yǔmɑ́oqiú",
+      "stage": "1"
+    },
+    {
+      "word": "足球",
+      "jyutping": "zuk1kau4",
+      "pinyin": "zúqiú",
+      "stage": "1"
+    },
+    {
+      "word": "保齡球",
+      "jyutping": "bou2ling4kau4",
+      "pinyin": "bɑ̌olíngqiú",
+      "stage": "1"
+    },
+    {
+      "word": "南半球",
+      "jyutping": "naam4bun3kau4",
+      "pinyin": "nɑ́nbɑ̀nqiú",
+      "stage": "1"
+    },
+    {
+      "word": "風球",
+      "jyutping": "fung1kau4",
+      "pinyin": "fēngqiú",
+      "stage": "1"
+    },
+    {
+      "word": "哥爾夫球",
+      "jyutping": "go1ji5fu1kau4",
+      "pinyin": "gē’ěrfūqiú",
+      "stage": "1"
+    },
+    {
+      "word": "高爾夫球",
+      "jyutping": "gou1ji5fu1kau4",
+      "pinyin": "gɑ̄o'ěrfūqiú",
+      "stage": "1"
+    },
+    {
+      "word": "氣球",
+      "jyutping": "hei3kau4",
+      "pinyin": "qìqiú",
+      "stage": "1"
+    },
+    {
+      "word": "排球",
+      "jyutping": "paai4kau4",
+      "pinyin": "pɑ́iqiú",
+      "stage": "1"
+    },
+    {
+      "word": "眼球",
+      "jyutping": "ngaan5kau4",
+      "pinyin": "yɑ̌nqiú",
+      "stage": "1"
+    },
+    {
+      "word": "網球",
+      "jyutping": "mong5kau4",
+      "pinyin": "wɑ̌ngqiú",
+      "stage": "1"
+    },
+    {
+      "word": "籃球",
+      "jyutping": "laam4kau4",
+      "pinyin": "lɑ́nqiú",
+      "stage": "1"
+    }
+  ],
+  "stage2Words": [
+    {
+      "word": "球星",
+      "jyutping": "kau4sing1",
+      "pinyin": "qiúxīng",
+      "stage": "2"
+    },
+    {
+      "word": "全球",
+      "jyutping": "cyun4kau4",
+      "pinyin": "quɑ́nqiú",
+      "stage": "2"
+    },
+    {
+      "word": "地球儀",
+      "jyutping": "dei6kau4ji4",
+      "pinyin": "dìqiúyí",
+      "stage": "2"
+    },
+    {
+      "word": "星球",
+      "jyutping": "sing1kau4",
+      "pinyin": "xīngqiú",
+      "stage": "2"
+    }
+  ],
+  "fourCharacterPhrases": [],
+  "classicalPhrases": [],
+  "multiCharacterIdioms": [],
+  "properNouns": [],
+  "transliteratedWords": []
+}

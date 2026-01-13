@@ -1,0 +1,807 @@
+{
+  "id": "1292",
+  "character": "心",
+  "sourceUrl": "https://www.edbchinese.hk/lexlist_ch/result.jsp?id=1292&sortBy=ks&jpC=lshk",
+  "radical": "心",
+  "strokeCount": 4,
+  "jyutping": "sam1",
+  "pinyin": "xīn",
+  "strokeOrderImages": [
+    "https://www.edbchinese.hk/EmbziciwebRes/stkdemo_js/1001-2000/1292.html?lang=ch"
+  ],
+  "strokeVectors": [
+    {
+      "strokeNumber": 1,
+      "segment": 1,
+      "frame": 24,
+      "pathData": "Aj5DBQBDi1A4jMIAVhXQAxlGCMEgIAsBiQBsC5AOD7QgCBHgFBHQiEBehmAAQiqAAhYkEg",
+      "transform": {
+        "x": 191.3,
+        "y": 502.8
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 1,
+      "segment": 2,
+      "frame": 27,
+      "pathData": "AmTGvICZlBQBVijBGi+QBEi1A3jNIAUhXQAylFCMEfIAsBjQBsC5APD7QgDBHgEBIQgaGFhkGHQjMC6iSAAQjoAAhdnLg",
+      "transform": {
+        "x": 175.8,
+        "y": 546.5
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 1,
+      "segment": 3,
+      "frame": 30,
+      "pathData": "AlDTbIgOgGQiThqgXkbQgGlyCqlRIDFmaQBUikBGi+QBEi1A4jNIAUhXQAylFCMEfIAsBjQBsC5AOD7QgCBHgFBIQgZGGhkGGQghB/goB/QiZHei6CWQhXBAhXAAQg5AAg4gbg",
+      "transform": {
+        "x": 165.4,
+        "y": 584.5
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 2,
+      "segment": 1,
+      "frame": 48,
+      "pathData": "AgJHAIgYhbIh+mkQg5iUhfi2Qhgi1EPAiQBYAgAuAiQCqCCA+C5IBrGwQgcESiBAAQhNAAhwhjg",
+      "transform": {
+        "x": 328.7,
+        "y": 516.4
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 2,
+      "segment": 2,
+      "frame": 51,
+      "pathData": "AECROQh8jFhVjQQivlgh/neIgXhbIh+mlQg5iVhgi1Qhfi2EPAiQBYAhAuAiQCrCCA+C5ICbJ8QCZIUEbFpQAQFVjNAAQg5AAhLgbg",
+      "transform": {
+        "x": 353.1,
+        "y": 574.6
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 2,
+      "segment": 3,
+      "frame": 54,
+      "pathData": "AK3YqQpGkzlMmbQh2iThgiYQh8jGhVjQQiwlfh/nfIgXhbIh+mlQg5iUhgi2Qhfi1EPAiQBYAgAuAiQCrCCA+C5ICcJ8QCZIVEbFpQBaB0BnBiQEdEaK8EfQHlIVqLBsQhogshlgxg",
+      "transform": {
+        "x": 422.3,
+        "y": 628.8
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 2,
+      "segment": 4,
+      "frame": 57,
+      "pathData": "APUcbQrvgzprkBQhpgrhlgxQpGkzlNmcQh2iShgiZQh7jFhWjPQivlgh/nfIgYhbIh+mlQg5iVhfi1Qhgi2EPAiQBYAhAuAiQCrCCA+C5ICdJ8QCZIVEbFoQBaB0BoBiQEdEbK7EeQBRAhBXAiQIyCjMdh9QGOg5EtiVQMmEGlbKYQo1CHpHAAQimAAimgLg",
+      "transform": {
+        "x": 551.4,
+        "y": 644.7
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 2,
+      "segment": 5,
+      "frame": 60,
+      "pathData": "AG9cbQrugzpskBQhpgrhlgxQpGkzlNmcQh2iShgiZQh7jFhWjPQivlgh/nfIgYhbIh+mlQg5iVhfi1Qhgi2EPAiQBYAhAuAiQCrCCA+C5ICdJ8QCZIVEbFoQBaB0BoBiQEdEbK7EeQBRAhBXAiQIzCjMch9QGOg5EtiVIAkgTQB4hwhQlDIkrwMQgzjRCPCRQHxJNJtHhIGnERQDVCfAKEAQgFBkg1BWQhaCsrhEeQiQAriRAjQo1CHpHAAQilAAingLg",
+      "transform": {
+        "x": 604.9,
+        "y": 644.7
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 3,
+      "segment": 1,
+      "frame": 72,
+      "pathData": "AhkG4QinkXjOl+QkPlQIOBwQHkBzEWDBIgBAAQB2JjnuAAQh1AAiWgig",
+      "transform": {
+        "x": 509.9,
+        "y": 377.9
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 3,
+      "segment": 2,
+      "frame": 75,
+      "pathData": "AEDMkQixhYlnpMIgfgyQinkWjOl/QkPlQIOBwQHkBzEWDBQAmAbAjAcQAkAdAgAgQFTF+gwF0QhLHRkSAAQhJAAhXggg",
+      "transform": {
+        "x": 530.7,
+        "y": 414.1
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 4,
+      "segment": 1,
+      "frame": 96,
+      "pathData": "ABGFNQiIikiTiQIiDhrIhThNQimjgFMA6QGfCWFJCWQASFrlbAAQgoAAgsgFg",
+      "transform": {
+        "x": 795.2,
+        "y": 358.1
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 4,
+      "segment": 2,
+      "frame": 99,
+      "pathData": "ACxKxQg1hDg1hJQjDk8jekIQiJikiTiPIiDhsIhThNQimjhFMA7QGgCVFICWQE7CQDrCPQChBXB2B2QA9JYpMAAQhZAAhmgNg",
+      "transform": {
+        "x": 836.9,
+        "y": 394.6
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 4,
+      "segment": 3,
+      "frame": 102,
+      "pathData": "AKpPaQlKjKk6mNQg0hDg0hIQjFk8jdkIQiKikiTiQIiDhsIhThNQiljgFLA6QGgCWFJCWQE6CPDrCQQChBWB2B3QC4C6BNEJQBFE9iCEiQgsCRiBAAQgtAAg4gSg",
+      "transform": {
+        "x": 850.9,
+        "y": 424.7
+      },
+      "color": "#000000"
+    }
+  ],
+  "inLexicalListsHK": true,
+  "stage1Words": [
+    {
+      "word": "心中",
+      "jyutping": "sam1zung1",
+      "pinyin": "xīnzhōng",
+      "stage": "1"
+    },
+    {
+      "word": "心思",
+      "jyutping": "sam1si1",
+      "pinyin": "xīnsi",
+      "stage": "1"
+    },
+    {
+      "word": "心急",
+      "jyutping": "sam1gap1",
+      "pinyin": "xīnjí",
+      "stage": "1"
+    },
+    {
+      "word": "心得",
+      "jyutping": "sam1dak1",
+      "pinyin": "xīndé",
+      "stage": "1"
+    },
+    {
+      "word": "心情",
+      "jyutping": "sam1cing4",
+      "pinyin": "xīnqíng",
+      "stage": "1"
+    },
+    {
+      "word": "心意",
+      "jyutping": "sam1ji3",
+      "pinyin": "xīnyì",
+      "stage": "1"
+    },
+    {
+      "word": "心愛",
+      "jyutping": "sam1oi3",
+      "pinyin": "xīn’ɑ̀i",
+      "stage": "1"
+    },
+    {
+      "word": "心腸",
+      "jyutping": "sam1coeng4",
+      "pinyin": "xīnchɑ́ng",
+      "stage": "1"
+    },
+    {
+      "word": "心跳",
+      "jyutping": "sam1tiu3",
+      "pinyin": "xīntiɑ̀o",
+      "stage": "1"
+    },
+    {
+      "word": "心裏",
+      "jyutping": "sam1leoi5",
+      "pinyin": "xīnli",
+      "stage": "1"
+    },
+    {
+      "word": "心滿意足",
+      "jyutping": "sam1mun5ji3zuk1",
+      "pinyin": "xīn mɑ̌n yì zú",
+      "stage": "1"
+    },
+    {
+      "word": "心臟",
+      "jyutping": "sam1zong6",
+      "pinyin": "xīnzɑ̀ng",
+      "stage": "1"
+    },
+    {
+      "word": "一心",
+      "jyutping": "jat1sam1",
+      "pinyin": "yìxīn",
+      "stage": "1"
+    },
+    {
+      "word": "力不從心",
+      "jyutping": "lik6bat1cung4sam1",
+      "pinyin": "lì bù cóng xīn",
+      "stage": "1"
+    },
+    {
+      "word": "小心",
+      "jyutping": "siu2sam1",
+      "pinyin": "xiɑ̌o•xīn",
+      "stage": "1"
+    },
+    {
+      "word": "中心",
+      "jyutping": "zung1sam1",
+      "pinyin": "zhōngxīn",
+      "stage": "1"
+    },
+    {
+      "word": "公德心",
+      "jyutping": "gung1dak1sam1",
+      "pinyin": "gōngdéxīn",
+      "stage": "1"
+    },
+    {
+      "word": "用心",
+      "jyutping": "sam1",
+      "pinyin": "yòngxīn",
+      "stage": "1"
+    },
+    {
+      "word": "全心全意",
+      "jyutping": "cyun4sam1cyun4ji3",
+      "pinyin": "quɑ́n xīn quɑ́n yì",
+      "stage": "1"
+    },
+    {
+      "word": "安心",
+      "jyutping": "sam1",
+      "pinyin": "nxīn",
+      "stage": "1"
+    },
+    {
+      "word": "灰心",
+      "jyutping": "fui1sam1",
+      "pinyin": "huīxīn",
+      "stage": "1"
+    },
+    {
+      "word": "決心",
+      "jyutping": "kyut3sam1",
+      "pinyin": "juéxīn",
+      "stage": "1"
+    },
+    {
+      "word": "放心",
+      "jyutping": "fong3sam1",
+      "pinyin": "fɑ̀ngxīn",
+      "stage": "1"
+    },
+    {
+      "word": "信心",
+      "jyutping": "seon3sam1",
+      "pinyin": "xìnxīn",
+      "stage": "1"
+    },
+    {
+      "word": "恆心",
+      "jyutping": "hang4sam1",
+      "pinyin": "héngxīn",
+      "stage": "1"
+    },
+    {
+      "word": "狠心",
+      "jyutping": "han2sam1",
+      "pinyin": "hěnxīn",
+      "stage": "1"
+    },
+    {
+      "word": "耐心",
+      "jyutping": "noi6sam1",
+      "pinyin": "nɑ̀ixīn",
+      "stage": "1"
+    },
+    {
+      "word": "背心",
+      "jyutping": "bui3sam1",
+      "pinyin": "bèixīn",
+      "stage": "1"
+    },
+    {
+      "word": "留心",
+      "jyutping": "lau4sam1",
+      "pinyin": "liúxīn",
+      "stage": "1"
+    },
+    {
+      "word": "真心",
+      "jyutping": "zan1sam1",
+      "pinyin": "zhēnxīn",
+      "stage": "1"
+    },
+    {
+      "word": "專心",
+      "jyutping": "zyun1sam1",
+      "pinyin": "zhuɑ̄nxīn",
+      "stage": "1"
+    },
+    {
+      "word": "專心致志",
+      "jyutping": "zyun1sam1zi3zi3",
+      "pinyin": "zhuɑ̄n xīn zhì zhì",
+      "stage": "1"
+    },
+    {
+      "word": "粗心",
+      "jyutping": "cou1sam1",
+      "pinyin": "cūxīn",
+      "stage": "1"
+    },
+    {
+      "word": "細心",
+      "jyutping": "sai3sam1",
+      "pinyin": "xìxīn",
+      "stage": "1"
+    },
+    {
+      "word": "貪心",
+      "jyutping": "taam1sam1",
+      "pinyin": "tɑ̄nxīn",
+      "stage": "1"
+    },
+    {
+      "word": "掌心",
+      "jyutping": "zoeng2sam1",
+      "pinyin": "zhɑ̌ngxīn",
+      "stage": "1"
+    },
+    {
+      "word": "虛心",
+      "jyutping": "heoi1sam1",
+      "pinyin": "xūxīn",
+      "stage": "1"
+    },
+    {
+      "word": "開心",
+      "jyutping": "hoi1sam1",
+      "pinyin": "kɑ̄ixīn",
+      "stage": "1"
+    },
+    {
+      "word": "傷心",
+      "jyutping": "soeng1sam1",
+      "pinyin": "shɑ̄ngxīn",
+      "stage": "1"
+    },
+    {
+      "word": "愛心",
+      "jyutping": "oi3sam1",
+      "pinyin": "ɑ̀ixīn",
+      "stage": "1"
+    },
+    {
+      "word": "熱心",
+      "jyutping": "jit6sam1",
+      "pinyin": "rèxīn",
+      "stage": "1"
+    },
+    {
+      "word": "操心",
+      "jyutping": "cou1sam1",
+      "pinyin": "cɑ̄oxīn",
+      "stage": "1"
+    },
+    {
+      "word": "擔心",
+      "jyutping": "daam1sam1",
+      "pinyin": "dɑ̄nxīn",
+      "stage": "1"
+    },
+    {
+      "word": "點心",
+      "jyutping": "dim2sam1",
+      "pinyin": "diɑ̌nxin",
+      "stage": "1"
+    },
+    {
+      "word": "關心",
+      "jyutping": "gwaan1sam1",
+      "pinyin": "guɑ̄nxīn",
+      "stage": "1"
+    }
+  ],
+  "stage2Words": [
+    {
+      "word": "心血",
+      "jyutping": "sam1hyut3",
+      "pinyin": "xīnxuè",
+      "stage": "2"
+    },
+    {
+      "word": "心事",
+      "jyutping": "sam1si6",
+      "pinyin": "xīnshì",
+      "stage": "2"
+    },
+    {
+      "word": "心底",
+      "jyutping": "sam1dai2",
+      "pinyin": "xīndǐ",
+      "stage": "2"
+    },
+    {
+      "word": "心理",
+      "jyutping": "sam1lei5",
+      "pinyin": "xīnlǐ",
+      "stage": "2"
+    },
+    {
+      "word": "心境",
+      "jyutping": "sam1ging2",
+      "pinyin": "xīnjìng",
+      "stage": "2"
+    },
+    {
+      "word": "心態",
+      "jyutping": "sam1taai3",
+      "pinyin": "xīntɑ̀i",
+      "stage": "2"
+    },
+    {
+      "word": "心頭",
+      "jyutping": "sam1tau4",
+      "pinyin": "xīntóu",
+      "stage": "2"
+    },
+    {
+      "word": "心聲",
+      "jyutping": "sam1sing1",
+      "pinyin": "xīnshēng",
+      "stage": "2"
+    },
+    {
+      "word": "心曠神怡",
+      "jyutping": "sam1kwong3san4ji4",
+      "pinyin": "xīn kuɑ̀ng shén yí",
+      "stage": "2"
+    },
+    {
+      "word": "心願",
+      "jyutping": "sam1jyun6",
+      "pinyin": "xīnyuɑ̀n",
+      "stage": "2"
+    },
+    {
+      "word": "心臟病",
+      "jyutping": "sam1zong6beng6",
+      "pinyin": "xīnzɑ̀ngbìng",
+      "stage": "2"
+    },
+    {
+      "word": "心靈",
+      "jyutping": "sam1ling4",
+      "pinyin": "xīnlíng",
+      "stage": "2"
+    },
+    {
+      "word": "人心",
+      "jyutping": "jan4sam1",
+      "pinyin": "rénxīn",
+      "stage": "2"
+    },
+    {
+      "word": "小心翼翼",
+      "jyutping": "siu2sam1jik6jik6",
+      "pinyin": "xiɑ̌oxīn yìyì",
+      "stage": "2"
+    },
+    {
+      "word": "內心",
+      "jyutping": "noi6sam1",
+      "pinyin": "nèixīn",
+      "stage": "2"
+    },
+    {
+      "word": "匠心獨運",
+      "jyutping": "zoeng6sam1duk6wan6",
+      "pinyin": "jiɑ̀ng xīn dú yùn",
+      "stage": "2"
+    },
+    {
+      "word": "扣人心弦",
+      "jyutping": "kau3jan4sam1jin4",
+      "pinyin": "kòu rén xīn xiɑ́n",
+      "stage": "2"
+    },
+    {
+      "word": "別出心裁",
+      "jyutping": "bit6ceot1sam1coi4",
+      "pinyin": "bié chū xīn cɑ́i",
+      "stage": "2"
+    },
+    {
+      "word": "良心",
+      "jyutping": "loeng4sam1",
+      "pinyin": "liɑ́ngxīn",
+      "stage": "2"
+    },
+    {
+      "word": "身心",
+      "jyutping": "san1sam1",
+      "pinyin": "shēnxīn",
+      "stage": "2"
+    },
+    {
+      "word": "忠心",
+      "jyutping": "zung1sam1",
+      "pinyin": "zhōngxīn",
+      "stage": "2"
+    },
+    {
+      "word": "空心",
+      "jyutping": "hung1sam1",
+      "pinyin": "kōngxīn",
+      "stage": "2"
+    },
+    {
+      "word": "重心",
+      "jyutping": "zung6sam1",
+      "pinyin": "zhòngxīn",
+      "stage": "2"
+    },
+    {
+      "word": "核心",
+      "jyutping": "hat6sam1/wat6sam1",
+      "pinyin": "héxīn",
+      "stage": "2"
+    },
+    {
+      "word": "衷心",
+      "jyutping": "cung1sam1",
+      "pinyin": "zhōngxīn",
+      "stage": "2"
+    },
+    {
+      "word": "得心應手",
+      "jyutping": "dak1sam1jing3sau2",
+      "pinyin": "dé xīn yìng shǒu",
+      "stage": "2"
+    },
+    {
+      "word": "掉以輕心",
+      "jyutping": "diu6ji5hing1sam1",
+      "pinyin": "diɑ̀o yǐ qīng xīn",
+      "stage": "2"
+    },
+    {
+      "word": "野心",
+      "jyutping": "je5sam1",
+      "pinyin": "yěxīn",
+      "stage": "2"
+    },
+    {
+      "word": "提心吊膽",
+      "jyutping": "tai4sam1diu3daam2",
+      "pinyin": "tí xīn diɑ̀o dɑ̌n",
+      "stage": "2"
+    },
+    {
+      "word": "無心",
+      "jyutping": "mou4sam1",
+      "pinyin": "wúxīn",
+      "stage": "2"
+    },
+    {
+      "word": "圓心",
+      "jyutping": "jyun4sam1",
+      "pinyin": "yuɑ́nxīn",
+      "stage": "2"
+    },
+    {
+      "word": "疑心",
+      "jyutping": "ji4sam1",
+      "pinyin": "yíxīn",
+      "stage": "2"
+    },
+    {
+      "word": "精心",
+      "jyutping": "zing1sam1",
+      "pinyin": "jīngxīn",
+      "stage": "2"
+    },
+    {
+      "word": "賞心悦目",
+      "jyutping": "soeng2sam1jyut6muk6",
+      "pinyin": "shɑ̌ng xīn yuè mù",
+      "stage": "2"
+    },
+    {
+      "word": "隨心所欲",
+      "jyutping": "ceoi4sam1so2juk6",
+      "pinyin": "suí xīn suǒ yù",
+      "stage": "2"
+    },
+    {
+      "word": "觸目驚心",
+      "jyutping": "zuk1muk6ging1sam1",
+      "pinyin": "chù mù jīng xīn",
+      "stage": "2"
+    }
+  ],
+  "fourCharacterPhrases": [
+    {
+      "word": "一心一意"
+    },
+    {
+      "word": "人心惶惶"
+    },
+    {
+      "word": "心不在焉"
+    },
+    {
+      "word": "心中有數"
+    },
+    {
+      "word": "心安理得"
+    },
+    {
+      "word": "心平氣和"
+    },
+    {
+      "word": "心急如焚"
+    },
+    {
+      "word": "心悅誠服"
+    },
+    {
+      "word": "心慌意亂"
+    },
+    {
+      "word": "心煩意亂"
+    },
+    {
+      "word": "心有餘悸"
+    },
+    {
+      "word": "心灰意冷"
+    },
+    {
+      "word": "心狠手辣"
+    },
+    {
+      "word": "心直口快"
+    },
+    {
+      "word": "心花怒放"
+    },
+    {
+      "word": "平心而論"
+    },
+    {
+      "word": "平心靜氣"
+    },
+    {
+      "word": "同心協力"
+    },
+    {
+      "word": "死心塌地"
+    },
+    {
+      "word": "別有用心"
+    },
+    {
+      "word": "忠心耿耿"
+    },
+    {
+      "word": "苦口婆心"
+    },
+    {
+      "word": "動人心弦"
+    },
+    {
+      "word": "粗心大意"
+    },
+    {
+      "word": "痛心疾首"
+    },
+    {
+      "word": "費盡心思"
+    },
+    {
+      "word": "雄心勃勃"
+    },
+    {
+      "word": "雄心壯志"
+    },
+    {
+      "word": "雄心萬丈"
+    },
+    {
+      "word": "煞費苦心"
+    },
+    {
+      "word": "萬眾一心"
+    },
+    {
+      "word": "漫不經心"
+    },
+    {
+      "word": "盡心盡力"
+    },
+    {
+      "word": "稱心滿意"
+    },
+    {
+      "word": "語重心長"
+    },
+    {
+      "word": "賞心樂事"
+    },
+    {
+      "word": "膽戰心驚"
+    },
+    {
+      "word": "鐵石心腸"
+    },
+    {
+      "word": "驚心動魄"
+    }
+  ],
+  "classicalPhrases": [
+    {
+      "word": "丹心",
+      "jyutping": "daan1sam1",
+      "pinyin": "dɑ̄nxīn"
+    }
+  ],
+  "multiCharacterIdioms": [
+    {
+      "word": "心有餘而力不足"
+    },
+    {
+      "word": "世上無難事，只怕有心人"
+    },
+    {
+      "word": "皇天不負有心人"
+    },
+    {
+      "word": "無心插柳柳成蔭"
+    },
+    {
+      "word": "路遙知馬力，日久見人心"
+    },
+    {
+      "word": "誰言寸草心，報得三春暉"
+    }
+  ],
+  "properNouns": [
+    {
+      "word": "心肝脾肺腎",
+      "jyutping": "sam1gon1pei4fai3san6",
+      "pinyin": "xīn gɑ̄n pí fèi shèn"
+    },
+    {
+      "word": "冰心",
+      "jyutping": "bing1sam1",
+      "pinyin": "Bīngxīn"
+    }
+  ],
+  "transliteratedWords": []
+}

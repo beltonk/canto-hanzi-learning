@@ -1,0 +1,503 @@
+{
+  "id": "1197",
+  "character": "度",
+  "sourceUrl": "https://www.edbchinese.hk/lexlist_ch/result.jsp?id=1197&sortBy=ks&jpC=lshk",
+  "radical": "广",
+  "strokeCount": 9,
+  "jyutping": "dou6",
+  "pinyin": "dù",
+  "strokeOrderImages": [
+    "https://www.edbchinese.hk/EmbziciwebRes/stkdemo_js/1001-2000/1197.html?lang=ch"
+  ],
+  "strokeVectors": [
+    {
+      "strokeNumber": 1,
+      "segment": 1,
+      "frame": 24,
+      "pathData": "AifDJQiZkFhekQQgXhfF8BLQDwA9CyBvQB3I2j3AAQiNAAkDi5g",
+      "transform": {
+        "x": 532.1,
+        "y": 130.6
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 1,
+      "segment": 2,
+      "frame": 27,
+      "pathData": "AAOHOQmUnni1oQQgYhfF8BLQH9CADkFkQBxDdiFEXQhzDEiEAAQhyAAh/iRg",
+      "transform": {
+        "x": 548.7,
+        "y": 152.7
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 2,
+      "segment": 1,
+      "frame": 48,
+      "pathData": "Au2DLQoUjGG9g9QPChjOrhzQLXBqqkD7QpYBMpTBaQiMASh6AAQjwAAiohEg",
+      "transform": {
+        "x": 356.7,
+        "y": 251.9
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 2,
+      "segment": 2,
+      "frame": 51,
+      "pathData": "A9qFFQoUjGG8g+QeAjFcjkDQNkCHt8EWQ3aCC27DfQiMARh6AAQjwAAiohDg",
+      "transform": {
+        "x": 451.5,
+        "y": 239.7
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 2,
+      "segment": 3,
+      "frame": 54,
+      "pathData": "EgsQAGtQoUjGG8g+UApLgEPAmfgGEQIFgvF4FdQDaC6q+AGUgltAB3gkgAFkQiMARh6AAQjwAAiohDg",
+      "transform": {
+        "x": 544.9,
+        "y": 229.3
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 3,
+      "segment": 1,
+      "frame": 72,
+      "pathData": "AlFKNQAklOAUleQBDsvjqkwIMRAAQCABRg6C8QhtH+g/LcQgfDpglDhQjmFMh+AAQiaAAAGnyg",
+      "transform": {
+        "x": 310.7,
+        "y": 384.7
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 3,
+      "segment": 2,
+      "frame": 75,
+      "pathData": "AoOXnQFLxMBM1PQBDswjqkwIMRAAQCABRg6C8QhsH+hALeQikTHlGPuQkxGLh0AAQiKAAB+oug",
+      "transform": {
+        "x": 295.7,
+        "y": 476.4
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 3,
+      "segment": 3,
+      "frame": 78,
+      "pathData": "EgVCAyAQGwmTH6ubUAOSgYwACGglPQBDswjqkwIMSAAQCABRg6C8QhtH+g/LeQkKe/q4WCQlyLEqHIOQlREfiJAAQgeAAgUgOg",
+      "transform": {
+        "x": 219.7,
+        "y": 590.9
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 4,
+      "segment": 1,
+      "frame": 96,
+      "pathData": "ArwCEQmAifD8grQMXhTLbhYQKegDpxE1QnhBLnfBeQgeAIgnAAQiOAAkIhug",
+      "transform": {
+        "x": 426.7,
+        "y": 449.4
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 4,
+      "segment": 2,
+      "frame": 99,
+      "pathData": "A6TD8QmAifD8grQcqjAXxjbQL4AysHEcQ1XBz1WEKQgeAIgnAAQiOAAkIhug",
+      "transform": {
+        "x": 519.8,
+        "y": 437.3
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 4,
+      "segment": 3,
+      "frame": 102,
+      "pathData": "EgnZAFeQmAigD8grUAo6gESAe5gFIQF3gjF4ERQDODCnpAHUgi1AAigi0AGyQgdAIgnAAQiOAAkIhug",
+      "transform": {
+        "x": 603.6,
+        "y": 427.6
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 5,
+      "segment": 1,
+      "frame": 120,
+      "pathData": "AhcGXIgNiKQgvpsjElYQiJi5HABeQF3BQARDFQAOFmAMF9QikJNh+AAQhpAAhOmcg",
+      "transform": {
+        "x": 480.1,
+        "y": 400.6
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 5,
+      "segment": 2,
+      "frame": 123,
+      "pathData": "ADCWEQiSiZgki3IiE1/QgvpujElYQiJi5HABeQF3BQARDFQAnO5ARRlQgsHGh6AAQgRAAgTgJg",
+      "transform": {
+        "x": 481.6,
+        "y": 460.8
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 6,
+      "segment": 1,
+      "frame": 144,
+      "pathData": "AlwHPQBcu4iMjMQhpkCDrAKQFJAKF1FWQBEBqhEBrQhzCpiXLRQj4GtiCAAQiJAAgDngg",
+      "transform": {
+        "x": 693.1,
+        "y": 371.5
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 6,
+      "segment": 2,
+      "frame": 147,
+      "pathData": "AnoS8UAFQggzgDYgE6QhpkCDrAJQFKALF0FVQBFBrhFBqQhzCpiXLSIkiT2QjYCvhlAAQh2AAAnjvg",
+      "transform": {
+        "x": 688.3,
+        "y": 422.4
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 7,
+      "segment": 1,
+      "frame": 168,
+      "pathData": "AnNiOIJHg1QK4BarYEMIonAhg",
+      "transform": {
+        "x": 558.1,
+        "y": 562.7
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 7,
+      "segment": 2,
+      "frame": 171,
+      "pathData": "AvDhwISQhrQF1gqFPEBQCMBzjuAII7yBrg",
+      "transform": {
+        "x": 608.3,
+        "y": 559.7
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 8,
+      "segment": 1,
+      "frame": 192,
+      "pathData": "Ar6CnQlcidEAggQMdgmMGimQIMg4pNE6Ir+CjQipAoiRAAQi8AAiShEg",
+      "transform": {
+        "x": 523.8,
+        "y": 665.1
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 8,
+      "segment": 2,
+      "frame": 195,
+      "pathData": "AG8GiQB/keBalKQBOj5kAAhIzhEKQmGBckCh4QlcidEAghQSHg3RYlGQDJhYH9DHQEPBqj8D4QirCjiRFGQg0Bqg1BlQmHFpidAAQicAABLllg",
+      "transform": {
+        "x": 589,
+        "y": 699.5
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 8,
+      "segment": 3,
+      "frame": 198,
+      "pathData": "A/pZgQQzk8LuoDQOepbFg0SQBOj6kAAiIzhEJQmGBdkCh5QlcidEAggQSGg4RZlGQDJhXH9DGQEPBrj8D3QirCkiRFGQnZPRp6IIQsqJ9zeDdQjGAShyAAQi2AAAlgug",
+      "transform": {
+        "x": 547.3,
+        "y": 789.8
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 9,
+      "segment": 1,
+      "frame": 216,
+      "pathData": "AGyHUQp8rhomlyIHxBxQHIFvHjHPQB/FQhqAAQhMAAjDisg",
+      "transform": {
+        "x": 509.2,
+        "y": 737.3
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 9,
+      "segment": 2,
+      "frame": 219,
+      "pathData": "ANUTHItavzQs2wKqvnOIHxBxQI2HFJbJbQILHqJNFqQHwIkncAAQihAAkOg+g",
+      "transform": {
+        "x": 585.5,
+        "y": 801.9
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 9,
+      "segment": 3,
+      "frame": 222,
+      "pathData": "AHjYXQnUirnJn3ItbvyQs2wLqvnOIHxBxQI2HFJcJbQMBLROMG6QHzELJxB7QKDCQH+DII5sCkQidAPh/AAQkHAAiJhAg",
+      "transform": {
+        "x": 715,
+        "y": 835.7
+      },
+      "color": "#000000"
+    }
+  ],
+  "inLexicalListsHK": true,
+  "stage1Words": [
+    {
+      "word": "度",
+      "jyutping": "dou6",
+      "pinyin": "d",
+      "stage": "1"
+    },
+    {
+      "word": "度過",
+      "jyutping": "dou6gwo3",
+      "pinyin": "dùguò",
+      "stage": "1"
+    },
+    {
+      "word": "度數",
+      "jyutping": "dou6sou3",
+      "pinyin": "dùshù",
+      "stage": "1"
+    },
+    {
+      "word": "角度",
+      "jyutping": "gok3dou6",
+      "pinyin": "jiɑ̌odù",
+      "stage": "1"
+    },
+    {
+      "word": "長度",
+      "jyutping": "coeng4dou6",
+      "pinyin": "chɑ́ngdù",
+      "stage": "1"
+    },
+    {
+      "word": "強度",
+      "jyutping": "koeng4dou6",
+      "pinyin": "qiɑ́ngdù",
+      "stage": "1"
+    },
+    {
+      "word": "速度",
+      "jyutping": "cuk1dou6",
+      "pinyin": "sùdù",
+      "stage": "1"
+    },
+    {
+      "word": "量度",
+      "jyutping": "loeng4dok6",
+      "pinyin": "liɑ́ngdù",
+      "stage": "1"
+    },
+    {
+      "word": "態度",
+      "jyutping": "taai3dou6",
+      "pinyin": "tɑ̀i•dù",
+      "stage": "1"
+    },
+    {
+      "word": "温度",
+      "jyutping": "wan1dou6",
+      "pinyin": "wēndù",
+      "stage": "1"
+    },
+    {
+      "word": "温度計",
+      "jyutping": "wan1dou6gai3",
+      "pinyin": "wēndùjì",
+      "stage": "1"
+    }
+  ],
+  "stage2Words": [
+    {
+      "word": "度身訂做",
+      "jyutping": "dok6san1ding3zou6",
+      "pinyin": "duó shēn dìngzuò",
+      "stage": "2"
+    },
+    {
+      "word": "一度",
+      "jyutping": "jat1dou6",
+      "pinyin": "yídù",
+      "stage": "2"
+    },
+    {
+      "word": "再度",
+      "jyutping": "zoi3dou6",
+      "pinyin": "zɑ̀idù",
+      "stage": "2"
+    },
+    {
+      "word": "年度",
+      "jyutping": "nin4dou6",
+      "pinyin": "niɑ́ndù",
+      "stage": "2"
+    },
+    {
+      "word": "制度",
+      "jyutping": "zai3dou6",
+      "pinyin": "zhìdù",
+      "stage": "2"
+    },
+    {
+      "word": "知名度",
+      "jyutping": "zi1ming4dou6",
+      "pinyin": "zhīmíngdù",
+      "stage": "2"
+    },
+    {
+      "word": "限度",
+      "jyutping": "haan6dou6",
+      "pinyin": "xiɑ̀ndù",
+      "stage": "2"
+    },
+    {
+      "word": "風度",
+      "jyutping": "fung1dou6",
+      "pinyin": "fēngdù",
+      "stage": "2"
+    },
+    {
+      "word": "高度",
+      "jyutping": "gou1dou6",
+      "pinyin": "gɑ̄odù",
+      "stage": "2"
+    },
+    {
+      "word": "密度",
+      "jyutping": "mat6dou6",
+      "pinyin": "mìdù",
+      "stage": "2"
+    },
+    {
+      "word": "深度",
+      "jyutping": "sam1dou6",
+      "pinyin": "shēndù",
+      "stage": "2"
+    },
+    {
+      "word": "幅度",
+      "jyutping": "fuk1dou6",
+      "pinyin": "fúdù",
+      "stage": "2"
+    },
+    {
+      "word": "程度",
+      "jyutping": "cing4dou6",
+      "pinyin": "chéngdù",
+      "stage": "2"
+    },
+    {
+      "word": "進度",
+      "jyutping": "zeon3dou6",
+      "pinyin": "jìndù",
+      "stage": "2"
+    },
+    {
+      "word": "極度",
+      "jyutping": "gik6dou6",
+      "pinyin": "jídù",
+      "stage": "2"
+    },
+    {
+      "word": "過度",
+      "jyutping": "gwo3dou6",
+      "pinyin": "guòdù",
+      "stage": "2"
+    },
+    {
+      "word": "調度",
+      "jyutping": "diu6dou6",
+      "pinyin": "diɑ̀odù",
+      "stage": "2"
+    },
+    {
+      "word": "濃度",
+      "jyutping": "nung4dou6",
+      "pinyin": "nóngdù",
+      "stage": "2"
+    },
+    {
+      "word": "濕度",
+      "jyutping": "sap1dou6",
+      "pinyin": "shīdù",
+      "stage": "2"
+    },
+    {
+      "word": "闊度",
+      "jyutping": "fut3dou6",
+      "pinyin": "kuòdù",
+      "stage": "2"
+    },
+    {
+      "word": "難度",
+      "jyutping": "naan4dou6",
+      "pinyin": "nɑ́ndù",
+      "stage": "2"
+    }
+  ],
+  "fourCharacterPhrases": [
+    {
+      "word": "置諸度外"
+    },
+    {
+      "word": "置之度外"
+    }
+  ],
+  "classicalPhrases": [
+    {
+      "word": "幾度",
+      "jyutping": "gei2dou6",
+      "pinyin": "jǐdù"
+    }
+  ],
+  "multiCharacterIdioms": [],
+  "properNouns": [
+    {
+      "word": "印尼",
+      "jyutping": "jan3nei4",
+      "pinyin": "Yìnní"
+    },
+    {
+      "word": "印度尼西亞",
+      "jyutping": "jan3dou6nei4sai1aa3",
+      "pinyin": "Yìndùníxīyɑ̀"
+    },
+    {
+      "word": "印度",
+      "jyutping": "jan3dou6",
+      "pinyin": "Yìndù"
+    },
+    {
+      "word": "印度洋",
+      "jyutping": "jan3dou6joeng4",
+      "pinyin": "Yìndù Yɑ́ng"
+    }
+  ],
+  "transliteratedWords": []
+}

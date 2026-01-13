@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Render Strokes with CreateJS</title>
+  <script src="https://code.createjs.com/1.0.0/easeljs.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    h1 {
+      color: #333;
+    }
+    .canvas-container {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin: 20px 0;
+    }
+    .stroke-group {
+      border: 2px solid #ddd;
+      border-radius: 4px;
+      padding: 15px;
+      background: #fafafa;
+    }
+    canvas {
+      border: 1px solid #ccc;
+      background: white;
+      display: block;
+    }
+    .info {
+      margin: 10px 0;
+      padding: 10px;
+      background: #e9ecef;
+      border-radius: 4px;
+      font-size: 12px;
+    }
+    button {
+      padding: 10px 20px;
+      margin: 5px;
+      font-size: 14px;
+      cursor: pointer;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    .svg-output {
+      margin-top: 20px;
+      padding: 15px;
+      background: #f9f9f9;
+      border-radius: 4px;
+    }
+    pre {
+      background: #f5f5f5;
+      padding: 10px;
+      border-radius: 4px;
+      overflow-x: auto;
+      font-size: 11px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>CreateJS Path Decoder & SVG Converter</h1>
+    <p>This page loads CreateJS and renders the stroke paths, then extracts them as SVG.</p>
+    
+    <h2>Combined Character View</h2>
+    <div style="text-align: center; margin: 20px 0;">
+      <div class="stroke-group" style="display: inline-block;">
+        <h3>Character: 士 (All Strokes Combined)</h3>
+        <canvas id="canvas-combined" width="1080" height="1080" style="width: 400px; height: 400px; border: 2px solid #333;"></canvas>
+        <div class="info">
+          All 3 strokes rendered together in their relative positions<br>
+          <button onclick="renderCombined()" style="margin-top: 10px;">Re-render</button>
+        </div>
+      </div>
+    </div>
+    
+    <h2>Individual Strokes</h2>
+    <div class="canvas-container" id="canvasContainer"></div>
+    
+    <div class="controls">
+      <button onclick="renderCombined()">Render Combined Character</button>
+      <button onclick="renderAllStrokes()">Render Individual Strokes</button>
+      <button onclick="extractSVGPaths()">Extract SVG Paths</button>
+      <button onclick="downloadSVG()">Download Combined SVG</button>
+    </div>
+    
+    <div class="svg-output" id="svgOutput" style="display: none;">
+      <h3>Extracted SVG Paths:</h3>
+      <pre id="svgPaths"></pre>
+    </div>
+  </div>
+
+  <script>
+    // Stroke data from 0821.json
+    const strokeData = {
+      "id": "0821",
+      "character": "士",
+      "strokeVectors": [
+        {
+          "strokeNumber": 1,
+          "segment": 1,
+          "frame": 24,
+          "pathData": "Am/GWQk1hUmwlWQiDiYCoguINqg/IR0h9QLpC7q+FRQl4BDk9BBQogCdhoAAIgMgBg",
+          "transform": { "x": 239.2, "y": 566.5 },
+          "color": "#000000"
+        },
+        {
+          "strokeNumber": 1,
+          "segment": 2,
+          "frame": 27,
+          "pathData": "A3DIFQk0hUmwlXQiDiXCnguINrg/MAxngFbQMqCUszExQkjAgkhAlQzpC3tGCtQohCdhpAAIgMgBg",
+          "transform": { "x": 341.9, "y": 555.4 },
+          "color": "#000000"
+        },
+        {
+          "strokeNumber": 1,
+          "segment": 3,
+          "frame": 30,
+          "pathData": "EgncAJyQk0hUmwlXQiDiZCngtINrg/MBQigIzQPUD+tcD/Q1KA402CuQzoC2tHCuQohCchpAAIgMAAg",
+          "transform": { "x": 446.8, "y": 544.6 },
+          "color": "#000000"
+        },
+        {
+          "strokeNumber": 1,
+          "segment": 4,
+          "frame": 33,
+          "pathData": "Eg4dALZQk0hUmwlXQiDiYCnguINrg/MBdrgKPQGyg5EqgwQHFhIIJGkQDfC0hmByQhMA1jRgJIzVgGQ9UAR8tDvQzpC3tHCtQohCdhpAAIgMgBg",
+          "transform": { "x": 555.7, "y": 534.2 },
+          "color": "#000000"
+        },
+        {
+          "strokeNumber": 2,
+          "segment": 1,
+          "frame": 48,
+          "pathData": "Ak5QcQgRtAg+r8QgxnNhjioQipi6AjhkQAnjSHsBNQGrBsFVEGQCHC/i8EdQiyEOgnXdQipJNipAAQilAAiloyg",
+          "transform": { "x": 535.2, "y": 285.4 },
+          "color": "#000000"
+        },
+        {
+          "strokeNumber": 2,
+          "segment": 2,
+          "frame": 51,
+          "pathData": "EgEzAlOIgD2aQAU2VhmzlQgxnMhjioQipi7AjhkQAnjSHsBNQGrBsFVEGQCHC/i8EeQi9EdggaCQgSPMghUpQieHuieAAQiRAAiSmlg",
+          "transform": { "x": 535.2, "y": 404.3 },
+          "color": "#000000"
+        },
+        {
+          "strokeNumber": 2,
+          "segment": 3,
+          "frame": 54,
+          "pathData": "EgEyA33QAA5JgE9kQAU2VhmzlQgxnMhjioQipi7AjhkQAnjSHsBNQGrBsFVEGQCHC/i8EeQi9EdggaDUgAfAZTgBHAofQgRChjRBrQh1A5hNAAQhoAAgfhng",
+          "transform": { "x": 535.2, "y": 491.7 },
+          "color": "#000000"
+        },
+        {
+          "strokeNumber": 3,
+          "segment": 1,
+          "frame": 72,
+          "pathData": "AoTD3QpHjngLg/QgnifGYAEQNAgsL0g8QIPDHmWDHQp1BVoYCAQgWACgXAAQh/AAiTg8g",
+          "transform": { "x": 362.3, "y": 869.8 },
+          "color": "#000000"
+        },
+        {
+          "strokeNumber": 3,
+          "segment": 2,
+          "frame": 75,
+          "pathData": "A4zFdQpHjngLg/QgnieGYAEQfihsYfjJQMGESqoDBQr/AgsVA1QtmBerFCqQgWABgWAAQiAAAiTg8g",
+          "transform": { "x": 467.9, "y": 859.6 },
+          "color": "#000000"
+        },
+        {
+          "strokeNumber": 3,
+          "segment": 3,
+          "frame": 78,
+          "pathData": "EgmXAGpQpHjngKhAQgoieGZAEUAkigB8AbDgD7IIxhPQErgjF5ClQLyGwpFAFQ5XAO7FB0QtnBfrFCpQgWACgWAAQiAAAiTg8g",
+          "transform": { "x": 554.7, "y": 852 },
+          "color": "#000000"
+        }
+      ]
+    };
+
+    const CANVAS_SIZE = 1080;
+    const SVG_SIZE = 400;
+    let extractedPaths = [];
+
+    function renderCombined() {
+      const canvas = document.getElementById('canvas-combined');
+      if (!canvas) return;
+      
+      const stage = new createjs.Stage(canvas);
+      stage.clear();
+      
+      // Render all strokes together in their relative positions
+      strokeData.strokeVectors.forEach(segment => {
+        const shape = new createjs.Shape();
+        const g = shape.graphics;
+        
+        // Set fill and stroke
+        g.f(segment.color);
+        g.s(segment.color, 3);
+        
+        // Use the compact path format
+        g.p(segment.pathData);
+        
+        // Apply transform - these are the actual positions from the data
+        shape.x = segment.transform.x;
+        shape.y = segment.transform.y;
+        
+        stage.addChild(shape);
+      });
+      
+      stage.update();
+    }
+
+    function renderAllStrokes() {
+      const container = document.getElementById('canvasContainer');
+      container.innerHTML = '';
+
+      // Group by stroke
+      const strokesByNumber = {};
+      strokeData.strokeVectors.forEach(vec => {
+        if (!strokesByNumber[vec.strokeNumber]) {
+          strokesByNumber[vec.strokeNumber] = [];
+        }
+        strokesByNumber[vec.strokeNumber].push(vec);
+      });
+
+      // Render each stroke
+      Object.keys(strokesByNumber).sort().forEach(strokeNum => {
+        const segments = strokesByNumber[strokeNum];
+        const canvasId = `canvas-stroke-${strokeNum}`;
+        
+        const groupDiv = document.createElement('div');
+        groupDiv.className = 'stroke-group';
+        groupDiv.innerHTML = `
+          <h3>Stroke ${strokeNum} (${segments.length} segments)</h3>
+          <canvas id="${canvasId}" width="${CANVAS_SIZE}" height="${CANVAS_SIZE}" style="width: 400px; height: 400px;"></canvas>
+          <div class="info">
+            Segments: ${segments.map(s => s.segment).join(', ')}<br>
+            Frames: ${segments.map(s => s.frame).join(', ')}
+          </div>
+        `;
+        container.appendChild(groupDiv);
+
+        // Create stage and render
+        const canvas = document.getElementById(canvasId);
+        const stage = new createjs.Stage(canvas);
+        
+        segments.forEach(segment => {
+          const shape = new createjs.Shape();
+          const g = shape.graphics;
+          
+          // Set fill and stroke
+          g.f(segment.color);
+          g.s(segment.color, 3);
+          
+          // Use the compact path format
+          g.p(segment.pathData);
+          
+          // Apply transform
+          shape.x = segment.transform.x;
+          shape.y = segment.transform.y;
+          
+          stage.addChild(shape);
+        });
+        
+        stage.update();
+      });
+    }
+
+    function extractSVGPaths() {
+      extractedPaths = [];
+      const container = document.getElementById('canvasContainer');
+      const canvases = container.querySelectorAll('canvas');
+      
+      canvases.forEach((canvas, idx) => {
+        const ctx = canvas.getContext('2d');
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        
+        // For now, we'll extract the path data and transforms
+        // The actual path decoding would require more complex logic
+        const strokeNum = parseInt(canvas.id.split('-')[2]);
+        const segments = strokeData.strokeVectors.filter(v => v.strokeNumber === strokeNum);
+        
+        segments.forEach(seg => {
+          extractedPaths.push({
+            stroke: strokeNum,
+            segment: seg.segment,
+            pathData: seg.pathData,
+            transform: seg.transform,
+            // Note: The actual SVG path would need to be decoded from CreateJS format
+            // This is a placeholder - we'd need to use CreateJS to render and trace
+            svgPath: `<!-- CreateJS path: ${seg.pathData} - needs decoding -->`
+          });
+        });
+      });
+      
+      // Display extracted paths
+      const output = document.getElementById('svgOutput');
+      const pathsDiv = document.getElementById('svgPaths');
+      pathsDiv.textContent = JSON.stringify(extractedPaths, null, 2);
+      output.style.display = 'block';
+    }
+
+    function downloadSVG() {
+      // Get the combined canvas
+      const canvas = document.getElementById('canvas-combined');
+      if (!canvas) {
+        alert('Please render the combined character first!');
+        return;
+      }
+      
+      // Convert canvas to image data URL
+      const dataURL = canvas.toDataURL('image/png');
+      
+      // Create SVG wrapper with the image
+      const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      svg.setAttribute('width', CANVAS_SIZE);
+      svg.setAttribute('height', CANVAS_SIZE);
+      svg.setAttribute('viewBox', `0 0 ${CANVAS_SIZE} ${CANVAS_SIZE}`);
+      svg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+      
+      // Add image
+      const image = document.createElementNS('http://www.w3.org/2000/svg', 'image');
+      image.setAttribute('href', dataURL);
+      image.setAttribute('width', CANVAS_SIZE);
+      image.setAttribute('height', CANVAS_SIZE);
+      svg.appendChild(image);
+      
+      const svgString = new XMLSerializer().serializeToString(svg);
+      const blob = new Blob([svgString], { type: 'image/svg+xml' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'character-0821-士.svg';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    // Auto-render on load
+    window.addEventListener('load', () => {
+      if (typeof createjs !== 'undefined') {
+        renderCombined(); // Render combined view first
+        renderAllStrokes(); // Then render individual strokes
+      } else {
+        console.error('CreateJS not loaded!');
+      }
+    });
+  </script>
+</body>
+</html>

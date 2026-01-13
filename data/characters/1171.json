@@ -1,0 +1,456 @@
+{
+  "id": "1171",
+  "character": "幣",
+  "sourceUrl": "https://www.edbchinese.hk/lexlist_ch/result.jsp?id=1171&sortBy=ks&jpC=lshk",
+  "radical": "巾",
+  "strokeCount": 14,
+  "jyutping": "bai6",
+  "pinyin": "bì",
+  "strokeOrderImages": [
+    "https://www.edbchinese.hk/EmbziciwebRes/stkdemo_js/1001-2000/1171.html?lang=ch"
+  ],
+  "strokeVectors": [
+    {
+      "strokeNumber": 1,
+      "segment": 1,
+      "frame": 24,
+      "pathData": "Ag0CfIkRmxQCrgYEkBjQBQAgBCAkQBtGbiuAAQhfAAiwh5g",
+      "transform": {
+        "x": 247.1,
+        "y": 177.7
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 1,
+      "segment": 2,
+      "frame": 27,
+      "pathData": "ADfGxQiMgbjDkIIlqo+QCrgYElBjQInDfhLGbQgxCgiOAAQgZAAgbgEg",
+      "transform": {
+        "x": 262,
+        "y": 193.5
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 2,
+      "segment": 1,
+      "frame": 48,
+      "pathData": "AlPAwQA/iyAai1QAUhXDrCGQFcDhgMC5QgMBnirA6QiZAnhpAAQknAAA4kqg",
+      "transform": {
+        "x": 517.1,
+        "y": 134.5
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 2,
+      "segment": 2,
+      "frame": 51,
+      "pathData": "AgNowQAUhYDrCHQFcDggMC6QgLBnisA6QlTCWliEFQjLB/hNAAQHho3BUpNg",
+      "transform": {
+        "x": 493.8,
+        "y": 159.5
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 3,
+      "segment": 1,
+      "frame": 72,
+      "pathData": "AhfEAQAOmRiDlXQiDi5FJA3QDYAfAjBwQAaDYgYIGQiZF0hUAAQhTAAgOl3g",
+      "transform": {
+        "x": 224.8,
+        "y": 334.2
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 3,
+      "segment": 2,
+      "frame": 75,
+      "pathData": "AiUPVQiMk7AuiZQEetpj8qTQiDi5FJA3QDYAfAjBwQAnFChIPkQguHeisFaQgNAagQAAQgpAAhEi1g",
+      "transform": {
+        "x": 224.4,
+        "y": 387.3
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 4,
+      "segment": 1,
+      "frame": 96,
+      "pathData": "Ar3gEQJFhtKIhFICXgSQEXgDkZCFQtNBjoVCtg",
+      "transform": {
+        "x": 316.5,
+        "y": 283.6
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 4,
+      "segment": 2,
+      "frame": 99,
+      "pathData": "A0VBgQJFhsKJhFQKnhOHaiPQHJCjnsBmQg+gJhbADQ2QBfsDD7g",
+      "transform": {
+        "x": 370.7,
+        "y": 273.5
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 4,
+      "segment": 3,
+      "frame": 102,
+      "pathData": "APiE0QAJlVgZkxQANh4ktAJQ2QBhsDD6IAAjPQJFhsKJhGQKohOHaiOQDHhWFODsQChByh0CYQhACtgeGhQiPGwhdAAQhbAAgqmng",
+      "transform": {
+        "x": 391.1,
+        "y": 314.1
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 4,
+      "segment": 4,
+      "frame": 105,
+      "pathData": "AMDTbQiRjfiBiEQkMjXCQAbIEkBnQDYBYAhkhQB5tjg5qsQANh4ktAKQ2QBgsDD7IAAjPQJFhtKJhFQKohOHaiPQDHhVFODsQChByh0CYQhQDWgbJTIgOI7QgYI3jhC4QhqBvhQAAQhMAAg2hig",
+      "transform": {
+        "x": 391.1,
+        "y": 375.1
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 5,
+      "segment": 1,
+      "frame": 120,
+      "pathData": "AipKiIAAl2QAJwDjSh4Qhdi7GoBAQH2B/hZBsIhYCuQg0DnAEPPQiCFWhnAAQhjAAhLk5g",
+      "transform": {
+        "x": 368,
+        "y": 162.7
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 5,
+      "segment": 2,
+      "frame": 123,
+      "pathData": "AipTZIAA6QQAJwDjSh5Qhdi6GoBAQH2B+hZBtIhYCuQg0DnAEPQQAPLNgUJMQiHIDhlAAQhjAAhDnmg",
+      "transform": {
+        "x": 368,
+        "y": 236.7
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 5,
+      "segment": 3,
+      "frame": 126,
+      "pathData": "Aipb+MAAAgr/QAJwEjSh4Qhdi7GoBAQH2B/hZBsIhYCuQg0DnAEPQQAkaeihPIQhTEnhSAkIgBAAQh0AAAAoLg",
+      "transform": {
+        "x": 368,
+        "y": 295.3
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 6,
+      "segment": 1,
+      "frame": 144,
+      "pathData": "AiOCMQB5kEAKjtQA5icCSApIAgH6QhkCchgCGQifCdg6AAQhXAACGlVg",
+      "transform": {
+        "x": 335.9,
+        "y": 339.6
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 6,
+      "segment": 2,
+      "frame": 147,
+      "pathData": "AnILyQC8jbDsm7QDvmBAOlRQA6icCSApIAhH7QkjHDj7ELQkdEThQAAIgHgBg",
+      "transform": {
+        "x": 312.6,
+        "y": 366.9
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 7,
+      "segment": 1,
+      "frame": 168,
+      "pathData": "AgEDJQhliAhiiUQjFkPG9CaQBYAmBIAsQCIFniwAAQhBAAhogwg",
+      "transform": {
+        "x": 406.4,
+        "y": 341.2
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 7,
+      "segment": 2,
+      "frame": 171,
+      "pathData": "ACYFZQj5jqjmleQjFkQG9CbQF7ChBIETQA2FNh9AAQg4AAhdhEg",
+      "transform": {
+        "x": 418.8,
+        "y": 357.7
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 8,
+      "segment": 1,
+      "frame": 192,
+      "pathData": "AlyDNQDinvgyj5QgXh2HQC0QDzBuhzC5QiFCTiRELIgnBJQkYEahxAAQiDAABgl+g",
+      "transform": {
+        "x": 679.6,
+        "y": 124
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 8,
+      "segment": 2,
+      "frame": 195,
+      "pathData": "Aq+QOQFFoPEqr1QDhnwgxj5QgYh2HSC0QDyBuhzC5QiECTiREMQl8LIlWE0QkDDuhnAAIgHgBg",
+      "transform": {
+        "x": 650.5,
+        "y": 169.2
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 9,
+      "segment": 1,
+      "frame": 216,
+      "pathData": "AsWDBICriKIRNkAQJrATpvEiQrEBelvAAQhwAAhRgJg",
+      "transform": {
+        "x": 704.4,
+        "y": 213.4
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 9,
+      "segment": 2,
+      "frame": 219,
+      "pathData": "Az3ElICriKIdem4QGdhABIDKQALCPohBnQz9DKoaABQhxAAhQgJg",
+      "transform": {
+        "x": 752.5,
+        "y": 203.4
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 10,
+      "segment": 1,
+      "frame": 240,
+      "pathData": "AlDEwQCKmkgznEQAtj3GcFVQCvCKhfDIIhsEXQgtCIgvB6QjnEQhsAAQh/AAAqlxg",
+      "transform": {
+        "x": 757.8,
+        "y": 280.8
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 10,
+      "segment": 2,
+      "frame": 243,
+      "pathData": "AncKoQJ7sFhmt5QAtj3GdFVQCwCKhgDIIhsEYQj5LyktFGQg8BHg8BAQkFCOhsAAQi3AAEDmXg",
+      "transform": {
+        "x": 728.3,
+        "y": 322.2
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 10,
+      "segment": 3,
+      "frame": 246,
+      "pathData": "AzlUQQL0iLIyp5QLVsuhsuxQAtj3GdFVQCwCKhgDIIhsEYQj5LykuFGQp9L1rEAKQidAQhqAAQisAAgigsg",
+      "transform": {
+        "x": 665.8,
+        "y": 347.5
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 11,
+      "segment": 1,
+      "frame": 264,
+      "pathData": "AEqDmQmjl/kpAEQkTheEThCQFkhGFNEIQBbBMBcBIQCpEkhuAAQg+AAiZhfg",
+      "transform": {
+        "x": 660.1,
+        "y": 341.5
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 11,
+      "segment": 2,
+      "frame": 267,
+      "pathData": "AKNMwIg9g+Iu5v2QmjmBkqAFQkSheEShDQFkhGFOEJQKSIkKHFqQK5IAuhAAIggAAg",
+      "transform": {
+        "x": 726.1,
+        "y": 390.7
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 11,
+      "segment": 3,
+      "frame": 270,
+      "pathData": "AgCItIu6v2QmjmBkqAEQkShdEShDQFkhGFOEJQMQKLL9GFQHiDxKDDOQDwBejwBdQoTCUmKgHIgZABQk0AAmznIg",
+      "transform": {
+        "x": 785.6,
+        "y": 410.4
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 12,
+      "segment": 1,
+      "frame": 288,
+      "pathData": "AiBEgQAGlXiAlxQh+j0CcgUQCAgSEGBlQClBOgeEDQgEEkgPECQidGahoAAQhnAAgymUg",
+      "transform": {
+        "x": 384.7,
+        "y": 651.9
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 12,
+      "segment": 2,
+      "frame": 291,
+      "pathData": "AhwSAQh1iehMlXQgWiJBijEQDUpNjpqgQh+j0CcgUQCAgSEGBlQClBOgeEDQgORvi9JjQhBD8hKAAQgkAAgng7g",
+      "transform": {
+        "x": 384.6,
+        "y": 703.8
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 13,
+      "segment": 1,
+      "frame": 312,
+      "pathData": "Ap6DGIh5jcQKehIKvhoQFAAqlWCUQnIAxlYBEQjwBaiVAAIgZgBg",
+      "transform": {
+        "x": 472.7,
+        "y": 594.1
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 13,
+      "segment": 2,
+      "frame": 315,
+      "pathData": "A1QFBIh6jdQTziIUyj5ICNgkQH+CLp6DHQ0iBBr9CWQjvBaiVAAIgZgBg",
+      "transform": {
+        "x": 545.3,
+        "y": 581.8
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 13,
+      "segment": 3,
+      "frame": 318,
+      "pathData": "AROHkQAKlpgEmnQANj9j0AEQ0iBBr9CWQkEBhiZgIIh6jdQTziJUyj5IEahIQCmgSDcC4QEODThNCTQiCEJACBuQACEGgEDyQjAHAh7AAQh5AAg1m7g",
+      "transform": {
+        "x": 570.8,
+        "y": 638.5
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 13,
+      "segment": 4,
+      "frame": 321,
+      "pathData": "AOLVvQjSlwjqi5QhxiWD3BGQD3BGBdgHQB+gBAHk+QAupGgIsyQANj9j0AEQ0iBBr9CWQkEBhiZgIIh6jdQTziJUyj5IEahIQCmgSDcC4QEODThNCTQiCEJACBuQAHNXhCJxQhRHqkvCZQgxAYgqAAQhhAAg3iFg",
+      "transform": {
+        "x": 570.8,
+        "y": 698.3
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 14,
+      "segment": 1,
+      "frame": 336,
+      "pathData": "AkKF4QADq7hAkKQh9j2EXAvQGVBXB2C9QAwBuhZCRQgqBwgVGwQiyH9iDAAQh4AAhTmkg",
+      "transform": {
+        "x": 541.3,
+        "y": 589.6
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 14,
+      "segment": 2,
+      "frame": 339,
+      "pathData": "AkWS6IAAxqQAoy9hZlyQh9j2EXAvQGVBXB2C9QAwBuhZCRQhJDAgKR2QAAH7gMH3QijIZh8AAQh4AAhVn0g",
+      "transform": {
+        "x": 541.3,
+        "y": 681
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 14,
+      "segment": 3,
+      "frame": 342,
+      "pathData": "EgCRAoYQiPovAKwhIAA8fQAoy+hZlzQh9j1EXAvQGVBWB2C9QAwBvhZCRQhJC/gKR4QgBQKgyP7Qg0NMiZHLQgmA/gdAAQgcAAgUg/g",
+      "transform": {
+        "x": 541.3,
+        "y": 774.6
+      },
+      "color": "#000000"
+    }
+  ],
+  "inLexicalListsHK": true,
+  "stage1Words": [
+    {
+      "word": "人民幣",
+      "jyutping": "jan4man4bai6",
+      "pinyin": "rénmínbì",
+      "stage": "1"
+    },
+    {
+      "word": "紙幣",
+      "jyutping": "zi2bai6",
+      "pinyin": "zhǐbì",
+      "stage": "1"
+    },
+    {
+      "word": "貨幣",
+      "jyutping": "fo3bai6",
+      "pinyin": "huòbì",
+      "stage": "1"
+    },
+    {
+      "word": "港幣",
+      "jyutping": "gong2bai6",
+      "pinyin": "gɑ̌ngbì",
+      "stage": "1"
+    },
+    {
+      "word": "硬幣",
+      "jyutping": "ngaang6bai6",
+      "pinyin": "yìngbì",
+      "stage": "1"
+    }
+  ],
+  "stage2Words": [
+    {
+      "word": "外幣",
+      "jyutping": "ngoi6bai6",
+      "pinyin": "wɑ̀ibì",
+      "stage": "2"
+    }
+  ],
+  "fourCharacterPhrases": [],
+  "classicalPhrases": [],
+  "multiCharacterIdioms": [],
+  "properNouns": [],
+  "transliteratedWords": []
+}

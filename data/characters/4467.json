@@ -1,0 +1,619 @@
+{
+  "id": "4467",
+  "character": "面",
+  "sourceUrl": "https://www.edbchinese.hk/lexlist_ch/result.jsp?id=4467&sortBy=ks&jpC=lshk",
+  "radical": "面",
+  "strokeCount": 9,
+  "jyutping": "min6",
+  "pinyin": "miɑ̀n",
+  "strokeOrderImages": [
+    "https://www.edbchinese.hk/EmbziciwebRes/stkdemo_js/4001-ZC/4467.html?lang=ch"
+  ],
+  "strokeVectors": [
+    {
+      "strokeNumber": 1,
+      "segment": 1,
+      "frame": 24,
+      "pathData": "AsVB3QlHjFF5gXQLMhAKMhGQJpDSpXDSQnaAzlEAAQnrAAiTh1g",
+      "transform": {
+        "x": 361.4,
+        "y": 242.3
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 1,
+      "segment": 2,
+      "frame": 27,
+      "pathData": "A75DsQlHjFF5gYQcjihWAjPQMsD5q2D4Qv1Bvt2AoQoHA7lbAAQnrAAiTh2g",
+      "transform": {
+        "x": 460.9,
+        "y": 230.5
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 1,
+      "segment": 3,
+      "frame": 30,
+      "pathData": "EgnmAFIQlHjGF5gXUAmwgDcAargEvQHIhgF7DeQFRDimtBdQ+KEg4KBGQoHA7lbAAQnrAAiTh2g",
+      "transform": {
+        "x": 535.8,
+        "y": 221.4
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 2,
+      "segment": 1,
+      "frame": 48,
+      "pathData": "AmNCwQA9l4iPkfQgNjIHGDIQFFCMCOCpQB3B+icCrQg5Bfg8BdQk5EZioAAQjLAAAMmcg",
+      "transform": {
+        "x": 491,
+        "y": 300.1
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 2,
+      "segment": 2,
+      "frame": 51,
+      "pathData": "Ao4JjICimIQDlpjjSmiQgNjIHFDIQFGCLCOCpQB3B+icCtQk+IKl9HoQiSBohWAAQiTAAAaksg",
+      "transform": {
+        "x": 481.8,
+        "y": 332.5
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 2,
+      "segment": 3,
+      "frame": 54,
+      "pathData": "Aq/QAIG2wiQDlpljSmiQgNjIHFDIQFGCLCOCqQB3B9icCtQnbMMpnK+QiVCOg7AAQg8AAAeiOg",
+      "transform": {
+        "x": 467.7,
+        "y": 358
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 3,
+      "segment": 1,
+      "frame": 72,
+      "pathData": "AgdISQgtkEgzjhQhJnNj+kYQhpieCmgzQD/ABEnBvQEgBKgXF3IBGMSQhHHQiNAAQh/AAi4l4g",
+      "transform": {
+        "x": 214.1,
+        "y": 545.3
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 3,
+      "segment": 2,
+      "frame": 75,
+      "pathData": "ABbT+QhsyFitsAQhJnOj+kYQhpieCmgzQD+ABEnBvQEgBKgWF3MADIAjgQhpFsh5AAQhyAAiAlBg",
+      "transform": {
+        "x": 220.6,
+        "y": 614.6
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 3,
+      "segment": 3,
+      "frame": 78,
+      "pathData": "EAFUAh+Qi7kJgUitQh195j5xVQhJnOj+kYQhpieCmgzQD/ABEnBvQEgBKgXF3MAELAvcQAwIfhQDRQg7B+g+AAQgsAAguhAg",
+      "transform": {
+        "x": 224.9,
+        "y": 678.5
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 4,
+      "segment": 1,
+      "frame": 96,
+      "pathData": "AyghtQR3hBQthVQG3CbmdCZQvmBZvpB6QnHkgDYhRg",
+      "transform": {
+        "x": 331.8,
+        "y": 473.2
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 4,
+      "segment": 2,
+      "frame": 99,
+      "pathData": "EgmSAAFUAm9gCMAhngDvQJ2C4pJC5UgioABtgi6AEPQnHkhDYhRg",
+      "transform": {
+        "x": 458.4,
+        "y": 461.7
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 4,
+      "segment": 3,
+      "frame": 102,
+      "pathData": "EAqIAE9QAHj/gCkCQgYi9krgRUgstABSgtOAFeQnHkgDYhRUAuZgCoAmygEyINQh3QDGgGDCB4QDBB4FFEJQCaCZhkC4QiXD0hDFiQjgGvisAAQjOAAiDpog",
+      "transform": {
+        "x": 575,
+        "y": 496.2
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 4,
+      "segment": 4,
+      "frame": 105,
+      "pathData": "EAmkAV4QDzzogK1DQgYi+krgQUgstABSgtOAFeQnHkhDYhRUAuZgCoAmygEyINQh2QDGgHDCB5QDBB4FFEJQCaCZhkC3QjJFGgzIGIjwcXQj8GCilAAQjEAAhKodg",
+      "transform": {
+        "x": 575,
+        "y": 597
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 4,
+      "segment": 5,
+      "frame": 108,
+      "pathData": "EAiCAoAQjFnBkcnAIgEgJQgFgRAZgFQEpg2DBhaIAagMQAxgcAWgtIA7i6QFi3QgM5WQgYi+krgQUgstABSgtOAFeQnHkhDYhRUAuZgCoAmygEyINQh2QDGgHDCB5QDBB4FFEJQCaCZhkC3QjJFGgzIGMgEmAixQilPhmZEkQh0BGhXAAQhYAAg6hGg",
+      "transform": {
+        "x": 575,
+        "y": 666
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 5,
+      "segment": 1,
+      "frame": 120,
+      "pathData": "AiiIkIgLmdQgRqZisiuQBVjFInC0QB9CogzE3QgMGDgHGDQh1EUh9AAQh4AAiBkEg",
+      "transform": {
+        "x": 431.9,
+        "y": 540.1
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 5,
+      "segment": 2,
+      "frame": 123,
+      "pathData": "AiERRIgp35QgRqbisitQBVjFInC0QB9CogzE2QgdO8gBO4Qh3EHhxAAQhwAAhqkHg",
+      "transform": {
+        "x": 431.9,
+        "y": 596.1
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 5,
+      "segment": 3,
+      "frame": 126,
+      "pathData": "AhicRMgBLgrnQgRqaisiuQBVjFInC0QB9CogzE3QgsXMAVW/IAAARQgBBggxAvIgXASQjJCZhWAAQhLAAAMh1g",
+      "transform": {
+        "x": 431.9,
+        "y": 651.9
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 6,
+      "segment": 1,
+      "frame": 144,
+      "pathData": "AjcIGQgHnMgMkZQgrkmh8iBQhnjGFrAuQFeA1DSCmQAkBBgrCQQhBD/gVJSQiMFIiLAAQiDAAiDkhg",
+      "transform": {
+        "x": 616.8,
+        "y": 532.2
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 6,
+      "segment": 2,
+      "frame": 147,
+      "pathData": "AjRRXQgG03gYpDQgrkmh8iBQhnjGFrAuQFeA1DSCmQAkBBgrCQQhQE6gNM/IghOEQh9Elh8AAQh4AAh5kVg",
+      "transform": {
+        "x": 616.8,
+        "y": 590.2
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 6,
+      "segment": 3,
+      "frame": 150,
+      "pathData": "AjPa7UAABgiwgAhgMcQgrkmh8iBQhnjFFrAtQFeA1DSCmQAkBBgrCQQhQE6gNNAIhEceQgkB2ikCGQh+BphBAAQhOAAAQieg",
+      "transform": {
+        "x": 616.8,
+        "y": 639.6
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 7,
+      "segment": 1,
+      "frame": 168,
+      "pathData": "Amtg0QGNhkFQgyQHWCjmmDCQloAflkAQQlRivEQhPg",
+      "transform": {
+        "x": 493.1,
+        "y": 584.4
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 7,
+      "segment": 2,
+      "frame": 171,
+      "pathData": "AtjgcQQfkLJ0BfQGXEEoiAgQrrBlrcAhQlRivEQhPg",
+      "transform": {
+        "x": 536.9,
+        "y": 582
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 8,
+      "segment": 1,
+      "frame": 192,
+      "pathData": "AnHgOQGmhzFYg8QHXCxm8CxQmEASl3AHQjwiEDShIg",
+      "transform": {
+        "x": 494.6,
+        "y": 702.5
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 8,
+      "segment": 2,
+      "frame": 195,
+      "pathData": "AtAARQMRjVIGgZQDJALCTByQCzC8hrAuQtyBFsrAPQjwiEDShJg",
+      "transform": {
+        "x": 532.3,
+        "y": 699.4
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 9,
+      "segment": 1,
+      "frame": 216,
+      "pathData": "AtiiEQM1gnMlg3QJ9CcpRDfQtTAqtRAgQmRlBGvgmg",
+      "transform": {
+        "x": 360.1,
+        "y": 834.7
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 9,
+      "segment": 2,
+      "frame": 219,
+      "pathData": "A7dg7QbdhUaTicQI2DBoADjQ7mBx7dBCQmRlCGuglg",
+      "transform": {
+        "x": 449.1,
+        "y": 827.4
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 9,
+      "segment": 3,
+      "frame": 222,
+      "pathData": "EgovAACUAllgBxAjdgD7QFBALF7DcQD6CxrYAoUgmnAC5gmXABcQmRlDGvgmg",
+      "transform": {
+        "x": 534.2,
+        "y": 821.2
+      },
+      "color": "#000000"
+    }
+  ],
+  "inLexicalListsHK": true,
+  "stage1Words": [
+    {
+      "word": "面",
+      "jyutping": "min6",
+      "pinyin": "miɑ̀n",
+      "stage": "1"
+    },
+    {
+      "word": "面孔",
+      "jyutping": "min6hung2",
+      "pinyin": "miɑ̀nkǒng",
+      "stage": "1"
+    },
+    {
+      "word": "面具",
+      "jyutping": "min6geoi6",
+      "pinyin": "miɑ̀njù",
+      "stage": "1"
+    },
+    {
+      "word": "面前",
+      "jyutping": "min6cin4",
+      "pinyin": "miɑ̀nqiɑ́n",
+      "stage": "1"
+    },
+    {
+      "word": "面容",
+      "jyutping": "min6jung4",
+      "pinyin": "miɑ̀nróng",
+      "stage": "1"
+    },
+    {
+      "word": "臉容",
+      "jyutping": "lim5jung4",
+      "pinyin": "liɑ̌nróng",
+      "stage": "1"
+    },
+    {
+      "word": "面貌",
+      "jyutping": "min6maau6",
+      "pinyin": "miɑ̀nmɑ̀o",
+      "stage": "1"
+    },
+    {
+      "word": "面龐",
+      "jyutping": "min6pong4",
+      "pinyin": "miɑ̀npɑ́ng",
+      "stage": "1"
+    },
+    {
+      "word": "臉龐",
+      "jyutping": "lim5pong4",
+      "pinyin": "liɑ̌npɑ́ng",
+      "stage": "1"
+    },
+    {
+      "word": "一方面",
+      "jyutping": "jat1fong1min6",
+      "pinyin": "yìfɑ̄ngmiɑ̀n",
+      "stage": "1"
+    },
+    {
+      "word": "一面",
+      "jyutping": "jat1min6",
+      "pinyin": "yímiɑ̀n",
+      "stage": "1"
+    },
+    {
+      "word": "方面",
+      "jyutping": "fong1min6",
+      "pinyin": "fɑ̄ngmiɑ̀n",
+      "stage": "1"
+    },
+    {
+      "word": "四方八面",
+      "jyutping": "sei3fong1baat3min6",
+      "pinyin": "sìfɑ̄ng-bɑ̄miɑ̀n",
+      "stage": "1"
+    },
+    {
+      "word": "四面八方",
+      "jyutping": "sei3min6baat3fong1",
+      "pinyin": "sìmiɑ̀n-bɑ̄fɑ̄ng",
+      "stage": "1"
+    },
+    {
+      "word": "四面",
+      "jyutping": "sei3min6",
+      "pinyin": "sìmiɑ̀n",
+      "stage": "1"
+    },
+    {
+      "word": "平面",
+      "jyutping": "ping4min6",
+      "pinyin": "píngmiɑ̀n",
+      "stage": "1"
+    },
+    {
+      "word": "正面",
+      "jyutping": "zing3min6",
+      "pinyin": "zhèngmiɑ̀n",
+      "stage": "1"
+    },
+    {
+      "word": "見面",
+      "jyutping": "gin3min6",
+      "pinyin": "jiɑ̀nmiɑ̀n",
+      "stage": "1"
+    },
+    {
+      "word": "表面",
+      "jyutping": "biu2min6",
+      "pinyin": "biɑ̌omiɑ̀n",
+      "stage": "1"
+    },
+    {
+      "word": "迎面",
+      "jyutping": "jing4min6",
+      "pinyin": "yíngmiɑ̀n",
+      "stage": "1"
+    },
+    {
+      "word": "封面",
+      "jyutping": "fung1min6",
+      "pinyin": "fēngmiɑ̀n",
+      "stage": "1"
+    },
+    {
+      "word": "書面",
+      "jyutping": "syu1min6",
+      "pinyin": "shūmiɑ̀n",
+      "stage": "1"
+    },
+    {
+      "word": "裏面",
+      "jyutping": "leoi5min6",
+      "pinyin": "lǐmiɑ̀n",
+      "stage": "1"
+    },
+    {
+      "word": "對面",
+      "jyutping": "deoi3min6",
+      "pinyin": "duìmiɑ̀n",
+      "stage": "1"
+    },
+    {
+      "word": "滿面",
+      "jyutping": "mun5min6",
+      "pinyin": "mɑ̌nmiɑ̀n",
+      "stage": "1"
+    }
+  ],
+  "stage2Words": [
+    {
+      "word": "面子",
+      "jyutping": "min6zi2",
+      "pinyin": "miɑ̀nzi",
+      "stage": "2"
+    },
+    {
+      "word": "面目",
+      "jyutping": "min6muk6",
+      "pinyin": "miɑ̀nmù",
+      "stage": "2"
+    },
+    {
+      "word": "面向",
+      "jyutping": "min6hoeng3",
+      "pinyin": "miɑ̀nxiɑ̀ng",
+      "stage": "2"
+    },
+    {
+      "word": "面面觀",
+      "jyutping": "min6min6gun1",
+      "pinyin": "miɑ̀nmiɑ̀nguɑ̄n",
+      "stage": "2"
+    },
+    {
+      "word": "面對",
+      "jyutping": "min6deoi3",
+      "pinyin": "miɑ̀nduì",
+      "stage": "2"
+    },
+    {
+      "word": "面積",
+      "jyutping": "min6zik1",
+      "pinyin": "miɑ̀njī",
+      "stage": "2"
+    },
+    {
+      "word": "面頰",
+      "jyutping": "min6gaap3",
+      "pinyin": "miɑ̀njiɑ́",
+      "stage": "2"
+    },
+    {
+      "word": "面臨",
+      "jyutping": "min6lam4",
+      "pinyin": "miɑ̀nlín",
+      "stage": "2"
+    },
+    {
+      "word": "反面",
+      "jyutping": "faan2min6",
+      "pinyin": "fɑ̌nmiɑ̀n",
+      "stage": "2"
+    },
+    {
+      "word": "片面",
+      "jyutping": "pin3min6",
+      "pinyin": "piɑ̀nmiɑ̀n",
+      "stage": "2"
+    },
+    {
+      "word": "出面",
+      "jyutping": "ceot1min6",
+      "pinyin": "chūmiɑ̀n",
+      "stage": "2"
+    },
+    {
+      "word": "市面",
+      "jyutping": "si5min6",
+      "pinyin": "shìmiɑ̀n",
+      "stage": "2"
+    },
+    {
+      "word": "全面",
+      "jyutping": "cyun4min6",
+      "pinyin": "quɑ́nmiɑ̀n",
+      "stage": "2"
+    },
+    {
+      "word": "別開生面",
+      "jyutping": "bit6hoi1sang1min6",
+      "pinyin": "bié kɑ̄i shēng miɑ̀n",
+      "stage": "2"
+    },
+    {
+      "word": "局面",
+      "jyutping": "guk6min6",
+      "pinyin": "júmiɑ̀n",
+      "stage": "2"
+    },
+    {
+      "word": "見面禮",
+      "jyutping": "gin3min6lai5",
+      "pinyin": "jiɑ̀nmiɑ̀nlǐ",
+      "stage": "2"
+    },
+    {
+      "word": "斜面",
+      "jyutping": "ce4min6",
+      "pinyin": "xiémiɑ̀n",
+      "stage": "2"
+    },
+    {
+      "word": "場面",
+      "jyutping": "coeng4min6",
+      "pinyin": "chɑ̌ngmiɑ̀n",
+      "stage": "2"
+    },
+    {
+      "word": "畫面",
+      "jyutping": "waa2min6",
+      "pinyin": "huɑ̀miɑ̀n",
+      "stage": "2"
+    },
+    {
+      "word": "當面",
+      "jyutping": "dong1min6",
+      "pinyin": "dɑ̄ngmiɑ̀n",
+      "stage": "2"
+    }
+  ],
+  "fourCharacterPhrases": [
+    {
+      "word": "一面之緣"
+    },
+    {
+      "word": "四面楚歌"
+    },
+    {
+      "word": "改頭換面"
+    },
+    {
+      "word": "面不改容"
+    },
+    {
+      "word": "面不改色"
+    },
+    {
+      "word": "面目全非"
+    },
+    {
+      "word": "面紅耳赤"
+    },
+    {
+      "word": "面面相覷"
+    },
+    {
+      "word": "獨當一面"
+    }
+  ],
+  "classicalPhrases": [],
+  "multiCharacterIdioms": [],
+  "properNouns": [],
+  "transliteratedWords": []
+}

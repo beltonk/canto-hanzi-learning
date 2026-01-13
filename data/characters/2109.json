@@ -1,0 +1,604 @@
+{
+  "id": "2109",
+  "character": "水",
+  "sourceUrl": "https://www.edbchinese.hk/lexlist_ch/result.jsp?id=2109&sortBy=ks&jpC=lshk",
+  "radical": "水",
+  "strokeCount": 4,
+  "jyutping": "seoi2",
+  "pinyin": "shuǐ",
+  "strokeOrderImages": [
+    "https://www.edbchinese.hk/EmbziciwebRes/stkdemo_js/2001-3000/2109.html?lang=ch"
+  ],
+  "strokeVectors": [
+    {
+      "strokeNumber": 1,
+      "segment": 1,
+      "frame": 24,
+      "pathData": "AllQSIgDieQgMpZghlwQgzlehCiuQgVg5gXgmQg0ihgah9QAAjvDlAAQDLAAHYEPQErCxBDCsQATAxAAAxQgaBYhTB4QinE8gvJBQgOCNgNCZIgMCeQigC8igAAQigAAigi8g",
+      "transform": {
+        "x": 547.9,
+        "y": 234.3875
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 1,
+      "segment": 2,
+      "frame": 27,
+      "pathData": "EgFsAgUQALqwAArqQAAlWgEkkIgDieQgMpZghlxQhDnPheicIgKggQgtiOgXhwQAAjvDlAAQDLAAHYEPQC9BwBhBuQBjByAABvQgaBYhTB4QinE9gvJBQgOCNgNCZIgMCeQgwKFgVNHIAAAJIAAAGIgKINIgBAOIAAAeQiODNiNAAQiOAAiOjNg",
+      "transform": {
+        "x": 547.9,
+        "y": 338.6875
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 1,
+      "segment": 3,
+      "frame": 30,
+      "pathData": "EgGgAuKQAcpxAQqtQAEjeAEjlQALqxAAroQAAlXgEklIgDieQgMpYghlxIgQhrQg/l3hSiJQg0ihgah9QAAjvDlAAQDLAAHYEOQGBDlAADaQgaBZhTB3QgcA0gYA8Qh7EtgnHiQgOCNgNCYIgMCeQgwKGgVNGIAAAJIAAAGIgKIOIgBAOIAAAeIgFHDIgBF+IAAOgQiZDCiZAAQiZAAiajCg",
+      "transform": {
+        "x": 547.9,
+        "y": 426.2125
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 1,
+      "segment": 4,
+      "frame": 33,
+      "pathData": "EgIZAyiQBCjlAurZIAJjOQAcpxAQqsQAEjfAEjlQALqvAArqQAAlWgEklIgDieQgMpZghlxIgEgiQhDmzhaiWQg0ihgah9QAAjvDlAAQDLAAHYEPQGBDkAADbQgaBYhTB4QgsBTgkBlQhjEcgjGqQgOCNgNCZIgMCeQgwKGgVNHIAAAJIAAAGIgKIMIgBAOIAAAeIgFHEIgBF9IAAOgIAAESQA0JWAAIsQABEThPD8Qg1AHgwAAQovAAgwseg",
+      "transform": {
+        "x": 547.9,
+        "y": 514.5526
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 1,
+      "segment": 5,
+      "frame": 36,
+      "pathData": "EgApBARQonp1nPlIQirh8AAgvQAAhJBdAAQMcCSDVAAQCLAAAaiXIADgJQBCjlAurZIAJjOQAcpxAQqtQAFjeADjkQAMqxAArpQAAlXgFklIgCieQgNpYgglxQhEnPheicQghhqgXhaQgMgvgJgrQAAjvDkAAQDLAAHZEOQAyAeArAdQEkDGAAC+QgaBZhTB3QinE+guJBQgPCNgMCYIgNCeQgwKGgVNHIAAAJIAAAGIgKIOIgBAOIAAAeIgEHCIgBF+IAAOgIAAERQA0JWAAItQAAEShPD9Qg0CnhYCeQjAFihjAAQicAAjPj/g",
+      "transform": {
+        "x": 489.675,
+        "y": 548.225
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 2,
+      "segment": 1,
+      "frame": 48,
+      "pathData": "AtUDwQj6icAAhXQAAg5EKggQPmhYM8jNQEKDmlrDlQguALg0APQxsEeiHAAQiiAAjaiSg",
+      "transform": {
+        "x": 245.254,
+        "y": 447.225
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 2,
+      "segment": 2,
+      "frame": 51,
+      "pathData": "AB1KPQCKjjBqjRQD6n8AAhzQAAg5hEAAQhTAAiSAkQguALg0APQxtEeiHAAQihAAjbiRQj5icAAhZQAAg5EJgfQPnhZM7jMQCqgqCigvIAugNQChhEAqAAQBYAAFDDqQEYEEAABYQAABzh8CHQjqDkjBD6QjCFWjDEuIhWCFQhdAWhOAAQlKAAgmmQg",
+      "transform": {
+        "x": 303.225,
+        "y": 497.1703
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 2,
+      "segment": 3,
+      "frame": 54,
+      "pathData": "ArvSgQCWicB5iQQFfnPD2mWQCKjiBqjRQD6n9AAhzQAAg5hEAAQhTAAiSAkQguALg0APQxtEeiHAAQihAAjbiRQj5icAAhZQAAg5EJgfQPnhZM7jMQCqgqCigvIAugNQChhEAqAAQBYAAFDDqQEYEEAABYQAABzh8CHQjqDljBD6QjCFWjDEtIhWCFQl1Iwl1GfQijCvipCWIgzACQnKAAC0n/g",
+      "transform": {
+        "x": 303.225,
+        "y": 561.1741
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 2,
+      "segment": 4,
+      "frame": 57,
+      "pathData": "EgeqAgZQAAgwCWhdQNGqZH4oLQCWicB5iPQFenPD3mWQCKjjBqjQQD6n+AAhzQAAg5hEAAQhTAAiSAkQgvAMgzAOQxtEeiHABQiiAAjaiSQj5icAAhZQgBg5EKgfQPnhYM7jNQCqgqCigvIAtgNQCihEApAAQBZABFDDpQEYEEAABZQAAByh8CIQjrDkjAD6QjCFWjDEuIhWCFQl1Ivl2GfQikCwinCWQmmF1nEDUQoOEokTAAQiSgBAAg9g",
+      "transform": {
+        "x": 275.15,
+        "y": 605.15
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 3,
+      "segment": 1,
+      "frame": 72,
+      "pathData": "AtqFkQBfhtBUhoQCsjRBlinQCPjuAAiVQAAi8CxAAQC1AAGvDQQGWD/AAC2QAAA0iXBEQjqBXmqE9QiqCBi1CAQh4BUh9BUQhlAXhNAAQlbAACOnFg",
+      "transform": {
+        "x": 774.0201,
+        "y": 346.169
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 3,
+      "segment": 2,
+      "frame": 75,
+      "pathData": "A2/SkIA2hTQKUp3G2n6QBfhtBUhnQCrjTBlinQCQjugBiVQAAi8CxABQC2gBGvDRQGWD/AAC1QAAA0iWBEQjrBYmqE+QirB/i1CAQh4BUh8BUQmlEfnXEhQkgCpjMA4g",
+      "transform": {
+        "x": 718.5,
+        "y": 385.05
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 4,
+      "segment": 1,
+      "frame": 96,
+      "pathData": "ACiL3QjAjsjVkMQi8jrjLkDIAKoOIBHBEIADACIAAAAIBiBdIAjAjQHPHRGnFlICDBtQCSGSnGAAQg7AAhHgHg",
+      "transform": {
+        "x": 631.7821,
+        "y": 565.1249
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 4,
+      "segment": 2,
+      "frame": 99,
+      "pathData": "AHrWHQm+m9rEthQjCjrjVkMQi8jrjLkEIAKoOIBIBEIACACIABAAIBhBdIAkAjQHQHRGnFmICCBtQGQFJFODQQF9D4ItEGQCDKWuVAAQhRAAhYgFg",
+      "transform": {
+        "x": 714.4489,
+        "y": 630.5322
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 4,
+      "segment": 3,
+      "frame": 102,
+      "pathData": "Ai9WIQhvhgiIiIQm+m9rFtgQjBjsjVkLQi8jsjLkEIAKoNIBHBDIADADIAAAAIBiBcIAjAkQHQHQGnFnICDBtQGRFJFODQQF8D4IsEFQKGEvNyFBQFXBjAABOQAAA+kEA6QrODKtKAAQosAAjKjqg",
+      "transform": {
+        "x": 807.175,
+        "y": 653.575
+      },
+      "color": "#000000"
+    }
+  ],
+  "inLexicalListsHK": true,
+  "stage1Words": [
+    {
+      "word": "水",
+      "jyutping": "seoi2",
+      "pinyin": "shuǐ",
+      "stage": "1"
+    },
+    {
+      "word": "水分",
+      "jyutping": "seoi2fan6",
+      "pinyin": "shuǐfèn",
+      "stage": "1"
+    },
+    {
+      "word": "水份",
+      "jyutping": "seoi2fan6",
+      "pinyin": "shuǐfèn",
+      "stage": "1"
+    },
+    {
+      "word": "水手",
+      "jyutping": "seoi2sau2",
+      "pinyin": "shuǐshǒu",
+      "stage": "1"
+    },
+    {
+      "word": "水牛",
+      "jyutping": "seoi2ngau4",
+      "pinyin": "shuǐniú",
+      "stage": "1"
+    },
+    {
+      "word": "水仙",
+      "jyutping": "seoi2sin1",
+      "pinyin": "shuǐxiɑ̄n",
+      "stage": "1"
+    },
+    {
+      "word": "水母",
+      "jyutping": "seoi2mou5",
+      "pinyin": "shuǐmǔ",
+      "stage": "1"
+    },
+    {
+      "word": "水池",
+      "jyutping": "seoi2ci4",
+      "pinyin": "shuǐchí",
+      "stage": "1"
+    },
+    {
+      "word": "水災",
+      "jyutping": "seoi2zoi1",
+      "pinyin": "shuǐzɑ̄i",
+      "stage": "1"
+    },
+    {
+      "word": "水車",
+      "jyutping": "seoi2ce1",
+      "pinyin": "shuǐchē",
+      "stage": "1"
+    },
+    {
+      "word": "水果",
+      "jyutping": "seoi2gwo2",
+      "pinyin": "shuǐguǒ",
+      "stage": "1"
+    },
+    {
+      "word": "水草",
+      "jyutping": "seoi2cou2",
+      "pinyin": "shuǐcɑ̌o",
+      "stage": "1"
+    },
+    {
+      "word": "水桶",
+      "jyutping": "seoi2tung2",
+      "pinyin": "shuǐtǒng",
+      "stage": "1"
+    },
+    {
+      "word": "水產",
+      "jyutping": "seoi2caan2",
+      "pinyin": "shuǐchɑ̌n",
+      "stage": "1"
+    },
+    {
+      "word": "水喉",
+      "jyutping": "seoi2hau4",
+      "pinyin": "shuǐhóu",
+      "stage": "1"
+    },
+    {
+      "word": "水晶",
+      "jyutping": "seoi2zing1",
+      "pinyin": "shuǐjīng",
+      "stage": "1"
+    },
+    {
+      "word": "水鄉",
+      "jyutping": "seoi2hoeng1",
+      "pinyin": "shuǐxiɑ̄ng",
+      "stage": "1"
+    },
+    {
+      "word": "水塘",
+      "jyutping": "seoi2tong4",
+      "pinyin": "shuǐtɑ́ng",
+      "stage": "1"
+    },
+    {
+      "word": "水庫",
+      "jyutping": "seoi2fu3",
+      "pinyin": "shuǐkù",
+      "stage": "1"
+    },
+    {
+      "word": "水管",
+      "jyutping": "seoi2gun2",
+      "pinyin": "shuǐguɑ̌n",
+      "stage": "1"
+    },
+    {
+      "word": "口水",
+      "jyutping": "hau2seoi2",
+      "pinyin": "kǒushuǐ",
+      "stage": "1"
+    },
+    {
+      "word": "山水",
+      "jyutping": "saan1seoi2",
+      "pinyin": "shɑ̄nshuǐ",
+      "stage": "1"
+    },
+    {
+      "word": "汗水",
+      "jyutping": "hon6seoi2",
+      "pinyin": "hɑ̀nshuǐ",
+      "stage": "1"
+    },
+    {
+      "word": "自來水",
+      "jyutping": "zi6loi4seoi2",
+      "pinyin": "zìlɑ́ishuǐ",
+      "stage": "1"
+    },
+    {
+      "word": "汽水",
+      "jyutping": "hei3seoi2",
+      "pinyin": "qìshuǐ",
+      "stage": "1"
+    },
+    {
+      "word": "雨水",
+      "jyutping": "jyu5seoi2",
+      "pinyin": "yǔshuǐ",
+      "stage": "1"
+    },
+    {
+      "word": "泉水",
+      "jyutping": "cyun4seoi2",
+      "pinyin": "quɑ́nshuǐ",
+      "stage": "1"
+    },
+    {
+      "word": "流水",
+      "jyutping": "lau4seoi2",
+      "pinyin": "liúshuǐ",
+      "stage": "1"
+    },
+    {
+      "word": "食水",
+      "jyutping": "sik6seoi2",
+      "pinyin": "shíshuǐ",
+      "stage": "1"
+    },
+    {
+      "word": "清水",
+      "jyutping": "cing1seoi2",
+      "pinyin": "qīngshuǐ",
+      "stage": "1"
+    },
+    {
+      "word": "淚水",
+      "jyutping": "leoi6seoi2",
+      "pinyin": "lèishuǐ",
+      "stage": "1"
+    },
+    {
+      "word": "開水",
+      "jyutping": "hoi1seoi2",
+      "pinyin": "kɑ̄ishuǐ",
+      "stage": "1"
+    },
+    {
+      "word": "跳水",
+      "jyutping": "tiu3seoi2",
+      "pinyin": "tiɑ̀oshuǐ",
+      "stage": "1"
+    },
+    {
+      "word": "濾水",
+      "jyutping": "leoi6seoi2",
+      "pinyin": "lǜshuǐ",
+      "stage": "1"
+    },
+    {
+      "word": "礦泉水",
+      "jyutping": "kwong3cyun4seoi2",
+      "pinyin": "kuɑ̀ngquɑ́nshuǐ",
+      "stage": "1"
+    },
+    {
+      "word": "露水",
+      "jyutping": "lou6seoi2",
+      "pinyin": "lùshui",
+      "stage": "1"
+    }
+  ],
+  "stage2Words": [
+    {
+      "word": "水土",
+      "jyutping": "seoi2tou2",
+      "pinyin": "shuǐtǔ",
+      "stage": "2"
+    },
+    {
+      "word": "水平",
+      "jyutping": "seoi2ping4",
+      "pinyin": "shuǐpíng",
+      "stage": "2"
+    },
+    {
+      "word": "水利",
+      "jyutping": "seoi2lei6",
+      "pinyin": "shuǐlì",
+      "stage": "2"
+    },
+    {
+      "word": "水泥",
+      "jyutping": "seoi2nai4",
+      "pinyin": "shuǐní",
+      "stage": "2"
+    },
+    {
+      "word": "水泄不通",
+      "jyutping": "seoi2sit3bat1tung1",
+      "pinyin": "shuǐ xiè bù tōng",
+      "stage": "2"
+    },
+    {
+      "word": "水流",
+      "jyutping": "seoi2lau4",
+      "pinyin": "shuǐliú",
+      "stage": "2"
+    },
+    {
+      "word": "水痘",
+      "jyutping": "seoi2dau6",
+      "pinyin": "shuǐdòu",
+      "stage": "2"
+    },
+    {
+      "word": "水源",
+      "jyutping": "seoi2jyun4",
+      "pinyin": "shuǐyuɑ́n",
+      "stage": "2"
+    },
+    {
+      "word": "水溝",
+      "jyutping": "seoi2kau1",
+      "pinyin": "shuǐgōu",
+      "stage": "2"
+    },
+    {
+      "word": "水準",
+      "jyutping": "seoi2zeon2",
+      "pinyin": "shuǐzhǔn",
+      "stage": "2"
+    },
+    {
+      "word": "水滴",
+      "jyutping": "seoi2dik6",
+      "pinyin": "shuǐdī",
+      "stage": "2"
+    },
+    {
+      "word": "水質",
+      "jyutping": "seoi2zat1",
+      "pinyin": "shuǐzhì",
+      "stage": "2"
+    },
+    {
+      "word": "蒸汽",
+      "jyutping": "zing1hei3",
+      "pinyin": "zhēngqì",
+      "stage": "2"
+    },
+    {
+      "word": "水蒸氣",
+      "jyutping": "seoi2zing1hei3",
+      "pinyin": "shuǐzhēngqì",
+      "stage": "2"
+    },
+    {
+      "word": "下水",
+      "jyutping": "haa6seoi2",
+      "pinyin": "xiɑ̀shuǐ",
+      "stage": "2"
+    },
+    {
+      "word": "半瓶醋",
+      "jyutping": "bun3ping4cou3",
+      "pinyin": "bɑ̀npíngcù",
+      "stage": "2"
+    },
+    {
+      "word": "半桶水",
+      "jyutping": "bun3tung2seoi2",
+      "pinyin": "bɑ̀ntǒngshuǐ",
+      "stage": "2"
+    },
+    {
+      "word": "洪水",
+      "jyutping": "hung4seoi2",
+      "pinyin": "hóngshuǐ",
+      "stage": "2"
+    },
+    {
+      "word": "排水",
+      "jyutping": "paai4seoi2",
+      "pinyin": "pɑ́ishuǐ",
+      "stage": "2"
+    },
+    {
+      "word": "淡水",
+      "jyutping": "daam6seoi2",
+      "pinyin": "dɑ̀nshuǐ",
+      "stage": "2"
+    },
+    {
+      "word": "潛水",
+      "jyutping": "cim4seoi2",
+      "pinyin": "qiɑ́nshuǐ",
+      "stage": "2"
+    },
+    {
+      "word": "潮水",
+      "jyutping": "ciu4seoi2",
+      "pinyin": "chɑ́oshuǐ",
+      "stage": "2"
+    },
+    {
+      "word": "墨水",
+      "jyutping": "mak6seoi2",
+      "pinyin": "mòshuǐ",
+      "stage": "2"
+    },
+    {
+      "word": "薪金",
+      "jyutping": "san1gam1",
+      "pinyin": "xīnjīn",
+      "stage": "2"
+    },
+    {
+      "word": "薪水",
+      "jyutping": "san1seoi2",
+      "pinyin": "xīnshui",
+      "stage": "2"
+    }
+  ],
+  "fourCharacterPhrases": [
+    {
+      "word": "一頭霧水"
+    },
+    {
+      "word": "山明水秀"
+    },
+    {
+      "word": "水到渠成"
+    },
+    {
+      "word": "水漲船高"
+    },
+    {
+      "word": "如魚得水"
+    },
+    {
+      "word": "行雲流水"
+    },
+    {
+      "word": "車水馬龍"
+    },
+    {
+      "word": "拖泥帶水"
+    },
+    {
+      "word": "杯水車薪"
+    },
+    {
+      "word": "萍水相逢"
+    },
+    {
+      "word": "順水推舟"
+    },
+    {
+      "word": "遊山玩水"
+    }
+  ],
+  "classicalPhrases": [],
+  "multiCharacterIdioms": [
+    {
+      "word": "井水不犯河水"
+    },
+    {
+      "word": "風水輪流轉"
+    }
+  ],
+  "properNouns": [
+    {
+      "word": "水滸傳",
+      "jyutping": "seoi2wu2zyun6",
+      "pinyin": "Shuǐhǔzhuɑ̀n"
+    },
+    {
+      "word": "金木水火土",
+      "jyutping": "gam1muk6seoi2fo2tou2",
+      "pinyin": "jīn mù shuǐ huǒ tǔ"
+    },
+    {
+      "word": "淺水灣",
+      "jyutping": "cin2seoi2waan1",
+      "pinyin": "Qiɑ̌nshuǐ Wɑ̄n"
+    }
+  ],
+  "transliteratedWords": []
+}

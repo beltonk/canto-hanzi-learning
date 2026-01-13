@@ -1,0 +1,598 @@
+{
+  "id": "2741",
+  "character": "相",
+  "sourceUrl": "https://www.edbchinese.hk/lexlist_ch/result.jsp?id=2741&sortBy=ks&jpC=lshk",
+  "radical": "目",
+  "strokeCount": 9,
+  "jyutping": "soeng1",
+  "pinyin": "xiɑ̄ng",
+  "strokeOrderImages": [
+    "https://www.edbchinese.hk/EmbziciwebRes/stkdemo_js/2001-3000/2741.html?lang=ch"
+  ],
+  "strokeVectors": [
+    {
+      "strokeNumber": 1,
+      "segment": 1,
+      "frame": 24,
+      "pathData": "AuVCcQkgizEggpQMchJLih+QOBA4uOFyQmUAzmbAnQhkALhdAAQknAAjahsg",
+      "transform": {
+        "x": 239.2,
+        "y": 410.7
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 1,
+      "segment": 2,
+      "frame": 27,
+      "pathData": "A7WE8Qkhi0EhgpQY8iSVXlmQEsg9EzDUQC6CnkRBbQ09EU2dCJQhkAKhdAAQknAAjZhrg",
+      "transform": {
+        "x": 322.6,
+        "y": 394.7
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 2,
+      "segment": 1,
+      "frame": 48,
+      "pathData": "AjXTRQAIoXABoqQggvOixpiQhhlfF/CXQJgEHgvEoQiDJSgZIpQgcIGgVJSQilH8hwAAQhqAAg7nFg",
+      "transform": {
+        "x": 351.6,
+        "y": 280.8
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 2,
+      "segment": 2,
+      "frame": 51,
+      "pathData": "EgEqAm1QBZ6UAD9xQggvPixpiQhhlfF/CXQJgEHgvEoQiDJSgZIqUgBQAXWgAVAhKQi2H1h4AAQhyAAg5nCg",
+      "transform": {
+        "x": 351.6,
+        "y": 405.7
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 2,
+      "segment": 3,
+      "frame": 54,
+      "pathData": "EgEyBAtQjnnJBIlbQAti+A7m/UADFgk2AAFgsoQgfvPiypiQhglfF+CXQJgEHgvEoQiDJSgZIqUgB1AiNAAJA3LQApLvjvFkQhEBuhEAAQheAAhdjMg",
+      "transform": {
+        "x": 346.9,
+        "y": 546.7
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 3,
+      "segment": 1,
+      "frame": 72,
+      "pathData": "AlvE/QGJqWBum7QGtjUh3MlQjRGrjVFjQkmDyh3AAQiuAADEoAg",
+      "transform": {
+        "x": 303,
+        "y": 496.2
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 3,
+      "segment": 2,
+      "frame": 75,
+      "pathData": "Ap7MZQBMhdBIheQNCysCpqmQGtjVh3MmQl1L5l/ITQiuEJjLDnQitBnh2AyQhxAwg/AAQjOAAFZoJg",
+      "transform": {
+        "x": 265,
+        "y": 544.4
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 3,
+      "segment": 3,
+      "frame": 78,
+      "pathData": "A20bxQOpslKFtHQNCyrCqqnQGsjUh3MlQl1L6l/ISQp9PGvzH7QlrCphhAAQgXAAgIgJg",
+      "transform": {
+        "x": 204,
+        "y": 591.7
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 4,
+      "segment": 1,
+      "frame": 96,
+      "pathData": "AA9EsQjtkDj+k2QjukmPEG4QFDH/j7AAQhoAAjLhYg",
+      "transform": {
+        "x": 405,
+        "y": 553.7
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 4,
+      "segment": 2,
+      "frame": 99,
+      "pathData": "AD7HkQmjmUnepHQkElCSZItQHxEBhXHTQgnCmh0AAQhqAAipiKg",
+      "transform": {
+        "x": 426.6,
+        "y": 577.1
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 5,
+      "segment": 1,
+      "frame": 120,
+      "pathData": "AhyJKIgBjCQArtVjgmkQiwkVGyBZQGRBQgQEhQgTIdgQLXQigIMhrAAQhoAAg3n6g",
+      "transform": {
+        "x": 585.2,
+        "y": 417
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 5,
+      "segment": 2,
+      "frame": 123,
+      "pathData": "AiWWaQAotxgFvOQArtWjgmkQiwkVGyBZQGRBQgQEhQgmQ2gbcgQiDIGhuAAQhpAAhWnYg",
+      "transform": {
+        "x": 585.2,
+        "y": 498.4
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 5,
+      "segment": 3,
+      "frame": 126,
+      "pathData": "EgBoArZQj2lWA1nPIB2v5QBHxbgHz7QArtVjgmlQiwkVGyBZQGRBQgQEhQgmQ5gbcnQgbcphfIcQgtCjhFgBQhAAAhWiOg",
+      "transform": {
+        "x": 585.2,
+        "y": 599.8
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 6,
+      "segment": 1,
+      "frame": 144,
+      "pathData": "AschKQKgg1J3iAQJBAno8ECQofBHp+CPg",
+      "transform": {
+        "x": 666.5,
+        "y": 321.9
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 6,
+      "segment": 2,
+      "frame": 147,
+      "pathData": "AObKyIAAtwQAKmwlPgXQtlAKy5EQIh/lLQT3hlRnlwQCJg5G6ExQEjC7hCCyQiKIrAYFyIgKFWQi8HIiHAAQiMAAhVnjg",
+      "transform": {
+        "x": 747.6,
+        "y": 383.9
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 6,
+      "segment": 3,
+      "frame": 150,
+      "pathData": "AOQbYQAImpADnFMAAAghpQAKmvlPgYQtlAKy5EQIh/lLQT3hkRnlxQCJg4G6EwQEjC8hCCxQiKIsAYFyQgqT4AqOrIARC5QiNJDiXAAQiOAAiYn+g",
+      "transform": {
+        "x": 747.6,
+        "y": 492.8
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 6,
+      "segment": 4,
+      "frame": 153,
+      "pathData": "EAOgAxFIlWrSQClh+BPiQIAIgOIADgGQAOgeADgkIADgnQAqvRAHyHMAAAghqQAKmwlOgXQtmAKy4EQIh/lLQT3hlRnlwQCIg4G7EwQEjC7hCCyQiKIsAXFyQgqT5AqOqICQYeQA5IGlNHbQieCzhtAAQhVAAg4hsg",
+      "transform": {
+        "x": 748.9,
+        "y": 591.5
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 7,
+      "segment": 1,
+      "frame": 168,
+      "pathData": "AqaCkIAAjxQHLgfH5h3QLaCGrLEeQjSAjjQAAQkYAAkZhAg",
+      "transform": {
+        "x": 669.8,
+        "y": 501.5
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 7,
+      "segment": 2,
+      "frame": 171,
+      "pathData": "AzMEIIAAjyQLfgwNYkVQFyhUHvDIIgKCKQowC0r7CFQkZBBkYAAQkZAAkZhBg",
+      "transform": {
+        "x": 726,
+        "y": 491.5
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 8,
+      "segment": 1,
+      "frame": 192,
+      "pathData": "ApRCuIAAjSQGyhiGNhQQKugFp9GPQk4AjjXAAQjqAAh3gpg",
+      "transform": {
+        "x": 663.5,
+        "y": 658.8
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 8,
+      "segment": 2,
+      "frame": 195,
+      "pathData": "AzzD7IAAjTQNujHLah8QIHguGYD6IgsBAQ3aEzqAAAQjqAAh3gpg",
+      "transform": {
+        "x": 730.9,
+        "y": 651.1
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 9,
+      "segment": 1,
+      "frame": 216,
+      "pathData": "AqaiMQHUgiIBhAQNSB/tZEhQoFApoRAUg",
+      "transform": {
+        "x": 665.1,
+        "y": 827
+      },
+      "color": "#000000"
+    },
+    {
+      "strokeNumber": 9,
+      "segment": 2,
+      "frame": 219,
+      "pathData": "AzChMQNMg+PlieQF+gnEdD4Ig3ClQzPCx0OAwg",
+      "transform": {
+        "x": 720.3,
+        "y": 820.6
+      },
+      "color": "#000000"
+    }
+  ],
+  "inLexicalListsHK": true,
+  "stage1Words": [
+    {
+      "word": "相反",
+      "jyutping": "soeng1faan2",
+      "pinyin": "xiɑ̄ngfɑ̌n",
+      "stage": "1"
+    },
+    {
+      "word": "相片",
+      "jyutping": "soeng3pin3",
+      "pinyin": "xiɑ̀ngpiɑ̀n",
+      "stage": "1"
+    },
+    {
+      "word": "相同",
+      "jyutping": "soeng1tung4",
+      "pinyin": "xiɑ̄ngtóng",
+      "stage": "1"
+    },
+    {
+      "word": "相似",
+      "jyutping": "soeng1ci5",
+      "pinyin": "xiɑ̄ngsì",
+      "stage": "1"
+    },
+    {
+      "word": "相信",
+      "jyutping": "soeng1seon3",
+      "pinyin": "xiɑ̄ngxìn",
+      "stage": "1"
+    },
+    {
+      "word": "相差",
+      "jyutping": "soeng1caa1",
+      "pinyin": "xiɑ̄ngchɑ̀",
+      "stage": "1"
+    },
+    {
+      "word": "相處",
+      "jyutping": "soeng1cyu2",
+      "pinyin": "xiɑ̄ngchǔ",
+      "stage": "1"
+    },
+    {
+      "word": "相等",
+      "jyutping": "soeng1dang2",
+      "pinyin": "xiɑ̄ngděng",
+      "stage": "1"
+    },
+    {
+      "word": "相距",
+      "jyutping": "soeng1keoi5",
+      "pinyin": "xiɑ̄ngjù",
+      "stage": "1"
+    },
+    {
+      "word": "相傳",
+      "jyutping": "soeng1cyun4",
+      "pinyin": "xiɑ̄ngchuɑ́n",
+      "stage": "1"
+    },
+    {
+      "word": "相當",
+      "jyutping": "soeng1dong1",
+      "pinyin": "xiɑ̄ngdɑ̄ng",
+      "stage": "1"
+    },
+    {
+      "word": "相撞",
+      "jyutping": "soeng1zong6",
+      "pinyin": "xiɑ̄ngzhuɑ̀ng",
+      "stage": "1"
+    },
+    {
+      "word": "相簿",
+      "jyutping": "soeng3bou6",
+      "pinyin": "xiɑ̀ngbù",
+      "stage": "1"
+    },
+    {
+      "word": "相關",
+      "jyutping": "soeng1gwaan1",
+      "pinyin": "xiɑ̄ngguɑ̄n",
+      "stage": "1"
+    },
+    {
+      "word": "互相",
+      "jyutping": "wu6soeng1",
+      "pinyin": "hùxiɑ̄ng",
+      "stage": "1"
+    },
+    {
+      "word": "照相",
+      "jyutping": "ziu3soeng3",
+      "pinyin": "zhɑ̀oxiɑ̀ng",
+      "stage": "1"
+    }
+  ],
+  "stage2Words": [
+    {
+      "word": "相互",
+      "jyutping": "soeng1wu6",
+      "pinyin": "xiɑ̄nghù",
+      "stage": "2"
+    },
+    {
+      "word": "相比",
+      "jyutping": "soeng1bei2",
+      "pinyin": "xiɑ̄ngbǐ",
+      "stage": "2"
+    },
+    {
+      "word": "相近",
+      "jyutping": "soeng1gan6",
+      "pinyin": "xiɑ̄ngjìn",
+      "stage": "2"
+    },
+    {
+      "word": "相通",
+      "jyutping": "soeng1tung1",
+      "pinyin": "xiɑ̄ngtōng",
+      "stage": "2"
+    },
+    {
+      "word": "相連",
+      "jyutping": "soeng1lin4",
+      "pinyin": "xiɑ̄ngliɑ́n",
+      "stage": "2"
+    },
+    {
+      "word": "相提並論",
+      "jyutping": "soeng1tai4bing6leon6",
+      "pinyin": "xiɑ̄ng tí bìng lùn",
+      "stage": "2"
+    },
+    {
+      "word": "相遇",
+      "jyutping": "soeng1jyu6",
+      "pinyin": "xiɑ̄ngyù",
+      "stage": "2"
+    },
+    {
+      "word": "相隔",
+      "jyutping": "soeng1gaak3",
+      "pinyin": "xiɑ̄nggé",
+      "stage": "2"
+    },
+    {
+      "word": "相對",
+      "jyutping": "soeng1deoi3",
+      "pinyin": "xiɑ̄ngduì",
+      "stage": "2"
+    },
+    {
+      "word": "相稱",
+      "jyutping": "soeng1cing3",
+      "pinyin": "xiɑ̄ngchèn",
+      "stage": "2"
+    },
+    {
+      "word": "相鄰",
+      "jyutping": "soeng1leon4",
+      "pinyin": "xiɑ̄nglín",
+      "stage": "2"
+    },
+    {
+      "word": "相應",
+      "jyutping": "soeng1jing3",
+      "pinyin": "xiɑ̄ngyìng",
+      "stage": "2"
+    },
+    {
+      "word": "相識",
+      "jyutping": "soeng1sik1",
+      "pinyin": "xiɑ̄ngshí",
+      "stage": "2"
+    },
+    {
+      "word": "相繼",
+      "jyutping": "soeng1gai3",
+      "pinyin": "xiɑ̄ngjì",
+      "stage": "2"
+    },
+    {
+      "word": "守望相助",
+      "jyutping": "sau2mong6soeng1zo6",
+      "pinyin": "shǒu wɑ̀ng xiɑ̄ng zhù",
+      "stage": "2"
+    },
+    {
+      "word": "刮目相看",
+      "jyutping": "gwaat3muk6soeng1hon1",
+      "pinyin": "guɑ̄ mù xiɑ̄ng kɑ̀n",
+      "stage": "2"
+    },
+    {
+      "word": "亮相",
+      "jyutping": "loeng6soeng3",
+      "pinyin": "liɑ̀ngxiɑ̀ng",
+      "stage": "2"
+    },
+    {
+      "word": "宰相",
+      "jyutping": "zoi2soeng3",
+      "pinyin": "zɑ̌ixiɑ̀ng",
+      "stage": "2"
+    },
+    {
+      "word": "息息相關",
+      "jyutping": "sik1sik1soeng1gwaan1",
+      "pinyin": "xīxī xiɑ̄ng guɑ̄n",
+      "stage": "2"
+    },
+    {
+      "word": "真相",
+      "jyutping": "zan1soeng3",
+      "pinyin": "zhēnxiɑ̀ng",
+      "stage": "2"
+    }
+  ],
+  "fourCharacterPhrases": [
+    {
+      "word": "大相逕庭"
+    },
+    {
+      "word": "不相伯仲"
+    },
+    {
+      "word": "另眼相看"
+    },
+    {
+      "word": "同病相憐"
+    },
+    {
+      "word": "自相矛盾"
+    },
+    {
+      "word": "似曾相識"
+    },
+    {
+      "word": "拔刀相助"
+    },
+    {
+      "word": "相依為命"
+    },
+    {
+      "word": "相形見絀"
+    },
+    {
+      "word": "相得益彰"
+    },
+    {
+      "word": "相輔相成"
+    },
+    {
+      "word": "面面相覷"
+    },
+    {
+      "word": "狹路相逢"
+    },
+    {
+      "word": "真相大白"
+    },
+    {
+      "word": "針鋒相對"
+    },
+    {
+      "word": "短兵相接"
+    },
+    {
+      "word": "萍水相逢"
+    },
+    {
+      "word": "旗鼓相當"
+    }
+  ],
+  "classicalPhrases": [
+    {
+      "word": "相宜",
+      "jyutping": "soeng1ji4",
+      "pinyin": "xiɑ̄ngyí"
+    },
+    {
+      "word": "相思",
+      "jyutping": "soeng1si1",
+      "pinyin": "xiɑ̄ngsī"
+    },
+    {
+      "word": "相看",
+      "jyutping": "soeng1hon1",
+      "pinyin": "xiɑ̄ngkɑ̄n"
+    },
+    {
+      "word": "相見",
+      "jyutping": "soeng1gin3",
+      "pinyin": "xiɑ̄ngjiɑ̀n"
+    },
+    {
+      "word": "相送",
+      "jyutping": "soeng1sung3",
+      "pinyin": "xiɑ̄ngsòng"
+    }
+  ],
+  "multiCharacterIdioms": [
+    {
+      "word": "相見好，同住難"
+    },
+    {
+      "word": "風馬牛不相及"
+    },
+    {
+      "word": "冤冤相報何時了"
+    },
+    {
+      "word": "鷸蚌相爭，漁人得利"
+    }
+  ],
+  "properNouns": [
+    {
+      "word": "首相",
+      "jyutping": "sau2soeng3",
+      "pinyin": "shǒuxiɑ̀ng"
+    },
+    {
+      "word": "藺相如",
+      "jyutping": "leon6soeng1jyu4",
+      "pinyin": "Lìn Xiɑ̄ngrú"
+    }
+  ],
+  "transliteratedWords": []
+}

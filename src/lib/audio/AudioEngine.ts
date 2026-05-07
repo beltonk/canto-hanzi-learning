@@ -113,7 +113,9 @@ export class AudioEngine {
     if (!el) {
       el = new Audio(entry.src);
       el.preload = 'auto';
-      el.playsInline = true;
+      // iOS/WebKit inline playback hints; use attributes for broad DOM typings compatibility.
+      el.setAttribute('playsinline', 'true');
+      el.setAttribute('webkit-playsinline', 'true');
       this.audioElements.set(id, el);
     }
     el.currentTime = 0;

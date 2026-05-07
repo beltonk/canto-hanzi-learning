@@ -15,7 +15,7 @@ export default function GamePage() {
   if (!gameModule) {
     return (
       <AppShell title="找不到遊戲" emoji="❓" bg="rose">
-        <div className="container mx-auto px-4 py-12 text-center max-w-md">
+        <div className="w-full h-full p-0 text-center">
           <div className="text-6xl mb-4">❓</div>
           <p className="text-slate-700 text-lg mb-6">找不到這個遊戲</p>
           <button
@@ -42,7 +42,7 @@ export default function GamePage() {
       bg="indigo"
       onBack={() => router.push('/play')}
     >
-      <div className="container mx-auto max-w-3xl py-3 sm:py-4 px-2 sm:px-4">
+      <div className="w-full h-full p-0">
         <GameHost
           module={gameModule}
           onExit={() => router.push('/play')}

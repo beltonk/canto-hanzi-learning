@@ -45,7 +45,7 @@ export default function PlayHub() {
 
   return (
     <AppShell title="遊戲樂園" emoji="🎮" bg="pink">
-      <div className="container mx-auto px-3 sm:px-4 py-3 sm:py-4 max-w-6xl">
+      <div className="w-full h-full p-0">
         {/* Stars summary band */}
         <div className="mb-5 rounded-3xl bg-gradient-to-br from-amber-400 via-orange-400 to-rose-400 text-white p-4 sm:p-5 shadow-lg flex items-center justify-between flex-wrap gap-3">
           <div>
@@ -59,7 +59,7 @@ export default function PlayHub() {
         </div>
 
         {/* Game tiles - bigger, more vivid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4">
           {GAME_REGISTRY.map((game, idx) => {
             const { manifest } = game;
             const best = bestStars[manifest.id];

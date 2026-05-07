@@ -15,6 +15,17 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
     engine.setCategoryEnabled('music', root.settings.soundCategories.music);
     engine.setCategoryEnabled('voice', root.settings.soundCategories.voice);
     engine.setCategoryEnabled('effect', root.settings.soundCategories.effect);
+
+    // iOS browsers (including Chrome, which uses WebKit) keep AudioContext
+    // suspended until a trusted user gesture. Prime/unlock on first interaction.
+    const unlock = () => { void engine.unlock(); };
+    const opts: AddEventListenerOptions = { passive: true };
+    const events: Array<keyof WindowEventMap> = ['pointerdown', 'touchstart', 'mousedown', 'keydown'];
+    events.forEach(eventName => window.addEventListener(eventName, unlock, opts));
+
+    return () => {
+      events.forEach(eventName => window.removeEventListener(eventName, unlock));
+    };
   }, []);
 
   return (

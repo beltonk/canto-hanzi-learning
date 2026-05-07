@@ -18,7 +18,7 @@ function ExploreContent() {
 
   return (
     <AppShell title="查字 · 認字" emoji="🔍" bg="rose" onBack={() => requestExit(() => router.push('/'))}>
-      <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-6 max-w-4xl">
+      <div className="w-full h-full p-0">
         <CharacterExploration
           character={char}
           initialQuery={initialQuery}

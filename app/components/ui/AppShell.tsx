@@ -79,10 +79,10 @@ export default function AppShell({
 
   return (
     /* Outer shell — on md+ we use a left sidebar so we go side-by-side */
-    <div className={`${fillHeight ? 'h-screen' : 'min-h-screen'} bg-gradient-to-br ${BG_GRADIENTS[bg]} flex flex-col md:flex-row`}>
+    <div className={`${fillHeight ? 'h-dvh min-h-dvh' : 'min-h-dvh'} bg-gradient-to-br ${BG_GRADIENTS[bg]} flex flex-col lg:flex-row`}>
 
       {/* ─── LEFT SIDEBAR (md+) ─────────────────────────────────────────── */}
-      <aside className="hidden md:flex flex-col w-20 lg:w-52 shrink-0 sticky top-0 h-screen z-30
+      <aside className="hidden lg:flex flex-col w-52 shrink-0 sticky top-0 h-dvh z-30
                         bg-white border-r border-slate-200 shadow-sm overflow-y-auto">
         {/* Logo / home link */}
         <Link
@@ -160,7 +160,7 @@ export default function AppShell({
               </button>
             ) : (
               /* Placeholder so title stays centred on mobile */
-              <div className="shrink-0 w-10 h-10 md:hidden" />
+              <div className="shrink-0 w-10 h-10 lg:hidden" />
             )}
 
             {/* Page title */}
@@ -192,7 +192,7 @@ export default function AppShell({
           </div>
 
           {/* Mobile status strip */}
-          <div className="md:hidden flex items-center gap-1.5 px-3 pb-2 overflow-x-auto">
+          <div className="lg:hidden flex items-center gap-1.5 px-3 pb-2 overflow-x-auto">
             <Link
               href="/favorites"
               className="shrink-0 px-2.5 py-1 rounded-full bg-pink-100 border border-pink-300
@@ -213,13 +213,13 @@ export default function AppShell({
         </header>
 
         {/* ── MAIN CONTENT ────────────────────────────────────────────── */}
-        <main className={`flex-1 flex flex-col min-h-0 ${fillHeight ? 'overflow-hidden' : ''} pb-[148px] md:pb-0`}>
+        <main className={`flex-1 flex flex-col min-h-0 px-3 sm:px-4 pt-3 sm:pt-4 ${fillHeight ? 'overflow-hidden' : ''} pb-[156px] lg:pb-4`}>
           {children}
         </main>
       </div>
 
       {/* ─── BOTTOM TAB BAR (mobile only, < md) ─────────────────────── */}
-      <nav className="md:hidden fixed bottom-0 inset-x-0 z-30
+      <nav className="lg:hidden fixed bottom-0 inset-x-0 z-30
                       bg-white/95 backdrop-blur-lg border-t-2 border-slate-200
                       shadow-[0_-4px_24px_rgba(0,0,0,0.10)]">
         {/* Show 5 primary items; keep it uncluttered */}

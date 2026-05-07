@@ -211,7 +211,7 @@ export default function CharacterExploration({
   const hasStrokeData = data.strokeVectors && data.strokeVectors.length > 0;
 
   return (
-    <div className="max-w-4xl mx-auto space-y-3">
+    <div className="w-full h-full space-y-3">
       {/* Character Navigation */}
       {characterList.length > 1 && (
         <div className="bg-[var(--card-bg)] rounded-2xl shadow-[0_4px_16px_var(--card-shadow)] overflow-hidden">

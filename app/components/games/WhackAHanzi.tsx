@@ -7,8 +7,11 @@ import CorrectBurst from '@/app/components/ui/CorrectBurst';
 
 const HOLES = 9;
 const ROUND_COUNT = 20;
-const BASE_POP_INTERVAL = 2200; // ms — start slower for a more relaxed feel
-const MIN_POP_INTERVAL = 900;   // don't go crazy fast
+const BASE_POP_INTERVAL = 2600; // ms — slower opening pace
+const END_POP_INTERVAL = 1800;  // ms — endgame stays challenging but comfortable
+const MIN_POP_INTERVAL = 1600;  // hard floor to avoid "crazy fast" endings
+const COMBO_SPEEDUP_PER_STACK = 10;
+const MAX_COMBO_SPEEDUP = 80;
 
 const HOLE_VISUALS = [
   { ground: 'from-amber-300 to-amber-500', emoji: '🌱' },
@@ -65,8 +68,8 @@ export default function WhackAHanzi({ items, onResult }: GameProps) {
     setCurrentTarget(targetItem.character);
 
     // Increase number of decoys as the game progresses
-    const baseHoles = 3 + Math.floor(r / 5);
-    const holeCount = Math.min(7, baseHoles + Math.floor(Math.random() * 2));
+    const baseHoles = 3 + Math.floor(r / 6);
+    const holeCount = Math.min(6, baseHoles + Math.floor(Math.random() * 2));
 
     const holes: number[] = [];
     holes.push(Math.floor(Math.random() * HOLES));
@@ -103,9 +106,19 @@ export default function WhackAHanzi({ items, onResult }: GameProps) {
     const tick = () => {
       if (doneRef.current) return;
       nextRound();
+      // Keep the exciting acceleration, but use a gentler curve so the
+      // endgame stays controllable on touch devices.
+      const progress = Math.min(1, roundRef.current / ROUND_COUNT);
+      const ramp = Math.pow(progress, 1.35);
+      const intervalByRound =
+        BASE_POP_INTERVAL - (BASE_POP_INTERVAL - END_POP_INTERVAL) * ramp;
+      const comboSpeedup = Math.min(
+        MAX_COMBO_SPEEDUP,
+        comboRef.current * COMBO_SPEEDUP_PER_STACK,
+      );
       const interval = Math.max(
         MIN_POP_INTERVAL,
-        BASE_POP_INTERVAL - roundRef.current * 50 - comboRef.current * 30,
+        Math.round(intervalByRound - comboSpeedup),
       );
       intervalRef.current = setTimeout(tick, interval);
     };

@@ -121,8 +121,9 @@ export default function DictationExercise(props: DictationExerciseProps) {
   useEffect(() => {
     const update = () => {
       const w = window.innerWidth;
-      if (w >= 1024) setPaneSize(320);
-      else if (w >= 768) setPaneSize(280);
+      if (w >= 1366) setPaneSize(420);
+      else if (w >= 1024) setPaneSize(380);
+      else if (w >= 768) setPaneSize(340);
       else if (w >= 640) setPaneSize(300);
       else setPaneSize(Math.min(w - 80, 280));
     };
@@ -237,7 +238,7 @@ export default function DictationExercise(props: DictationExerciseProps) {
   const progress = ((currentIndex + 1) / questions.length) * 100;
 
   return (
-    <div className="max-w-3xl mx-auto space-y-3">
+    <div className="w-full h-full space-y-3">
       {/* Difficulty selector */}
       <div className="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-2xl border-2 border-indigo-200 shadow-sm p-3">
         <div className="flex items-center gap-2 flex-wrap">
@@ -306,7 +307,7 @@ export default function DictationExercise(props: DictationExerciseProps) {
         )}
 
         {/* Writing area */}
-        <div className="flex flex-col md:flex-row items-center md:items-start justify-center gap-4 md:gap-6">
+        <div className="flex flex-col md:flex-row items-center md:items-start md:justify-between gap-4 md:gap-6 w-full">
           {/* User's writing pane */}
           <div className="flex flex-col items-center gap-2">
             <div className="text-xs font-semibold text-slate-600 self-start">

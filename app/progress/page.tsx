@@ -127,7 +127,7 @@ export default function ProgressPage() {
 
   return (
     <AppShell title="學習進度" emoji="📊" bg="sky">
-      <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-6 max-w-5xl">
+      <div className="w-full h-full p-0">
         {/* Top hero band */}
         <div className="rounded-3xl bg-gradient-to-br from-sky-500 via-indigo-500 to-purple-500 text-white p-5 sm:p-6 shadow-lg mb-4">
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">

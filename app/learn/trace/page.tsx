@@ -53,8 +53,9 @@ function TracePageContent() {
     const update = () => {
       const w = window.innerWidth;
       // 360 default, fits cleanly on iPad/desktop; mobile uses (width - 32px padding - 4px border)
-      if (w >= 1024) setCanvasSize(380);
-      else if (w >= 768) setCanvasSize(320); // iPad portrait: side-by-side, so less width
+      if (w >= 1280) setCanvasSize(390);
+      else if (w >= 1024) setCanvasSize(370);
+      else if (w >= 768) setCanvasSize(350); // tablet portrait keeps larger writing area
       else if (w >= 640) setCanvasSize(340);
       else setCanvasSize(Math.min(w - 48, 320));
     };
@@ -127,7 +128,7 @@ function TracePageContent() {
 
   return (
     <AppShell title="筆順練習" emoji="🖌️" bg="indigo" fillHeight onBack={() => requestExit(() => router.push('/'))}>
-      <div className="flex-1 flex flex-col min-h-0 px-3 sm:px-4 py-3 sm:py-4 mx-auto w-full max-w-5xl">
+      <div className="flex-1 flex flex-col min-h-0 w-full h-full p-0">
         {/* Compact filters in single row */}
         <div className="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-2xl shadow-sm border-2 border-indigo-200 p-3 sm:p-4 mb-3 shrink-0">
           <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
@@ -161,7 +162,7 @@ function TracePageContent() {
         </div>
 
         {/* Side-by-side from md (iPad portrait) up — fills remaining vertical space */}
-        <div className="flex-1 grid grid-cols-1 md:grid-cols-[1fr_280px] lg:grid-cols-[1fr_320px] gap-3 min-h-0">
+        <div className="flex-1 grid grid-cols-1 lg:grid-cols-[1fr_300px] xl:grid-cols-[1fr_340px] gap-3 min-h-0">
           {/* Tracing area */}
           <div className="bg-gradient-to-br from-indigo-100 via-purple-100 to-indigo-50 rounded-2xl shadow-sm border-2 border-indigo-300 p-3 sm:p-4 min-h-0 overflow-y-auto">
             <div className="flex items-center justify-between gap-2 mb-3 flex-wrap">
@@ -249,7 +250,7 @@ function TracePageContent() {
             </div>
             <div className="flex-1 min-h-0 overflow-y-auto pr-1
                             scrollbar-thin scrollbar-thumb-sky-300 scrollbar-track-transparent">
-              <div className="grid grid-cols-7 sm:grid-cols-8 md:grid-cols-4 lg:grid-cols-5 gap-1.5">
+              <div className="grid grid-cols-7 sm:grid-cols-8 md:grid-cols-10 lg:grid-cols-4 xl:grid-cols-5 gap-1.5">
                 {filteredList.map(e => (
                   <button
                     key={e.character}

@@ -107,9 +107,9 @@ export default function Home() {
 
   return (
     <AppShell title="粵語漢字學習" emoji="📖" hideBack bg="indigo">
-      <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-6 max-w-5xl">
+      <div className="w-full h-full p-0">
         {/* Hero compact band */}
-        <div className="mb-5 sm:mb-6 grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4">
+        <div className="mb-5 sm:mb-6 grid grid-cols-1 lg:grid-cols-3 gap-3 sm:gap-4">
           {/* Welcome / progress */}
           <div className="md:col-span-2 rounded-3xl bg-gradient-to-br from-indigo-500 via-purple-500 to-fuchsia-500 text-white p-5 sm:p-6 shadow-lg relative overflow-hidden">
             <div className="absolute -right-8 -top-8 text-9xl opacity-20 select-none">🐼</div>
@@ -188,7 +188,7 @@ export default function Home() {
             <h2 className="text-lg sm:text-xl font-bold text-slate-900">學習活動</h2>
             <span className="text-xs text-slate-500">點擊開始</span>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-3">
             {ACTIVITIES.map(act => (
               <Link
                 key={act.href}
@@ -243,7 +243,7 @@ export default function Home() {
               <span className="text-xl">🎯</span>
               <h2 className="text-base sm:text-lg font-bold text-slate-900">今日任務</h2>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
               {quests.map(q => <QuestCard key={q.id} quest={q} />)}
             </div>
           </section>

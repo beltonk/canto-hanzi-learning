@@ -16,8 +16,8 @@ function DecomposeContent() {
   useEffect(() => { initSession(); }, [initSession]);
 
   return (
-    <AppShell title="拆字遊戲" emoji="🧩" bg="emerald" onBack={() => requestExit(() => router.push('/'))}>
-      <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-6 max-w-4xl">
+    <AppShell title="拆字" emoji="🧩" bg="emerald" onBack={() => requestExit(() => router.push('/'))}>
+      <div className="w-full h-full p-0">
         <DecompositionPlay
           character={char}
           onCharacterChange={(newChar) => {

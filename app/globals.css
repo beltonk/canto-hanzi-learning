@@ -150,8 +150,17 @@ body {
   font-family: var(--font-sans);
   font-size: 16px;
   line-height: 1.6;
+  -webkit-text-size-adjust: 100%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* iPad / tablet touch devices: slightly larger base type so utility text
+   classes (xs/sm/base) remain readable in Chrome's desktop-like viewport. */
+@media (pointer: coarse) and (min-width: 768px) and (max-width: 1279px) {
+  html {
+    font-size: 17px;
+  }
 }
 
 /* Smooth theme transitions for surfaces */

@@ -15,7 +15,7 @@ function DictationContent() {
 
   return (
     <AppShell title="默書練習" emoji="✏️" bg="amber" onBack={() => requestExit(() => router.push('/'))}>
-      <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-6 max-w-3xl">
+      <div className="w-full h-full p-0">
         <DictationExercise />
       </div>
       {summary && (

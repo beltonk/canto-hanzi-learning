@@ -21,6 +21,7 @@ export class AudioEngine {
   private currentMusic: { source: AudioBufferSourceNode | HTMLAudioElement; id: string } | null = null;
   private brushSource: AudioBufferSourceNode | null = null;
   private audioElements = new Map<string, HTMLAudioElement>(); // fallback
+  private unlocked = false;
 
   setRegistry(registry: SoundRegistry) {
     this.registry = registry;
@@ -55,6 +56,40 @@ export class AudioEngine {
     }
   }
 
+  private async resumeContextIfNeeded(): Promise<AudioContext | null> {
+    const ctx = this.ensureContext();
+    if (!ctx) return null;
+    if (ctx.state === 'suspended') {
+      try {
+        await ctx.resume();
+      } catch {
+        // Ignore and let caller gracefully no-op on locked platforms.
+      }
+    }
+    return ctx;
+  }
+
+  /**
+   * Attempt to unlock audio playback on platforms that require user gesture
+   * (notably iOS Safari/Chrome where AudioContext starts suspended).
+   */
+  async unlock(): Promise<boolean> {
+    const ctx = await this.resumeContextIfNeeded();
+    if (!ctx) return false;
+    if (this.unlocked && ctx.state === 'running') return true;
+    if (ctx.state !== 'running') return false;
+    try {
+      const src = ctx.createBufferSource();
+      src.buffer = ctx.createBuffer(1, 1, 22050);
+      src.connect(ctx.destination);
+      src.start(0);
+      this.unlocked = true;
+    } catch {
+      // Best effort; context may still be usable without priming.
+    }
+    return ctx.state === 'running';
+  }
+
   private async loadBuffer(id: string): Promise<AudioBuffer | null> {
     const ctx = this.ensureContext();
     if (!ctx) return null;
@@ -77,6 +112,8 @@ export class AudioEngine {
     let el = this.audioElements.get(id);
     if (!el) {
       el = new Audio(entry.src);
+      el.preload = 'auto';
+      el.playsInline = true;
       this.audioElements.set(id, el);
     }
     el.currentTime = 0;
@@ -87,7 +124,7 @@ export class AudioEngine {
     if (!this.globalEnabled) return;
     const entry = this.registry[id];
     if (!entry || !this.categoryEnabled[entry.category]) return;
-    const ctx = this.ensureContext();
+    const ctx = await this.resumeContextIfNeeded();
     if (!ctx) { this.playFallback(id); return; }
     const buf = await this.loadBuffer(id);
     if (!buf) return;
@@ -105,7 +142,7 @@ export class AudioEngine {
     }
     const entry = this.registry[id];
     if (!entry) return;
-    const ctx = this.ensureContext();
+    const ctx = await this.resumeContextIfNeeded();
     if (!ctx) { this.playFallback(id); return; }
     const buf = await this.loadBuffer(id);
     if (!buf) return;
@@ -124,7 +161,7 @@ export class AudioEngine {
     start: async (id: string) => {
       if (!this.globalEnabled || !this.categoryEnabled.music) return;
       this.stopMusic();
-      const ctx = this.ensureContext();
+      const ctx = await this.resumeContextIfNeeded();
       if (!ctx) return;
       const buf = await this.loadBuffer(id);
       if (!buf) return;
@@ -151,7 +188,7 @@ export class AudioEngine {
 
   async startBrush(id = 'brush.loop') {
     if (!this.globalEnabled || !this.categoryEnabled.effect) return;
-    const ctx = this.ensureContext();
+    const ctx = await this.resumeContextIfNeeded();
     if (!ctx) return;
     const buf = await this.loadBuffer(id);
     if (!buf) return;
@@ -192,9 +229,9 @@ export class AudioEngine {
    * Total length ~0.4s — short enough to stay enjoyable on rapid retries.
    * A 5 kHz low-pass keeps it warm on small speakers (iPad).
    */
-  playCorrect() {
+  async playCorrect() {
     if (!this.globalEnabled || !this.categoryEnabled.effect) return;
-    const ctx = this.ensureContext();
+    const ctx = await this.resumeContextIfNeeded();
     if (!ctx) return;
 
     const now = ctx.currentTime;
@@ -252,9 +289,9 @@ export class AudioEngine {
    * Always passes through a 6 kHz low-pass so it stays warm on iPad
    * speakers and doesn't get harsh at higher pitches.
    */
-  playVictoryFanfare(level: 1 | 2 | 3 = 3) {
+  async playVictoryFanfare(level: 1 | 2 | 3 = 3) {
     if (!this.globalEnabled || !this.categoryEnabled.effect) return;
-    const ctx = this.ensureContext();
+    const ctx = await this.resumeContextIfNeeded();
     if (!ctx) return;
 
     const now = ctx.currentTime;
@@ -345,9 +382,9 @@ export class AudioEngine {
    * Synthesise a soft low "boop" for incorrect answers — not harsh or discouraging.
    * A short sine-wave dip, gain 0.12.
    */
-  playIncorrect() {
+  async playIncorrect() {
     if (!this.globalEnabled || !this.categoryEnabled.effect) return;
-    const ctx = this.ensureContext();
+    const ctx = await this.resumeContextIfNeeded();
     if (!ctx) return;
     const gain = ctx.createGain();
     gain.gain.value = 0.12;
@@ -449,6 +486,7 @@ export class AudioEngine {
   speakTTS(text: string, lang = 'zh-HK', rate = 0.5) {
     if (!this.globalEnabled || !this.categoryEnabled.voice) return;
     if (typeof window === 'undefined' || !('speechSynthesis' in window)) return;
+    void this.unlock();
     window.speechSynthesis.cancel();
 
     const speakNow = () => {

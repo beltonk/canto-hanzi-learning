@@ -155,7 +155,7 @@ export default function DecompositionPlay({ character, onCharacterChange }: Deco
   }
 
   return (
-    <div className="max-w-4xl mx-auto space-y-4">
+    <div className="w-full h-full space-y-4">
       {score.total > 0 && (
         <div className="flex items-center justify-center gap-2 text-base font-medium text-slate-600">
           <span>分數</span>

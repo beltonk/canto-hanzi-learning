@@ -36,7 +36,7 @@ function FlashcardContent() {
 
   return (
     <AppShell title="字卡溫習" emoji="🃏" bg="sky" fillHeight onBack={() => requestExit(() => router.push('/'))}>
-      <div className="flex-1 flex flex-col min-h-0 px-2 sm:px-3 pt-2 pb-2">
+      <div className="flex-1 flex flex-col min-h-0">
         <FlashcardRevision initialCharList={initialCharList} initialTitle={initialTitle} />
       </div>
       {summary && (

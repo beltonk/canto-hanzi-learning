@@ -80,7 +80,7 @@ export default function FavoritesPage() {
 
   return (
     <AppShell title="我的收藏" emoji="❤️" bg="pink">
-      <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-6 max-w-4xl">
+      <div className="w-full h-full p-0">
         {/* Hero */}
         <div className="mb-5 rounded-3xl bg-gradient-to-br from-pink-500 via-rose-500 to-fuchsia-500 text-white p-5 sm:p-6 shadow-lg relative overflow-hidden">
           <div className="absolute -right-6 -top-6 text-9xl opacity-20 select-none">❤️</div>

@@ -22,7 +22,7 @@ export default function StickersPage() {
 
   return (
     <AppShell title="貼紙簿" emoji="📚" bg="amber">
-      <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-6 max-w-3xl">
+      <div className="w-full h-full p-0">
         {/* Progress card */}
         <div className="rounded-3xl bg-gradient-to-br from-amber-400 via-orange-400 to-rose-400 text-white p-5 sm:p-6 shadow-lg mb-5">
           <div className="flex items-center justify-between gap-3 mb-3 flex-wrap">

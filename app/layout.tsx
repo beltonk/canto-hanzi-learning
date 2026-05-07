@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Noto_Sans_TC, Noto_Serif_TC, Roboto_Mono } from "next/font/google";
 // Full-coverage Kaiti brush face (CC-BY). Each woff2 slice is loaded on
 // demand via unicode-range, so only the glyphs actually rendered on the
@@ -34,6 +34,12 @@ const robotoMono = Roboto_Mono({
 export const metadata: Metadata = {
   title: "粵語漢字學習系統 | Cantonese Hanzi Learning",
   description: "香港小學中文字互動學習平台 | HK Primary School Chinese Learning Platform",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
 };
 
 export default function RootLayout({

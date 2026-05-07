@@ -57,6 +57,22 @@ export default function FlashcardRevision({
   // Card state
   const [showFilters, setShowFilters] = useState(false);
   const [showStrokeAnimation, setShowStrokeAnimation] = useState(false);
+  const [strokeAnimSize, setStrokeAnimSize] = useState(220);
+
+  // Adaptive canvas sizing for phone / iPad portrait / iPad landscape.
+  useEffect(() => {
+    const updateSize = () => {
+      const w = window.innerWidth;
+      if (w >= 1366) setStrokeAnimSize(260);
+      else if (w >= 1180) setStrokeAnimSize(240);
+      else if (w >= 900) setStrokeAnimSize(220);
+      else if (w >= 768) setStrokeAnimSize(210);
+      else setStrokeAnimSize(190);
+    };
+    updateSize();
+    window.addEventListener("resize", updateSize);
+    return () => window.removeEventListener("resize", updateSize);
+  }, []);
 
   // Load summary stats on mount
   useEffect(() => {
@@ -253,27 +269,27 @@ export default function FlashcardRevision({
   // ── SETUP SCREEN ──────────────────────────────────────────────────────────
   if (!isStarted) {
     return (
-      <div className="flex-1 flex items-center justify-center p-4">
-        <div className="w-full max-w-2xl bg-gradient-to-br from-sky-100 via-indigo-50 to-purple-100
-                        rounded-3xl shadow-xl border-2 border-sky-300 p-6 md:p-8">
+      <div className="flex-1 flex items-stretch p-0">
+        <div className="w-full bg-gradient-to-br from-sky-100 via-indigo-50 to-purple-100
+                        rounded-3xl shadow-xl border-2 border-sky-300 p-5 sm:p-6 lg:p-8">
           {/* Header row */}
-          <div className="flex items-center gap-4 mb-6">
-            <Mascot type="rabbit" size={64} message={t("selectRange")} />
+          <div className="flex items-start sm:items-center gap-3 sm:gap-4 mb-5 sm:mb-6">
+            <Mascot type="rabbit" size={60} message={t("selectRange")} />
             <div>
-              <h2 className="text-2xl font-bold text-slate-900">{t("flashcardSettings")}</h2>
+              <h2 className="text-xl sm:text-2xl font-bold text-slate-900">{t("flashcardSettings")}</h2>
               <p className="text-sm text-slate-500 mt-0.5">{t("usingHkWordList")}</p>
             </div>
           </div>
 
-          {/* Stroke range buttons — all in one row */}
+          {/* Stroke range buttons */}
           <div className="mb-5">
             <label className="block text-sm font-semibold text-slate-700 mb-2">{t("strokeCountLabel")}</label>
-            <div className="flex gap-2 flex-wrap">
+            <div className="grid grid-cols-3 sm:grid-cols-5 gap-2">
               {STROKE_RANGES.map((range, index) => (
                 <button
                   key={index}
                   onClick={() => setStrokeRange(range)}
-                  className={`flex-1 min-w-[60px] px-3 py-3 rounded-2xl font-bold text-base transition-all active:scale-95
+                  className={`px-3 py-2.5 rounded-2xl font-bold text-sm sm:text-base transition-all active:scale-95
                     ${strokeRange === range
                       ? 'bg-sky-500 text-white shadow-md shadow-sky-200'
                       : 'bg-white border-2 border-sky-200 text-slate-600 hover:border-sky-400 hover:bg-sky-50'
@@ -382,24 +398,26 @@ export default function FlashcardRevision({
         </div>
       )}
 
-      {/* ── Main area: nav arrows + two-column card ── */}
-      <div className="flex-1 flex items-stretch gap-1 min-h-0 px-1 pb-1">
-
-        {/* Left arrow */}
-        <div className="flex items-center shrink-0">
-          <NavArrow direction="left" onClick={goToPrevious} disabled={isFirst} size="md" />
-        </div>
-
-        {/* Card — two columns */}
+      {/* ── Main area ── */}
+      <div className="flex-1 min-h-0 px-1.5 sm:px-2 pb-1.5 sm:pb-2">
         <div
           key={current.character}
-          className={`flex-1 grid grid-cols-1 md:grid-cols-2 gap-0 min-h-0 overflow-hidden
+          className={`h-full grid grid-cols-1 lg:grid-cols-[minmax(320px,42%)_1fr] gap-0 min-h-0 overflow-hidden
                       bg-gradient-to-br from-sky-100 via-white to-purple-100
                       rounded-3xl shadow-xl border-2 border-sky-300 ${cardEnterClass}`}
         >
           {/* LEFT: Character display */}
-          <div className="flex flex-col items-center justify-center p-4 md:p-6
-                          md:border-r-2 border-sky-200 bg-gradient-to-br from-sky-100 to-indigo-100">
+          <div className="flex flex-col items-center justify-center p-4 lg:p-6
+                          lg:border-r-2 border-sky-200 bg-gradient-to-br from-sky-100 to-indigo-100">
+            {/* Prev / next controls stay close to card content on all screens */}
+            <div className="w-full flex items-center justify-between mb-2">
+              <NavArrow direction="left" onClick={goToPrevious} disabled={isFirst} size="md" />
+              <span className="text-xs sm:text-sm font-semibold text-slate-500">
+                {currentIndex + 1} / {characters.length}
+              </span>
+              <NavArrow direction="right" onClick={goToNext} disabled={isLast} size="md" />
+            </div>
+
             {/* Big stroke animation */}
             <div
               onClick={() => hasStrokeData && setShowStrokeAnimation(!showStrokeAnimation)}
@@ -409,7 +427,7 @@ export default function FlashcardRevision({
               <StrokeAnimation
                 strokeVectors={current.strokeVectors}
                 character={current.character}
-                size={200}
+                size={strokeAnimSize}
                 showAnimation={showStrokeAnimation}
                 onAnimationEnd={() => setShowStrokeAnimation(false)}
               />
@@ -421,11 +439,11 @@ export default function FlashcardRevision({
 
             {/* Jyutping */}
             <div className="text-center mb-3">
-              <div className="jyutping text-sky-600 text-2xl md:text-3xl font-bold">
+              <div className="jyutping text-sky-600 text-3xl sm:text-4xl font-bold">
                 {current.jyutping}
               </div>
               {current.pinyin && (
-                <div className="text-sm text-slate-400 mt-0.5">({current.pinyin})</div>
+                <div className="text-sm sm:text-base text-slate-400 mt-0.5">({current.pinyin})</div>
               )}
             </div>
 
@@ -450,7 +468,7 @@ export default function FlashcardRevision({
           </div>
 
           {/* RIGHT: Details */}
-          <div className="flex flex-col p-4 md:p-6 min-h-0 overflow-y-auto gap-3">
+          <div className="flex flex-col p-4 lg:p-6 min-h-0 overflow-y-auto gap-3">
             {/* Radical + stroke count pills */}
             <div className="grid grid-cols-2 gap-2 shrink-0">
               <div className="bg-rose-100 border border-rose-200 rounded-2xl p-3 text-center">
@@ -498,11 +516,6 @@ export default function FlashcardRevision({
               ← → 切換 · 空白鍵 發音
             </p>
           </div>
-        </div>
-
-        {/* Right arrow */}
-        <div className="flex items-center shrink-0">
-          <NavArrow direction="right" onClick={goToNext} disabled={isLast} size="md" />
         </div>
       </div>
     </div>

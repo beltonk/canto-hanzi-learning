@@ -38,7 +38,7 @@ export default function StickersPage() {
         </div>
 
         {/* Sticker grid */}
-        <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 sm:p-5">
+        <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl shadow-sm border-2 border-amber-200 p-4 sm:p-5">
           <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 gap-3 sm:gap-4 justify-items-center">
             {ALL_STICKERS.map(id => (
               <div key={id} className="flex flex-col items-center gap-1">
@@ -55,7 +55,7 @@ export default function StickersPage() {
         </div>
 
         {unlockedStickers.length === 0 && (
-          <div className="mt-6 text-center bg-white rounded-2xl border border-slate-200 p-6">
+          <div className="mt-6 text-center bg-gradient-to-br from-amber-50 to-rose-50 rounded-2xl border-2 border-amber-200 p-6">
             <div className="text-5xl mb-2">🔒</div>
             <p className="text-slate-700 mb-4 font-medium">完成活動、升級可解鎖貼紙！</p>
             <div className="flex justify-center gap-3 flex-wrap">

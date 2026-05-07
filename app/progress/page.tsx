@@ -167,9 +167,9 @@ export default function ProgressPage() {
           </div>
         )}
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* 7-day chart */}
-          <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 sm:p-5">
+          <div className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-2xl shadow-sm border-2 border-indigo-200 p-4 sm:p-5">
             <h3 className="font-bold text-slate-900 mb-4 flex items-center gap-2">
               <span>📈</span> 最近 7 日活動
             </h3>
@@ -190,7 +190,7 @@ export default function ProgressPage() {
           </div>
 
           {/* Stickers preview */}
-          <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 sm:p-5">
+          <div className="bg-gradient-to-br from-amber-50 to-rose-50 rounded-2xl shadow-sm border-2 border-amber-200 p-4 sm:p-5">
             <div className="flex items-center justify-between mb-3">
               <h3 className="font-bold text-slate-900 flex items-center gap-2">
                 <span>📚</span> 我的貼紙
@@ -217,7 +217,7 @@ export default function ProgressPage() {
 
         {/* Mastery character grid */}
         {Object.keys(data.masteryRecords).length > 0 ? (
-          <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 sm:p-5 mt-4">
+          <div className="bg-gradient-to-br from-sky-50 to-cyan-50 rounded-2xl shadow-sm border-2 border-sky-200 p-4 sm:p-5 mt-4">
             <div className="flex items-center justify-between mb-3">
               <h3 className="font-bold text-slate-900">學習狀態 ({Object.keys(data.masteryRecords).length})</h3>
               <div className="flex gap-2 flex-wrap">
@@ -241,7 +241,7 @@ export default function ProgressPage() {
               ))}
             </div>
             {hoveredChar && data.masteryRecords[hoveredChar] && (
-              <div className="mt-3 p-3 bg-indigo-50 border border-indigo-200 rounded-xl text-sm">
+              <div className="mt-3 p-3 bg-gradient-to-r from-indigo-100 to-purple-100 border border-indigo-300 rounded-xl text-sm">
                 <div className="flex items-center gap-3 flex-wrap">
                   <span className="font-chinese text-3xl font-bold text-slate-900">{hoveredChar}</span>
                   <span className="text-slate-700">
@@ -263,7 +263,7 @@ export default function ProgressPage() {
             )}
           </div>
         ) : (
-          <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mt-4 text-center">
+          <div className="bg-gradient-to-br from-sky-50 to-cyan-50 rounded-2xl shadow-sm border-2 border-sky-200 p-6 mt-4 text-center">
             <Mascot id="panda" pose="idle" size={64} className="mx-auto mb-2" />
             <p className="text-slate-600 mb-3">開始練習，建立你的學習記錄！</p>
             <Link href="/" className="inline-block px-5 py-2.5 rounded-xl bg-indigo-600 text-white font-semibold hover:bg-indigo-700 transition-all active:scale-95">
@@ -273,7 +273,7 @@ export default function ProgressPage() {
         )}
 
         {/* Settings */}
-        <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 sm:p-5 mt-4">
+        <div className="bg-gradient-to-br from-slate-200 to-slate-100 rounded-2xl shadow-sm border-2 border-slate-400 p-4 sm:p-5 mt-4">
           <h3 className="font-bold text-slate-900 mb-3">管理進度</h3>
           <div className="flex flex-wrap gap-2">
             <button

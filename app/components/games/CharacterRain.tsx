@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { addFavorite } from '@/lib/favorites';
 import type { GameProps } from './types';
+import { useAudio } from '@/lib/audio/context';
 
 const ROUND_COUNT = 12;
 const MAX_LIVES = 3;
@@ -11,8 +12,8 @@ const COLUMN_WIDTH_PCT = 100 / COLUMN_COUNT;
 const TILE_SIZE_PX = 56;
 const SAFE_GAP_PX = 14;
 const FRAME_HEIGHT_PX = 380;
-const FALL_BASE_PX_PER_S = 70;
-const FALL_MAX_PX_PER_S = 180;
+const FALL_BASE_PX_PER_S = 45;
+const FALL_MAX_PX_PER_S = 120;
 const TICK_MS = 33;
 const SPAWN_INTERVAL_MS = 700;
 const MAX_TILES_ON_SCREEN = 6;
@@ -34,6 +35,7 @@ let idCounter = 0;
 function rand<T>(arr: T[]): T { return arr[Math.floor(Math.random() * arr.length)]; }
 
 export default function CharacterRain({ items, onResult }: GameProps) {
+  const audio = useAudio();
   // Display state — driven by `tilesRef` via the `tick` counter that forces re-renders.
   // Storing tiles in a ref (instead of useState) avoids React StrictMode's
   // double-invoke of state updater functions, which was clobbering side
@@ -205,6 +207,7 @@ export default function CharacterRain({ items, onResult }: GameProps) {
     if (doneRef.current) return;
     if (tile.char === targetRef.current && !targetCaughtRef.current) {
       targetCaughtRef.current = true;
+      audio.playCorrect();
       const comboBonus = Math.floor(stateRef.current.combo / 3);
       const newScore = stateRef.current.score + 1 + comboBonus;
       const newCombo = stateRef.current.combo + 1;
@@ -233,6 +236,7 @@ export default function CharacterRain({ items, onResult }: GameProps) {
         setTimeout(() => spawnRound(nextR), 350);
       }
     } else if (tile.char !== targetRef.current) {
+      audio.playIncorrect();
       stateRef.current.combo = 0;
       setCombo(0);
       const xPct = tile.lane * COLUMN_WIDTH_PCT + COLUMN_WIDTH_PCT / 2;

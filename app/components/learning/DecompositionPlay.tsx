@@ -166,7 +166,7 @@ export default function DecompositionPlay({ character, onCharacterChange }: Deco
       )}
 
       {allEntries.length > 1 && (
-        <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-4">
+        <div className="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-2xl shadow-sm border-2 border-indigo-200 p-4">
           <div className="flex items-center justify-between mb-3">
             <span className="text-sm font-semibold text-slate-700">
               選擇字符 ({allEntries.length})
@@ -193,7 +193,7 @@ export default function DecompositionPlay({ character, onCharacterChange }: Deco
                 className={`text-2xl px-3 py-2 rounded-xl border transition-all hanzi-display font-medium min-w-[48px] ${
                   e.character === currentEntry.character
                     ? "bg-indigo-600 text-white border-indigo-600 shadow-md"
-                    : "bg-white border-slate-200 text-slate-800 hover:border-indigo-300 hover:bg-indigo-50"
+                    : "bg-indigo-50/70 border-indigo-200 text-slate-800 hover:border-indigo-400 hover:bg-indigo-100"
                 }`}
               >
                 {e.character}
@@ -241,7 +241,7 @@ export default function DecompositionPlay({ character, onCharacterChange }: Deco
           </div>
         </div>
         {showHint && (
-          <div className="mt-3 p-3 bg-white/70 backdrop-blur rounded-xl border border-indigo-200">
+          <div className="mt-3 p-3 bg-indigo-100 rounded-xl border border-indigo-300">
             <span className="text-sm text-slate-700">
               結構：<strong className="text-indigo-700">{puzzle.structureType}</strong>
               <span className="ml-3">部件數量：<strong className="text-indigo-700">{currentEntry.components.length}</strong></span>
@@ -252,9 +252,9 @@ export default function DecompositionPlay({ character, onCharacterChange }: Deco
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Drop Zone */}
-        <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-4">
+        <div className="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-2xl shadow-sm border-2 border-emerald-200 p-4">
           <div className="text-sm font-semibold text-slate-600 mb-3 text-center">放置區（按順序）</div>
-          <div className="min-h-[100px] border-2 border-dashed border-emerald-300 rounded-xl bg-emerald-50/40 p-4">
+          <div className="min-h-[100px] border-2 border-dashed border-emerald-400 rounded-xl bg-emerald-100/60 p-4">
             <div className="flex gap-2 flex-wrap justify-center items-center min-h-[64px]">
               {puzzle.arranged.length === 0 ? (
                 <div className="text-sm text-slate-400">點擊下方部件</div>
@@ -274,7 +274,7 @@ export default function DecompositionPlay({ character, onCharacterChange }: Deco
         </div>
 
         {/* Available Components */}
-        <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-4">
+        <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl shadow-sm border-2 border-amber-200 p-4">
           <div className="text-sm font-semibold text-slate-600 mb-3 text-center">可用部件</div>
           <div className="flex gap-2 flex-wrap justify-center min-h-[100px] items-center p-2">
             {puzzle.components.length === 0 ? (
@@ -316,8 +316,8 @@ export default function DecompositionPlay({ character, onCharacterChange }: Deco
         <div
           className={`text-center p-5 rounded-2xl border-2 ${
             puzzle.correct
-              ? "bg-emerald-50 border-emerald-300"
-              : "bg-rose-50 border-rose-300"
+              ? "bg-emerald-100 border-emerald-400"
+              : "bg-rose-100 border-rose-400"
           } ${popClass}`}
         >
           {puzzle.correct ? (

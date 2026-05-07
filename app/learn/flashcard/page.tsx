@@ -14,8 +14,8 @@ function FlashcardContent() {
   useEffect(() => { initSession(); }, [initSession]);
 
   return (
-    <AppShell title="字卡溫習" emoji="🃏" bg="sky" onBack={() => requestExit(() => router.push('/'))}>
-      <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-6 max-w-4xl">
+    <AppShell title="字卡溫習" emoji="🃏" bg="sky" fillHeight onBack={() => requestExit(() => router.push('/'))}>
+      <div className="flex-1 flex flex-col min-h-0 px-2 sm:px-3 pt-2 pb-2">
         <FlashcardRevision />
       </div>
       {summary && (

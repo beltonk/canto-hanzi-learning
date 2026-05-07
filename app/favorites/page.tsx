@@ -95,7 +95,7 @@ export default function FavoritesPage() {
               className={`px-4 py-2 rounded-full text-sm font-semibold transition-all ${
                 filter === f.key
                   ? 'bg-rose-500 text-white shadow-md'
-                  : 'bg-white border border-slate-200 text-slate-700 hover:border-rose-300 hover:bg-rose-50'
+                  : 'bg-rose-50 border border-rose-200 text-slate-700 hover:border-rose-300 hover:bg-rose-100'
               }`}
             >
               {f.label} <span className="opacity-70">({f.count})</span>
@@ -105,7 +105,7 @@ export default function FavoritesPage() {
 
         {/* Empty state */}
         {filtered.length === 0 && (
-          <div className="rounded-2xl bg-white border border-slate-200 p-10 text-center shadow-sm">
+          <div className="rounded-2xl bg-gradient-to-br from-rose-50 to-pink-50 border-2 border-rose-200 p-10 text-center shadow-sm">
             <div className="text-6xl mb-3">📭</div>
             <div className="text-lg font-bold text-slate-800 mb-1">
               {favorites.length === 0 ? '還沒有收藏項目' : '此分類下沒有項目'}
@@ -133,7 +133,7 @@ export default function FavoritesPage() {
             {filtered.map(fav => (
               <div
                 key={fav.text}
-                className="group rounded-2xl bg-white border-2 border-slate-200 hover:border-rose-300 shadow-sm hover:shadow-md transition-all overflow-hidden flex flex-col"
+                className="group rounded-2xl bg-gradient-to-br from-rose-50 to-pink-50 border-2 border-rose-200 hover:border-rose-400 shadow-sm hover:shadow-md transition-all overflow-hidden flex flex-col"
               >
                 {/* Character display */}
                 <button

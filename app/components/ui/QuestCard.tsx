@@ -13,10 +13,10 @@ export default function QuestCard({ quest }: { quest: Quest }) {
   const pct = Math.min(100, Math.round((quest.progress / quest.target) * 100));
   return (
     <div
-      className={`rounded-2xl border p-4 transition-all shadow-sm ${
+      className={`rounded-2xl border-2 p-4 transition-all shadow-sm ${
         quest.done
-          ? 'bg-emerald-50 border-emerald-200'
-          : 'bg-white border-slate-200'
+          ? 'bg-gradient-to-br from-emerald-50 to-teal-50 border-emerald-300'
+          : 'bg-gradient-to-br from-amber-50 to-orange-50 border-amber-200'
       }`}
     >
       <div className="flex items-center gap-2 mb-2">

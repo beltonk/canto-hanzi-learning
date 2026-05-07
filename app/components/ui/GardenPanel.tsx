@@ -14,7 +14,7 @@ export default function GardenPanel({ plants, className }: GardenPanelProps) {
   if (plants.length === 0) {
     return (
       <div
-        className={`rounded-2xl border-2 border-dashed border-emerald-200 bg-emerald-50/40 p-6 text-center ${className ?? ''}`}
+        className={`rounded-2xl border-2 border-dashed border-emerald-300 bg-gradient-to-br from-emerald-50 to-teal-50 p-6 text-center ${className ?? ''}`}
       >
         <div className="text-4xl mb-2">🌱</div>
         <p className="text-sm text-slate-500">完成學習活動，種植自己的花園！</p>

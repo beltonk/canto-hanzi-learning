@@ -190,7 +190,7 @@ export default function DictationExercise(props: DictationExerciseProps) {
   return (
     <div className="max-w-2xl mx-auto space-y-4">
       {/* Difficulty selector */}
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-4">
+      <div className="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-2xl border-2 border-indigo-200 shadow-sm p-4">
         <div className="flex items-center gap-3 flex-wrap">
           <span className="text-sm font-semibold text-slate-700">難度</span>
           {STROKE_RANGES.map(r => (
@@ -223,13 +223,13 @@ export default function DictationExercise(props: DictationExerciseProps) {
         />
       </div>
 
-      <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 space-y-5">
+      <div className="bg-gradient-to-br from-sky-50 to-indigo-50 rounded-2xl shadow-sm border-2 border-sky-200 p-4 space-y-4">
         {/* Audio + Hint */}
-        <div className="flex items-center gap-3 flex-wrap">
+        <div className="flex items-center gap-3">
           <button
             onClick={speak}
-            className="flex-1 min-w-[200px] px-6 py-5 bg-gradient-to-br from-indigo-500 to-purple-500
-                     text-white rounded-2xl text-xl font-semibold
+            className="flex-1 px-5 py-3 bg-gradient-to-br from-indigo-500 to-purple-500
+                     text-white rounded-2xl text-lg font-semibold
                      flex items-center justify-center gap-3
                      shadow-md hover:shadow-lg hover:scale-[1.02] active:scale-95 transition-all"
           >
@@ -237,8 +237,8 @@ export default function DictationExercise(props: DictationExerciseProps) {
           </button>
           <button
             onClick={() => setShowHint(!showHint)}
-            className="px-5 py-5 bg-white border border-amber-300 text-amber-700
-                     rounded-2xl text-base font-medium hover:bg-amber-50 transition-all"
+            className="px-4 py-3 bg-amber-100 border border-amber-300 text-amber-700
+                     rounded-2xl text-base font-medium hover:bg-amber-200 transition-all"
           >
             {showHint ? '隱藏提示' : '提示 💡'}
           </button>
@@ -246,7 +246,7 @@ export default function DictationExercise(props: DictationExerciseProps) {
 
         {/* Hint */}
         {showHint && (
-          <div className="text-center p-4 bg-amber-50 border border-amber-200 rounded-xl space-y-1">
+          <div className="text-center p-4 bg-amber-100 border border-amber-300 rounded-xl space-y-1">
             <div className="text-base font-mono text-amber-700">{currentQuestion.jyutping}</div>
             <div className="text-sm text-slate-600">
               部首：<span className="font-chinese font-medium">{currentQuestion.radical}</span>
@@ -296,8 +296,8 @@ export default function DictationExercise(props: DictationExerciseProps) {
           <div
             className={`p-5 rounded-2xl border-2 ${
               isCorrect
-                ? "bg-emerald-50 border-emerald-300"
-                : "bg-rose-50 border-rose-300"
+                ? "bg-emerald-100 border-emerald-400"
+                : "bg-rose-100 border-rose-400"
             }`}
           >
             <div className="flex items-center justify-between gap-4 flex-wrap">
@@ -350,7 +350,7 @@ export default function DictationExercise(props: DictationExerciseProps) {
 
       {/* Final Score */}
       {submitted && currentIndex === questions.length - 1 && (
-        <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 text-center">
+        <div className="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-2xl shadow-sm border-2 border-emerald-200 p-5 text-center">
           <div className="flex items-center justify-center gap-3">
             <span className="text-3xl font-bold text-indigo-600">{score.correct}/{score.total}</span>
             <span className="text-lg text-slate-600">

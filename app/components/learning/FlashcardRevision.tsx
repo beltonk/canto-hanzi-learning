@@ -200,175 +200,146 @@ export default function FlashcardRevision() {
     return range.label;
   };
 
-  // Render filter selection panel
+  // ── SETUP SCREEN ──────────────────────────────────────────────────────────
   if (!isStarted) {
     return (
-      <div className="max-w-lg mx-auto">
-        <div className="bg-[var(--card-bg)] rounded-3xl shadow-[0_8px_32px_var(--card-shadow)] p-8 md:p-10">
-          {/* Mascot */}
-          <div className="flex justify-center mb-6">
-            <Mascot type="rabbit" size={96} message={t("selectRange")} />
+      <div className="flex-1 flex items-center justify-center p-4">
+        <div className="w-full max-w-2xl bg-gradient-to-br from-sky-100 via-indigo-50 to-purple-100
+                        rounded-3xl shadow-xl border-2 border-sky-300 p-6 md:p-8">
+          {/* Header row */}
+          <div className="flex items-center gap-4 mb-6">
+            <Mascot type="rabbit" size={64} message={t("selectRange")} />
+            <div>
+              <h2 className="text-2xl font-bold text-slate-900">{t("flashcardSettings")}</h2>
+              <p className="text-sm text-slate-500 mt-0.5">{t("usingHkWordList")}</p>
+            </div>
           </div>
 
-          <h2 className="text-2xl md:text-3xl font-bold text-[var(--color-charcoal)] mb-8 text-center">
-            {t("flashcardSettings")}
-          </h2>
-
-          {/* Stroke Count Selection */}
-          <div className="mb-8">
-            <label className="block text-lg font-semibold text-[var(--color-charcoal)] mb-3">
-              {t("strokeCountLabel")}
-            </label>
-            <div className="grid grid-cols-2 gap-3">
+          {/* Stroke range buttons — all in one row */}
+          <div className="mb-5">
+            <label className="block text-sm font-semibold text-slate-700 mb-2">{t("strokeCountLabel")}</label>
+            <div className="flex gap-2 flex-wrap">
               {STROKE_RANGES.map((range, index) => (
                 <button
                   key={index}
                   onClick={() => setStrokeRange(range)}
-                  className={`px-4 py-4 rounded-2xl border-3 transition-all text-xl font-medium
-                    min-h-[56px]
+                  className={`flex-1 min-w-[60px] px-3 py-3 rounded-2xl font-bold text-base transition-all active:scale-95
                     ${strokeRange === range
-                      ? "border-[var(--color-sky)] bg-[var(--color-sky)]/10 text-[var(--color-sky-dark)]"
-                      : "border-[var(--color-peach)] bg-[var(--card-bg)] text-[var(--color-gray)] hover:border-[var(--color-coral-light)] hover:bg-[var(--color-coral)]/5"
+                      ? 'bg-sky-500 text-white shadow-md shadow-sky-200'
+                      : 'bg-white border-2 border-sky-200 text-slate-600 hover:border-sky-400 hover:bg-sky-50'
                     }`}
                 >
                   {getStrokeRangeLabel(range)}
                 </button>
               ))}
             </div>
+            <p className="text-center text-sm text-slate-500 mt-2">{getEstimatedCount()}</p>
           </div>
 
-          {/* Estimated Count */}
-          <div className="mb-6 text-center text-[var(--color-gray)]">
-            {getEstimatedCount()}
-          </div>
-
-          {/* Info */}
-          <div className="mb-6 p-4 bg-[var(--color-sky)]/10 rounded-xl text-sm text-[var(--color-sky-dark)]">
-            📚 {t("usingHkWordList")}
-          </div>
-
-          {/* Error Message */}
           {error && (
-            <div className="mb-6 p-5 bg-[var(--color-coral)]/10 border-2 border-[var(--color-coral)] text-[var(--color-coral-dark)] rounded-2xl text-center text-lg">
+            <div className="mb-4 p-3 bg-rose-50 border-2 border-rose-300 text-rose-700 rounded-2xl text-center text-sm">
               {error}
             </div>
           )}
 
-          {/* Start Button */}
-          <Button
-            onClick={() => fetchCharacters()}
-            disabled={isLoading}
-            variant="primary"
-            size="xl"
-            fullWidth
-          >
+          <Button onClick={() => fetchCharacters()} disabled={isLoading} variant="primary" size="xl" fullWidth>
             {isLoading ? t("loadingData") : `${t("startRevision")} 🎯`}
           </Button>
 
-          <p className="mt-6 text-base text-[var(--color-gray)] text-center">
-            {t("keyboardHints")}
-          </p>
+          <p className="mt-3 text-xs text-slate-400 text-center">{t("keyboardHints")}</p>
         </div>
       </div>
     );
   }
 
-  // Current character
+  // ── SESSION ────────────────────────────────────────────────────────────────
   const current = characters[currentIndex];
   if (!current) return null;
 
   const isFirst = currentIndex === 0;
-  const isLast = currentIndex === characters.length - 1;
+  const isLast  = currentIndex === characters.length - 1;
   const progress = ((currentIndex + 1) / characters.length) * 100;
-
-  // Word counts for current character
   const hasWords = (current.stage1Words?.length || 0) + (current.stage2Words?.length || 0) > 0;
   const hasStrokeData = current.strokeVectors && current.strokeVectors.length > 0;
 
   return (
-    <div className="max-w-3xl mx-auto px-4">
-      {/* Filter Bar */}
-      <div className="flex items-center justify-between mb-4 bg-[var(--card-bg)] rounded-2xl px-4 py-3 shadow-sm">
-        <div className="flex items-center gap-3">
-          <span className="text-sm text-[var(--color-gray)]">{t("range")}:</span>
-          <span className="px-3 py-1 bg-[var(--color-mint)]/10 rounded-full text-sm font-medium text-[var(--color-mint-dark)]">
-            {getStrokeRangeLabel(strokeRange)}
+    /* Full-height landscape layout: [← nav] [left col] [right col] [→ nav] */
+    <div className="flex-1 flex flex-col min-h-0">
+
+      {/* ── Top bar: progress + filter toggle ── */}
+      <div className="flex items-center gap-3 px-2 py-1.5 shrink-0">
+        {/* Progress bar */}
+        <div className="flex-1 flex items-center gap-2">
+          <span className="text-xs font-bold text-slate-500 tabular-nums shrink-0">
+            {currentIndex + 1}/{characters.length}
           </span>
+          <div className="flex-1 h-2.5 bg-sky-100 rounded-full overflow-hidden">
+            <div
+              className="h-full bg-gradient-to-r from-sky-400 to-indigo-500 rounded-full transition-all duration-300"
+              style={{ width: `${progress}%` }}
+            />
+          </div>
         </div>
+
+        {/* Filter pill */}
         <button
           onClick={() => setShowFilters(!showFilters)}
-          className="px-3 py-1.5 text-sm font-medium text-[var(--color-coral)] hover:bg-[var(--color-coral)]/5 rounded-lg transition-colors"
+          className={`shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold border-2 transition-all
+            ${showFilters ? 'bg-sky-500 text-white border-sky-500' : 'bg-sky-50 text-sky-700 border-sky-300 hover:bg-sky-100'}`}
         >
-          {showFilters ? t("cancel") : t("changeRange")}
+          📐 {getStrokeRangeLabel(strokeRange)}
+          <span className="opacity-60">{showFilters ? '▲' : '▼'}</span>
+        </button>
+
+        {/* Back to settings */}
+        <button
+          onClick={() => setIsStarted(false)}
+          className="shrink-0 px-3 py-1.5 rounded-full text-xs font-bold bg-slate-100 text-slate-600 border-2 border-slate-200 hover:bg-slate-200 transition-all"
+        >
+          ⚙️ 設定
         </button>
       </div>
 
-      {/* Inline Filter Panel */}
+      {/* Inline filter panel */}
       {showFilters && (
-        <div className="mb-4 bg-[var(--card-bg)] rounded-2xl p-4 shadow-[0_4px_16px_var(--card-shadow)]">
-          <div>
-            <label className="block text-sm font-medium text-[var(--color-gray)] mb-2">{t("strokeCountLabel")}</label>
-            <div className="grid grid-cols-3 gap-2">
-              {STROKE_RANGES.map((range, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setStrokeRange(range)}
-                  className={`px-3 py-2 rounded-xl text-sm font-medium transition-all
-                    ${strokeRange === range
-                      ? "bg-[var(--color-sky)] text-white"
-                      : "bg-[var(--input-bg)] text-[var(--color-gray)] hover:bg-[var(--color-sky)]/10"
-                    }`}
-                >
-                  {getStrokeRangeLabel(range)}
-                </button>
-              ))}
-            </div>
-          </div>
-          <button
-            onClick={() => handleFilterChange(strokeRange)}
-            disabled={isLoading}
-            className="mt-3 w-full py-2 bg-[var(--color-coral)] text-white rounded-xl font-medium
-                     hover:bg-[var(--color-coral-dark)] disabled:opacity-50 transition-colors"
-          >
-            {isLoading ? t("loadingData") : t("applyAndRestart")}
-          </button>
+        <div className="mx-2 mb-2 p-3 bg-gradient-to-r from-sky-50 to-indigo-50 border-2 border-sky-200 rounded-2xl flex items-center gap-2 flex-wrap shrink-0">
+          <span className="text-xs font-semibold text-slate-600 shrink-0">筆畫：</span>
+          {STROKE_RANGES.map((range, idx) => (
+            <button
+              key={idx}
+              onClick={() => handleFilterChange(range)}
+              disabled={isLoading}
+              className={`px-3 py-1.5 rounded-xl text-sm font-bold transition-all
+                ${strokeRange === range ? 'bg-sky-500 text-white shadow-sm' : 'bg-white text-slate-600 border border-sky-200 hover:bg-sky-50'}`}
+            >
+              {getStrokeRangeLabel(range)}
+            </button>
+          ))}
         </div>
       )}
 
-      {/* Progress Indicator */}
-      <div className="text-center mb-6">
-        <span className="text-xl font-semibold text-[var(--color-gray)]">
-          {currentIndex + 1} / {characters.length}
-        </span>
-        <div className="mt-3 h-4 bg-[var(--color-peach)] rounded-full overflow-hidden shadow-inner">
-          <div 
-            className="h-full bg-gradient-to-r from-[var(--color-sky)] to-[var(--color-sky-dark)] transition-all duration-300 rounded-full"
-            style={{ width: `${progress}%` }}
-          />
-        </div>
-      </div>
+      {/* ── Main area: nav arrows + two-column card ── */}
+      <div className="flex-1 flex items-stretch gap-1 min-h-0 px-1 pb-1">
 
-      {/* Flashcard */}
-      <div className="relative flex items-center justify-center">
-        {/* Previous Button */}
-        <div className="absolute left-0 md:-left-20 z-10">
-          <NavArrow
-            direction="left"
-            onClick={goToPrevious}
-            disabled={isFirst}
-          />
+        {/* Left arrow */}
+        <div className="flex items-center shrink-0">
+          <NavArrow direction="left" onClick={goToPrevious} disabled={isFirst} size="md" />
         </div>
 
-        {/* Card — re-keyed per character so the entrance animation re-runs */}
+        {/* Card — two columns */}
         <div
           key={current.character}
-          className={`bg-[var(--card-bg)] rounded-[32px] shadow-[0_12px_40px_var(--card-shadow)] p-6 md:p-10 mx-16 md:mx-0 w-full max-w-xl ${cardEnterClass}`}
+          className={`flex-1 grid grid-cols-1 md:grid-cols-2 gap-0 min-h-0 overflow-hidden
+                      bg-gradient-to-br from-sky-100 via-white to-purple-100
+                      rounded-3xl shadow-xl border-2 border-sky-300 ${cardEnterClass}`}
         >
-          {/* Character rendered using strokes - clickable */}
-          <div className="flex justify-center mb-4">
-            <div 
+          {/* LEFT: Character display */}
+          <div className="flex flex-col items-center justify-center p-4 md:p-6
+                          md:border-r-2 border-sky-200 bg-gradient-to-br from-sky-100 to-indigo-100">
+            {/* Big stroke animation */}
+            <div
               onClick={() => hasStrokeData && setShowStrokeAnimation(!showStrokeAnimation)}
-              className={`${hasStrokeData ? 'cursor-pointer' : ''}`}
+              className={`${hasStrokeData ? 'cursor-pointer hover:opacity-90 active:scale-95 transition-all' : ''} mb-3`}
               title={hasStrokeData ? t("clickForAnimation") : ""}
             >
               <StrokeAnimation
@@ -379,127 +350,105 @@ export default function FlashcardRevision() {
                 onAnimationEnd={() => setShowStrokeAnimation(false)}
               />
             </div>
-          </div>
 
-
-          {/* Jyutping & Pinyin */}
-          <div className="text-center mb-4">
-            <span className="jyutping text-[var(--color-sky)]">
-              {current.jyutping}
-            </span>
-            {current.pinyin && (
-              <span className="text-sm text-[var(--color-gray-light)] ml-2">
-                ({current.pinyin})
-              </span>
+            {hasStrokeData && (
+              <p className="text-xs text-indigo-400 mb-2">{t("clickForAnimation")}</p>
             )}
+
+            {/* Jyutping */}
+            <div className="text-center mb-3">
+              <div className="jyutping text-sky-600 text-2xl md:text-3xl font-bold">
+                {current.jyutping}
+              </div>
+              {current.pinyin && (
+                <div className="text-sm text-slate-400 mt-0.5">({current.pinyin})</div>
+              )}
+            </div>
+
+            {/* Actions */}
+            <div className="flex items-center gap-2 flex-wrap justify-center">
+              <button
+                onClick={() => playPronunciation()}
+                className="flex items-center gap-2 px-4 py-2.5 rounded-full
+                           bg-gradient-to-br from-sky-500 to-indigo-500 text-white font-bold text-sm
+                           shadow-md shadow-sky-200 hover:shadow-lg hover:scale-105 active:scale-95 transition-all"
+              >
+                🔊 {t("playPronunciation")}
+              </button>
+              <FavoriteButton
+                text={current.character}
+                kind="char"
+                jyutping={current.jyutping}
+                source="flashcard"
+                variant="chip"
+              />
+            </div>
           </div>
 
-          {/* Play Button + Favorite */}
-          <div className="flex justify-center mb-6 gap-3 flex-wrap">
-            <button
-              onClick={() => playPronunciation()}
-              className="px-6 py-3 bg-gradient-to-br from-[var(--color-sky)] to-[var(--color-sky-dark)]
-                       text-white text-lg font-semibold rounded-full
-                       shadow-[0_4px_16px_rgba(126,200,227,0.4)]
-                       hover:scale-105 active:scale-95
-                       transition-all flex items-center gap-2
-                       min-h-[48px]"
-            >
-              <span className="text-xl">🔊</span>
-              {t("playPronunciation")}
-            </button>
-            <FavoriteButton
-              text={current.character}
-              kind="char"
-              jyutping={current.jyutping}
-              source="flashcard"
-              variant="chip"
-            />
-          </div>
-
-          {/* Divider */}
-          <div className="border-t-2 border-[var(--color-peach)] my-4" />
-
-          {/* Details Grid */}
-          <div className="grid grid-cols-2 gap-3 text-center">
-            <div className="bg-[var(--color-coral)]/10 rounded-2xl p-4">
-              <div className="text-sm text-[var(--color-coral)] mb-1 font-medium">{t("radical")}</div>
-              <div className="text-2xl hanzi-display text-[var(--color-charcoal)]">
-                {current.radical || "—"}
+          {/* RIGHT: Details */}
+          <div className="flex flex-col p-4 md:p-6 min-h-0 overflow-y-auto gap-3">
+            {/* Radical + stroke count pills */}
+            <div className="grid grid-cols-2 gap-2 shrink-0">
+              <div className="bg-rose-100 border border-rose-200 rounded-2xl p-3 text-center">
+                <div className="text-xs text-rose-600 font-semibold mb-1">{t("radical")}</div>
+                <div className="text-2xl hanzi-display font-bold text-rose-800">
+                  {current.radical || '—'}
+                </div>
+              </div>
+              <div className="bg-teal-100 border border-teal-200 rounded-2xl p-3 text-center">
+                <div className="text-xs text-teal-600 font-semibold mb-1">{t("strokeCount")}</div>
+                <div className="text-2xl font-bold text-teal-800">
+                  {current.strokeCount}<span className="text-sm ml-0.5">{t("strokesUnit")}</span>
+                </div>
               </div>
             </div>
-            <div className="bg-[var(--color-mint)]/10 rounded-2xl p-4">
-              <div className="text-sm text-[var(--color-mint-dark)] mb-1 font-medium">{t("strokeCount")}</div>
-              <div className="text-2xl text-[var(--color-charcoal)] font-bold">
-                {current.strokeCount} {t("strokesUnit")}
+
+            {/* Divider */}
+            <div className="border-t-2 border-sky-100 shrink-0" />
+
+            {/* Words section */}
+            {hasWords ? (
+              <>
+                <button
+                  onClick={() => setShowDetails(!showDetails)}
+                  className="shrink-0 w-full py-2 rounded-xl border-2 border-sky-200
+                             text-sky-700 text-sm font-bold
+                             hover:bg-sky-50 transition-all flex items-center justify-center gap-1"
+                >
+                  {showDetails ? `${t("hideDetails")} ↑` : `${t("showDetails")} ↓`}
+                </button>
+
+                {showDetails && (
+                  <div className="flex-1 min-h-0 overflow-y-auto space-y-2">
+                    {current.stage1Words && current.stage1Words.length > 0 && (
+                      <CompactWordList words={current.stage1Words} title={t("stage1")} icon="📗" />
+                    )}
+                    {current.stage2Words && current.stage2Words.length > 0 && (
+                      <CompactWordList words={current.stage2Words} title={t("stage2")} icon="📘" />
+                    )}
+                    {current.fourCharacterPhrases && current.fourCharacterPhrases.length > 0 && (
+                      <CompactWordList words={current.fourCharacterPhrases} title={t("fourCharPhrases")} icon="✨" />
+                    )}
+                  </div>
+                )}
+              </>
+            ) : (
+              <div className="flex-1 flex items-center justify-center">
+                <p className="text-sm text-slate-400 text-center">暫無詞語資料</p>
               </div>
-            </div>
+            )}
+
+            {/* Keyboard hint */}
+            <p className="shrink-0 text-center text-xs text-slate-400 mt-auto pt-2">
+              {t("keyboardHints")}
+            </p>
           </div>
-
-          {/* Toggle Details Button */}
-          {hasWords && (
-            <button
-              onClick={() => setShowDetails(!showDetails)}
-              className="mt-4 w-full py-2.5 rounded-xl border-2 border-[var(--color-peach)] 
-                       text-[var(--color-gray)] font-medium
-                       hover:bg-[var(--color-coral)]/5 hover:border-[var(--color-coral-light)] transition-all"
-            >
-              {showDetails ? `${t("hideDetails")} ↑` : `${t("showDetails")} ↓`}
-            </button>
-          )}
-
-          {/* Related Words (expandable) - Show ALL */}
-          {showDetails && hasWords && (
-            <div className="mt-4 space-y-3 max-h-[300px] overflow-y-auto">
-              {current.stage1Words && current.stage1Words.length > 0 && (
-                <CompactWordList
-                  words={current.stage1Words}
-                  title={t("stage1")}
-                  icon="📗"
-                />
-              )}
-              {current.stage2Words && current.stage2Words.length > 0 && (
-                <CompactWordList
-                  words={current.stage2Words}
-                  title={t("stage2")}
-                  icon="📘"
-                />
-              )}
-              {current.fourCharacterPhrases && current.fourCharacterPhrases.length > 0 && (
-                <CompactWordList
-                  words={current.fourCharacterPhrases}
-                  title={t("fourCharPhrases")}
-                  icon="✨"
-                />
-              )}
-            </div>
-          )}
         </div>
 
-        {/* Next Button */}
-        <div className="absolute right-0 md:-right-20 z-10">
-          <NavArrow
-            direction="right"
-            onClick={goToNext}
-            disabled={isLast}
-          />
+        {/* Right arrow */}
+        <div className="flex items-center shrink-0">
+          <NavArrow direction="right" onClick={goToNext} disabled={isLast} size="md" />
         </div>
-      </div>
-
-      {/* Back to Settings */}
-      <div className="text-center mt-8">
-        <button
-          onClick={() => setIsStarted(false)}
-          className="text-lg text-[var(--color-sky)] hover:text-[var(--color-sky-dark)] font-medium
-                   underline underline-offset-4 transition-colors"
-        >
-          {t("backToSettings")}
-        </button>
-      </div>
-
-      {/* Keyboard Hint */}
-      <div className="text-center mt-4 text-base text-[var(--color-gray)]">
-        {t("keyboardHints")}
       </div>
     </div>
   );

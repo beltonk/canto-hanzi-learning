@@ -13,6 +13,8 @@ import {
   type ExpectedStrokeMask,
 } from '@/lib/tracing/match';
 import { useReducedMotion } from '@/lib/motion';
+import { useAudio } from '@/lib/audio/context';
+import CorrectBurst from '@/app/components/ui/CorrectBurst';
 
 interface StrokeTracingProps {
   strokeVectors?: StrokeVector[];
@@ -43,7 +45,7 @@ interface CreateJSShape {
 
 let createJSLoadedGlobal = false;
 
-const PAUSE_AFTER_STROKE_MS = 1000;
+const PAUSE_AFTER_STROKE_MS = 500;
 
 interface StrokeAttempt {
   similarity: number;
@@ -106,6 +108,8 @@ export default function StrokeTracing({
   const distFieldRef = useRef<Uint16Array | null>(null);
 
   const reducedMotion = useReducedMotion();
+  const audio = useAudio();
+  const [showStrokeBurst, setShowStrokeBurst] = useState(false);
   const debugMode = useMemo(() => {
     if (typeof window === 'undefined') return false;
     return new URLSearchParams(window.location.search).get('debug') === 'trace';
@@ -324,6 +328,9 @@ export default function StrokeTracing({
     const failPause = reducedMotion ? 350 : PAUSE_AFTER_STROKE_MS;
 
     if (result.passed) {
+      audio.playCorrect();
+      setShowStrokeBurst(true);
+      setTimeout(() => setShowStrokeBurst(false), 600);
       setFeedback('pass');
       drawInk(pts, '#10B981'); // green ink for success
       // Pause, then clear ink and advance
@@ -351,6 +358,7 @@ export default function StrokeTracing({
         }
       }, passPause);
     } else {
+      audio.playIncorrect();
       setFeedback('fail');
       drawInk(pts, '#EF4444'); // red ink for failure
       setRetryCount(c => c + 1);
@@ -439,7 +447,7 @@ export default function StrokeTracing({
   if (!strokeVectors?.length) {
     return (
       <div
-        className="bg-amber-50 rounded-2xl border-2 border-amber-200 flex items-center justify-center"
+        className="bg-gradient-to-br from-amber-100 to-orange-100 rounded-2xl border-2 border-amber-300 flex items-center justify-center"
         style={{ width: size, height: size }}
       >
         <div className="text-center p-4">
@@ -481,7 +489,7 @@ export default function StrokeTracing({
 
       {/* Canvas stack */}
       <div
-        className="relative rounded-3xl overflow-hidden border-4 border-indigo-200 shadow-lg bg-white"
+        className="relative rounded-3xl overflow-hidden border-4 border-indigo-300 shadow-lg bg-indigo-50"
         style={{ width: size, height: size, touchAction: 'none' }}
       >
         <canvas
@@ -519,10 +527,12 @@ export default function StrokeTracing({
         />
 
         {!createJSLoaded && (
-          <div className="absolute inset-0 flex items-center justify-center bg-amber-50">
+          <div className="absolute inset-0 flex items-center justify-center bg-indigo-100/80">
             <span className="text-sm text-slate-500">載入中...</span>
           </div>
         )}
+
+        <CorrectBurst show={showStrokeBurst} />
 
         {!completed && (
           <div className="absolute top-3 left-3 w-9 h-9 rounded-full bg-indigo-600 text-white font-bold text-base flex items-center justify-center shadow-md pointer-events-none">

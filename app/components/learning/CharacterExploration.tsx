@@ -350,92 +350,94 @@ export default function CharacterExploration({
         </div>
       )}
 
-      {/* Main Character Display */}
-      <div className="bg-[var(--card-bg)] rounded-2xl p-4 md:p-6 shadow-[0_4px_16px_var(--card-shadow)]">
-        <div className="flex flex-col items-center">
-          {/* Character rendered using strokes - clickable */}
-          <div 
+      {/* Main Character Display — 2-col on md: stroke left, info + words right */}
+      <div className="bg-[var(--card-bg)] rounded-2xl p-4 shadow-[0_4px_16px_var(--card-shadow)]">
+        <div className="flex flex-col md:flex-row md:items-start md:gap-6">
+          {/* Stroke animation */}
+          <div
             onClick={() => hasStrokeData && setShowStrokeAnimation(!showStrokeAnimation)}
-            className={`${hasStrokeData ? 'cursor-pointer' : ''}`}
+            className={`flex justify-center md:shrink-0 ${hasStrokeData ? 'cursor-pointer' : ''}`}
             title={hasStrokeData ? t("clickForAnimation") : ""}
           >
             <StrokeAnimation
               strokeVectors={data.strokeVectors}
               character={data.character}
-              size={220}
+              size={180}
               showAnimation={showStrokeAnimation}
               onAnimationEnd={() => setShowStrokeAnimation(false)}
             />
           </div>
 
-
-          {/* Character Info */}
-          <div className="mt-4 text-center">
-            <div className="jyutping text-[var(--color-sky)] text-2xl">{data.jyutping}</div>
-            {data.pinyin && (
-              <button
-                onClick={() => speakMandarin(data.character)}
-                className="text-sm text-[var(--color-gray-light)] mt-1 hover:text-[var(--color-gray)] transition-colors
-                         inline-flex items-center gap-1 group"
-                title={t("mandarinPronunciation")}
-              >
-                <span className="text-xs opacity-60 group-hover:opacity-100">🔊</span>
-                {t("mandarinPronunciation")}: {data.pinyin}
-              </button>
-            )}
-          </div>
-
-          {/* Character Details Row */}
-          <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
-            <div className="text-base text-[var(--color-gray)]">
-              {data.strokeCount} {t("strokes")} • {t("radical")}:
-              <span className="hanzi-display text-xl ml-1">{data.radical}</span>
+          {/* Info column */}
+          <div className="flex-1 mt-3 md:mt-0">
+            {/* Jyutping + mandarin */}
+            <div className="text-center md:text-left mb-3">
+              <div className="jyutping text-[var(--color-sky)] text-2xl">{data.jyutping}</div>
+              {data.pinyin && (
+                <button
+                  onClick={() => speakMandarin(data.character)}
+                  className="text-sm text-[var(--color-gray-light)] mt-1 hover:text-[var(--color-gray)] transition-colors
+                           inline-flex items-center gap-1 group"
+                  title={t("mandarinPronunciation")}
+                >
+                  <span className="text-xs opacity-60 group-hover:opacity-100">🔊</span>
+                  {t("mandarinPronunciation")}: {data.pinyin}
+                </button>
+              )}
             </div>
-            <button
-              onClick={() => speakCantonese(data.character)}
-              className="px-6 py-2 bg-gradient-to-br from-[var(--color-coral)] to-[var(--color-coral-dark)] text-white
-                       rounded-full text-base font-semibold
-                       shadow-[0_4px_12px_rgba(255,107,107,0.3)]
-                       hover:scale-105 active:scale-95 transition-all
-                       flex items-center gap-2"
-            >
-              <span className="text-lg">🔊</span> {t("listenPronunciation")}
-            </button>
-            <FavoriteButton
-              text={data.character}
-              kind="char"
-              jyutping={data.jyutping}
-              source="explore"
-              variant="chip"
-            />
+
+            {/* Details + actions */}
+            <div className="flex flex-wrap items-center justify-center md:justify-start gap-2 mb-4">
+              <div className="text-base text-[var(--color-gray)]">
+                {data.strokeCount} {t("strokes")} • {t("radical")}:
+                <span className="hanzi-display text-xl ml-1">{data.radical}</span>
+              </div>
+              <button
+                onClick={() => speakCantonese(data.character)}
+                className="px-4 py-1.5 bg-gradient-to-br from-[var(--color-coral)] to-[var(--color-coral-dark)] text-white
+                         rounded-full text-base font-semibold
+                         shadow-[0_4px_12px_rgba(255,107,107,0.3)]
+                         hover:scale-105 active:scale-95 transition-all
+                         flex items-center gap-2"
+              >
+                <span className="text-lg">🔊</span> {t("listenPronunciation")}
+              </button>
+              <FavoriteButton
+                text={data.character}
+                kind="char"
+                jyutping={data.jyutping}
+                source="explore"
+                variant="chip"
+              />
+            </div>
+
+            {/* Quick Word Preview inline on md */}
+            {totalWords > 0 && (
+              <div>
+                <h3 className="text-sm font-bold mb-2 text-[var(--color-charcoal)] flex items-center gap-1">
+                  <span>📝</span> {t("commonWords")}
+                </h3>
+                <div className="flex flex-wrap gap-2">
+                  {[
+                    ...(data.stage1Words?.slice(0, 6) || []),
+                    ...(data.stage2Words?.slice(0, 4) || []),
+                  ].map((word, idx) => (
+                    <button
+                      key={`${word.word}-${idx}`}
+                      onClick={() => speakCantonese(word.word)}
+                      className="px-3 py-1.5 bg-[var(--color-peach)]/10 border-2 border-[var(--color-peach)] rounded-xl
+                               text-base hanzi-display text-[var(--color-charcoal)]
+                               hover:border-[var(--color-coral-light)] hover:bg-[var(--color-coral)]/5 transition-colors"
+                    >
+                      {word.word}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
-
-      {/* Quick Word Preview */}
-      {totalWords > 0 && (
-        <div className="bg-[var(--card-bg)] rounded-2xl p-4 shadow-[0_4px_16px_var(--card-shadow)]">
-          <h3 className="text-base font-bold mb-3 text-[var(--color-charcoal)] flex items-center gap-2">
-            <span className="text-lg">📝</span> {t("commonWords")}
-          </h3>
-          <div className="flex flex-wrap gap-2">
-            {[
-              ...(data.stage1Words?.slice(0, 6) || []),
-              ...(data.stage2Words?.slice(0, 4) || []),
-            ].map((word, idx) => (
-              <button
-                key={`${word.word}-${idx}`}
-                onClick={() => speakCantonese(word.word)}
-                className="px-3 py-2 bg-[var(--color-peach)]/10 border-2 border-[var(--color-peach)] rounded-xl
-                         text-lg hanzi-display text-[var(--color-charcoal)]
-                         hover:border-[var(--color-coral-light)] hover:bg-[var(--color-coral)]/5 transition-colors"
-              >
-                {word.word}
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
 
       {/* Related Words Full Section */}
       <RelatedWords

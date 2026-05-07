@@ -29,15 +29,15 @@ export default function ResultScreen({ result, manifest, onPlayAgain, onNextGame
         </h2>
       </div>
       <div className="grid grid-cols-3 gap-3 w-full max-w-sm">
-        <div className="bg-amber-50 border border-amber-200 rounded-2xl p-3">
+        <div className="bg-amber-100 border border-amber-300 rounded-2xl p-3">
           <div className="text-xl font-bold text-amber-600">+{xpEarned}</div>
           <div className="text-xs text-slate-600 mt-0.5">經驗值</div>
         </div>
-        <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-3">
+        <div className="bg-emerald-100 border border-emerald-300 rounded-2xl p-3">
           <div className="text-xl font-bold text-emerald-600">{result.correctCount}/{result.totalCount}</div>
           <div className="text-xs text-slate-600 mt-0.5">正確</div>
         </div>
-        <div className="bg-sky-50 border border-sky-200 rounded-2xl p-3">
+        <div className="bg-sky-100 border border-sky-300 rounded-2xl p-3">
           <div className="text-xl font-bold text-sky-600">{Math.round(result.durationMs / 1000)}秒</div>
           <div className="text-xs text-slate-600 mt-0.5">用時</div>
         </div>

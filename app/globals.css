@@ -236,13 +236,36 @@ body, .surface, .card-child, .card-activity {
 }
 @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
 
+/* Correct answer burst: ring expands and fades out */
+@keyframes correct-burst {
+  0%   { transform: scale(0.5); opacity: 1; }
+  60%  { transform: scale(1.6); opacity: 0.6; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+/* Star particles shoot outward */
+@keyframes star-pop {
+  0%   { transform: translate(0, 0) scale(0.5); opacity: 1; }
+  100% { transform: translate(var(--tx, 0px), var(--ty, -40px)) scale(1.2); opacity: 0; }
+}
+/* Incorrect: gentle shake */
+@keyframes incorrect-shake {
+  0%, 100% { transform: translateX(0); }
+  20%  { transform: translateX(-6px); }
+  40%  { transform: translateX(5px); }
+  60%  { transform: translateX(-4px); }
+  80%  { transform: translateX(3px); }
+}
+
 @layer utilities {
-  .animate-pop      { animation: pop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-  .animate-wiggle   { animation: wiggle 0.4s ease-in-out; }
-  .animate-float-in { animation: float-in 0.25s ease-out; }
-  .animate-cheer    { animation: cheer 0.5s ease-in-out; }
-  .animate-float    { animation: float 3s ease-in-out infinite; }
-  .animate-fade-in  { animation: fade-in 0.2s ease-out; }
+  .animate-pop           { animation: pop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+  .animate-wiggle        { animation: wiggle 0.4s ease-in-out; }
+  .animate-float-in      { animation: float-in 0.25s ease-out; }
+  .animate-cheer         { animation: cheer 0.5s ease-in-out; }
+  .animate-float         { animation: float 3s ease-in-out infinite; }
+  .animate-fade-in       { animation: fade-in 0.2s ease-out; }
+  .animate-correct-burst { animation: correct-burst 0.5s ease-out forwards; }
+  .animate-star-pop      { animation: star-pop 0.55s ease-out forwards; }
+  .animate-incorrect-shake { animation: incorrect-shake 0.35s ease-in-out; }
 }
 
 /* Reduced motion */

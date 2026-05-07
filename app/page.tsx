@@ -106,7 +106,7 @@ export default function Home() {
     : Math.round(((xp - currentLevelXp) / (nextLevelXp - currentLevelXp)) * 100);
 
   return (
-    <AppShell title="粵語漢字樂園" emoji="🏯" hideBack bg="indigo">
+    <AppShell title="粵語漢字學習" emoji="📖" hideBack bg="indigo">
       <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-6 max-w-5xl">
         {/* Hero compact band */}
         <div className="mb-5 sm:mb-6 grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4">
@@ -140,17 +140,17 @@ export default function Home() {
               <div className="text-sm font-bold">我的收藏</div>
               <div className="text-xs text-white/85">{favCount} 項</div>
             </Link>
-            <Link href="/progress" className="rounded-3xl bg-white border border-slate-200 shadow-sm hover:shadow-md transition-all p-4 flex flex-col items-center justify-center gap-1 active:scale-95">
+            <Link href="/progress" className="rounded-3xl bg-gradient-to-br from-sky-400 to-indigo-500 text-white shadow-md hover:shadow-lg transition-all p-4 flex flex-col items-center justify-center gap-1 active:scale-95">
               <div className="text-3xl">📊</div>
-              <div className="text-sm font-semibold text-slate-800">學習進度</div>
-              <div className="text-xs text-slate-500">📚 {stickerCount} 貼紙</div>
+              <div className="text-sm font-bold">學習進度</div>
+              <div className="text-xs text-white/85">📚 {stickerCount} 貼紙</div>
             </Link>
           </div>
         </div>
 
         {/* Search bar — primary entry point for finding a specific character */}
         <form onSubmit={submitSearch} className="mb-5 sm:mb-6">
-          <div className="relative bg-white border-2 border-indigo-200 rounded-2xl shadow-sm focus-within:border-indigo-500 focus-within:shadow-md transition-all flex items-center gap-2 pl-4 pr-2 py-1.5">
+          <div className="relative bg-gradient-to-r from-indigo-50 to-purple-50 border-2 border-indigo-300 rounded-2xl shadow-sm focus-within:border-indigo-500 focus-within:shadow-md transition-all flex items-center gap-2 pl-4 pr-2 py-1.5">
             <span className="text-2xl">🔍</span>
             <input
               ref={searchRef}
@@ -208,7 +208,7 @@ export default function Home() {
 
         {/* Today's review */}
         {dueChars.length > 0 && (
-          <section className="mb-5 rounded-2xl bg-white border border-slate-200 shadow-sm p-4 sm:p-5">
+          <section className="mb-5 rounded-2xl bg-gradient-to-br from-indigo-50 to-purple-50 border-2 border-indigo-200 shadow-sm p-4 sm:p-5">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
                 <span className="text-xl">📖</span>

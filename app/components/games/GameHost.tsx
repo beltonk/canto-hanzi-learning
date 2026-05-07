@@ -88,11 +88,11 @@ export default function GameHost({ module, onExit, onNextGame }: GameHostProps) 
 
   if (phase === 'loading') {
     return (
-      <div className="bg-white rounded-3xl shadow-md border border-slate-200 p-8">
-        <div className="flex items-center justify-center min-h-64">
+      <div className="bg-gradient-to-br from-indigo-100 to-purple-100 rounded-3xl shadow-md border-2 border-indigo-300 p-6">
+        <div className="flex items-center justify-center min-h-40">
           <div className="text-center">
             <div className="text-5xl mb-3 animate-bounce">⏳</div>
-            <p className="text-slate-500 font-medium">準備字卡中…</p>
+            <p className="text-indigo-700 font-medium">準備字卡中…</p>
           </div>
         </div>
       </div>
@@ -101,19 +101,21 @@ export default function GameHost({ module, onExit, onNextGame }: GameHostProps) 
 
   if (phase === 'intro') {
     return (
-      <div className="bg-white rounded-3xl shadow-md border border-slate-200 overflow-hidden">
+      <div className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-3xl shadow-md border-2 border-indigo-200 overflow-hidden">
         <div
-          className="p-6 sm:p-8 text-white text-center relative overflow-hidden"
+          className="p-4 sm:p-6 text-white text-center relative overflow-hidden"
           style={{ background: `linear-gradient(135deg, ${manifest.colorVar}, ${manifest.colorVar}dd)` }}
         >
           <div className="absolute -right-4 -top-2 text-9xl opacity-20 select-none">{manifest.emoji ?? '🎮'}</div>
-          <div className="relative">
-            <Mascot id={manifest.mascot} pose="happy" size={96} className="mx-auto mb-3" />
-            <h2 className="text-2xl sm:text-3xl font-bold mb-2">{manifest.title['zh-HK']}</h2>
-            <p className="text-base text-white/90 max-w-md mx-auto">{manifest.description['zh-HK']}</p>
+          <div className="relative flex flex-col md:flex-row md:items-center md:gap-5 md:text-left">
+            <Mascot id={manifest.mascot} pose="happy" size={72} className="mx-auto md:mx-0 mb-2 md:mb-0 shrink-0" />
+            <div>
+              <h2 className="text-xl sm:text-2xl font-bold mb-1">{manifest.title['zh-HK']}</h2>
+              <p className="text-sm text-white/90 max-w-md">{manifest.description['zh-HK']}</p>
+            </div>
           </div>
         </div>
-        <div className="p-6 sm:p-8 flex flex-col items-center gap-4">
+        <div className="p-4 sm:p-6 flex flex-col items-center gap-3">
           {items.length === 0 ? (
             <div className="text-center">
               <p className="text-rose-600 mb-4">暫無適合的字符，請放寬篩選條件</p>
@@ -125,7 +127,7 @@ export default function GameHost({ module, onExit, onNextGame }: GameHostProps) 
             <>
               <button
                 onClick={startGame}
-                className="w-full max-w-xs px-10 py-4 rounded-2xl font-bold text-xl text-white shadow-lg hover:shadow-xl active:scale-95 transition-all"
+                className="w-full max-w-xs px-8 py-3 rounded-2xl font-bold text-lg text-white shadow-lg hover:shadow-xl active:scale-95 transition-all"
                 style={{ background: manifest.colorVar }}
               >
                 ▶ 開始
@@ -145,7 +147,7 @@ export default function GameHost({ module, onExit, onNextGame }: GameHostProps) 
 
   if (phase === 'paused') {
     return (
-      <div className="bg-white rounded-3xl shadow-md border border-slate-200 p-8">
+      <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-3xl shadow-md border-2 border-amber-200 p-5">
         <div className="flex flex-col items-center gap-4 max-w-xs mx-auto">
           <div className="text-5xl">⏸</div>
           <h2 className="text-2xl font-bold text-slate-900">暫停中</h2>
@@ -159,7 +161,7 @@ export default function GameHost({ module, onExit, onNextGame }: GameHostProps) 
 
   if (phase === 'result' && result) {
     return (
-      <div className="bg-white rounded-3xl shadow-md border border-slate-200 overflow-hidden">
+      <div className="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-3xl shadow-md border-2 border-emerald-200 overflow-hidden">
         <ResultScreen
           result={result}
           manifest={manifest}
@@ -172,8 +174,8 @@ export default function GameHost({ module, onExit, onNextGame }: GameHostProps) 
   }
 
   return (
-    <div className="bg-white rounded-3xl shadow-md border border-slate-200 overflow-hidden">
-      <div className="flex items-center justify-between px-4 py-2.5 border-b border-slate-200 bg-slate-50">
+    <div className="bg-gradient-to-br from-indigo-100 to-purple-100 rounded-3xl shadow-md border-2 border-indigo-300 overflow-hidden">
+      <div className="flex items-center justify-between px-4 py-2.5 border-b border-indigo-200 bg-indigo-200/60">
         <div className="flex items-center gap-2">
           <span className="text-xl">{manifest.emoji ?? '🎮'}</span>
           <h3 className="font-bold text-slate-900 text-base">{manifest.title['zh-HK']}</h3>

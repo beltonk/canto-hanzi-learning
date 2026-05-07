@@ -45,7 +45,7 @@ export default function PlayHub() {
 
   return (
     <AppShell title="遊戲樂園" emoji="🎮" bg="pink">
-      <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-6 max-w-6xl">
+      <div className="container mx-auto px-3 sm:px-4 py-3 sm:py-4 max-w-6xl">
         {/* Stars summary band */}
         <div className="mb-5 rounded-3xl bg-gradient-to-br from-amber-400 via-orange-400 to-rose-400 text-white p-4 sm:p-5 shadow-lg flex items-center justify-between flex-wrap gap-3">
           <div>
@@ -70,7 +70,7 @@ export default function PlayHub() {
               <Link
                 key={manifest.id}
                 href={`/play/${manifest.id}`}
-                className={`group relative overflow-hidden rounded-2xl bg-gradient-to-br ${grad} shadow-md hover:shadow-xl hover:-translate-y-1 active:scale-95 transition-all p-4 sm:p-5 min-h-[160px] sm:min-h-[180px] flex flex-col`}
+                className={`group relative overflow-hidden rounded-2xl bg-gradient-to-br ${grad} shadow-md hover:shadow-xl hover:-translate-y-1 active:scale-95 transition-all p-3 sm:p-4 min-h-[130px] sm:min-h-[150px] md:min-h-[130px] flex flex-col`}
               >
                 <div className="absolute -right-3 -bottom-4 text-7xl sm:text-8xl opacity-25 select-none pointer-events-none transition-transform group-hover:scale-110 group-hover:rotate-6">
                   {manifest.emoji ?? '🎮'}

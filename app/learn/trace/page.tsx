@@ -54,9 +54,10 @@ function TracePageContent() {
     const update = () => {
       const w = window.innerWidth;
       // 360 default, fits cleanly on iPad/desktop; mobile uses (width - 32px padding - 4px border)
-      if (w >= 1024) setCanvasSize(420);
-      else if (w >= 640) setCanvasSize(380);
-      else setCanvasSize(Math.min(w - 48, 340));
+      if (w >= 1024) setCanvasSize(380);
+      else if (w >= 768) setCanvasSize(320); // iPad portrait: side-by-side, so less width
+      else if (w >= 640) setCanvasSize(340);
+      else setCanvasSize(Math.min(w - 48, 320));
     };
     update();
     window.addEventListener('resize', update);
@@ -129,7 +130,7 @@ function TracePageContent() {
     <AppShell title="筆順練習" emoji="🖌️" bg="indigo" onBack={() => requestExit(() => router.push('/'))}>
       <div className="container mx-auto px-3 sm:px-4 py-3 sm:py-4 max-w-5xl">
         {/* Compact filters in single row */}
-        <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-3 sm:p-4 mb-3">
+        <div className="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-2xl shadow-sm border-2 border-indigo-200 p-3 sm:p-4 mb-3">
           <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
             <span className="text-sm font-semibold text-slate-700 shrink-0">筆畫</span>
             <div className="flex gap-1 flex-wrap">
@@ -151,7 +152,7 @@ function TracePageContent() {
             <select
               value={filterRadical}
               onChange={e => setFilterRadical(e.target.value)}
-              className="px-3 py-1.5 rounded-lg text-sm border border-slate-200 bg-white text-slate-700 focus:border-indigo-500 focus:outline-none font-chinese"
+              className="px-3 py-1.5 rounded-lg text-sm border border-indigo-200 bg-white/80 text-slate-700 focus:border-indigo-500 focus:outline-none font-chinese"
             >
               <option value="">全部</option>
               {radicals.map(r => <option key={r} value={r}>{r}</option>)}
@@ -160,11 +161,11 @@ function TracePageContent() {
           </div>
         </div>
 
-        {/* Side-by-side on tablet/desktop, stacked on mobile */}
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-3">
+        {/* Side-by-side from md (iPad portrait) up */}
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_280px] lg:grid-cols-[1fr_320px] gap-3">
           {/* Tracing area */}
-          <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 sm:p-6">
-            <div className="flex items-center justify-between gap-3 mb-4 flex-wrap">
+          <div className="bg-gradient-to-br from-indigo-100 via-purple-100 to-indigo-50 rounded-2xl shadow-sm border-2 border-indigo-300 p-3 sm:p-4">
+            <div className="flex items-center justify-between gap-2 mb-3 flex-wrap">
               <div className="flex items-center gap-2 sm:gap-3">
                 <button
                   onClick={goPrev}
@@ -237,7 +238,7 @@ function TracePageContent() {
           </div>
 
           {/* Character picker — sidebar on desktop, below on mobile */}
-          <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-3 sm:p-4">
+          <div className="bg-gradient-to-br from-sky-50 to-indigo-50 rounded-2xl shadow-sm border-2 border-sky-200 p-3 sm:p-4">
             <div className="flex items-center justify-between mb-2">
               <span className="text-sm font-semibold text-slate-700">選字 ({filteredList.length})</span>
               {filteredList.length > 60 && (
@@ -249,7 +250,7 @@ function TracePageContent() {
                 </button>
               )}
             </div>
-            <div className={`grid grid-cols-7 sm:grid-cols-8 lg:grid-cols-5 gap-1.5 ${!showCharList && filteredList.length > 60 ? 'max-h-[180px] overflow-hidden' : 'max-h-[420px] overflow-y-auto scrollbar-thin'}`}>
+            <div className={`grid grid-cols-7 sm:grid-cols-8 md:grid-cols-5 lg:grid-cols-5 gap-1.5 ${!showCharList && filteredList.length > 60 ? 'max-h-[180px] overflow-hidden' : 'max-h-[360px] overflow-y-auto scrollbar-thin'}`}>
               {filteredList.map(e => (
                 <button
                   key={e.character}
@@ -257,7 +258,7 @@ function TracePageContent() {
                   className={`aspect-square rounded-lg font-chinese text-lg sm:text-xl flex items-center justify-center transition-all border ${
                     e.character === currentChar
                       ? 'bg-indigo-600 text-white border-indigo-600 shadow-md scale-105'
-                      : 'bg-white border-slate-200 text-slate-800 hover:border-indigo-300 hover:bg-indigo-50'
+                      : 'bg-white/70 border-sky-200 text-slate-800 hover:border-indigo-400 hover:bg-indigo-50'
                   }`}
                 >
                   {e.character}

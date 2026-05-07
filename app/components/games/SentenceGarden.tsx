@@ -242,9 +242,9 @@ export default function SentenceGarden({ onResult }: GameProps) {
 
       {/* Slots */}
       <div className={`flex gap-1.5 sm:gap-2 min-h-14 sm:min-h-16 flex-wrap justify-center items-center max-w-md p-3 rounded-2xl border-2 border-dashed transition-colors ${
-        feedback === 'correct' ? 'bg-emerald-50 border-emerald-300' :
-        feedback === 'wrong'   ? 'bg-rose-50 border-rose-300 animate-wiggle' :
-        'bg-white border-slate-300'
+        feedback === 'correct' ? 'bg-emerald-100 border-emerald-400' :
+        feedback === 'wrong'   ? 'bg-rose-100 border-rose-400 animate-wiggle' :
+        'bg-indigo-50 border-indigo-300'
       }`}>
         {arranged.length === 0 && (
           <div className="text-slate-400 text-sm">↓ 從下方點擊詞語</div>

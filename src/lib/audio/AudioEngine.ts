@@ -180,6 +180,59 @@ export class AudioEngine {
   }
 
   /**
+   * Synthesise a short celebratory "ding-ding" chime for correct answers.
+   * Two ascending triangle-wave notes, very soft (gain 0.18).
+   */
+  playCorrect() {
+    if (!this.globalEnabled || !this.categoryEnabled.effect) return;
+    const ctx = this.ensureContext();
+    if (!ctx) return;
+    const gain = ctx.createGain();
+    gain.gain.value = 0.18;
+    gain.connect(this.gains.effect);
+    const now = ctx.currentTime;
+    // Note 1: C5 → E5 rising feel
+    const o1 = ctx.createOscillator();
+    o1.type = 'triangle';
+    o1.frequency.setValueAtTime(523, now);       // C5
+    o1.frequency.linearRampToValueAtTime(659, now + 0.06); // E5
+    o1.connect(gain);
+    o1.start(now);
+    o1.stop(now + 0.12);
+    // Note 2: G5 — a beat later
+    const o2 = ctx.createOscillator();
+    o2.type = 'triangle';
+    o2.frequency.setValueAtTime(784, now + 0.13); // G5
+    o2.connect(gain);
+    gain.gain.setValueAtTime(0.18, now + 0.13);
+    gain.gain.linearRampToValueAtTime(0, now + 0.35);
+    o2.start(now + 0.13);
+    o2.stop(now + 0.36);
+  }
+
+  /**
+   * Synthesise a soft low "boop" for incorrect answers — not harsh or discouraging.
+   * A short sine-wave dip, gain 0.12.
+   */
+  playIncorrect() {
+    if (!this.globalEnabled || !this.categoryEnabled.effect) return;
+    const ctx = this.ensureContext();
+    if (!ctx) return;
+    const gain = ctx.createGain();
+    gain.gain.value = 0.12;
+    gain.connect(this.gains.effect);
+    const now = ctx.currentTime;
+    const o = ctx.createOscillator();
+    o.type = 'sine';
+    o.frequency.setValueAtTime(220, now);       // A3
+    o.frequency.linearRampToValueAtTime(180, now + 0.18); // slide down
+    o.connect(gain);
+    gain.gain.linearRampToValueAtTime(0, now + 0.22);
+    o.start(now);
+    o.stop(now + 0.23);
+  }
+
+  /**
    * Pick the best available SpeechSynthesis voice for a given language.
    * Prefers known high-quality / native-sounding Cantonese & Mandarin voices
    * (Sin-ji on Apple, Tracy on Microsoft, Google zh-* on Chrome, etc.).
@@ -240,7 +293,7 @@ export class AudioEngine {
   }
 
   /** Speak text via SpeechSynthesis, respecting global mute and ducking music. */
-  speakTTS(text: string, lang = 'zh-HK', rate = 0.8) {
+  speakTTS(text: string, lang = 'zh-HK', rate = 0.72) {
     if (!this.globalEnabled || !this.categoryEnabled.voice) return;
     if (typeof window === 'undefined' || !('speechSynthesis' in window)) return;
     window.speechSynthesis.cancel();

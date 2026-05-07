@@ -11,15 +11,10 @@ interface AppShellProps {
   title: string;
   emoji?: string;
   children: React.ReactNode;
-  /** Custom back action; if not given, navigates to '/' */
   onBack?: () => void;
-  /** If true, hides the back button (used on home page only) */
   hideBack?: boolean;
-  /** Right side content (e.g. settings, filter button) */
   rightSlot?: React.ReactNode;
-  /** Background gradient — defaults to indigo→purple */
   bg?: 'indigo' | 'sky' | 'rose' | 'amber' | 'emerald' | 'pink';
-  /** When true, renders as a 100vh shell with no scroll */
   fillHeight?: boolean;
 }
 
@@ -32,17 +27,22 @@ const BG_GRADIENTS: Record<NonNullable<AppShellProps['bg']>, string> = {
   pink:    'from-pink-50 via-white to-rose-50',
 };
 
-const NAV_ITEMS: Array<{ href: string; emoji: string; label: string }> = [
-  { href: '/',                  emoji: '🏠', label: '首頁' },
-  { href: '/learn/explore',     emoji: '🔍', label: '查字' },
-  { href: '/learn/flashcard',   emoji: '🃏', label: '字卡' },
-  { href: '/learn/decompose',   emoji: '🧩', label: '拆字' },
-  { href: '/learn/dictation',   emoji: '✏️', label: '默書' },
-  { href: '/learn/trace',       emoji: '🖌️', label: '筆順' },
-  { href: '/play',              emoji: '🎮', label: '遊戲' },
-  { href: '/favorites',         emoji: '❤️', label: '我的收藏' },
-  { href: '/progress',          emoji: '📊', label: '進度' },
+// Colours for each nav item active state
+const NAV_ITEMS: Array<{ href: string; emoji: string; label: string; activeColor: string; activeBg: string; dot: string }> = [
+  { href: '/',                emoji: '🏠', label: '首頁',    activeColor: 'text-indigo-700', activeBg: 'bg-indigo-100',  dot: 'bg-indigo-500'  },
+  { href: '/learn/explore',   emoji: '🔍', label: '查字',    activeColor: 'text-sky-700',    activeBg: 'bg-sky-100',     dot: 'bg-sky-500'     },
+  { href: '/learn/flashcard', emoji: '🃏', label: '字卡',    activeColor: 'text-purple-700', activeBg: 'bg-purple-100',  dot: 'bg-purple-500'  },
+  { href: '/learn/decompose', emoji: '🧩', label: '拆字',    activeColor: 'text-teal-700',   activeBg: 'bg-teal-100',    dot: 'bg-teal-500'    },
+  { href: '/learn/dictation', emoji: '✏️', label: '默書',    activeColor: 'text-rose-700',   activeBg: 'bg-rose-100',    dot: 'bg-rose-500'    },
+  { href: '/learn/trace',     emoji: '🖌️', label: '筆順',    activeColor: 'text-fuchsia-700',activeBg: 'bg-fuchsia-100', dot: 'bg-fuchsia-500' },
+  { href: '/play',            emoji: '🎮', label: '遊戲',    activeColor: 'text-orange-700', activeBg: 'bg-orange-100',  dot: 'bg-orange-500'  },
+  { href: '/favorites',       emoji: '❤️', label: '我的收藏', activeColor: 'text-pink-700',   activeBg: 'bg-pink-100',    dot: 'bg-pink-500'    },
+  { href: '/progress',        emoji: '📊', label: '進度',    activeColor: 'text-emerald-700',activeBg: 'bg-emerald-100', dot: 'bg-emerald-500' },
 ];
+
+function isActive(href: string, pathname: string) {
+  return href === '/' ? pathname === '/' : pathname.startsWith(href);
+}
 
 export default function AppShell({
   title,
@@ -60,7 +60,6 @@ export default function AppShell({
   const [xp, setXp] = useState(0);
   const [streak, setStreak] = useState(0);
   const [favCount, setFavCount] = useState(0);
-  const [showQuickNav, setShowQuickNav] = useState(false);
 
   useEffect(() => {
     Promise.resolve().then(() => {
@@ -79,132 +78,205 @@ export default function AppShell({
   };
 
   return (
-    <div className={`${fillHeight ? 'h-screen overflow-hidden' : 'min-h-screen'} bg-gradient-to-br ${BG_GRADIENTS[bg]} flex flex-col`}>
-      {/*
-        Sticky top app bar.
-        Layout is intentionally STABLE across all pages:
-          [☰ menu] [emoji + title] [pills] [right]
-        The back button is rendered as a separate floating chip BELOW the bar
-        on non-home pages, so the menu/title/pills never shift position.
-      */}
-      <header className="sticky top-0 z-30 bg-white/85 backdrop-blur-md border-b border-slate-200 shadow-sm">
-        <div className="container mx-auto px-3 sm:px-4 max-w-6xl">
-          <div className="flex items-center gap-2 sm:gap-3 h-14">
-            {/* Quick-nav burger — always leftmost, always present */}
-            <button
-              onClick={() => setShowQuickNav(!showQuickNav)}
-              className={`w-10 h-10 rounded-xl active:scale-95 transition-all flex items-center justify-center text-lg shrink-0 ${
-                showQuickNav ? 'bg-indigo-100 text-indigo-700' : 'text-slate-700 hover:bg-slate-100'
-              }`}
-              aria-label="選單"
-              aria-expanded={showQuickNav}
-              title="快速導航"
-            >
-              ☰
-            </button>
+    /* Outer shell — on md+ we use a left sidebar so we go side-by-side */
+    <div className={`${fillHeight ? 'h-screen' : 'min-h-screen'} bg-gradient-to-br ${BG_GRADIENTS[bg]} flex flex-col md:flex-row`}>
 
-            {/* Title — clickable goes home */}
-            <Link
-              href="/"
-              className="flex-1 min-w-0 flex items-center gap-2 truncate hover:opacity-80 transition-opacity"
-              title="返回首頁"
-            >
-              {emoji && <span className="text-xl sm:text-2xl shrink-0">{emoji}</span>}
-              <h1 className="text-base sm:text-xl font-semibold text-slate-900 truncate">{title}</h1>
-            </Link>
+      {/* ─── LEFT SIDEBAR (md+) ─────────────────────────────────────────── */}
+      <aside className="hidden md:flex flex-col w-20 lg:w-52 shrink-0 sticky top-0 h-screen z-30
+                        bg-white border-r border-slate-200 shadow-sm overflow-y-auto">
+        {/* Logo / home link */}
+        <Link
+          href="/"
+          className="flex items-center gap-3 px-3 py-4 border-b border-slate-100 hover:bg-indigo-50 transition-colors"
+          title="粵語漢字學習"
+        >
+          <span className="text-3xl shrink-0">📖</span>
+          <span className="hidden lg:block text-sm font-bold text-indigo-700 leading-tight">
+            粵語漢字學習
+          </span>
+        </Link>
 
-            {/* Status pills */}
+        {/* Nav items */}
+        <nav className="flex-1 flex flex-col gap-1 p-2 pt-3">
+          {NAV_ITEMS.map(item => {
+            const active = isActive(item.href, pathname);
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                title={item.label}
+                className={`flex items-center gap-3 px-3 py-3 rounded-2xl font-semibold transition-all active:scale-95
+                  ${active
+                    ? `${item.activeBg} ${item.activeColor} shadow-sm`
+                    : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
+                  }`}
+              >
+                <span className="text-2xl shrink-0 leading-none">{item.emoji}</span>
+                <span className="hidden lg:block text-sm">{item.label}</span>
+                {item.href === '/favorites' && favCount > 0 && (
+                  <span className="hidden lg:flex ml-auto text-xs font-bold bg-pink-500 text-white rounded-full w-5 h-5 items-center justify-center">
+                    {favCount > 9 ? '9+' : favCount}
+                  </span>
+                )}
+              </Link>
+            );
+          })}
+        </nav>
+
+        {/* Status at the bottom */}
+        <div className="p-3 border-t border-slate-100 flex flex-col gap-1.5">
+          <div className="flex items-center gap-2 px-2 py-1.5 rounded-xl bg-amber-50 border border-amber-200">
+            <span className="text-base">⭐</span>
+            <span className="hidden lg:block text-xs font-bold text-amber-700">Lv.{level}</span>
+          </div>
+          <div className="flex items-center gap-2 px-2 py-1.5 rounded-xl bg-rose-50 border border-rose-200">
+            <span className="text-base">🔥</span>
+            <span className="hidden lg:block text-xs font-bold text-rose-700">{streak} 天連續</span>
+          </div>
+          <div className="flex items-center gap-2 px-2 py-1.5 rounded-xl bg-indigo-50 border border-indigo-200">
+            <span className="text-base">💎</span>
+            <span className="hidden lg:block text-xs font-bold text-indigo-700">{xp} XP</span>
+          </div>
+        </div>
+      </aside>
+
+      {/* ─── RIGHT CONTENT COLUMN ───────────────────────────────────────── */}
+      <div className={`flex-1 flex flex-col min-w-0 ${fillHeight ? 'overflow-hidden' : ''}`}>
+
+        {/* ── TOP BAR (all viewports) ─────────────────────────────────── */}
+        <header className="sticky top-0 z-20 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm">
+          <div className="flex items-center gap-2 sm:gap-3 h-14 px-3 sm:px-4">
+
+            {/* Back button or left spacer */}
+            {!hideBack ? (
+              <button
+                onClick={handleBack}
+                className="shrink-0 w-10 h-10 rounded-2xl flex items-center justify-center
+                           bg-slate-100 text-slate-700 text-xl font-bold
+                           hover:bg-indigo-100 hover:text-indigo-700 active:scale-90 transition-all"
+                aria-label="返回"
+              >
+                ←
+              </button>
+            ) : (
+              /* Placeholder so title stays centred on mobile */
+              <div className="shrink-0 w-10 h-10 md:hidden" />
+            )}
+
+            {/* Page title */}
+            <div className="flex-1 min-w-0 flex items-center gap-2">
+              {emoji && <span className="text-2xl shrink-0 leading-none">{emoji}</span>}
+              <h1 className="text-lg sm:text-xl font-bold text-slate-900 truncate">{title}</h1>
+            </div>
+
+            {/* Status pills — visible sm+ */}
             <div className="hidden sm:flex items-center gap-2 shrink-0">
               <Link
                 href="/favorites"
-                className="px-2.5 py-1.5 rounded-full bg-pink-50 border border-pink-200 text-sm flex items-center gap-1.5 font-semibold text-pink-700 hover:bg-pink-100 transition-colors"
+                className="px-3 py-1.5 rounded-full bg-pink-100 border border-pink-300
+                           text-sm font-bold text-pink-700 flex items-center gap-1.5
+                           hover:bg-pink-200 transition-colors"
                 title="我的收藏"
               >
                 ❤️ <span className="tabular-nums">{favCount}</span>
               </Link>
-              <div className="px-3 py-1.5 rounded-full bg-amber-50 border border-amber-200 text-sm flex items-center gap-1.5 font-semibold text-amber-700">
-                ⭐ <span>Lv.{level}</span>
+              <div className="px-3 py-1.5 rounded-full bg-amber-100 border border-amber-300 text-sm font-bold text-amber-700 flex items-center gap-1.5">
+                ⭐ Lv.{level}
               </div>
-              <div className="px-3 py-1.5 rounded-full bg-rose-50 border border-rose-200 text-sm flex items-center gap-1.5 font-semibold text-rose-700">
-                🔥 <span>{streak}</span>
+              <div className="px-3 py-1.5 rounded-full bg-rose-100 border border-rose-300 text-sm font-bold text-rose-700 flex items-center gap-1.5">
+                🔥 {streak}
               </div>
             </div>
 
             {rightSlot && <div className="shrink-0">{rightSlot}</div>}
           </div>
 
-          {/* Mobile pill row */}
-          <div className="sm:hidden flex items-center gap-2 pb-2 overflow-x-auto scrollbar-thin">
+          {/* Mobile status strip */}
+          <div className="md:hidden flex items-center gap-1.5 px-3 pb-2 overflow-x-auto">
             <Link
               href="/favorites"
-              className="px-2.5 py-1 rounded-full bg-pink-50 border border-pink-200 text-xs flex items-center gap-1 font-semibold text-pink-700 shrink-0"
+              className="shrink-0 px-2.5 py-1 rounded-full bg-pink-100 border border-pink-300
+                         text-xs font-bold text-pink-700 flex items-center gap-1"
             >
               ❤️ {favCount}
             </Link>
-            <div className="px-2.5 py-1 rounded-full bg-amber-50 border border-amber-200 text-xs flex items-center gap-1 font-semibold text-amber-700 shrink-0">
+            <div className="shrink-0 px-2.5 py-1 rounded-full bg-amber-100 border border-amber-300 text-xs font-bold text-amber-700">
               ⭐ Lv.{level}
             </div>
-            <div className="px-2.5 py-1 rounded-full bg-rose-50 border border-rose-200 text-xs flex items-center gap-1 font-semibold text-rose-700 shrink-0">
+            <div className="shrink-0 px-2.5 py-1 rounded-full bg-rose-100 border border-rose-300 text-xs font-bold text-rose-700">
               🔥 {streak}
             </div>
-            <div className="px-2.5 py-1 rounded-full bg-indigo-50 border border-indigo-200 text-xs flex items-center gap-1 font-semibold text-indigo-700 shrink-0">
+            <div className="shrink-0 px-2.5 py-1 rounded-full bg-indigo-100 border border-indigo-300 text-xs font-bold text-indigo-700">
               💎 {xp} XP
             </div>
           </div>
+        </header>
+
+        {/* ── MAIN CONTENT ────────────────────────────────────────────── */}
+        <main className={`flex-1 flex flex-col min-h-0 ${fillHeight ? 'overflow-hidden' : ''} pb-[148px] md:pb-0`}>
+          {children}
+        </main>
+      </div>
+
+      {/* ─── BOTTOM TAB BAR (mobile only, < md) ─────────────────────── */}
+      <nav className="md:hidden fixed bottom-0 inset-x-0 z-30
+                      bg-white/95 backdrop-blur-lg border-t-2 border-slate-200
+                      shadow-[0_-4px_24px_rgba(0,0,0,0.10)]">
+        {/* Show 5 primary items; keep it uncluttered */}
+        <div className="grid grid-cols-5 h-[72px]">
+          {NAV_ITEMS.slice(0, 5).map(item => {
+            const active = isActive(item.href, pathname);
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`flex flex-col items-center justify-center gap-0.5 transition-all active:scale-90
+                  ${active ? item.activeColor : 'text-slate-500'}`}
+              >
+                <span className={`text-[28px] leading-none transition-transform ${active ? 'scale-110' : ''}`}>
+                  {item.emoji}
+                </span>
+                <span className={`text-[11px] font-bold leading-none ${active ? '' : 'text-slate-400'}`}>
+                  {item.label}
+                </span>
+                {active && (
+                  <span className={`w-1.5 h-1.5 rounded-full mt-0.5 ${item.dot}`} />
+                )}
+              </Link>
+            );
+          })}
         </div>
 
-        {/* Drop-down quick nav */}
-        {showQuickNav && (
-          <div className="border-t border-slate-200 bg-white shadow-md animate-fade-in">
-            <div className="container mx-auto px-3 sm:px-4 max-w-6xl py-3">
-              <div className="grid grid-cols-3 sm:grid-cols-9 gap-2">
-                {NAV_ITEMS.map(item => {
-                  const active = item.href === '/'
-                    ? pathname === '/'
-                    : pathname.startsWith(item.href);
-                  return (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      onClick={() => setShowQuickNav(false)}
-                      className={`flex flex-col items-center gap-1 py-2 px-1 rounded-xl transition-all active:scale-95 ${
-                        active
-                          ? 'bg-indigo-100 text-indigo-700 shadow-sm font-semibold'
-                          : 'text-slate-700 hover:bg-slate-100'
-                      }`}
-                    >
-                      <span className="text-2xl">{item.emoji}</span>
-                      <span className="text-xs">{item.label}</span>
-                    </Link>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-        )}
-      </header>
-
-      {/*
-        Floating back chip — sits just below the header on non-home pages.
-        Lives outside the title bar so the bar layout never changes.
-      */}
-      {!hideBack && (
-        <div className="container mx-auto px-3 sm:px-4 max-w-6xl pt-2 sm:pt-3">
-          <button
-            onClick={handleBack}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/85 backdrop-blur border border-slate-200 text-slate-700 text-sm font-medium shadow-sm hover:bg-white hover:border-indigo-300 hover:text-indigo-700 active:scale-95 transition-all"
-            aria-label="返回"
-          >
-            <span className="text-base leading-none">←</span>
-            <span>返回</span>
-          </button>
+        {/* Second row for overflow items */}
+        <div className="grid grid-cols-4 border-t border-slate-100 h-[64px]">
+          {NAV_ITEMS.slice(5).map(item => {
+            const active = isActive(item.href, pathname);
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`flex flex-col items-center justify-center gap-0.5 transition-all active:scale-90 relative
+                  ${active ? item.activeColor : 'text-slate-500'}`}
+              >
+                <span className={`text-[24px] leading-none transition-transform ${active ? 'scale-110' : ''}`}>
+                  {item.emoji}
+                </span>
+                <span className={`text-[11px] font-bold leading-none ${active ? '' : 'text-slate-400'}`}>
+                  {item.label === '我的收藏' ? '收藏' : item.label}
+                </span>
+                {item.href === '/favorites' && favCount > 0 && (
+                  <span className="absolute top-1 right-3 text-[10px] font-bold bg-pink-500 text-white rounded-full w-4 h-4 flex items-center justify-center">
+                    {favCount > 9 ? '9+' : favCount}
+                  </span>
+                )}
+                {active && (
+                  <span className={`w-1.5 h-1.5 rounded-full mt-0.5 ${item.dot}`} />
+                )}
+              </Link>
+            );
+          })}
         </div>
-      )}
-
-      {/* Main content area */}
-      <main className={`flex-1 ${fillHeight ? 'overflow-hidden' : ''}`}>
-        {children}
-      </main>
+      </nav>
     </div>
   );
 }

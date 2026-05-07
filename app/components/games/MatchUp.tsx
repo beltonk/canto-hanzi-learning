@@ -136,7 +136,7 @@ export default function MatchUp({ items, onResult }: GameProps) {
         // tile.content is the jyutping string — speak the *character* it represents
         // Find the paired char tile to get the character
         const paired = tiles.find(t => t.charId === tile.charId && t.type === 'char');
-        if (paired) audio.speakTTS(paired.content, 'zh-HK', 0.72);
+        if (paired) audio.speakTTS(paired.content, 'zh-HK', 0.5);
       }
     }
 
@@ -184,7 +184,7 @@ export default function MatchUp({ items, onResult }: GameProps) {
       setFlipped([]);
       processingRef.current = false;
     }, 800);
-  }, [flipped, tiles, pairsThisRound, roundIdx, onResult]);
+  }, [audio, flipped, mode, tiles, pairsThisRound, roundIdx, onResult]);
 
   const cols = pairsThisRound * 2 <= 8 ? 4 : 6;
 

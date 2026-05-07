@@ -243,7 +243,7 @@ export default function CharacterRain({ items, onResult }: GameProps) {
       setFeedback({ x: xPct, y: (tile.yPx / FRAME_HEIGHT_PX) * 100, text: '✗', color: 'text-rose-500' });
       setTimeout(() => setFeedback(null), 500);
     }
-  }, [spawnRound, finishGame]);
+  }, [audio, spawnRound, finishGame]);
 
   const tiles = tilesRef.current;
 

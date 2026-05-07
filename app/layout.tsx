@@ -1,5 +1,10 @@
 import type { Metadata } from "next";
 import { Noto_Sans_TC, Noto_Serif_TC, Roboto_Mono } from "next/font/google";
+// Full-coverage Kaiti brush face (CC-BY). Each woff2 slice is loaded on
+// demand via unicode-range, so only the glyphs actually rendered on the
+// page are downloaded. Provides consistent brush rendering for the chars
+// that Free HK Kai (an HK EDB-only font) doesn't ship — e.g. 糸, 艸.
+import "lxgw-wenkai-tc-webfont/lxgwwenkaitc-regular.css";
 import "./globals.css";
 import { LanguageProvider } from "@/lib/i18n/context";
 import { ThemeProvider } from "@/lib/theme/context";

@@ -2,6 +2,8 @@
 
 import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { addFavorite } from '@/lib/favorites';
+import { useAudio } from '@/lib/audio/context';
+import CorrectBurst from '@/app/components/ui/CorrectBurst';
 import type { GameProps } from './types';
 
 interface Sentence {
@@ -147,12 +149,14 @@ function shuffle<T>(arr: T[]): T[] {
 const FLOWERS = ['🌸', '🌺', '🌻', '🌷', '🌹', '🌼', '💐'];
 
 export default function SentenceGarden({ onResult }: GameProps) {
+  const audio = useAudio();
   const sentences = useMemo(() => shuffle(SENTENCE_POOL).slice(0, ROUND_COUNT), []);
   const [roundIdx, setRoundIdx] = useState(0);
   const [tray, setTray] = useState<string[]>([]);
   const [arranged, setArranged] = useState<string[]>([]);
   const [flowers, setFlowers] = useState<string[]>([]);
   const [feedback, setFeedback] = useState<'idle' | 'correct' | 'wrong'>('idle');
+  const [burst, setBurst] = useState(false);
   const startRef = useRef(0);
   const scoreRef = useRef(0);
 
@@ -181,11 +185,14 @@ export default function SentenceGarden({ onResult }: GameProps) {
       const correct = nextArranged.join('') === current.words.join('');
       if (correct) {
         setFeedback('correct');
+        setBurst(true);
+        audio.playCorrect();
         setFlowers(f => [...f, FLOWERS[Math.floor(Math.random() * FLOWERS.length)]]);
         scoreRef.current += 1;
         const newScore = scoreRef.current;
         setTimeout(() => {
           const r = roundIdx + 1;
+          setBurst(false);
           if (r >= ROUND_COUNT) {
             const stars: 1 | 2 | 3 = newScore >= ROUND_COUNT ? 3 : newScore >= Math.ceil(ROUND_COUNT * 0.6) ? 2 : 1;
             onResult({ stars, correctCount: newScore, totalCount: ROUND_COUNT, durationMs: Date.now() - startRef.current });
@@ -195,6 +202,7 @@ export default function SentenceGarden({ onResult }: GameProps) {
         }, 1100);
       } else {
         setFeedback('wrong');
+        audio.playIncorrect();
         // Auto-save the correct sentence as a "word" favorite so the user can revisit it.
         addFavorite({
           text: current.words.join(''),
@@ -209,7 +217,7 @@ export default function SentenceGarden({ onResult }: GameProps) {
         }, 900);
       }
     }
-  }, [arranged, tray, roundIdx, current, feedback, onResult]);
+  }, [arranged, tray, roundIdx, current, feedback, onResult, audio]);
 
   const moveBack = useCallback((word: string) => {
     if (feedback !== 'idle') return;
@@ -238,6 +246,7 @@ export default function SentenceGarden({ onResult }: GameProps) {
         <div className="absolute top-2 left-2 text-xl opacity-60">☁️</div>
         <div className="text-5xl sm:text-6xl mb-1 animate-float inline-block">{current?.emoji ?? '🌳'}</div>
         <div className="text-sm text-slate-600">把詞語拼成一句話：</div>
+        <CorrectBurst show={burst} />
       </div>
 
       {/* Slots */}

@@ -207,6 +207,7 @@ export default function StrokeRacer({ items, onResult }: GameProps) {
           character={currentChar.character}
           size={canvasSize}
           onComplete={handleStrokeComplete}
+          hintByDefault={false}
         />
         {feedback === 'timeout' && (
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none bg-rose-500/30 rounded-3xl">

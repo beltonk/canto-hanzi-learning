@@ -21,6 +21,13 @@ interface StrokeTracingProps {
   character: string;
   size?: number;
   onComplete?: (stars: 1 | 2 | 3) => void;
+  /**
+   * Whether the current expected stroke is highlighted as a guide by
+   * default. Practice modes (筆順練習) leave this on; the 太空寫字 game
+   * turns it off so the player has to recall the next stroke from memory
+   * — they can still tap the 💡 提示 button to peek for one stroke.
+   */
+  hintByDefault?: boolean;
 }
 
 interface StrokeGroup {
@@ -60,6 +67,7 @@ export default function StrokeTracing({
   character,
   size = 360,
   onComplete,
+  hintByDefault = true,
 }: StrokeTracingProps) {
   const baseCanvasRef = useRef<HTMLCanvasElement>(null);
   const inkCanvasRef = useRef<HTMLCanvasElement>(null);
@@ -89,6 +97,10 @@ export default function StrokeTracing({
   const [stars, setStars] = useState<1 | 2 | 3 | null>(null);
   const [isPaused, setIsPaused] = useState(false);
   const [replaying, setReplaying] = useState(false);
+  // Whether to render the next-stroke guide. Defaults to `hintByDefault`
+  // (true for 筆順練習, false for the 太空寫字 game). The user can
+  // toggle this anytime via the 💡 提示 button.
+  const [showHint, setShowHint] = useState(hintByDefault);
   // Last result components — for the hidden debug overlay (?debug=trace).
   const [lastDebug, setLastDebug] = useState<{
     coverage: number;
@@ -163,11 +175,15 @@ export default function StrokeTracing({
         // Completed strokes: dark black
         color = '#1F2937';
       } else if (i === completedUpTo && highlightCurrent) {
-        // Current expected stroke: medium grey to guide user
-        color = '#9CA3AF';
+        // Current expected stroke: clearer slate so the next-stroke hint
+        // is actually visible against the cream background. Used when the
+        // user has the 💡 提示 toggle on (or in default practice mode).
+        color = '#64748B';
       } else {
-        // Future strokes: very light grey
-        color = '#E5E7EB';
+        // Future strokes (or current stroke when hint is off): a soft
+        // slate so the silhouette is still readable but doesn't telegraph
+        // which one is next.
+        color = '#CBD5E1';
       }
       shape.graphics.f(color);
       shape.graphics.p(seg.pathData);
@@ -179,8 +195,8 @@ export default function StrokeTracing({
   }, [createJSLoaded, strokeGroups]);
 
   useEffect(() => {
-    if (createJSLoaded) drawGuide(currentStrokeIdx, !isPaused);
-  }, [createJSLoaded, currentStrokeIdx, drawGuide, isPaused, character]);
+    if (createJSLoaded) drawGuide(currentStrokeIdx, !isPaused && showHint);
+  }, [createJSLoaded, currentStrokeIdx, drawGuide, isPaused, character, showHint]);
 
   /**
    * Render JUST the current expected stroke to an offscreen canvas, then
@@ -241,18 +257,21 @@ export default function StrokeTracing({
     setIsPaused(false);
     setReplaying(false);
     setLastDebug(null);
+    setShowHint(hintByDefault);
     livePointsRef.current = [];
     const ink = inkCanvasRef.current?.getContext('2d');
     ink?.clearRect(0, 0, 1080, 1080);
-  }, [character]);
+  }, [character, hintByDefault]);
 
-  const drawInk = useCallback((points: Point[], color: string = '#3B82F6') => {
+  const drawInk = useCallback((points: Point[], color: string = '#1D4ED8') => {
     const ctx = inkCanvasRef.current?.getContext('2d');
     if (!ctx) return;
     ctx.clearRect(0, 0, 1080, 1080);
     if (points.length < 2) return;
     ctx.strokeStyle = color;
-    ctx.lineWidth = 24;
+    // Bumped from 24 → 34 (≈3.1% of canvas) so the user's ink is clearly
+    // visible against the cream background, even on smaller iPad viewports.
+    ctx.lineWidth = 34;
     ctx.lineCap = 'round';
     ctx.lineJoin = 'round';
     ctx.beginPath();
@@ -281,7 +300,7 @@ export default function StrokeTracing({
     const pt = canvasToInternal(e);
     livePointsRef.current = [pt];
     setIsCapturing(true);
-    drawInk([pt], '#3B82F6');
+    drawInk([pt], '#1D4ED8');
     setFeedback('idle');
   }, [completed, isPaused, canvasToInternal, drawInk]);
 
@@ -289,7 +308,7 @@ export default function StrokeTracing({
     if (!isCapturing || activePointerRef.current !== e.pointerId) return;
     const pt = canvasToInternal(e);
     livePointsRef.current = [...livePointsRef.current, pt];
-    drawInk(livePointsRef.current, '#3B82F6');
+    drawInk(livePointsRef.current, '#1D4ED8');
   }, [isCapturing, canvasToInternal, drawInk]);
 
   const handlePointerUp = useCallback((e: React.PointerEvent<HTMLCanvasElement>) => {
@@ -332,7 +351,7 @@ export default function StrokeTracing({
       setShowStrokeBurst(true);
       setTimeout(() => setShowStrokeBurst(false), 600);
       setFeedback('pass');
-      drawInk(pts, '#10B981'); // green ink for success
+      drawInk(pts, '#047857'); // emerald-700 ink for success
       // Pause, then clear ink and advance
       setIsPaused(true);
       advanceTimerRef.current = setTimeout(() => {
@@ -360,7 +379,7 @@ export default function StrokeTracing({
     } else {
       audio.playIncorrect();
       setFeedback('fail');
-      drawInk(pts, '#EF4444'); // red ink for failure
+      drawInk(pts, '#B91C1C'); // red-700 ink for failure
       setRetryCount(c => c + 1);
       // Clear after pause, allow retry of same stroke
       advanceTimerRef.current = setTimeout(() => {
@@ -368,7 +387,7 @@ export default function StrokeTracing({
         setFeedback('idle');
       }, failPause);
     }
-  }, [isCapturing, strokeGroups, currentStrokeIdx, attempts, retryCount, totalStrokes, onComplete, drawGuide, drawInk, clearInk, reducedMotion]);
+  }, [audio, isCapturing, strokeGroups, currentStrokeIdx, attempts, retryCount, totalStrokes, onComplete, drawGuide, drawInk, clearInk, reducedMotion]);
 
   const handleReset = useCallback(() => {
     if (advanceTimerRef.current) clearTimeout(advanceTimerRef.current);
@@ -415,7 +434,7 @@ export default function StrokeTracing({
       }
       if (pointIdx === 0) displayed = [];
       displayed.push(stroke.points[pointIdx]);
-      drawInk(displayed, '#6366F1'); // indigo replay ink
+      drawInk(displayed, '#4338CA'); // indigo-700 replay ink
       pointIdx += 1;
       if (pointIdx >= stroke.points.length) {
         strokeIdx += 1;
@@ -565,21 +584,37 @@ export default function StrokeTracing({
         >
           {completed ? '再練一次' : '重新開始'}
         </button>
+        {!completed && (
+          <button
+            onClick={() => setShowHint(h => !h)}
+            aria-pressed={showHint}
+            className={`px-5 py-2.5 rounded-xl text-sm font-medium transition-all border ${
+              showHint
+                ? 'bg-amber-100 border-amber-300 text-amber-800 hover:bg-amber-200'
+                : 'bg-white border-slate-300 text-slate-700 hover:bg-slate-50'
+            }`}
+            title={showHint ? '隱藏下一筆提示' : '顯示下一筆提示'}
+          >
+            {showHint ? '🙈 隱藏提示' : '💡 顯示提示'}
+          </button>
+        )}
         {completed && attempts.length > 0 && (
           <button
             onClick={handleReplay}
             disabled={replaying}
             className="px-5 py-2.5 rounded-xl bg-indigo-600 text-white text-sm font-medium shadow-sm hover:bg-indigo-700 disabled:opacity-60 disabled:cursor-not-allowed transition-all"
           >
-            {replaying ? '播放中…' : '🎬 重睇我寫'}
+            {replaying ? '播放中…' : '🎬 回顧筆順'}
           </button>
         )}
       </div>
 
       <p className="text-sm text-slate-500 text-center max-w-xs">
         {completed
-          ? '完成！可按「重睇我寫」重看你嘅筆順。'
-          : '用手指或滑鼠依照灰色筆順寫一筆，系統會自動檢查並進入下一筆'}
+          ? '完成！可按「回顧筆順」重看你的書寫過程。'
+          : showHint
+            ? '用手指或滑鼠依照灰色筆順寫一筆，系統會自動檢查並進入下一筆。'
+            : '憑記憶寫出下一筆。需要時可按「💡 顯示提示」查看灰色筆順。'}
       </p>
     </div>
   );

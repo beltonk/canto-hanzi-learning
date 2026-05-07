@@ -21,7 +21,18 @@ const STROKE_RANGES = [
   { labelKey: null, label: "16+", min: 16, max: 32 },
 ];
 
-export default function FlashcardRevision() {
+interface FlashcardRevisionProps {
+  /** Optional explicit list of characters to revise. When provided, the
+   *  setup screen is skipped and the cards are loaded immediately. */
+  initialCharList?: string[];
+  /** Optional friendly title shown when an external char list is loaded. */
+  initialTitle?: string;
+}
+
+export default function FlashcardRevision({
+  initialCharList,
+  initialTitle,
+}: FlashcardRevisionProps = {}) {
   const { t, language } = useLanguage();
   const audio = useAudio();
   // Card transitions go through the shared motion primitive so the global
@@ -38,9 +49,12 @@ export default function FlashcardRevision() {
   const [isLoading, setIsLoading] = useState(false);
   const [isStarted, setIsStarted] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  /** Tracks whether the current session was started from a deep link
+   *  (so the back button returns to the previous page rather than the
+   *  setup screen). */
+  const [externalListLabel, setExternalListLabel] = useState<string | null>(null);
   
   // Card state
-  const [showDetails, setShowDetails] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
   const [showStrokeAnimation, setShowStrokeAnimation] = useState(false);
 
@@ -97,9 +111,9 @@ export default function FlashcardRevision() {
       } else {
         setCharacters(data.characters);
         setCurrentIndex(0);
-        setShowDetails(false);
         setShowStrokeAnimation(false);
         setIsStarted(true);
+        setExternalListLabel(null);
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : t("loadFailed"));
@@ -107,6 +121,48 @@ export default function FlashcardRevision() {
       setIsLoading(false);
     }
   }, [strokeRange, t]);
+
+  // Fetch a focused list of characters by exact match (used by deep links
+  // such as 今日要複習 / 立即複習 / 學習狀態).
+  const fetchByCharList = useCallback(async (chars: string[], label?: string) => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      const results = await Promise.all(
+        chars.map(c =>
+          fetch(`/api/characters?char=${encodeURIComponent(c)}`)
+            .then(res => (res.ok ? res.json() : null))
+            .catch(() => null),
+        ),
+      );
+      const loaded = results
+        .map(r => r?.character as FullCharacterData | undefined)
+        .filter((c): c is FullCharacterData => Boolean(c));
+
+      if (loaded.length === 0) {
+        setError(t("noMatchingChars"));
+        setCharacters([]);
+      } else {
+        setCharacters(loaded);
+        setCurrentIndex(0);
+        setShowStrokeAnimation(false);
+        setIsStarted(true);
+        setExternalListLabel(label ?? `共 ${loaded.length} 字`);
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : t("loadFailed"));
+    } finally {
+      setIsLoading(false);
+    }
+  }, [t]);
+
+  // When initialCharList is provided, auto-start the session with that list.
+  useEffect(() => {
+    if (initialCharList && initialCharList.length > 0 && !isStarted && !isLoading) {
+      fetchByCharList(initialCharList, initialTitle);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialCharList, initialTitle]);
 
   // Handle filter change while viewing cards
   const handleFilterChange = (newStrokeRange: typeof STROKE_RANGES[0]) => {
@@ -126,7 +182,6 @@ export default function FlashcardRevision() {
         );
       }
       setCurrentIndex(currentIndex + 1);
-      setShowDetails(false);
       setShowStrokeAnimation(false);
     }
   }, [currentIndex, characters]);
@@ -134,7 +189,6 @@ export default function FlashcardRevision() {
   const goToPrevious = useCallback(() => {
     if (currentIndex > 0) {
       setCurrentIndex(currentIndex - 1);
-      setShowDetails(false);
       setShowStrokeAnimation(false);
     }
   }, [currentIndex]);
@@ -143,7 +197,7 @@ export default function FlashcardRevision() {
   const playPronunciation = useCallback((text?: string) => {
     const current = characters[currentIndex];
     if (!current && !text) return;
-    audio.speakTTS(text || current.character, "zh-HK", 0.8);
+    audio.speakTTS(text || current.character, "zh-HK", 0.5);
   }, [characters, currentIndex, audio]);
 
   // Keyboard navigation
@@ -164,16 +218,12 @@ export default function FlashcardRevision() {
           e.preventDefault();
           playPronunciation();
           break;
-        case "Enter":
-          e.preventDefault();
-          setShowDetails(!showDetails);
-          break;
       }
     };
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isStarted, goToNext, goToPrevious, playPronunciation, showDetails]);
+  }, [isStarted, goToNext, goToPrevious, playPronunciation]);
 
   // Get estimated count based on filters
   const getEstimatedCount = () => {
@@ -268,8 +318,17 @@ export default function FlashcardRevision() {
 
       {/* ── Top bar: progress + filter toggle ── */}
       <div className="flex items-center gap-3 px-2 py-1.5 shrink-0">
+        {/* External list label (e.g. "今日要複習") */}
+        {externalListLabel && (
+          <span className="shrink-0 px-3 py-1 rounded-full text-xs font-bold
+                           bg-gradient-to-r from-amber-200 to-orange-200
+                           border-2 border-amber-400 text-amber-900">
+            📌 {externalListLabel}
+          </span>
+        )}
+
         {/* Progress bar */}
-        <div className="flex-1 flex items-center gap-2">
+        <div className="flex-1 flex items-center gap-2 min-w-0">
           <span className="text-xs font-bold text-slate-500 tabular-nums shrink-0">
             {currentIndex + 1}/{characters.length}
           </span>
@@ -281,22 +340,27 @@ export default function FlashcardRevision() {
           </div>
         </div>
 
-        {/* Filter pill */}
-        <button
-          onClick={() => setShowFilters(!showFilters)}
-          className={`shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold border-2 transition-all
-            ${showFilters ? 'bg-sky-500 text-white border-sky-500' : 'bg-sky-50 text-sky-700 border-sky-300 hover:bg-sky-100'}`}
-        >
-          📐 {getStrokeRangeLabel(strokeRange)}
-          <span className="opacity-60">{showFilters ? '▲' : '▼'}</span>
-        </button>
+        {/* Filter pill — hidden when we're in a deep-linked focused list */}
+        {!externalListLabel && (
+          <button
+            onClick={() => setShowFilters(!showFilters)}
+            className={`shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold border-2 transition-all
+              ${showFilters ? 'bg-sky-500 text-white border-sky-500' : 'bg-sky-50 text-sky-700 border-sky-300 hover:bg-sky-100'}`}
+          >
+            📐 {getStrokeRangeLabel(strokeRange)}
+            <span className="opacity-60">{showFilters ? '▲' : '▼'}</span>
+          </button>
+        )}
 
         {/* Back to settings */}
         <button
-          onClick={() => setIsStarted(false)}
+          onClick={() => {
+            setIsStarted(false);
+            setExternalListLabel(null);
+          }}
           className="shrink-0 px-3 py-1.5 rounded-full text-xs font-bold bg-slate-100 text-slate-600 border-2 border-slate-200 hover:bg-slate-200 transition-all"
         >
-          ⚙️ 設定
+          ⚙️ 選字
         </button>
       </div>
 
@@ -403,35 +467,26 @@ export default function FlashcardRevision() {
               </div>
             </div>
 
-            {/* Divider */}
-            <div className="border-t-2 border-sky-100 shrink-0" />
+            {/* Divider with section header */}
+            <div className="shrink-0 flex items-center gap-2">
+              <span className="text-sm font-bold text-sky-700">📚 詞語</span>
+              <div className="flex-1 border-t-2 border-sky-100" />
+            </div>
 
-            {/* Words section */}
+            {/* Words section — always visible, scrolls internally */}
             {hasWords ? (
-              <>
-                <button
-                  onClick={() => setShowDetails(!showDetails)}
-                  className="shrink-0 w-full py-2 rounded-xl border-2 border-sky-200
-                             text-sky-700 text-sm font-bold
-                             hover:bg-sky-50 transition-all flex items-center justify-center gap-1"
-                >
-                  {showDetails ? `${t("hideDetails")} ↑` : `${t("showDetails")} ↓`}
-                </button>
-
-                {showDetails && (
-                  <div className="flex-1 min-h-0 overflow-y-auto space-y-2">
-                    {current.stage1Words && current.stage1Words.length > 0 && (
-                      <CompactWordList words={current.stage1Words} title={t("stage1")} icon="📗" />
-                    )}
-                    {current.stage2Words && current.stage2Words.length > 0 && (
-                      <CompactWordList words={current.stage2Words} title={t("stage2")} icon="📘" />
-                    )}
-                    {current.fourCharacterPhrases && current.fourCharacterPhrases.length > 0 && (
-                      <CompactWordList words={current.fourCharacterPhrases} title={t("fourCharPhrases")} icon="✨" />
-                    )}
-                  </div>
+              <div className="flex-1 min-h-0 overflow-y-auto space-y-2 pr-1
+                              scrollbar-thin scrollbar-thumb-sky-300 scrollbar-track-transparent">
+                {current.stage1Words && current.stage1Words.length > 0 && (
+                  <CompactWordList words={current.stage1Words} title={t("stage1")} icon="📗" />
                 )}
-              </>
+                {current.stage2Words && current.stage2Words.length > 0 && (
+                  <CompactWordList words={current.stage2Words} title={t("stage2")} icon="📘" />
+                )}
+                {current.fourCharacterPhrases && current.fourCharacterPhrases.length > 0 && (
+                  <CompactWordList words={current.fourCharacterPhrases} title={t("fourCharPhrases")} icon="✨" />
+                )}
+              </div>
             ) : (
               <div className="flex-1 flex items-center justify-center">
                 <p className="text-sm text-slate-400 text-center">暫無詞語資料</p>
@@ -440,7 +495,7 @@ export default function FlashcardRevision() {
 
             {/* Keyboard hint */}
             <p className="shrink-0 text-center text-xs text-slate-400 mt-auto pt-2">
-              {t("keyboardHints")}
+              ← → 切換 · 空白鍵 發音
             </p>
           </div>
         </div>

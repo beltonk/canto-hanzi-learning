@@ -27,7 +27,6 @@ function TracePageContent() {
   const [characterList, setCharacterList] = useState<IndexEntry[]>([]);
   const [strokeRange, setStrokeRange] = useState(STROKE_RANGES[1]);
   const [filterRadical, setFilterRadical] = useState<string>('');
-  const [showCharList, setShowCharList] = useState(false);
   const [currentChar, setCurrentChar] = useState<string>('');
   const [data, setData] = useState<FullCharacterData | null>(null);
   const [loading, setLoading] = useState(true);
@@ -127,10 +126,10 @@ function TracePageContent() {
   const currentIdx = filteredList.findIndex(e => e.character === currentChar);
 
   return (
-    <AppShell title="筆順練習" emoji="🖌️" bg="indigo" onBack={() => requestExit(() => router.push('/'))}>
-      <div className="container mx-auto px-3 sm:px-4 py-3 sm:py-4 max-w-5xl">
+    <AppShell title="筆順練習" emoji="🖌️" bg="indigo" fillHeight onBack={() => requestExit(() => router.push('/'))}>
+      <div className="flex-1 flex flex-col min-h-0 px-3 sm:px-4 py-3 sm:py-4 mx-auto w-full max-w-5xl">
         {/* Compact filters in single row */}
-        <div className="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-2xl shadow-sm border-2 border-indigo-200 p-3 sm:p-4 mb-3">
+        <div className="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-2xl shadow-sm border-2 border-indigo-200 p-3 sm:p-4 mb-3 shrink-0">
           <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
             <span className="text-sm font-semibold text-slate-700 shrink-0">筆畫</span>
             <div className="flex gap-1 flex-wrap">
@@ -161,10 +160,10 @@ function TracePageContent() {
           </div>
         </div>
 
-        {/* Side-by-side from md (iPad portrait) up */}
-        <div className="grid grid-cols-1 md:grid-cols-[1fr_280px] lg:grid-cols-[1fr_320px] gap-3">
+        {/* Side-by-side from md (iPad portrait) up — fills remaining vertical space */}
+        <div className="flex-1 grid grid-cols-1 md:grid-cols-[1fr_280px] lg:grid-cols-[1fr_320px] gap-3 min-h-0">
           {/* Tracing area */}
-          <div className="bg-gradient-to-br from-indigo-100 via-purple-100 to-indigo-50 rounded-2xl shadow-sm border-2 border-indigo-300 p-3 sm:p-4">
+          <div className="bg-gradient-to-br from-indigo-100 via-purple-100 to-indigo-50 rounded-2xl shadow-sm border-2 border-indigo-300 p-3 sm:p-4 min-h-0 overflow-y-auto">
             <div className="flex items-center justify-between gap-2 mb-3 flex-wrap">
               <div className="flex items-center gap-2 sm:gap-3">
                 <button
@@ -193,7 +192,7 @@ function TracePageContent() {
 
               <div className="flex items-center gap-2">
                 <button
-                  onClick={() => audio.speakTTS(currentChar, 'zh-HK', 0.8)}
+                  onClick={() => audio.speakTTS(currentChar, 'zh-HK', 0.5)}
                   className="w-11 h-11 rounded-full bg-indigo-600 text-white text-lg shadow-md hover:bg-indigo-700 active:scale-95 transition-all flex items-center justify-center"
                   aria-label="播放發音"
                 >
@@ -237,33 +236,39 @@ function TracePageContent() {
             </div>
           </div>
 
-          {/* Character picker — sidebar on desktop, below on mobile */}
-          <div className="bg-gradient-to-br from-sky-50 to-indigo-50 rounded-2xl shadow-sm border-2 border-sky-200 p-3 sm:p-4">
-            <div className="flex items-center justify-between mb-2">
+          {/* Character picker — sidebar on iPad/desktop, below on mobile.
+              Fills the entire vertical space and scrolls internally when
+              there are more characters than fit. */}
+          <div className="bg-gradient-to-br from-sky-50 to-indigo-50 rounded-2xl shadow-sm border-2 border-sky-200 p-3 sm:p-4
+                          flex flex-col min-h-0">
+            <div className="flex items-center justify-between mb-2 shrink-0">
               <span className="text-sm font-semibold text-slate-700">選字 ({filteredList.length})</span>
-              {filteredList.length > 60 && (
-                <button
-                  onClick={() => setShowCharList(!showCharList)}
-                  className="text-xs text-indigo-600 font-medium"
-                >
-                  {showCharList ? '收起' : '展開'}
-                </button>
+              {currentChar && (
+                <span className="font-chinese text-lg text-indigo-600 font-bold">{currentChar}</span>
               )}
             </div>
-            <div className={`grid grid-cols-7 sm:grid-cols-8 md:grid-cols-5 lg:grid-cols-5 gap-1.5 ${!showCharList && filteredList.length > 60 ? 'max-h-[180px] overflow-hidden' : 'max-h-[360px] overflow-y-auto scrollbar-thin'}`}>
-              {filteredList.map(e => (
-                <button
-                  key={e.character}
-                  onClick={() => setCurrentChar(e.character)}
-                  className={`aspect-square rounded-lg font-chinese text-lg sm:text-xl flex items-center justify-center transition-all border ${
-                    e.character === currentChar
-                      ? 'bg-indigo-600 text-white border-indigo-600 shadow-md scale-105'
-                      : 'bg-white/70 border-sky-200 text-slate-800 hover:border-indigo-400 hover:bg-indigo-50'
-                  }`}
-                >
-                  {e.character}
-                </button>
-              ))}
+            <div className="flex-1 min-h-0 overflow-y-auto pr-1
+                            scrollbar-thin scrollbar-thumb-sky-300 scrollbar-track-transparent">
+              <div className="grid grid-cols-7 sm:grid-cols-8 md:grid-cols-4 lg:grid-cols-5 gap-1.5">
+                {filteredList.map(e => (
+                  <button
+                    key={e.character}
+                    onClick={() => setCurrentChar(e.character)}
+                    className={`aspect-square rounded-lg font-chinese text-lg sm:text-xl flex items-center justify-center transition-all border ${
+                      e.character === currentChar
+                        ? 'bg-indigo-600 text-white border-indigo-600 shadow-md scale-105'
+                        : 'bg-white/70 border-sky-200 text-slate-800 hover:border-indigo-400 hover:bg-indigo-50'
+                    }`}
+                  >
+                    {e.character}
+                  </button>
+                ))}
+                {filteredList.length === 0 && (
+                  <div className="col-span-full text-center text-sm text-slate-400 py-6">
+                    沒有符合條件的字
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>

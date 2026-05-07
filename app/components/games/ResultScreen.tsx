@@ -1,7 +1,9 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Mascot from '@/app/components/ui/Mascot';
+import ConfettiBurst from '@/app/components/ui/ConfettiBurst';
+import { useAudio } from '@/src/lib/audio/context';
 import type { GameResult, GameManifest } from './types';
 
 interface ResultScreenProps {
@@ -13,14 +15,29 @@ interface ResultScreenProps {
 }
 
 const XP_FOR_STARS: Record<1 | 2 | 3, number> = { 1: 5, 2: 10, 3: 20 };
+// Particle counts scale with stars so a perfect run feels noticeably bigger.
+const CONFETTI_COUNT: Record<1 | 2 | 3, number> = { 1: 25, 2: 55, 3: 90 };
 
 export default function ResultScreen({ result, manifest, onPlayAgain, onNextGame, onExit }: ResultScreenProps) {
+  const audio = useAudio();
   const xpEarned = XP_FOR_STARS[result.stars];
   const starDisplay = ['⭐', '⭐⭐', '⭐⭐⭐'][result.stars - 1];
   const pose = result.stars === 3 ? 'cheer' : result.stars === 2 ? 'happy' : 'oops';
+  const [showConfetti, setShowConfetti] = useState(false);
+
+  // Celebrate game completion: confetti rain + happy musical fanfare.
+  // Intensity scales with star rating so a 1-star "you tried" still gets
+  // a small, gentle celebration rather than nothing.
+  useEffect(() => {
+    setShowConfetti(true);
+    audio.playVictoryFanfare(result.stars);
+    // We only want this to fire once per result mount.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
-    <div className="flex flex-col items-center gap-6 p-8 text-center">
+    <div className="relative flex flex-col items-center gap-6 p-8 text-center">
+      <ConfettiBurst show={showConfetti} count={CONFETTI_COUNT[result.stars]} />
       <Mascot id={manifest.mascot} pose={pose} size={100} />
       <div>
         <div className="text-5xl mb-3">{starDisplay}</div>

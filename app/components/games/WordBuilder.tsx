@@ -1,6 +1,8 @@
 'use client';
 
 import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
+import { useAudio } from '@/lib/audio/context';
+import CorrectBurst from '@/app/components/ui/CorrectBurst';
 import type { GameProps } from './types';
 
 const ROUND_COUNT = 8;
@@ -21,16 +23,37 @@ function shuffle<T>(arr: T[]): T[] {
 }
 
 export default function WordBuilder({ items, onResult }: GameProps) {
+  const audio = useAudio();
   const rounds = useMemo<BuildRound[]>(() => {
+    // Quick character → jyutping lookup so we can recover a valid hint when
+    // the upstream lexicon associates a word with a character that isn't
+    // actually in it (variant / simplified-traditional / related-word
+    // entries — e.g. 份 → 分量, 什 → 甚麼). About 10% of word entries hit
+    // this case and the old code blindly used i.character as the hint,
+    // producing a 線索字 that was nowhere in the target word.
+    const charToJyutping = new Map<string, string>();
+    items.forEach(i => charToJyutping.set(i.character, i.jyutping));
+
     const candidates: BuildRound[] = [];
     items.forEach(i => {
       (i.words ?? []).forEach(w => {
-        if (w.length >= 2 && w.length <= 5 && /^[\u4e00-\u9fff]+$/.test(w)) {
-          candidates.push({ word: w, hintChar: i.character, hintJyutping: i.jyutping });
+        if (w.length < 2 || w.length > 5) return;
+        if (!/^[\u4e00-\u9fff]+$/.test(w)) return;
+
+        let hintChar = i.character;
+        let hintJyutping = i.jyutping;
+        if (!w.includes(hintChar)) {
+          // Recover: pick any character in the word for which we know the
+          // jyutping. If we can't, this round would mislead the kid — drop it.
+          const recovered = w.split('').find(c => charToJyutping.has(c));
+          if (!recovered) return;
+          hintChar = recovered;
+          hintJyutping = charToJyutping.get(recovered)!;
         }
+        candidates.push({ word: w, hintChar, hintJyutping });
       });
     });
-    // dedupe by word
+    // dedupe by word (first valid candidate wins)
     const seen = new Set<string>();
     const uniq = candidates.filter(c => {
       if (seen.has(c.word)) return false;
@@ -47,6 +70,7 @@ export default function WordBuilder({ items, onResult }: GameProps) {
   const [hintUsedThisRound, setHintUsedThisRound] = useState(false);
   const [hintsUsed, setHintsUsed] = useState(0);
   const [feedback, setFeedback] = useState<'idle' | 'correct' | 'wrong'>('idle');
+  const [burst, setBurst] = useState(false);
   const startRef = useRef(Date.now());
 
   const current = rounds[roundIdx] ?? null;
@@ -94,13 +118,24 @@ export default function WordBuilder({ items, onResult }: GameProps) {
       const correct = next.join('') === target;
       if (correct) {
         setFeedback('correct');
+        setBurst(true);
+        // Celebration cue + pronunciation of the completed word.
+        // The chime is short (~0.35s) and the TTS follows so the kid
+        // hears the answer they just built. Slight delay lets the
+        // chime breathe before the voice kicks in.
+        audio.playCorrect();
+        setTimeout(() => audio.speakTTS(target, 'zh-HK', 0.5), 250);
         const newScore = score + (hintUsedThisRound ? 0.5 : 1);
+        // Hold the celebration a touch longer so kids can enjoy the
+        // animation and hear the pronunciation before advancing.
         setTimeout(() => {
+          setBurst(false);
           setScore(newScore);
           finishRound(newScore);
-        }, 700);
+        }, 1400);
       } else {
         setFeedback('wrong');
+        audio.playIncorrect();
         setTimeout(() => {
           setArranged([]);
           setFeedback('idle');
@@ -108,7 +143,7 @@ export default function WordBuilder({ items, onResult }: GameProps) {
       }
     }
     void sourceIdx;
-  }, [arranged, feedback, target, score, hintUsedThisRound, finishRound]);
+  }, [arranged, feedback, target, score, hintUsedThisRound, finishRound, audio]);
 
   const handleClear = () => {
     if (feedback !== 'idle') return;
@@ -175,7 +210,7 @@ export default function WordBuilder({ items, onResult }: GameProps) {
       </div>
 
       {/* Slots */}
-      <div className={`flex gap-2 justify-center transition-all ${feedback === 'correct' ? 'animate-pop' : feedback === 'wrong' ? 'animate-wiggle' : ''}`}>
+      <div className={`relative flex gap-2 justify-center transition-all ${feedback === 'correct' ? 'animate-pop' : feedback === 'wrong' ? 'animate-wiggle' : ''}`}>
         {Array.from({ length: target.length }, (_, i) => (
           <div
             key={i}
@@ -192,7 +227,27 @@ export default function WordBuilder({ items, onResult }: GameProps) {
             {arranged[i] ?? '_'}
           </div>
         ))}
+        <CorrectBurst show={burst} />
       </div>
+
+      {/* Celebration banner: shows the completed word and an audio replay
+          chip once the kid gets it right. */}
+      {feedback === 'correct' && (
+        <div className="rounded-2xl bg-gradient-to-r from-emerald-100 to-teal-100 border-2 border-emerald-300 px-4 py-2 flex items-center gap-3 shadow-md animate-float-in">
+          <span className="text-2xl">🎉</span>
+          <div className="text-left">
+            <div className="font-chinese text-xl font-bold text-emerald-800">{target}</div>
+            <div className="text-xs text-emerald-700">答對了！</div>
+          </div>
+          <button
+            onClick={() => audio.speakTTS(target, 'zh-HK', 0.5)}
+            className="ml-2 px-3 py-1.5 rounded-full bg-white border border-emerald-300 text-emerald-700 text-sm font-semibold shadow-sm hover:bg-emerald-50 active:scale-95"
+            title="再聽一次"
+          >
+            🔊 再聽
+          </button>
+        </div>
+      )}
 
       {/* Tile pool */}
       <div className="flex flex-wrap gap-2 justify-center max-w-md">

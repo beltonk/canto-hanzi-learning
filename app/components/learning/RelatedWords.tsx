@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import type { Word, Phrase } from "@/types/fullCharacter";
 import { useLanguage } from "@/lib/i18n/context";
+import { useAudio } from "@/lib/audio/context";
 import type { TranslationKey } from "@/lib/i18n/translations";
 
 interface RelatedWordsProps {
@@ -57,6 +58,7 @@ export default function RelatedWords({
 }: RelatedWordsProps) {
   const [activeCategory, setActiveCategory] = useState<WordCategory>("stage1");
   const { t } = useLanguage();
+  const audio = useAudio();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [showScrollHint, setShowScrollHint] = useState(false);
 
@@ -103,15 +105,12 @@ export default function RelatedWords({
     }
   };
 
-  // Play word pronunciation
+  // Play word pronunciation. Routed through the AudioEngine so we
+  // explicitly pick a Cantonese voice (Sin-ji / Tracy / HiuMaan) rather
+  // than letting the browser silently fall back to a Mandarin voice when
+  // it sees lang="zh-HK". Rate matches the app-wide 0.5 policy for kids.
   const speakWord = (word: string) => {
-    if ("speechSynthesis" in window) {
-      window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(word);
-      utterance.lang = "zh-HK";
-      utterance.rate = 0.8;
-      window.speechSynthesis.speak(utterance);
-    }
+    audio.speakTTS(word, "zh-HK", 0.5);
   };
 
   // Set initial active category to one with words
@@ -255,16 +254,13 @@ export function CompactWordList({
   title: string;
   icon: string;
 }) {
+  const audio = useAudio();
   if (words.length === 0) return null;
 
+  // Same as RelatedWords above — go through AudioEngine so we get a real
+  // Cantonese female voice instead of an accidental Mandarin fallback.
   const speakWord = (word: string) => {
-    if ("speechSynthesis" in window) {
-      window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(word);
-      utterance.lang = "zh-HK";
-      utterance.rate = 0.8;
-      window.speechSynthesis.speak(utterance);
-    }
+    audio.speakTTS(word, "zh-HK", 0.5);
   };
 
   return (

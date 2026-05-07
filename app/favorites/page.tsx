@@ -42,7 +42,7 @@ export default function FavoritesPage() {
   });
 
   const handleSpeak = (text: string) => {
-    audio.speakTTS(text, 'zh-HK', 0.85);
+    audio.speakTTS(text, 'zh-HK', 0.5);
     markReviewed(text);
     refresh();
   };
@@ -58,6 +58,25 @@ export default function FavoritesPage() {
     word: favorites.filter(f => f.kind === 'word').length,
     mistake: favorites.filter(f => f.reason === 'mistake').length,
   };
+
+  // Build the deep-link list of single Han characters across the current
+  // filter — used by the "用字卡複習" CTA. Words/phrases are split into
+  // their constituent characters so the flashcard session always sees
+  // single-character cards.
+  const reviseCharsParam = (() => {
+    const chars = new Set<string>();
+    filtered.forEach(f => {
+      [...f.text].forEach(ch => {
+        if (/[\u4e00-\u9fff]/.test(ch)) chars.add(ch);
+      });
+    });
+    return Array.from(chars).join(',');
+  })();
+  const reviseTitle =
+    filter === 'mistake' ? '收藏：錯題複習' :
+    filter === 'char'    ? '收藏：單字複習' :
+    filter === 'word'    ? '收藏：詞語複習' :
+                           '收藏複習';
 
   return (
     <AppShell title="我的收藏" emoji="❤️" bg="pink">
@@ -76,6 +95,14 @@ export default function FavoritesPage() {
                 <span className="px-3 py-1 rounded-full bg-white/20 backdrop-blur text-sm font-semibold">
                   錯題 {counts.mistake} 個
                 </span>
+              )}
+              {reviseCharsParam.length > 0 && (
+                <Link
+                  href={`/learn/flashcard?chars=${encodeURIComponent(reviseCharsParam)}&title=${encodeURIComponent(reviseTitle)}`}
+                  className="ml-auto px-4 py-1.5 rounded-full bg-white text-rose-600 text-sm font-bold shadow-md hover:bg-rose-50 active:scale-95 transition-all"
+                >
+                  🃏 用字卡複習
+                </Link>
               )}
             </div>
           </div>

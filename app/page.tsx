@@ -215,7 +215,10 @@ export default function Home() {
                 <h2 className="text-base sm:text-lg font-bold text-slate-900">今日要複習</h2>
                 <span className="px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-700 text-xs font-bold">{dueChars.length}</span>
               </div>
-              <Link href="/learn/flashcard" className="text-xs sm:text-sm text-indigo-600 font-semibold hover:underline">
+              <Link
+                href={`/learn/flashcard?chars=${encodeURIComponent(dueChars.join(','))}&title=${encodeURIComponent('今日要複習')}`}
+                className="text-xs sm:text-sm text-indigo-600 font-semibold hover:underline"
+              >
                 立即複習 →
               </Link>
             </div>
@@ -223,7 +226,7 @@ export default function Home() {
               {dueChars.map(char => (
                 <Link
                   key={char}
-                  href={`/learn/flashcard?char=${encodeURIComponent(char)}`}
+                  href={`/learn/flashcard?chars=${encodeURIComponent(char)}&title=${encodeURIComponent('複習：' + char)}`}
                   className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-indigo-50 to-purple-50 border-2 border-indigo-200 flex items-center justify-center font-chinese text-xl sm:text-2xl text-slate-900 hover:scale-110 hover:border-indigo-500 active:scale-95 transition-all shadow-sm"
                 >
                   {char}

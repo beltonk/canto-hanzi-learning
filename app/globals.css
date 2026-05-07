@@ -87,7 +87,15 @@
 
   /* Typography */
   --font-sans:    var(--font-sans-tc), 'Inter', 'Roboto', system-ui, -apple-system, 'Helvetica Neue', sans-serif;
-  --font-chinese: 'Free HK Kai', 'Noto Serif TC', 'PMingLiU', serif;
+  /* Brush-style Chinese stack — order matters:
+       1. Free HK Kai           — preferred brush look for HK EDB common-use chars.
+       2. LXGW WenKai TC        — full-coverage CC-BY Kaiti webfont; takes over
+          for anything Free HK Kai doesn't ship (e.g. 糸, 艸) so the brush
+          style stays consistent across every glyph the user can encounter.
+       3. var(--font-serif-tc)  — actually-loaded Noto Serif TC (literal
+          "Noto Serif TC" doesn't match next/font/google's randomised name).
+       4. var(--font-sans-tc)   — Noto Sans TC final webfont safety net. */
+  --font-chinese: 'Free HK Kai', 'LXGW WenKai TC', var(--font-serif-tc), var(--font-sans-tc), 'Noto Serif TC', 'PMingLiU', serif;
 
   /* Touch targets */
   --touch-target-min: 44px;
@@ -156,19 +164,19 @@ body, .surface, .card-child, .card-activity {
    ============================================ */
 @layer utilities {
   .font-chinese {
-    font-family: 'Free HK Kai', 'Noto Serif TC', 'PMingLiU', serif !important;
+    font-family: 'Free HK Kai', 'LXGW WenKai TC', var(--font-serif-tc), var(--font-sans-tc), 'Noto Serif TC', 'PMingLiU', serif !important;
   }
   .hanzi-display {
-    font-family: 'Free HK Kai', 'Noto Serif TC', 'PMingLiU', serif !important;
+    font-family: 'Free HK Kai', 'LXGW WenKai TC', var(--font-serif-tc), var(--font-sans-tc), 'Noto Serif TC', 'PMingLiU', serif !important;
     line-height: 1.1;
   }
   .hanzi-medium {
-    font-family: 'Free HK Kai', 'Noto Serif TC', 'PMingLiU', serif !important;
+    font-family: 'Free HK Kai', 'LXGW WenKai TC', var(--font-serif-tc), var(--font-sans-tc), 'Noto Serif TC', 'PMingLiU', serif !important;
     font-size: 80px;
     line-height: 1.2;
   }
   .hanzi-sentence {
-    font-family: 'Free HK Kai', 'Noto Serif TC', 'PMingLiU', serif !important;
+    font-family: 'Free HK Kai', 'LXGW WenKai TC', var(--font-serif-tc), var(--font-sans-tc), 'Noto Serif TC', 'PMingLiU', serif !important;
     font-size: 18px;
     line-height: 1.8;
   }
@@ -256,6 +264,16 @@ body, .surface, .card-child, .card-activity {
   80%  { transform: translateX(3px); }
 }
 
+/* Confetti: a particle drifts from above the viewport down past the bottom,
+   spinning as it falls. Driven by per-element CSS variables:
+     --rot-start, --rot-end : start/end rotation
+     --drift                : horizontal drift distance */
+@keyframes confetti-fall {
+  0%   { transform: translate3d(0, 0, 0) rotate(var(--rot-start, 0deg)); opacity: 1; }
+  85%  { opacity: 1; }
+  100% { transform: translate3d(var(--drift, 0px), 115vh, 0) rotate(var(--rot-end, 540deg)); opacity: 0; }
+}
+
 @layer utilities {
   .animate-pop           { animation: pop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
   .animate-wiggle        { animation: wiggle 0.4s ease-in-out; }
@@ -266,6 +284,7 @@ body, .surface, .card-child, .card-activity {
   .animate-correct-burst { animation: correct-burst 0.5s ease-out forwards; }
   .animate-star-pop      { animation: star-pop 0.55s ease-out forwards; }
   .animate-incorrect-shake { animation: incorrect-shake 0.35s ease-in-out; }
+  .animate-confetti-fall { animation: confetti-fall linear forwards; }
 }
 
 /* Reduced motion */

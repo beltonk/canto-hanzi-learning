@@ -118,11 +118,11 @@ export default function CharacterExploration({
 
   // Speak character using TTS via AudioEngine (respects mute + ducks music)
   const speakCantonese = (text: string) => {
-    audio.speakTTS(text, "zh-HK", 0.8);
+    audio.speakTTS(text, "zh-HK", 0.5);
   };
 
   const speakMandarin = (text: string) => {
-    audio.speakTTS(text, "zh-CN", 0.8);
+    audio.speakTTS(text, "zh-CN", 0.5);
   };
 
   // Get unique radicals for filter dropdown

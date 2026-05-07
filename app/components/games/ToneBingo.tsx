@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { useAudio } from '@/lib/audio/context';
 import FavoriteButton from '@/app/components/ui/FavoriteButton';
+import CorrectBurst from '@/app/components/ui/CorrectBurst';
 import type { GameProps } from './types';
 
 const BOARD_SIZE = 8;        // 4x2 board
@@ -54,6 +55,7 @@ export default function ToneBingo({ items, onResult }: GameProps) {
   const [marked, setMarked] = useState<Set<number>>(new Set());
   const [missCount, setMissCount] = useState(0);
   const [pulse, setPulse] = useState<{ idx: number; type: 'hit' | 'miss' } | null>(null);
+  const [burst, setBurst] = useState(false);
   const [transitioning, setTransitioning] = useState(false);
   const startRef = useRef(0);
   const doneRef = useRef(false);
@@ -89,7 +91,7 @@ export default function ToneBingo({ items, onResult }: GameProps) {
   // Auto-pronounce on each new call
   useEffect(() => {
     if (!currentTarget || doneRef.current || transitioning) return;
-    const t = setTimeout(() => audio.speakTTS(currentTarget.character, 'zh-HK', 0.8), 250);
+    const t = setTimeout(() => audio.speakTTS(currentTarget.character, 'zh-HK', 0.5), 250);
     return () => clearTimeout(t);
   }, [currentTarget, audio, transitioning]);
 
@@ -123,7 +125,10 @@ export default function ToneBingo({ items, onResult }: GameProps) {
       newMarked.add(idx);
       setMarked(newMarked);
       setPulse({ idx, type: 'hit' });
+      setBurst(true);
+      audio.playCorrect();
       setTimeout(() => setPulse(null), 350);
+      setTimeout(() => setBurst(false), 700);
       if (newMarked.size >= TARGETS_PER_ROUND) {
         finishRound(newMarked.size, missCount);
       } else {
@@ -132,9 +137,10 @@ export default function ToneBingo({ items, onResult }: GameProps) {
     } else {
       setMissCount(c => c + 1);
       setPulse({ idx, type: 'miss' });
+      audio.playIncorrect();
       setTimeout(() => setPulse(null), 350);
     }
-  }, [round, currentTarget, marked, missCount, transitioning, finishRound]);
+  }, [round, currentTarget, marked, missCount, transitioning, finishRound, audio]);
 
   const handleSkip = useCallback(() => {
     if (!round || doneRef.current || transitioning) return;
@@ -147,7 +153,7 @@ export default function ToneBingo({ items, onResult }: GameProps) {
   }, [round, callPos, marked.size, missCount, transitioning, finishRound]);
 
   const handleReplay = useCallback(() => {
-    if (currentTarget) audio.speakTTS(currentTarget.character, 'zh-HK', 0.8);
+    if (currentTarget) audio.speakTTS(currentTarget.character, 'zh-HK', 0.5);
   }, [currentTarget, audio]);
 
   if (items.length < BOARD_SIZE) {
@@ -207,7 +213,8 @@ export default function ToneBingo({ items, onResult }: GameProps) {
       </div>
 
       {/* Board: 4x2 — exactly 4 right answers among 8 cards */}
-      <div className="grid grid-cols-4 gap-2 sm:gap-3 w-full max-w-md">
+      <div className="relative grid grid-cols-4 gap-2 sm:gap-3 w-full max-w-md">
+        <CorrectBurst show={burst} />
         {round.cells.map((cell, i) => {
           const isMarked = marked.has(i);
           const isHit = pulse?.idx === i && pulse.type === 'hit';

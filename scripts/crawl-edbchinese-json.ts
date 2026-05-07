@@ -175,8 +175,14 @@ function extractStrokeVectors(jsContent: string, canvasWidth: number = 0, canvas
   }
   
   // Extract shape definitions with path data
-  // Pattern: this.shape_N = new cjs.Shape(); ... .p("pathData"); ... setTransform(x, y);
-  const shapeRegex = /this\.(shape(?:_\d+)?)\s*=\s*new\s+cjs\.Shape\(\);[^}]*?\.p\("([^"]+)"\);[^}]*?setTransform\(([\d.]+),\s*([\d.]+)\)/gs;
+  // Pattern: this.shape_N = new cjs.Shape(); ... .p("pathData"); ... setTransform(x, y[, scaleX, scaleY[, ...]]);
+  // The trailing `(?:,\s*[-\d.]+)*` accepts the optional scaleX/scaleY (and any
+  // further) arguments — without it, characters whose intermediate brush frames
+  // include a scale (e.g. setTransform(x, y, 1.017, 1.017)) are silently
+  // dropped, and the scraper ends up pairing the path of one shape with the
+  // transform of a much later shape. That bug previously broke ~11 characters
+  // (巾, 工, 己, 干, 廿, 弓, 仁, 尖, 尚, 廷, 導) which used scaled brush frames.
+  const shapeRegex = /this\.(shape(?:_\d+)?)\s*=\s*new\s+cjs\.Shape\(\);[^}]*?\.p\("([^"]+)"\);[^}]*?setTransform\(([-\d.]+),\s*([-\d.]+)(?:,\s*[-\d.]+)*\)/gs;
   const colorRegex = /\.f\("([^"]+)"\)/;
   
   let shapeMatch;

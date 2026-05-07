@@ -14,6 +14,7 @@
     "crawl:edbchinese": "NODE_TLS_REJECT_UNAUTHORIZED=0 tsx scripts/crawl-edbchinese-json.ts"
   },
   "dependencies": {
+    "lxgw-wenkai-tc-webfont": "^1.2.0",
     "next": "16.1.1",
     "react": "19.2.3",
     "react-dom": "19.2.3"

@@ -35,6 +35,8 @@ interface ProgressData {
   masteredChars: number;
   practicedChars: number;
   dueCount: number;
+  /** Up to 100 SRS-due characters, used by the 立即複習 deep link. */
+  dueChars: string[];
   weekActivity: DayActivity[];
   masteryRecords: Record<string, CharacterMasteryRecord>;
   stickers: string[];
@@ -86,6 +88,7 @@ export default function ProgressPage() {
         masteredChars,
         practicedChars,
         dueCount: dueChars.length,
+        dueChars,
         weekActivity: weekAct,
         masteryRecords: chars,
         stickers: root.gamification.stickers,
@@ -161,7 +164,10 @@ export default function ProgressPage() {
                 <div className="text-xs text-slate-600">趕快趁今天的記憶複習一下！</div>
               </div>
             </div>
-            <Link href="/learn/flashcard" className="px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold shadow-md transition-all active:scale-95">
+            <Link
+              href={`/learn/flashcard?chars=${encodeURIComponent(data.dueChars.join(','))}&title=${encodeURIComponent('今日要複習')}`}
+              className="px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold shadow-md transition-all active:scale-95"
+            >
               立即複習 →
             </Link>
           </div>
@@ -252,7 +258,7 @@ export default function ProgressPage() {
                   <Link href={`/learn/trace?char=${encodeURIComponent(hoveredChar)}`} className="px-3 py-1.5 rounded-lg bg-indigo-600 text-white text-xs font-medium hover:bg-indigo-700">
                     🖌️ 寫字
                   </Link>
-                  <Link href={`/learn/flashcard?char=${encodeURIComponent(hoveredChar)}`} className="px-3 py-1.5 rounded-lg bg-sky-500 text-white text-xs font-medium hover:bg-sky-600">
+                  <Link href={`/learn/flashcard?chars=${encodeURIComponent(hoveredChar)}&title=${encodeURIComponent('複習：' + hoveredChar)}`} className="px-3 py-1.5 rounded-lg bg-sky-500 text-white text-xs font-medium hover:bg-sky-600">
                     🃏 字卡
                   </Link>
                   <Link href={`/learn/explore?char=${encodeURIComponent(hoveredChar)}`} className="px-3 py-1.5 rounded-lg bg-emerald-500 text-white text-xs font-medium hover:bg-emerald-600">

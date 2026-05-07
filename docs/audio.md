@@ -24,9 +24,14 @@ Routes text-to-speech through the `AudioEngine` so it respects:
 Usage:
 ```ts
 const audio = useAudio();
-audio.speakTTS('你好', 'zh-HK', 0.8);
-audio.speakTTS('hello', 'en-US', 1.0);
+audio.speakTTS('你好');                  // defaults: zh-HK @ rate 0.5 (kid-friendly slow)
+audio.speakTTS('你好', 'zh-HK', 0.5);
+audio.speakTTS('hello', 'en-US', 0.9);
 ```
+
+> **Default rate**: `0.5` — half of the `SpeechSynthesis` neutral of `1.0`,
+> tuned for primary-school learners. Every callsite in this codebase passes
+> `0.5` by policy. Override only with strong justification.
 
 ## Sound Registry
 

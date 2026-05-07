@@ -1,6 +1,8 @@
 'use client';
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { useAudio } from '@/lib/audio/context';
+import CorrectBurst from '@/app/components/ui/CorrectBurst';
 import { addFavorite } from '@/lib/favorites';
 import type { GameProps, GameItem } from './types';
 
@@ -49,11 +51,13 @@ function buildRound(items: GameItem[], excludeRadicals: string[]): RoundData | n
 }
 
 export default function RadicalDetective({ items, onResult }: GameProps) {
+  const audio = useAudio();
   const [roundIdx, setRoundIdx] = useState(0);
   const [round, setRound] = useState<RoundData | null>(null);
   const [found, setFound] = useState<Set<number>>(new Set());
   const [falseClicks, setFalseClicks] = useState(0);
   const [timeLeft, setTimeLeft] = useState(TIME_PER_ROUND);
+  const [burst, setBurst] = useState(false);
   const [transitioning, setTransitioning] = useState(false);
   const startRef = useRef(0);
   const doneRef = useRef(false);
@@ -133,12 +137,16 @@ export default function RadicalDetective({ items, onResult }: GameProps) {
       const newFound = new Set(found);
       newFound.add(idx);
       setFound(newFound);
+      setBurst(true);
+      audio.playCorrect();
+      setTimeout(() => setBurst(false), 700);
       if (newFound.size >= round.totalTargets) {
         // round complete early — full score for this round
         finishRound();
       }
     } else {
       setFalseClicks(f => f + 1);
+      audio.playIncorrect();
       // Auto-save misclicked characters to favorites so the user can review them
       const wrongChar = round.grid[idx]?.char;
       if (wrongChar) {
@@ -150,7 +158,7 @@ export default function RadicalDetective({ items, onResult }: GameProps) {
         });
       }
     }
-  }, [round, transitioning, found, finishRound]);
+  }, [round, transitioning, found, finishRound, audio]);
 
   if (!round) {
     return <div className="p-6 text-center text-slate-600">準備案件中…</div>;
@@ -184,7 +192,8 @@ export default function RadicalDetective({ items, onResult }: GameProps) {
       </div>
 
       {/* Grid: 4x2 — exactly 4 right answers among 8 cards */}
-      <div className="grid grid-cols-4 gap-2 sm:gap-3 w-full max-w-md">
+      <div className="relative grid grid-cols-4 gap-2 sm:gap-3 w-full max-w-md">
+        <CorrectBurst show={burst} />
         {round.grid.map((item, i) => (
           <button
             key={i}

@@ -4,7 +4,7 @@
  * Renders a brief ring + flying stars centred on its parent (position: relative).
  * Unmounts itself after the animation completes.
  */
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 const STARS = ['⭐', '🌟', '✨', '💫', '🎉'];
 const OFFSETS = [
@@ -22,17 +22,7 @@ interface Props {
 }
 
 export default function CorrectBurst({ show }: Props) {
-  const [visible, setVisible] = useState(show);
-
-  useEffect(() => {
-    if (show) {
-      setVisible(true);
-      const t = setTimeout(() => setVisible(false), 600);
-      return () => clearTimeout(t);
-    }
-  }, [show]);
-
-  if (!visible) return null;
+  if (!show) return null;
 
   return (
     <div className="pointer-events-none absolute inset-0 flex items-center justify-center z-20" aria-hidden>

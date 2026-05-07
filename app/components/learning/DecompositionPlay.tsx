@@ -211,7 +211,7 @@ export default function DecompositionPlay({ character, onCharacterChange }: Deco
               {currentEntry.character}
             </div>
             <button
-              onClick={() => audio.speakTTS(currentEntry.character, 'zh-HK', 0.8)}
+              onClick={() => audio.speakTTS(currentEntry.character, 'zh-HK', 0.5)}
               className="w-12 h-12 rounded-full bg-indigo-600 text-white text-xl shadow-md hover:bg-indigo-700 hover:shadow-lg active:scale-95 transition-all flex items-center justify-center"
               aria-label="播放發音"
             >

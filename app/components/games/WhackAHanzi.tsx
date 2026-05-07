@@ -139,7 +139,7 @@ export default function WhackAHanzi({ items, onResult }: GameProps) {
       setPulse({ hole, type: 'miss' });
       setTimeout(() => setPulse(null), 400);
     }
-  }, [holeChars, currentTarget]);
+  }, [audio, holeChars, currentTarget]);
 
   return (
     <div className="p-3 sm:p-4 flex flex-col items-center gap-3 bg-gradient-to-b from-sky-100 via-emerald-50 to-amber-50 rounded-b-3xl">

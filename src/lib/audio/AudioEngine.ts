@@ -180,34 +180,165 @@ export class AudioEngine {
   }
 
   /**
-   * Synthesise a short celebratory "ding-ding" chime for correct answers.
-   * Two ascending triangle-wave notes, very soft (gain 0.18).
+   * Synthesise a short, encouraging "win" chime for correct answers.
+   *
+   * Two ascending bells (C5 → G5, a perfect fifth — the classic ascending
+   * "fanfare" interval used in level-up / victory sounds). Each note is a
+   * sine fundamental layered with a softer 2nd-harmonic overtone for a
+   * gentle bell timbre, with a quick attack and exponential decay.
+   * The second note is slightly louder and longer so the chime resolves
+   * upward and feels rewarding without being shrill.
+   *
+   * Total length ~0.4s — short enough to stay enjoyable on rapid retries.
+   * A 5 kHz low-pass keeps it warm on small speakers (iPad).
    */
   playCorrect() {
     if (!this.globalEnabled || !this.categoryEnabled.effect) return;
     const ctx = this.ensureContext();
     if (!ctx) return;
-    const gain = ctx.createGain();
-    gain.gain.value = 0.18;
-    gain.connect(this.gains.effect);
+
     const now = ctx.currentTime;
-    // Note 1: C5 → E5 rising feel
-    const o1 = ctx.createOscillator();
-    o1.type = 'triangle';
-    o1.frequency.setValueAtTime(523, now);       // C5
-    o1.frequency.linearRampToValueAtTime(659, now + 0.06); // E5
-    o1.connect(gain);
-    o1.start(now);
-    o1.stop(now + 0.12);
-    // Note 2: G5 — a beat later
-    const o2 = ctx.createOscillator();
-    o2.type = 'triangle';
-    o2.frequency.setValueAtTime(784, now + 0.13); // G5
-    o2.connect(gain);
-    gain.gain.setValueAtTime(0.18, now + 0.13);
-    gain.gain.linearRampToValueAtTime(0, now + 0.35);
-    o2.start(now + 0.13);
-    o2.stop(now + 0.36);
+
+    const lp = ctx.createBiquadFilter();
+    lp.type = 'lowpass';
+    lp.frequency.value = 5000;
+    lp.Q.value = 0.7;
+    lp.connect(this.gains.effect);
+
+    const bell = (freq: number, startOffset: number, duration: number, peak: number) => {
+      const start = now + startOffset;
+      const end = start + duration;
+
+      const noteGain = ctx.createGain();
+      noteGain.gain.setValueAtTime(0, start);
+      noteGain.gain.linearRampToValueAtTime(peak, start + 0.008);
+      noteGain.gain.exponentialRampToValueAtTime(0.0001, end);
+      noteGain.connect(lp);
+
+      const fundamental = ctx.createOscillator();
+      fundamental.type = 'sine';
+      fundamental.frequency.value = freq;
+      fundamental.connect(noteGain);
+      fundamental.start(start);
+      fundamental.stop(end + 0.02);
+
+      const overtone = ctx.createOscillator();
+      overtone.type = 'sine';
+      overtone.frequency.value = freq * 2;
+      const overtoneGain = ctx.createGain();
+      overtoneGain.gain.value = 0.18;
+      overtone.connect(overtoneGain).connect(noteGain);
+      overtone.start(start);
+      overtone.stop(end + 0.02);
+    };
+
+    bell(523.25, 0.000, 0.16, 0.15); // C5 — the "set up" note
+    bell(783.99, 0.095, 0.30, 0.20); // G5 — the bright, triumphant resolution
+  }
+
+  /**
+   * Synthesise a celebratory "victory" fanfare for game-complete moments.
+   *
+   * A short 7-note ascending melody in C major, in the spirit of classic
+   * "level-up / course-clear" arcade jingles. Each note layers a triangle
+   * wave (bright, chiptune-like body) with a softer sine fundamental for
+   * warmth, plus a sustained low octave pad that grounds the whole phrase.
+   *
+   * Use `level` to scale intensity:
+   *   3 → full bouncy fanfare (~1.5s, all 7 notes, brightest)
+   *   2 → same melody at slightly lower volume (default, encouraging)
+   *   1 → short 3-note "you tried" cadence (~0.7s, gentle)
+   *
+   * Always passes through a 6 kHz low-pass so it stays warm on iPad
+   * speakers and doesn't get harsh at higher pitches.
+   */
+  playVictoryFanfare(level: 1 | 2 | 3 = 3) {
+    if (!this.globalEnabled || !this.categoryEnabled.effect) return;
+    const ctx = this.ensureContext();
+    if (!ctx) return;
+
+    const now = ctx.currentTime;
+
+    // Lower cutoff (was 6 kHz) softens the high overtones so the fanfare
+    // feels more like a music-box / lullaby than a chiptune blast.
+    const lp = ctx.createBiquadFilter();
+    lp.type = 'lowpass';
+    lp.frequency.value = 4200;
+    lp.Q.value = 0.7;
+    lp.connect(this.gains.effect);
+
+    // Schedule one melody note as triangle (body) + sine (warm sweetener).
+    // A slightly slower attack (25 ms vs 12 ms) takes the punchy edge off.
+    const note = (freq: number, startOffset: number, duration: number, peak: number) => {
+      const start = now + startOffset;
+      const end = start + duration;
+
+      const noteGain = ctx.createGain();
+      noteGain.gain.setValueAtTime(0, start);
+      noteGain.gain.linearRampToValueAtTime(peak, start + 0.025);
+      noteGain.gain.setValueAtTime(peak, end - 0.06);
+      noteGain.gain.exponentialRampToValueAtTime(0.0001, end);
+      noteGain.connect(lp);
+
+      const tri = ctx.createOscillator();
+      tri.type = 'triangle';
+      tri.frequency.value = freq;
+      tri.connect(noteGain);
+      tri.start(start);
+      tri.stop(end + 0.02);
+
+      const sin = ctx.createOscillator();
+      sin.type = 'sine';
+      sin.frequency.value = freq;
+      const sinGain = ctx.createGain();
+      sinGain.gain.value = 0.55;
+      sin.connect(sinGain).connect(noteGain);
+      sin.start(start);
+      sin.stop(end + 0.02);
+    };
+
+    if (level === 1) {
+      // Gentle "you tried" cadence — 3 notes, ascending major triad.
+      const peak = 0.055;
+      note(523.25, 0.00, 0.18, peak); // C5
+      note(659.25, 0.18, 0.18, peak); // E5
+      note(783.99, 0.36, 0.40, peak * 1.1); // G5 — held resolution
+      return;
+    }
+
+    // 2-star and 3-star: the full bouncy fanfare, at a softer level so it
+    // sits comfortably underneath UI sounds and never feels overpowering.
+    // Tempo: ~120 BPM eighth-notes => 125ms per beat.
+    const t = 0.125;
+    const peak = level === 3 ? 0.075 : 0.055;
+
+    // A held low pad (G3 + C4) gives the phrase a "fanfare" warmth.
+    // Kept very quiet (35 % of melody peak) so it just glues the notes.
+    const padStart = now;
+    const padEnd = now + t * 11;
+    const padGain = ctx.createGain();
+    padGain.gain.setValueAtTime(0, padStart);
+    padGain.gain.linearRampToValueAtTime(peak * 0.35, padStart + 0.06);
+    padGain.gain.setValueAtTime(peak * 0.35, padEnd - 0.25);
+    padGain.gain.exponentialRampToValueAtTime(0.0001, padEnd);
+    padGain.connect(lp);
+    for (const padFreq of [196.0, 261.63]) { // G3, C4
+      const padOsc = ctx.createOscillator();
+      padOsc.type = 'sine';
+      padOsc.frequency.value = padFreq;
+      padOsc.connect(padGain);
+      padOsc.start(padStart);
+      padOsc.stop(padEnd + 0.02);
+    }
+
+    // Melody — ascending arpeggio + flourish ending on a held high C6.
+    note(523.25, 0 * t, t * 0.9, peak);          // C5
+    note(659.25, 1 * t, t * 0.9, peak);          // E5
+    note(783.99, 2 * t, t * 0.9, peak);          // G5
+    note(1046.50, 3 * t, t * 1.6, peak * 1.05);  // C6 (held)
+    note(1318.51, 5 * t, t * 0.9, peak * 1.05);  // E6
+    note(1174.66, 6 * t, t * 0.9, peak);         // D6
+    note(1046.50, 7 * t, t * 4.0, peak * 1.15);  // C6 — long, triumphant resolution
   }
 
   /**
@@ -244,17 +375,32 @@ export class AudioEngine {
 
     const wantHK = lang.toLowerCase().startsWith('zh-hk') || lang.toLowerCase().startsWith('yue');
 
-    // Preferred voice names — these are the highest quality on each platform.
+    // Preferred voice names — every entry below is a Cantonese FEMALE voice.
+    // Order matters: best-quality / most-common platform voice first.
+    // The male WanLung voice is intentionally excluded from this list so
+    // it never wins over a female voice; if a system somehow has only
+    // WanLung available it can still be reached via the language fallback
+    // below — but this is extremely rare in practice.
     const preferredHK = [
-      'Sinji',         // macOS Premium Cantonese (newer naming)
-      'Sin-ji',        // macOS Cantonese (classic)
+      // macOS premium Cantonese (female, very natural)
+      'Sinji',
+      'Sin-ji',
       'Sin Ji',
-      'Tracy',         // Microsoft Cantonese (Windows / Edge)
+      // Microsoft Edge / Azure neural Cantonese (female, modern, very natural)
+      'HiuMaan',
+      'Hiu Maan',
+      'HiuMaanNeural',
+      'HiuGaai',
+      'Hiu Gaai',
+      'HiuGaaiNeural',
+      // Microsoft classic / SAPI Cantonese (female)
+      'Tracy',
       'TracyM',
       'TracyRUS',
-      'WanLung',       // Microsoft Cantonese male
+      // Google Chrome Cantonese (female on all platforms)
       'Google 粵語（香港）',
       'Google Cantonese (Hong Kong)',
+      'Google 廣東話',
     ];
     const preferredCN = [
       'Tingting',      // macOS Premium Mandarin
@@ -292,8 +438,15 @@ export class AudioEngine {
     return voices.find(v => v.lang.toLowerCase().startsWith('zh')) ?? null;
   }
 
-  /** Speak text via SpeechSynthesis, respecting global mute and ducking music. */
-  speakTTS(text: string, lang = 'zh-HK', rate = 0.72) {
+  /**
+   * Speak text via SpeechSynthesis, respecting global mute and ducking music.
+   *
+   * The default rate (0.5) is intentionally half of the SpeechSynthesis
+   * neutral of 1.0 — this app targets primary school students who need a
+   * slow, clearly enunciated voice. Individual callers can override `rate`
+   * when needed, but every callsite in this codebase uses 0.5 by policy.
+   */
+  speakTTS(text: string, lang = 'zh-HK', rate = 0.5) {
     if (!this.globalEnabled || !this.categoryEnabled.voice) return;
     if (typeof window === 'undefined' || !('speechSynthesis' in window)) return;
     window.speechSynthesis.cancel();

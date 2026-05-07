@@ -7,6 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "test": "vitest run",
+    "check": "npm run lint && npm run test",
+    "check:assets": "tsx scripts/check-asset-budget.ts",
     "index:generate": "tsx scripts/generate-indexes.ts",
     "crawl:edbchinese": "NODE_TLS_REJECT_UNAUTHORIZED=0 tsx scripts/crawl-edbchinese-json.ts"
   },
@@ -17,15 +20,20 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
     "@types/cheerio": "^0.22.35",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@vitejs/plugin-react": "^6.0.1",
     "cheerio": "^1.0.0",
     "eslint": "^9",
     "eslint-config-next": "16.1.1",
+    "jsdom": "^29.1.1",
     "tailwindcss": "^4",
     "tsx": "^4.7.0",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^4.1.5"
   }
 }

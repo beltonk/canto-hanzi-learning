@@ -128,7 +128,7 @@ export const translations = {
     keepGoing: "加油！📚",
     
     // Decomposition
-    selectCharacterToPlay: "揀選漢字",
+    selectCharacterToPlay: "選擇漢字",
     structure: "結構",
     dropHere: "放到這裏：",
     byComponent: "按部件",
@@ -146,12 +146,64 @@ export const translations = {
     monkeyName: "小猴子",
     monkeyMessage: "拆字真有趣！",
     owlName: "貓頭鷹",
-    owlMessage: "專心聆聯！",
+    owlMessage: "專心聆聽！",
     wellDone: "做得好！",
     
     // Navigation arrows
     previous: "上一個",
     next: "下一個",
+
+    // Stroke tracing
+    strokeTracing: "筆順練習",
+    strokeTracingDesc: "用手指依照筆順，寫出正確漢字",
+    traceCharacter: "練習寫字",
+    strokeGuide: "筆順示範",
+    myTrace: "重看我的書寫",
+    traceSuccess: "很棒！繼續！",
+    traceRetry: "再試一次！",
+    traceComplete: "完成！",
+    star1: "一顆星",
+    star2: "兩顆星",
+    star3: "三顆星",
+
+    // Mini-games hub
+    miniGamesHub: "遊戲樂園",
+    miniGamesDesc: "好玩又能學習的漢字遊戲",
+    playGame: "開始遊戲",
+    gameLocked: "未解鎖",
+    gameResult: "遊戲結果",
+    playAgainGame: "再玩一次",
+    nextGame: "下一個遊戲",
+    backToHub: "返回樂園",
+
+    // Gamification
+    level: "等級",
+    xpPoints: "經驗值",
+    streak: "連續天數",
+    dailyQuests: "今日任務",
+    questComplete: "任務完成！",
+    gardenTitle: "我的花園",
+    stickerBook: "貼紙簿",
+    levelUp: "升級了！",
+
+    // Progress dashboard
+    progressDashboard: "我的學習進度",
+    totalCharacters: "認識字數",
+    masteredChars: "已掌握",
+    practicedChars: "練習中",
+    dueForReview: "今日要複習",
+    exportProgress: "匯出進度",
+    importProgress: "匯入進度",
+    resetProgress: "重設進度",
+    confirmReset: "確定要重設所有進度嗎？",
+
+    // Sound settings
+    soundSettings: "聲音設定",
+    soundOn: "聲音開",
+    soundOff: "聲音關",
+    musicOn: "音樂",
+    voiceOn: "語音",
+    effectOn: "音效",
   },
   
   "en": {
@@ -298,6 +350,58 @@ export const translations = {
     // Navigation arrows
     previous: "Previous",
     next: "Next",
+
+    // Stroke tracing
+    strokeTracing: "Stroke Practice",
+    strokeTracingDesc: "Trace characters with your finger in the correct stroke order",
+    traceCharacter: "Practice Writing",
+    strokeGuide: "Stroke Guide",
+    myTrace: "Replay My Trace",
+    traceSuccess: "Great! Keep going!",
+    traceRetry: "Try again!",
+    traceComplete: "Complete!",
+    star1: "1 Star",
+    star2: "2 Stars",
+    star3: "3 Stars",
+
+    // Mini-games hub
+    miniGamesHub: "Game Zone",
+    miniGamesDesc: "Fun games to learn Hanzi characters",
+    playGame: "Play",
+    gameLocked: "Locked",
+    gameResult: "Results",
+    playAgainGame: "Play Again",
+    nextGame: "Next Game",
+    backToHub: "Back to Hub",
+
+    // Gamification
+    level: "Level",
+    xpPoints: "XP",
+    streak: "Day Streak",
+    dailyQuests: "Daily Quests",
+    questComplete: "Quest Complete!",
+    gardenTitle: "My Garden",
+    stickerBook: "Sticker Book",
+    levelUp: "Level Up!",
+
+    // Progress dashboard
+    progressDashboard: "My Progress",
+    totalCharacters: "Characters Known",
+    masteredChars: "Mastered",
+    practicedChars: "Practicing",
+    dueForReview: "Due for Review",
+    exportProgress: "Export Progress",
+    importProgress: "Import Progress",
+    resetProgress: "Reset Progress",
+    confirmReset: "Reset all progress?",
+
+    // Sound settings
+    soundSettings: "Sound Settings",
+    soundOn: "Sound On",
+    soundOff: "Sound Off",
+    musicOn: "Music",
+    voiceOn: "Voice",
+    effectOn: "Effects",
   },
 } as const;
 

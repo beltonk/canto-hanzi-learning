@@ -1,65 +1,45 @@
 "use client";
 
-import { useSearchParams, useRouter } from "next/navigation";
-import Link from "next/link";
-import { Suspense } from "react";
+import { useEffect, Suspense } from "react";
+import { useRouter } from "next/navigation";
+import AppShell from "@/app/components/ui/AppShell";
 import DictationExercise from "@/app/components/learning/DictationExercise";
-import { useLanguage } from "@/lib/i18n/context";
+import EndOfSessionSummary from "@/app/components/ui/EndOfSessionSummary";
+import { useSessionSummary } from "@/lib/activity/useSessionSummary";
 
 function DictationContent() {
-  const searchParams = useSearchParams();
   const router = useRouter();
-  const grade = (searchParams.get("grade") as "KS1" | "KS2") || "KS1";
-  const { t } = useLanguage();
+  const { initSession, requestExit, summary, dismissSummary } = useSessionSummary();
+
+  useEffect(() => { initSession(); }, [initSession]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[var(--background-gradient-from)] via-[var(--background-gradient-via)] to-[var(--background-gradient-to)]">
-      <div className="container mx-auto px-4 py-3 md:py-4">
-        {/* Compact Header */}
-        <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
-          <div className="flex items-center gap-2">
-            <Link
-              href="/"
-              className="text-base text-[var(--color-coral)] hover:text-[var(--color-coral-dark)] font-medium"
-            >
-              {t("backToHome")}
-            </Link>
-            <span className="text-[var(--color-gray-light)]">|</span>
-            <span className="text-2xl">🦉</span>
-            <h1 className="text-xl md:text-2xl font-bold text-[var(--color-charcoal)]">
-              {t("dictationPractice")}
-            </h1>
-          </div>
-          <select
-            value={grade}
-            onChange={(e) => {
-              const newGrade = e.target.value as "KS1" | "KS2";
-              router.push(`/learn/dictation?grade=${newGrade}`);
-            }}
-            className="px-3 py-2 text-sm border-2 border-[var(--color-peach)] rounded-xl 
-                     bg-[var(--card-bg)] text-[var(--color-charcoal)]
-                     focus:ring-2 focus:ring-[var(--color-golden)]/30 focus:border-[var(--color-golden)]
-                     cursor-pointer"
-          >
-            <option value="KS1">{t("stage1")}</option>
-            <option value="KS2">{t("stage2")}</option>
-          </select>
-        </div>
-
-        <DictationExercise grade={grade} />
+    <AppShell title="默書練習" emoji="✏️" bg="amber" onBack={() => requestExit(() => router.push('/'))}>
+      <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-6 max-w-3xl">
+        <DictationExercise />
       </div>
-    </div>
+      {summary && (
+        <EndOfSessionSummary
+          xpEarned={summary.xpEarned}
+          charsCount={summary.charsCount}
+          streak={summary.streak}
+          onClose={dismissSummary}
+        />
+      )}
+    </AppShell>
   );
 }
 
 function LoadingFallback() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[var(--background-gradient-from)] via-[var(--background-gradient-via)] to-[var(--background-gradient-to)] flex items-center justify-center">
-      <div className="text-center">
-        <div className="text-5xl mb-3 animate-float">🦉</div>
-        <div className="text-lg text-[var(--color-gray)]">Loading...</div>
+    <AppShell title="默書練習" emoji="✏️" bg="amber">
+      <div className="flex items-center justify-center py-20">
+        <div className="text-center">
+          <div className="text-5xl mb-3 animate-bounce">✏️</div>
+          <div className="text-lg text-slate-500">載入中...</div>
+        </div>
       </div>
-    </div>
+    </AppShell>
   );
 }
 

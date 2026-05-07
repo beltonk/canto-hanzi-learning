@@ -5,10 +5,15 @@ import type { FullCharacterData, IndexEntry } from "@/types/fullCharacter";
 import { useLanguage } from "@/lib/i18n/context";
 import StrokeAnimation from "./StrokeAnimation";
 import RelatedWords from "./RelatedWords";
+import FavoriteButton from "@/app/components/ui/FavoriteButton";
+import { useAudio } from "@/lib/audio/context";
+import { recordActivity } from "@/lib/activity/recordActivity";
 
 interface CharacterExplorationProps {
   /** Initial character to display */
   character?: string;
+  /** Initial free-text search query (e.g. from home search) */
+  initialQuery?: string;
   /** Callback when character changes */
   onCharacterChange?: (char: string) => void;
 }
@@ -22,9 +27,10 @@ interface CharacterExplorationProps {
  * - Related words and phrases
  * - Character navigation with search/filter
  */
-export default function CharacterExploration({ 
-  character, 
-  onCharacterChange 
+export default function CharacterExploration({
+  character,
+  initialQuery,
+  onCharacterChange,
 }: CharacterExplorationProps) {
   // Data state
   const [data, setData] = useState<FullCharacterData | null>(null);
@@ -33,17 +39,19 @@ export default function CharacterExploration({
   const [error, setError] = useState<string | null>(null);
   
   // UI state
-  const [showCharList, setShowCharList] = useState(false);
+  const [showCharList, setShowCharList] = useState(Boolean(initialQuery));
   const [showStrokeAnimation, setShowStrokeAnimation] = useState(false);
   const [showFilters, setShowFilters] = useState(true);
   
   // Filter state
   const [filterRadical, setFilterRadical] = useState("");
   const [filterStrokeCount, setFilterStrokeCount] = useState<number | "">("");
-  const [filterJyutping, setFilterJyutping] = useState("");
+  // Free-text character search — supports a single character, a partial jyutping or a radical
+  const [filterChar, setFilterChar] = useState(initialQuery ?? "");
 
   // Translations
   const { t } = useLanguage();
+  const audio = useAudio();
 
   // Load character list (index entries for navigation)
   const loadCharacterList = useCallback(async () => {
@@ -82,7 +90,12 @@ export default function CharacterExploration({
 
       const result = await response.json();
       setData(result.character);
-      setShowStrokeAnimation(false); // Reset animation state when character changes
+      setShowStrokeAnimation(false);
+      // Record character exploration (touch mastery + award XP)
+      recordActivity(
+        { type: 'explore', char, at: Date.now() },
+        'explore_char',
+      );
     } catch (err) {
       setError(err instanceof Error ? err.message : t("loadFailed"));
       setData(null);
@@ -103,26 +116,13 @@ export default function CharacterExploration({
     }
   }, [character, loadCharacterData]);
 
-  // Speak character using TTS (Cantonese)
+  // Speak character using TTS via AudioEngine (respects mute + ducks music)
   const speakCantonese = (text: string) => {
-    if ("speechSynthesis" in window) {
-      window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = "zh-HK";
-      utterance.rate = 0.8;
-      window.speechSynthesis.speak(utterance);
-    }
+    audio.speakTTS(text, "zh-HK", 0.8);
   };
 
-  // Speak character using TTS (Mandarin)
   const speakMandarin = (text: string) => {
-    if ("speechSynthesis" in window) {
-      window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = "zh-CN";
-      utterance.rate = 0.8;
-      window.speechSynthesis.speak(utterance);
-    }
+    audio.speakTTS(text, "zh-CN", 0.8);
   };
 
   // Get unique radicals for filter dropdown
@@ -145,7 +145,16 @@ export default function CharacterExploration({
 
   // Filter character list based on search criteria
   const filteredCharacterList = useMemo(() => {
+    const charQuery = filterChar.trim();
     return characterList.filter(entry => {
+      // Free text: match by exact character contained, partial jyutping or radical
+      if (charQuery) {
+        const lower = charQuery.toLowerCase();
+        const matchesChar = [...charQuery].some(c => entry.character === c);
+        const matchesJyutping = entry.jyutping?.toLowerCase().includes(lower);
+        const matchesRadical = entry.radical === charQuery;
+        if (!matchesChar && !matchesJyutping && !matchesRadical) return false;
+      }
       // Filter by radical
       if (filterRadical && entry.radical !== filterRadical) {
         return false;
@@ -154,22 +163,18 @@ export default function CharacterExploration({
       if (filterStrokeCount !== "" && entry.strokeCount !== filterStrokeCount) {
         return false;
       }
-      // Filter by jyutping (partial match)
-      if (filterJyutping && !entry.jyutping?.toLowerCase().includes(filterJyutping.toLowerCase())) {
-        return false;
-      }
       return true;
     });
-  }, [characterList, filterRadical, filterStrokeCount, filterJyutping]);
+  }, [characterList, filterChar, filterRadical, filterStrokeCount]);
 
   // Check if any filters are active
-  const hasActiveFilters = filterRadical || filterStrokeCount !== "" || filterJyutping;
+  const hasActiveFilters = filterRadical || filterStrokeCount !== "" || filterChar;
 
   // Clear all filters
   const clearFilters = () => {
+    setFilterChar("");
     setFilterRadical("");
     setFilterStrokeCount("");
-    setFilterJyutping("");
   };
 
   // Loading state
@@ -248,13 +253,27 @@ export default function CharacterExploration({
             {/* Filter Panel - Compact inline layout */}
             {showFilters && (
               <div className="mb-2 flex flex-wrap items-center gap-2 text-sm">
+                {/* Free-text search: by character, radical, or jyutping */}
+                <div className="flex items-center gap-1 grow basis-[200px]">
+                  <span className="text-base">🔍</span>
+                  <input
+                    type="text"
+                    value={filterChar}
+                    onChange={(e) => setFilterChar(e.target.value)}
+                    placeholder="搜尋：輸入字、部首或粵拼"
+                    className="w-full h-9 px-3 text-base border-2 border-rose-200 rounded-xl
+                             bg-white text-slate-900 focus:border-rose-500 focus:outline-none
+                             placeholder:text-slate-400"
+                  />
+                </div>
+
                 {/* Radical filter */}
                 <div className="flex items-center gap-1">
                   <label className="text-xs text-[var(--color-gray)] whitespace-nowrap">{t("radical")}</label>
                   <select
                     value={filterRadical}
                     onChange={(e) => setFilterRadical(e.target.value)}
-                    className="w-20 h-8 px-2 text-sm border border-[var(--input-border)] rounded-lg 
+                    className="w-24 h-9 px-2 text-sm border border-[var(--input-border)] rounded-lg
                              bg-[var(--input-bg)] text-[var(--color-charcoal)] focus:border-[var(--color-coral)] focus:outline-none
                              font-sans leading-normal"
                   >
@@ -264,14 +283,14 @@ export default function CharacterExploration({
                     ))}
                   </select>
                 </div>
-                
+
                 {/* Stroke count filter */}
                 <div className="flex items-center gap-1">
                   <label className="text-xs text-[var(--color-gray)] whitespace-nowrap">{t("strokeCount")}</label>
                   <select
                     value={filterStrokeCount}
                     onChange={(e) => setFilterStrokeCount(e.target.value ? Number(e.target.value) : "")}
-                    className="w-20 h-8 px-2 text-sm border border-[var(--input-border)] rounded-lg 
+                    className="w-20 h-9 px-2 text-sm border border-[var(--input-border)] rounded-lg
                              bg-[var(--input-bg)] text-[var(--color-charcoal)] focus:border-[var(--color-coral)] focus:outline-none
                              font-sans leading-normal"
                   >
@@ -281,21 +300,7 @@ export default function CharacterExploration({
                     ))}
                   </select>
                 </div>
-                
-                {/* Jyutping filter */}
-                <div className="flex items-center gap-1">
-                  <label className="text-xs text-[var(--color-gray)] whitespace-nowrap">{t("jyutping")}</label>
-                  <input
-                    type="text"
-                    value={filterJyutping}
-                    onChange={(e) => setFilterJyutping(e.target.value)}
-                    placeholder="jat1"
-                    className="w-20 h-8 px-2 text-sm border border-[var(--input-border)] rounded-lg 
-                             bg-[var(--input-bg)] text-[var(--color-charcoal)] focus:border-[var(--color-coral)] focus:outline-none
-                             font-mono leading-normal"
-                  />
-                </div>
-                
+
                 {/* Clear filters button */}
                 {hasActiveFilters && (
                   <button
@@ -381,14 +386,14 @@ export default function CharacterExploration({
           </div>
 
           {/* Character Details Row */}
-          <div className="mt-4 flex flex-wrap items-center justify-center gap-4">
+          <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
             <div className="text-base text-[var(--color-gray)]">
-              {data.strokeCount} {t("strokes")} • {t("radical")}: 
+              {data.strokeCount} {t("strokes")} • {t("radical")}:
               <span className="hanzi-display text-xl ml-1">{data.radical}</span>
             </div>
             <button
               onClick={() => speakCantonese(data.character)}
-              className="px-6 py-2 bg-gradient-to-br from-[var(--color-coral)] to-[var(--color-coral-dark)] text-white 
+              className="px-6 py-2 bg-gradient-to-br from-[var(--color-coral)] to-[var(--color-coral-dark)] text-white
                        rounded-full text-base font-semibold
                        shadow-[0_4px_12px_rgba(255,107,107,0.3)]
                        hover:scale-105 active:scale-95 transition-all
@@ -396,6 +401,13 @@ export default function CharacterExploration({
             >
               <span className="text-lg">🔊</span> {t("listenPronunciation")}
             </button>
+            <FavoriteButton
+              text={data.character}
+              kind="char"
+              jyutping={data.jyutping}
+              source="explore"
+              variant="chip"
+            />
           </div>
         </div>
       </div>

@@ -1,0 +1,235 @@
+'use client';
+
+import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
+import type { GameProps } from './types';
+
+const ROUND_COUNT = 8;
+
+interface BuildRound {
+  word: string;
+  hintChar: string;
+  hintJyutping: string;
+}
+
+function shuffle<T>(arr: T[]): T[] {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+export default function WordBuilder({ items, onResult }: GameProps) {
+  const rounds = useMemo<BuildRound[]>(() => {
+    const candidates: BuildRound[] = [];
+    items.forEach(i => {
+      (i.words ?? []).forEach(w => {
+        if (w.length >= 2 && w.length <= 5 && /^[\u4e00-\u9fff]+$/.test(w)) {
+          candidates.push({ word: w, hintChar: i.character, hintJyutping: i.jyutping });
+        }
+      });
+    });
+    // dedupe by word
+    const seen = new Set<string>();
+    const uniq = candidates.filter(c => {
+      if (seen.has(c.word)) return false;
+      seen.add(c.word);
+      return true;
+    });
+    return shuffle(uniq).slice(0, ROUND_COUNT);
+  }, [items]);
+
+  const totalRounds = rounds.length;
+  const [roundIdx, setRoundIdx] = useState(0);
+  const [arranged, setArranged] = useState<string[]>([]);
+  const [score, setScore] = useState(0);
+  const [hintUsedThisRound, setHintUsedThisRound] = useState(false);
+  const [hintsUsed, setHintsUsed] = useState(0);
+  const [feedback, setFeedback] = useState<'idle' | 'correct' | 'wrong'>('idle');
+  const startRef = useRef(Date.now());
+
+  const current = rounds[roundIdx] ?? null;
+  const target = current?.word ?? '';
+
+  // Build pool: target chars + 2-3 random distractor chars
+  const pool = useMemo(() => {
+    if (!target) return [] as string[];
+    const others: string[] = [];
+    items.forEach(i => {
+      if (!target.includes(i.character) && !others.includes(i.character)) {
+        others.push(i.character);
+      }
+    });
+    const distractorCount = Math.min(3, others.length);
+    const distractors = shuffle(others).slice(0, distractorCount);
+    return shuffle([...target.split(''), ...distractors]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [roundIdx, target]);
+
+  useEffect(() => {
+    setArranged([]);
+    setHintUsedThisRound(false);
+    setFeedback('idle');
+  }, [roundIdx]);
+
+  const finishRound = useCallback((newScore: number) => {
+    const r = roundIdx + 1;
+    if (r >= totalRounds) {
+      const perfectRounds = newScore;
+      const stars: 1 | 2 | 3 =
+        perfectRounds >= totalRounds * 0.85 && hintsUsed === 0 ? 3 :
+        perfectRounds >= totalRounds * 0.6 ? 2 : 1;
+      onResult({ stars, correctCount: perfectRounds, totalCount: totalRounds, durationMs: Date.now() - startRef.current });
+    } else {
+      setRoundIdx(r);
+    }
+  }, [roundIdx, totalRounds, hintsUsed, onResult]);
+
+  const handleTile = useCallback((char: string, sourceIdx: number) => {
+    if (feedback !== 'idle') return;
+    const next = [...arranged, char];
+    setArranged(next);
+    if (next.length === target.length) {
+      const correct = next.join('') === target;
+      if (correct) {
+        setFeedback('correct');
+        const newScore = score + (hintUsedThisRound ? 0.5 : 1);
+        setTimeout(() => {
+          setScore(newScore);
+          finishRound(newScore);
+        }, 700);
+      } else {
+        setFeedback('wrong');
+        setTimeout(() => {
+          setArranged([]);
+          setFeedback('idle');
+        }, 800);
+      }
+    }
+    void sourceIdx;
+  }, [arranged, feedback, target, score, hintUsedThisRound, finishRound]);
+
+  const handleClear = () => {
+    if (feedback !== 'idle') return;
+    setArranged([]);
+  };
+
+  const handleHint = () => {
+    if (hintUsedThisRound || feedback !== 'idle') return;
+    setHintUsedThisRound(true);
+    setHintsUsed(c => c + 1);
+    setArranged(target.slice(0, 1).split(''));
+  };
+
+  const handleSkip = () => {
+    if (feedback !== 'idle') return;
+    finishRound(score);
+  };
+
+  if (totalRounds === 0) {
+    return (
+      <div className="p-6 text-center text-slate-600">
+        <div className="text-5xl mb-2">📭</div>
+        目前字庫中沒有合適的詞語可組合，請刷新試試！
+      </div>
+    );
+  }
+  if (!current) return <div className="p-6 text-center text-slate-500">載入中...</div>;
+
+  // available pool excludes already-arranged tiles by occurrence
+  const remaining = [...pool];
+  arranged.forEach(ch => {
+    const i = remaining.indexOf(ch);
+    if (i >= 0) remaining.splice(i, 1);
+  });
+
+  return (
+    <div className="p-3 sm:p-4 flex flex-col items-center gap-3">
+      {/* HUD */}
+      <div className="w-full max-w-md flex items-center justify-between text-sm">
+        <span className="text-slate-700">第 <strong>{roundIdx + 1}</strong> / {totalRounds} 題</span>
+        <span className="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 font-bold">
+          ⭐ {Math.floor(score)}{score % 1 ? '.5' : ''}
+        </span>
+      </div>
+
+      {/* Progress dots */}
+      <div className="flex gap-1">
+        {Array.from({ length: totalRounds }, (_, i) => (
+          <div
+            key={i}
+            className={`h-1.5 w-6 rounded-full transition-all ${
+              i < roundIdx ? 'bg-emerald-500' : i === roundIdx ? 'bg-indigo-500' : 'bg-slate-200'
+            }`}
+          />
+        ))}
+      </div>
+
+      {/* Hint card */}
+      <div className="w-full max-w-md rounded-2xl bg-gradient-to-br from-amber-50 to-orange-50 border-2 border-amber-200 p-4 text-center">
+        <div className="text-xs text-slate-600 mb-1">線索字</div>
+        <div className="font-chinese text-5xl sm:text-6xl text-slate-900 leading-none mb-1">{current.hintChar}</div>
+        <div className="font-mono text-base text-amber-700">{current.hintJyutping}</div>
+        <div className="text-xs text-slate-600 mt-2">用底下的字組成包含此字的 <strong>{target.length}</strong> 字詞語</div>
+      </div>
+
+      {/* Slots */}
+      <div className={`flex gap-2 justify-center transition-all ${feedback === 'correct' ? 'animate-pop' : feedback === 'wrong' ? 'animate-wiggle' : ''}`}>
+        {Array.from({ length: target.length }, (_, i) => (
+          <div
+            key={i}
+            className={`w-14 h-14 sm:w-16 sm:h-16 rounded-2xl border-2 flex items-center justify-center font-chinese text-3xl sm:text-4xl font-bold shadow-sm transition-all ${
+              arranged[i]
+                ? feedback === 'correct'
+                  ? 'bg-emerald-500 border-emerald-600 text-white scale-105'
+                  : feedback === 'wrong'
+                  ? 'bg-rose-500 border-rose-600 text-white'
+                  : 'bg-indigo-500 border-indigo-600 text-white scale-105'
+                : 'bg-slate-50 border-dashed border-slate-300 text-slate-300'
+            }`}
+          >
+            {arranged[i] ?? '_'}
+          </div>
+        ))}
+      </div>
+
+      {/* Tile pool */}
+      <div className="flex flex-wrap gap-2 justify-center max-w-md">
+        {remaining.map((ch, i) => (
+          <button
+            key={`${ch}-${i}`}
+            onClick={() => handleTile(ch, i)}
+            disabled={feedback !== 'idle'}
+            className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br from-amber-200 to-amber-300 border-2 border-amber-400 font-chinese text-2xl sm:text-3xl font-bold text-amber-900 hover:scale-110 active:scale-95 disabled:opacity-40 transition-all shadow-md"
+          >
+            {ch}
+          </button>
+        ))}
+      </div>
+
+      {/* Controls */}
+      <div className="flex gap-2 flex-wrap justify-center">
+        <button
+          onClick={handleClear}
+          className="px-4 py-2 rounded-xl bg-slate-100 text-slate-700 text-sm font-medium hover:bg-slate-200 active:scale-95"
+        >
+          ↺ 清除
+        </button>
+        <button
+          onClick={handleHint}
+          disabled={hintUsedThisRound}
+          className="px-4 py-2 rounded-xl bg-sky-100 text-sky-700 text-sm font-medium hover:bg-sky-200 active:scale-95 disabled:opacity-40"
+        >
+          💡 提示 (-0.5⭐)
+        </button>
+        <button
+          onClick={handleSkip}
+          className="px-4 py-2 rounded-xl bg-rose-50 text-rose-600 text-sm font-medium hover:bg-rose-100 active:scale-95"
+        >
+          ⏭ 跳過
+        </button>
+      </div>
+    </div>
+  );
+}

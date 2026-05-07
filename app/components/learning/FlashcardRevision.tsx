@@ -7,7 +7,11 @@ import NavArrow from "@/app/components/ui/NavArrow";
 import Mascot from "@/app/components/ui/Mascot";
 import Button from "@/app/components/ui/Button";
 import StrokeAnimation from "./StrokeAnimation";
+import FavoriteButton from "@/app/components/ui/FavoriteButton";
 import { useLanguage } from "@/lib/i18n/context";
+import { useAudio } from "@/lib/audio/context";
+import { useMotionClass } from "@/lib/motion";
+import { recordActivity } from "@/lib/activity/recordActivity";
 
 const STROKE_RANGES = [
   { labelKey: "all" as const, label: "全部", min: 1, max: 32 },
@@ -19,6 +23,10 @@ const STROKE_RANGES = [
 
 export default function FlashcardRevision() {
   const { t, language } = useLanguage();
+  const audio = useAudio();
+  // Card transitions go through the shared motion primitive so the global
+  // prefers-reduced-motion preference disables the float-in animation.
+  const cardEnterClass = useMotionClass('floatIn');
   
   // Filter state
   const [strokeRange, setStrokeRange] = useState(STROKE_RANGES[0]);
@@ -110,11 +118,18 @@ export default function FlashcardRevision() {
   // Navigation handlers
   const goToNext = useCallback(() => {
     if (currentIndex < characters.length - 1) {
+      const nextChar = characters[currentIndex + 1];
+      if (nextChar) {
+          recordActivity(
+          { type: 'flashcard', char: nextChar.character, at: Date.now() },
+          'flashcard_card',
+        );
+      }
       setCurrentIndex(currentIndex + 1);
       setShowDetails(false);
       setShowStrokeAnimation(false);
     }
-  }, [currentIndex, characters.length]);
+  }, [currentIndex, characters]);
 
   const goToPrevious = useCallback(() => {
     if (currentIndex > 0) {
@@ -124,19 +139,12 @@ export default function FlashcardRevision() {
     }
   }, [currentIndex]);
 
-  // Play pronunciation using Web Speech API
+  // Play pronunciation via AudioEngine (respects mute + ducks music)
   const playPronunciation = useCallback((text?: string) => {
     const current = characters[currentIndex];
     if (!current && !text) return;
-
-    if ("speechSynthesis" in window) {
-      window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(text || current.character);
-      utterance.lang = "zh-HK";
-      utterance.rate = 0.8;
-      window.speechSynthesis.speak(utterance);
-    }
-  }, [characters, currentIndex]);
+    audio.speakTTS(text || current.character, "zh-HK", 0.8);
+  }, [characters, currentIndex, audio]);
 
   // Keyboard navigation
   useEffect(() => {
@@ -199,7 +207,7 @@ export default function FlashcardRevision() {
         <div className="bg-[var(--card-bg)] rounded-3xl shadow-[0_8px_32px_var(--card-shadow)] p-8 md:p-10">
           {/* Mascot */}
           <div className="flex justify-center mb-6">
-            <Mascot type="rabbit" size="lg" message={t("selectRange")} />
+            <Mascot type="rabbit" size={96} message={t("selectRange")} />
           </div>
 
           <h2 className="text-2xl md:text-3xl font-bold text-[var(--color-charcoal)] mb-8 text-center">
@@ -351,8 +359,11 @@ export default function FlashcardRevision() {
           />
         </div>
 
-        {/* Card */}
-        <div className="bg-[var(--card-bg)] rounded-[32px] shadow-[0_12px_40px_var(--card-shadow)] p-6 md:p-10 mx-16 md:mx-0 w-full max-w-xl">
+        {/* Card — re-keyed per character so the entrance animation re-runs */}
+        <div
+          key={current.character}
+          className={`bg-[var(--card-bg)] rounded-[32px] shadow-[0_12px_40px_var(--card-shadow)] p-6 md:p-10 mx-16 md:mx-0 w-full max-w-xl ${cardEnterClass}`}
+        >
           {/* Character rendered using strokes - clickable */}
           <div className="flex justify-center mb-4">
             <div 
@@ -383,11 +394,11 @@ export default function FlashcardRevision() {
             )}
           </div>
 
-          {/* Play Button */}
-          <div className="flex justify-center mb-6">
+          {/* Play Button + Favorite */}
+          <div className="flex justify-center mb-6 gap-3 flex-wrap">
             <button
               onClick={() => playPronunciation()}
-              className="px-6 py-3 bg-gradient-to-br from-[var(--color-sky)] to-[var(--color-sky-dark)] 
+              className="px-6 py-3 bg-gradient-to-br from-[var(--color-sky)] to-[var(--color-sky-dark)]
                        text-white text-lg font-semibold rounded-full
                        shadow-[0_4px_16px_rgba(126,200,227,0.4)]
                        hover:scale-105 active:scale-95
@@ -397,6 +408,13 @@ export default function FlashcardRevision() {
               <span className="text-xl">🔊</span>
               {t("playPronunciation")}
             </button>
+            <FavoriteButton
+              text={current.character}
+              kind="char"
+              jyutping={current.jyutping}
+              source="flashcard"
+              variant="chip"
+            />
           </div>
 
           {/* Divider */}

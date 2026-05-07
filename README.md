@@ -1,6 +1,6 @@
 # 粵語漢字學習系統 (Cantonese Hanzi Learning System)
 
-An interactive Traditional Chinese character learning system for Hong Kong primary school students. This web application helps students learn Cantonese pronunciation, character recognition, decomposition, and dictation through engaging activities with a child-friendly interface.
+An interactive Traditional Chinese character learning system for Hong Kong primary school students. This web application helps students learn Cantonese pronunciation, character recognition, decomposition, and dictation through engaging activities with a child-friendly interface. The app features a gamified Playground Map, stroke tracing with real-time feedback, 8 mini-games, a progress dashboard, and a sticker book — all designed to make learning fun for primary school students.
 
 ## 數據來源 (Data Source)
 
@@ -39,6 +39,38 @@ An interactive Traditional Chinese character learning system for Hong Kong prima
 - **🐰 字卡温習 (Flashcard Revision)**: Randomized flashcards with filters for learning stage and stroke count, featuring large navigation arrows and audio pronunciation
 - **🐵 拆字遊戲 (Decomposition Play)**: Puzzle-based activity where students arrange character components to form complete characters
 - **🦉 默書練習 (Dictation Exercises)**: Audio-based dictation exercises with immediate feedback
+- **✍️ 筆順練習 (Stroke Tracing)**: Interactive stroke-order tracing with real-time geometric validation, star scoring, mascot feedback, and audio cues
+- **🎮 遊戲樂園 (Mini-Games Hub)**: 8 engaging mini-games including Match-Up, Whack-a-Hanzi, Character Rain, Word Builder, Sentence Garden, Tone Bingo, Radical Detective, and Stroke Racer
+
+### Mini-Games
+
+| Game | Chinese Name | Description |
+|------|-------------|-------------|
+| Match-Up | 配對王 | Match characters with jyutping/meaning/radical in pairs |
+| Whack-a-Hanzi | 打地鼠 | Tap the correct character as it pops up in holes |
+| Character Rain | 落字雨 | Catch falling characters before they hit the bottom |
+| Word Builder | 拼字工坊 | Arrange character tiles to form target words |
+| Sentence Garden | 造句樂園 | Order word blocks to form correct sentences |
+| Tone Bingo | 聲調賓果 | Mark characters on a bingo board matching the called character |
+| Radical Detective | 拆字偵探 | Find all characters containing a target radical |
+| Stroke Racer | 太空寫字 | Complete stroke tracing against a countdown timer |
+
+### Gamification System
+
+- **XP & Levels**: Earn XP for every learning activity; level up to unlock new games
+- **Daily Streaks**: Keep your learning streak alive with daily activity; freeze days protect long streaks
+- **Daily Quests**: 3 deterministic daily quests with progress tracking
+- **Sticker Book**: Collect stickers by leveling up; view your collection at `/stickers`
+- **Garden**: Earn garden plants as level-up rewards
+- **Progress Dashboard**: View mastery stats, 7-day activity chart, SRS due characters, and per-character history
+
+### Progress Tracking
+
+- **Spaced Repetition (SRS)**: Characters follow a Leitner-like schedule (1, 3, 7, 21, 60 days)
+- **Mastery States**: `unseen → introduced → practiced → mastered` based on wins across multiple days
+- **Activity Log**: Last 1,000 interactions stored for review and recommendations
+- **Export/Import**: Download progress as JSON; import on another device
+- **Reset**: Full progress reset with confirmation
 
 ### Child-Friendly Design
 
@@ -67,7 +99,10 @@ The interface is specifically designed for primary school students:
 - **Styling**: Tailwind CSS 4 with CSS variables for theme support
 - **Font**: Free HK Kai (Traditional Chinese Kaishu)
 - **Internationalization**: React Context-based i18n system
-- **Linting**: ESLint with Next.js configs
+- **Audio**: Web Audio API engine with 4 channels (ui/voice/music/effect), TTS via SpeechSynthesis
+- **Storage**: LocalStorage with schema versioning and migrations (`cantoHanzi.v1`)
+- **Testing**: Vitest + Testing Library (38 unit tests)
+- **Linting**: ESLint with Next.js core-web-vitals config
 
 ## Getting Started
 
@@ -104,11 +139,15 @@ npm run dev
 
 Once the server is running, you can access:
 
-- **Home Page**: [http://localhost:3000](http://localhost:3000) - Overview and navigation with 4 activity cards
+- **Home Page**: [http://localhost:3000](http://localhost:3000) - Playground Map with activity badges, quests, and garden
 - **Character Exploration**: [http://localhost:3000/learn/explore](http://localhost:3000/learn/explore) - Learn characters with meanings, decomposition, and examples
 - **Flashcard Revision**: [http://localhost:3000/learn/flashcard](http://localhost:3000/learn/flashcard) - Random flashcards with filters
 - **Decomposition Play**: [http://localhost:3000/learn/decompose](http://localhost:3000/learn/decompose) - Drag-and-drop character puzzles
 - **Dictation Exercises**: [http://localhost:3000/learn/dictation](http://localhost:3000/learn/dictation) - Listen and write dictation practice
+- **Stroke Tracing**: [http://localhost:3000/learn/trace](http://localhost:3000/learn/trace) - Trace character strokes with real-time feedback
+- **Mini-Games Hub**: [http://localhost:3000/play](http://localhost:3000/play) - Select from 8 mini-games
+- **Progress Dashboard**: [http://localhost:3000/progress](http://localhost:3000/progress) - View learning stats and mastery grid
+- **Sticker Book**: [http://localhost:3000/stickers](http://localhost:3000/stickers) - View earned stickers
 
 ### Building for Production
 
@@ -308,6 +347,9 @@ import DictationExercise from "@/app/components/learning/DictationExercise";
 - `npm run build` - Build for production
 - `npm run start` - Start production server
 - `npm run lint` - Run ESLint
+- `npm run test` - Run unit tests (Vitest)
+- `npm run check` - Run lint + tests (CI gate)
+- `npm run check:assets` - Verify initial sound assets are under 500 KB budget
 - `npm run index:generate` - Generate index files from character data
 
 ## Internationalization
@@ -328,10 +370,11 @@ Theme preference is saved in localStorage and persists across sessions.
 
 ## Future Enhancements
 
-- [ ] Progress tracking and user accounts
-- [ ] Spaced repetition system
-- [ ] Mobile app version
-- [ ] Additional learning activities
+- [ ] Real audio files for UI sounds and mascot voicelines
+- [ ] Full stroke tracing replay ("重睇我寫") animation
+- [ ] Playwright smoke tests for all routes
+- [ ] WCAG AA contrast audit of new palette tokens
+- [ ] iPad performance profiling for stroke tracing (target ≥45 fps)
 
 ## Contributing
 

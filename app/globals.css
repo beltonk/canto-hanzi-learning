@@ -10,508 +10,242 @@
 }
 
 /* ============================================
-   Child-Friendly Color Palette
-   Warm, vibrant colors for young learners
+   Material Design 3 inspired color palette
+   - Primary: Indigo (deep, calming, modern)
+   - Secondary: Purple (playful)
+   - Tertiary: Emerald (success / nature)
+   - Surfaces: tinted whites and slates
    ============================================ */
 :root {
-  /* Primary Colors */
-  --color-coral: #FF6B6B;
-  --color-coral-light: #FF8E8E;
-  --color-coral-dark: #E55555;
-  
-  /* Warm Backgrounds */
-  --color-peach: #FFE5B4;
-  --color-peach-light: #FFF2D9;
-  --color-cream: #FFF8E7;
-  --color-cream-dark: #FFF0D0;
-  
-  /* Success/Correct */
-  --color-mint: #98D8AA;
-  --color-mint-light: #B8E8C4;
-  --color-mint-dark: #7BC88E;
-  
-  /* Info/Links */
-  --color-sky: #7EC8E3;
-  --color-sky-light: #A5DBF0;
-  --color-sky-dark: #5BB8D8;
-  
-  /* Achievement/Highlight */
-  --color-golden: #FFD93D;
-  --color-golden-light: #FFE566;
-  --color-golden-dark: #F5C800;
-  
-  /* Text Colors */
-  --color-charcoal: #2D3436;
-  --color-charcoal-light: #4A4A4A;
-  --color-gray: #636E72;
-  --color-gray-light: #7A8288;
-  
-  /* Semantic Colors */
-  --background: var(--color-cream);
-  --background-gradient-from: #FFECD2;
-  --background-gradient-via: #FFE4C4;
-  --background-gradient-to: #FFD8B8;
-  --foreground: var(--color-charcoal);
-  --card-bg: #FFFFFF;
-  --card-border: #E8E0D8;
-  --card-shadow: rgba(0, 0, 0, 0.08);
-  --input-bg: #FFFFFF;
-  --input-border: #DFE6E9;
-  
+  /* Material primary palette */
+  --md-primary:        #4f46e5; /* indigo-600 */
+  --md-primary-hover:  #4338ca;
+  --md-primary-tint:   #eef2ff;
+  --md-secondary:      #8b5cf6; /* purple-500 */
+  --md-secondary-tint: #f5f3ff;
+  --md-tertiary:       #10b981; /* emerald-500 */
+  --md-tertiary-tint:  #ecfdf5;
+  --md-warning:        #f59e0b; /* amber-500 */
+  --md-warning-tint:   #fffbeb;
+  --md-error:          #ef4444; /* rose */
+  --md-error-tint:     #fef2f2;
+
+  /* Surfaces */
+  --surface:           #ffffff;
+  --surface-variant:   #f8fafc; /* slate-50 */
+  --surface-tinted:    #f1f5f9; /* slate-100 */
+  --outline:           #e2e8f0; /* slate-200 */
+  --outline-strong:    #cbd5e1; /* slate-300 */
+
+  /* Text */
+  --on-surface:        #0f172a; /* slate-900 */
+  --on-surface-muted:  #475569; /* slate-600 */
+  --on-surface-subtle: #94a3b8; /* slate-400 */
+
+  /* App background gradient */
+  --background:        #f8fafc;
+  --background-gradient-from: #eef2ff;
+  --background-gradient-via:  #ffffff;
+  --background-gradient-to:   #f5f3ff;
+  --foreground: var(--on-surface);
+
+  /* Legacy aliases (kept for backward compat) */
+  --color-charcoal:        var(--on-surface);
+  --color-charcoal-light:  var(--on-surface-muted);
+  --color-gray:            var(--on-surface-muted);
+  --color-gray-light:      var(--on-surface-subtle);
+  --card-bg:               var(--surface);
+  --card-border:           var(--outline);
+  --card-shadow:           rgba(15, 23, 42, 0.06);
+  --input-bg:              var(--surface);
+  --input-border:          var(--outline);
+
+  --color-coral:        #ef4444;
+  --color-coral-light:  #f87171;
+  --color-coral-dark:   #dc2626;
+  --color-mint:         #10b981;
+  --color-mint-light:   #34d399;
+  --color-mint-dark:    #059669;
+  --color-sky:          #0ea5e9;
+  --color-sky-light:    #38bdf8;
+  --color-sky-dark:     #0284c7;
+  --color-golden:       #f59e0b;
+  --color-golden-light: #fbbf24;
+  --color-golden-dark:  #d97706;
+  --color-grape:        #8b5cf6;
+  --color-grape-light:  #a78bfa;
+  --color-grape-dark:   #7c3aed;
+  --color-grape-tint:   rgba(139, 92, 246, 0.10);
+  --color-bubble:       #ec4899;
+  --color-bubble-light: #f472b6;
+  --color-bubble-dark:  #db2777;
+  --color-bubble-tint:  rgba(236, 72, 153, 0.10);
+  --color-peach:        #fed7aa;
+  --color-peach-light:  #fff7ed;
+  --color-cream:        #fffbeb;
+  --color-cream-dark:   #fef3c7;
+
   /* Typography */
+  --font-sans:    var(--font-sans-tc), 'Inter', 'Roboto', system-ui, -apple-system, 'Helvetica Neue', sans-serif;
   --font-chinese: 'Free HK Kai', 'Noto Serif TC', 'PMingLiU', serif;
-  
-  /* Spacing for touch */
-  --touch-target-min: 48px;
-  --touch-target-lg: 72px;
-  --spacing-touch: 12px;
+
+  /* Touch targets */
+  --touch-target-min: 44px;
 }
 
-/* ============================================
-   Dark Mode Color Palette
-   ============================================ */
+/* Dark Mode */
 [data-theme="dark"] {
-  /* Primary Colors - slightly muted for dark mode */
-  --color-coral: #FF7B7B;
-  --color-coral-light: #FF9E9E;
-  --color-coral-dark: #E56565;
-  
-  /* Dark Backgrounds */
-  --color-peach: #4A3F35;
-  --color-peach-light: #5A4F45;
-  --color-cream: #1A1A1A;
-  --color-cream-dark: #252525;
-  
-  /* Success/Correct - brighter for visibility */
-  --color-mint: #7ED89A;
-  --color-mint-light: #98E8B4;
-  --color-mint-dark: #6BC88E;
-  
-  /* Info/Links */
-  --color-sky: #8ED8F3;
-  --color-sky-light: #B5EBF8;
-  --color-sky-dark: #6BC8E8;
-  
-  /* Achievement/Highlight */
-  --color-golden: #FFE94D;
-  --color-golden-light: #FFF576;
-  --color-golden-dark: #F5D800;
-  
-  /* Text Colors - inverted */
-  --color-charcoal: #E8E0D8;
-  --color-charcoal-light: #D0C8C0;
-  --color-gray: #A8B0B4;
-  --color-gray-light: #98A0A4;
-  
-  /* Semantic Colors */
-  --background: #1A1A1A;
-  --background-gradient-from: #1A1A1A;
-  --background-gradient-via: #252525;
-  --background-gradient-to: #2A2A2A;
-  --foreground: #E8E0D8;
-  --card-bg: #2D2D2D;
-  --card-border: #3D3D3D;
-  --card-shadow: rgba(0, 0, 0, 0.3);
-  --input-bg: #3D3D3D;
-  --input-border: #4D4D4D;
+  --md-primary:        #818cf8;
+  --md-primary-hover:  #6366f1;
+  --md-primary-tint:   #1e1b4b;
+  --md-secondary:      #a78bfa;
+  --md-secondary-tint: #2e1065;
+  --md-tertiary:       #34d399;
+  --md-tertiary-tint:  #064e3b;
+  --md-warning:        #fbbf24;
+  --md-warning-tint:   #451a03;
+  --md-error:          #f87171;
+
+  --surface:           #1e293b; /* slate-800 */
+  --surface-variant:   #0f172a; /* slate-900 */
+  --surface-tinted:    #334155; /* slate-700 */
+  --outline:           #334155;
+  --outline-strong:    #475569;
+
+  --on-surface:        #f1f5f9;
+  --on-surface-muted:  #cbd5e1;
+  --on-surface-subtle: #64748b;
+
+  --background:        #0f172a;
+  --background-gradient-from: #0f172a;
+  --background-gradient-via:  #1e293b;
+  --background-gradient-to:   #1e1b4b;
+
+  --card-bg:           var(--surface);
+  --card-border:       var(--outline);
+  --card-shadow:       rgba(0, 0, 0, 0.3);
+  --input-bg:          var(--surface-variant);
+  --input-border:      var(--outline-strong);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
 }
 
-/* Base body styles with theme support */
+/* Base body */
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 18px;
+  font-family: var(--font-sans);
+  font-size: 16px;
   line-height: 1.6;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Theme transition for smooth switching */
-*, *::before, *::after {
-  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+/* Smooth theme transitions for surfaces */
+body, .surface, .card-child, .card-activity {
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 /* ============================================
-   Typography Scale for Young Readers
+   Typography utilities
    ============================================ */
 @layer utilities {
-  /* 漢字顯示專用樣式 */
   .font-chinese {
     font-family: 'Free HK Kai', 'Noto Serif TC', 'PMingLiU', serif !important;
   }
-
-  /* 大字顯示 - 用於字符學習 (160px+) */
   .hanzi-display {
     font-family: 'Free HK Kai', 'Noto Serif TC', 'PMingLiU', serif !important;
     line-height: 1.1;
   }
-  
-  /* 中等漢字顯示 (80px) */
   .hanzi-medium {
     font-family: 'Free HK Kai', 'Noto Serif TC', 'PMingLiU', serif !important;
     font-size: 80px;
     line-height: 1.2;
   }
-
-  /* 例句顯示 */
   .hanzi-sentence {
     font-family: 'Free HK Kai', 'Noto Serif TC', 'PMingLiU', serif !important;
-    font-size: 20px;
+    font-size: 18px;
     line-height: 1.8;
   }
-  
-  /* Child-friendly text sizes */
-  .text-child-body {
-    font-size: 18px;
-    line-height: 1.6;
-  }
-  
-  .text-child-lg {
-    font-size: 20px;
-    line-height: 1.5;
-  }
-  
-  .text-child-xl {
-    font-size: 24px;
-    line-height: 1.4;
-  }
-  
-  .text-child-2xl {
-    font-size: 28px;
-    line-height: 1.3;
-  }
-  
-  .text-child-3xl {
-    font-size: 32px;
-    line-height: 1.2;
-  }
-  
-  /* Jyutping display */
   .jyutping {
-    font-family: var(--font-geist-mono), monospace;
-    font-size: 26px;
+    font-family: var(--font-mono), monospace;
+    font-size: 18px;
     letter-spacing: 0.05em;
   }
-  
-  /* Touch-friendly spacing */
-  .space-touch {
-    gap: var(--spacing-touch);
-  }
-  
-  .pad-child {
-    padding: 24px;
-  }
-  
-  .pad-child-lg {
-    padding: 32px;
-  }
-  
-  /* Touch target minimum */
-  .touch-target {
-    min-width: var(--touch-target-min);
-    min-height: var(--touch-target-min);
-  }
-  
-  .touch-target-lg {
-    min-width: var(--touch-target-lg);
-    min-height: var(--touch-target-lg);
-  }
 }
 
 /* ============================================
-   Child-Friendly Color Classes
-   ============================================ */
-@layer utilities {
-  /* Background colors */
-  .bg-coral { background-color: var(--color-coral); }
-  .bg-coral-light { background-color: var(--color-coral-light); }
-  .bg-peach { background-color: var(--color-peach); }
-  .bg-peach-light { background-color: var(--color-peach-light); }
-  .bg-cream { background-color: var(--color-cream); }
-  .bg-mint { background-color: var(--color-mint); }
-  .bg-mint-light { background-color: var(--color-mint-light); }
-  .bg-sky { background-color: var(--color-sky); }
-  .bg-sky-light { background-color: var(--color-sky-light); }
-  .bg-golden { background-color: var(--color-golden); }
-  .bg-golden-light { background-color: var(--color-golden-light); }
-  
-  /* Text colors */
-  .text-coral { color: var(--color-coral); }
-  .text-coral-dark { color: var(--color-coral-dark); }
-  .text-mint { color: var(--color-mint); }
-  .text-mint-dark { color: var(--color-mint-dark); }
-  .text-sky { color: var(--color-sky); }
-  .text-sky-dark { color: var(--color-sky-dark); }
-  .text-golden { color: var(--color-golden); }
-  .text-charcoal { color: var(--color-charcoal); }
-  .text-gray { color: var(--color-gray); }
-  
-  /* Border colors */
-  .border-coral { border-color: var(--color-coral); }
-  .border-mint { border-color: var(--color-mint); }
-  .border-sky { border-color: var(--color-sky); }
-  .border-golden { border-color: var(--color-golden); }
-  .border-peach { border-color: var(--color-peach); }
-}
-
-/* ============================================
-   Button Styles
+   Material card / button helpers
    ============================================ */
 @layer components {
+  .surface {
+    background: var(--surface);
+    border-radius: 16px;
+    border: 1px solid var(--outline);
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+  }
+  .surface-elevated {
+    background: var(--surface);
+    border-radius: 20px;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.08);
+  }
   .btn-primary {
-    background: linear-gradient(135deg, var(--color-coral) 0%, var(--color-coral-dark) 100%);
-    color: white;
+    background: var(--md-primary);
+    color: #ffffff;
     font-weight: 600;
-    font-size: 20px;
-    padding: 16px 32px;
-    border-radius: 16px;
-    min-height: var(--touch-target-min);
-    box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
-    transition: all 0.2s ease;
+    padding: 12px 24px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(79, 70, 229, 0.25);
+    transition: background 0.15s ease, box-shadow 0.15s ease, transform 0.05s ease;
   }
-  
-  .btn-primary:hover {
-    transform: scale(1.02);
-    box-shadow: 0 6px 16px rgba(255, 107, 107, 0.4);
-  }
-  
-  .btn-primary:active {
-    transform: scale(0.98);
-  }
-  
-  .btn-secondary {
-    background: var(--card-bg);
-    color: var(--color-charcoal);
-    font-weight: 600;
-    font-size: 20px;
-    padding: 16px 32px;
-    border-radius: 16px;
-    border: 3px solid var(--color-peach);
-    min-height: var(--touch-target-min);
-    transition: all 0.2s ease;
-  }
-  
-  .btn-secondary:hover {
-    background: var(--color-peach-light);
-    border-color: var(--color-coral-light);
-    transform: scale(1.02);
-  }
-  
-  .btn-mint {
-    background: linear-gradient(135deg, var(--color-mint) 0%, var(--color-mint-dark) 100%);
-    color: white;
-    font-weight: 600;
-    font-size: 20px;
-    padding: 16px 32px;
-    border-radius: 16px;
-    min-height: var(--touch-target-min);
-    box-shadow: 0 4px 12px rgba(152, 216, 170, 0.3);
-    transition: all 0.2s ease;
-  }
-  
-  .btn-mint:hover {
-    transform: scale(1.02);
-    box-shadow: 0 6px 16px rgba(152, 216, 170, 0.4);
-  }
-  
-  .btn-sky {
-    background: linear-gradient(135deg, var(--color-sky) 0%, var(--color-sky-dark) 100%);
-    color: white;
-    font-weight: 600;
-    font-size: 20px;
-    padding: 16px 32px;
-    border-radius: 16px;
-    min-height: var(--touch-target-min);
-    box-shadow: 0 4px 12px rgba(126, 200, 227, 0.3);
-    transition: all 0.2s ease;
-  }
-  
-  .btn-sky:hover {
-    transform: scale(1.02);
-  }
+  .btn-primary:hover { background: var(--md-primary-hover); box-shadow: 0 4px 12px rgba(79, 70, 229, 0.35); }
+  .btn-primary:active { transform: scale(0.98); }
 }
 
 /* ============================================
-   Card Styles
+   Animations (kept simple, used across app)
    ============================================ */
-@layer components {
-  .card-child {
-    background: var(--card-bg);
-    border-radius: 24px;
-    padding: 28px;
-    box-shadow: 0 8px 24px var(--card-shadow);
-    transition: all 0.3s ease;
-  }
-  
-  .card-child:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 32px var(--card-shadow);
-  }
-  
-  .card-activity {
-    background: var(--card-bg);
-    border-radius: 24px;
-    padding: 32px;
-    box-shadow: 0 8px 24px var(--card-shadow);
-    border: 3px solid transparent;
-    transition: all 0.3s ease;
-    cursor: pointer;
-  }
-  
-  .card-activity:hover {
-    transform: translateY(-6px) scale(1.02);
-    box-shadow: 0 16px 40px var(--card-shadow);
-  }
-  
-  .card-activity-coral:hover {
-    border-color: var(--color-coral-light);
-    background: linear-gradient(135deg, var(--card-bg) 0%, var(--color-coral-light) 100%);
-    background-size: 200% 200%;
-  }
-  
-  .card-activity-sky:hover {
-    border-color: var(--color-sky-light);
-    background: linear-gradient(135deg, var(--card-bg) 0%, var(--color-sky-light) 100%);
-    background-size: 200% 200%;
-  }
-  
-  .card-activity-mint:hover {
-    border-color: var(--color-mint-light);
-    background: linear-gradient(135deg, var(--card-bg) 0%, var(--color-mint-light) 100%);
-    background-size: 200% 200%;
-  }
-  
-  .card-activity-golden:hover {
-    border-color: var(--color-golden-light);
-    background: linear-gradient(135deg, var(--card-bg) 0%, var(--color-golden-light) 100%);
-    background-size: 200% 200%;
-  }
-}
-
-/* ============================================
-   Navigation Arrows
-   ============================================ */
-@layer components {
-  .nav-arrow {
-    width: var(--touch-target-lg);
-    height: var(--touch-target-lg);
-    border-radius: 50%;
-    background: var(--card-bg);
-    box-shadow: 0 4px 16px var(--card-shadow);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 32px;
-    color: var(--color-charcoal);
-    transition: all 0.2s ease;
-    cursor: pointer;
-  }
-  
-  .nav-arrow:hover:not(:disabled) {
-    transform: scale(1.1);
-    background: var(--color-peach-light);
-    box-shadow: 0 6px 20px var(--card-shadow);
-  }
-  
-  .nav-arrow:active:not(:disabled) {
-    transform: scale(0.95);
-  }
-  
-  .nav-arrow:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-  }
-}
-
-/* ============================================
-   Celebration Animations
-   ============================================ */
-@keyframes bounce-in {
-  0% { transform: scale(0); opacity: 0; }
-  50% { transform: scale(1.2); }
+@keyframes pop {
+  0% { transform: scale(0.6); opacity: 0; }
+  70% { transform: scale(1.08); opacity: 1; }
   100% { transform: scale(1); opacity: 1; }
 }
-
-@keyframes star-burst {
-  0% { transform: scale(0) rotate(0deg); opacity: 0; }
-  50% { transform: scale(1.3) rotate(180deg); opacity: 1; }
-  100% { transform: scale(1) rotate(360deg); opacity: 1; }
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-6deg); }
+  75% { transform: rotate(6deg); }
 }
-
-@keyframes gentle-shake {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-5px); }
-  75% { transform: translateX(5px); }
+@keyframes float-in {
+  from { transform: translateY(12px); opacity: 0; }
+  to   { transform: translateY(0); opacity: 1; }
 }
-
+@keyframes cheer {
+  0%   { transform: scale(1) rotate(0deg); }
+  30%  { transform: scale(1.15) rotate(-6deg); }
+  60%  { transform: scale(1.15) rotate(6deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
 @keyframes float {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+  50% { transform: translateY(-8px); }
 }
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
 
 @layer utilities {
-  .animate-bounce-in {
-    animation: bounce-in 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-  }
-  
-  .animate-star-burst {
-    animation: star-burst 0.6s ease-out;
-  }
-  
-  .animate-gentle-shake {
-    animation: gentle-shake 0.4s ease-in-out;
-  }
-  
-  .animate-float {
-    animation: float 3s ease-in-out infinite;
-  }
+  .animate-pop      { animation: pop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+  .animate-wiggle   { animation: wiggle 0.4s ease-in-out; }
+  .animate-float-in { animation: float-in 0.25s ease-out; }
+  .animate-cheer    { animation: cheer 0.5s ease-in-out; }
+  .animate-float    { animation: float 3s ease-in-out infinite; }
+  .animate-fade-in  { animation: fade-in 0.2s ease-out; }
 }
 
-/* ============================================
-   Custom Scrollbar Styles
-   ============================================ */
-@layer utilities {
-  /* Thin scrollbar */
-  .scrollbar-thin {
-    scrollbar-width: thin;
-  }
-  
-  .scrollbar-thumb-peach {
-    scrollbar-color: var(--color-peach) transparent;
-  }
-  
-  .scrollbar-track-transparent {
-    /* For Firefox */
-  }
-}
-
-/* Webkit scrollbar styles (Chrome, Safari, Edge) */
-.scrollbar-thin::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-
-.scrollbar-thin::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.scrollbar-thin::-webkit-scrollbar-thumb {
-  background-color: var(--color-peach);
-  border-radius: 3px;
-}
-
-.scrollbar-thin::-webkit-scrollbar-thumb:hover {
-  background-color: var(--color-coral-light);
-}
-
-/* Respect reduced motion preference */
+/* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
@@ -519,3 +253,12 @@ body {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Scrollbar (subtle) */
+@layer utilities {
+  .scrollbar-thin { scrollbar-width: thin; }
+}
+.scrollbar-thin::-webkit-scrollbar { width: 6px; height: 6px; }
+.scrollbar-thin::-webkit-scrollbar-track { background: transparent; }
+.scrollbar-thin::-webkit-scrollbar-thumb { background-color: var(--outline-strong); border-radius: 3px; }
+.scrollbar-thin::-webkit-scrollbar-thumb:hover { background-color: var(--md-primary); }

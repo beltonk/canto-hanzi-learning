@@ -69,6 +69,12 @@ export class AudioEngine {
     return ctx;
   }
 
+  private async getRunningContext(): Promise<AudioContext | null> {
+    const ctx = await this.resumeContextIfNeeded();
+    if (!ctx) return null;
+    return ctx.state === 'running' ? ctx : null;
+  }
+
   /**
    * Attempt to unlock audio playback on platforms that require user gesture
    * (notably iOS Safari/Chrome where AudioContext starts suspended).
@@ -126,7 +132,7 @@ export class AudioEngine {
     if (!this.globalEnabled) return;
     const entry = this.registry[id];
     if (!entry || !this.categoryEnabled[entry.category]) return;
-    const ctx = await this.resumeContextIfNeeded();
+    const ctx = await this.getRunningContext();
     if (!ctx) { this.playFallback(id); return; }
     const buf = await this.loadBuffer(id);
     if (!buf) return;
@@ -144,7 +150,7 @@ export class AudioEngine {
     }
     const entry = this.registry[id];
     if (!entry) return;
-    const ctx = await this.resumeContextIfNeeded();
+    const ctx = await this.getRunningContext();
     if (!ctx) { this.playFallback(id); return; }
     const buf = await this.loadBuffer(id);
     if (!buf) return;
@@ -163,7 +169,7 @@ export class AudioEngine {
     start: async (id: string) => {
       if (!this.globalEnabled || !this.categoryEnabled.music) return;
       this.stopMusic();
-      const ctx = await this.resumeContextIfNeeded();
+      const ctx = await this.getRunningContext();
       if (!ctx) return;
       const buf = await this.loadBuffer(id);
       if (!buf) return;
@@ -190,7 +196,7 @@ export class AudioEngine {
 
   async startBrush(id = 'brush.loop') {
     if (!this.globalEnabled || !this.categoryEnabled.effect) return;
-    const ctx = await this.resumeContextIfNeeded();
+    const ctx = await this.getRunningContext();
     if (!ctx) return;
     const buf = await this.loadBuffer(id);
     if (!buf) return;
@@ -233,8 +239,8 @@ export class AudioEngine {
    */
   async playCorrect() {
     if (!this.globalEnabled || !this.categoryEnabled.effect) return;
-    const ctx = await this.resumeContextIfNeeded();
-    if (!ctx) return;
+    const ctx = await this.getRunningContext();
+    if (!ctx) { this.playFallback('success.chime'); return; }
 
     const now = ctx.currentTime;
 
@@ -293,8 +299,8 @@ export class AudioEngine {
    */
   async playVictoryFanfare(level: 1 | 2 | 3 = 3) {
     if (!this.globalEnabled || !this.categoryEnabled.effect) return;
-    const ctx = await this.resumeContextIfNeeded();
-    if (!ctx) return;
+    const ctx = await this.getRunningContext();
+    if (!ctx) { this.playFallback('confetti.burst'); return; }
 
     const now = ctx.currentTime;
 
@@ -386,8 +392,8 @@ export class AudioEngine {
    */
   async playIncorrect() {
     if (!this.globalEnabled || !this.categoryEnabled.effect) return;
-    const ctx = await this.resumeContextIfNeeded();
-    if (!ctx) return;
+    const ctx = await this.getRunningContext();
+    if (!ctx) { this.playFallback('failure.soft'); return; }
     const gain = ctx.createGain();
     gain.gain.value = 0.12;
     gain.connect(this.gains.effect);

@@ -10,7 +10,7 @@ Highlights:
 - A search-first home page (search by character / 部首 / 粵拼) with quick
   links to every activity.
 - Finger-tracing of stroke order with a forgiving pixel-mask matcher,
-  star scoring, "重睇我寫" replay, and a reduced-motion path.
+  star scoring, stroke replay, and a reduced-motion path.
 - 8 mini-games with a shared lifecycle (intro → play → pause → result),
   all unlocked by default and fed from a 60+-item shuffled pool.
 - A gamification core (XP, levels, streaks with freeze grace, daily
@@ -19,6 +19,8 @@ Highlights:
   words you got wrong in dictation, games, and Sentence Garden.
 - Modern UI with Free HK Kai brush-stroke font, WCAG-AA-pinned palette,
   and `prefers-reduced-motion`–aware animations throughout.
+- Adaptive responsive layout across phone / iPad / desktop, with
+  full-pane content usage and consistent main-pane margins.
 
 ## 數據來源 (Data Source)
 
@@ -54,8 +56,8 @@ Highlights:
 ### Learning Activities
 
 - **🔍 查字 · 認字 (Character Exploration + Search)**: A unified search-and-learn surface. Search by character, radical (部首), or Jyutping; jump straight from the home page or the in-app search box. Each result shows pronunciation, stroke count, components, related words, and a one-tap favorite.
-- **🃏 字卡温習 (Flashcard Revision)**: Randomized flashcards with filters for learning stage and stroke count, large navigation arrows, audio pronunciation, and a `floatIn` card transition (auto-disabled under `prefers-reduced-motion`).
-- **🧩 拆字遊戲 (Decomposition Play)**: Drag-and-drop puzzle where students arrange character components into complete characters; success/error feedback uses the shared motion primitives.
+- **🃏 字卡溫習 (Flashcard Revision)**: Randomized flashcards with filters for learning stage and stroke count, large navigation arrows, audio pronunciation, and a `floatIn` card transition (auto-disabled under `prefers-reduced-motion`).
+- **🧩 拆字 (Decomposition Play)**: Drag-and-drop puzzle where students arrange character components into complete characters; success/error feedback uses the shared motion primitives.
 - **✏️ 默書練習 (Dictation Exercises)**: Audio-based dictation with auto-pronunciation, immediate feedback, and automatic addition of any missed character to 我的收藏.
 - **🖌️ 筆順練習 (Stroke Tracing)**: Finger / pen tracing on a 1080-px canvas. Uses a **pixel-mask matcher** (renders the expected stroke offscreen, builds a binary mask + distance field, then checks coverage / reach / oversize) so kids who are roughly on the right path always pass. Includes star scoring, mascot feedback, audio cues, **重睇我寫 replay** of captured polylines, a reduced-motion path, and a hidden `?debug=trace` overlay.
 - **🎮 遊戲樂園 (Mini-Games Hub)**: 8 engaging mini-games — Match-Up, Whack-a-Hanzi, Character Rain, Word Builder, Sentence Garden, Tone Bingo, Radical Detective, and Stroke Racer — sharing a single `GameHost` lifecycle (intro → play → pause → result → XP).
@@ -95,7 +97,8 @@ Highlights:
 
 The interface is specifically designed for primary school students:
 - **Material Design 3 palette** (indigo / purple / emerald + tinted surfaces); WCAG AA contrast pinned in unit tests for body text, status callouts, and white-on-color buttons.
-- **Consistent AppShell** on every page: a sticky header with burger / title / status pills, plus a floating "返回" chip beneath it (so the menu bar layout never changes).
+- **Consistent AppShell** on every page: sticky top bar + adaptive navigation (labeled left sidebar on larger screens, compact bottom tabs on smaller screens).
+- **Main-pane spacing system**: full-width content with small consistent margins so pages feel roomy without wasting space.
 - **Light mode default** with **dark mode support** — smooth theme switching.
 - **Bilingual interface** — Cantonese (default) and English.
 - **Large, touch-friendly buttons** (≥ 44 px touch targets) tuned for iPad.
@@ -119,7 +122,7 @@ The interface is specifically designed for primary school students:
 - **Styling**: Tailwind CSS 4 with CSS variables for theme support
 - **Font**: Free HK Kai (Traditional Chinese Kaishu)
 - **Internationalization**: React Context–based i18n (`zh-HK` + `en`)
-- **Audio**: Custom `AudioEngine` over Web Audio API with 4 channels (`ui` / `voice` / `music` / `effect`), lazy `AudioContext`, and an asset registry. TTS via `SpeechSynthesis` with explicit voice picking (`Sinji` / `Tracy` for Cantonese, `Tingting` / `Xiaoxiao` for Mandarin) and a wait-for-voices fallback.
+- **Audio**: Custom `AudioEngine` over Web Audio API with 4 channels (`ui` / `voice` / `music` / `effect`), lazy `AudioContext`, iOS/WebKit unlock-on-gesture handling, and an asset registry. TTS via `SpeechSynthesis` with explicit voice picking (`Sinji` / `Tracy` for Cantonese, `Tingting` / `Xiaoxiao` for Mandarin) and a wait-for-voices fallback.
 - **Storage**: `localStorage` under the `cantoHanzi.v1` key, with a typed `RootSchema`, schema versioning, and migrations (currently at v2; v1 → v2 adds the `favorites` collection).
 - **Stroke matching**: Pixel-mask matcher in `src/lib/tracing/match.ts` (`buildExpectedMask` + `computeDistanceField` + `matchStrokeByMask`).
 - **Motion primitives**: `useReducedMotion()` and `useMotionClass()` in `src/lib/motion/` (`pop` / `wiggle` / `floatIn` / `cheer` / `confetti` / `parallax`).
@@ -165,7 +168,7 @@ Once the server is running, you can access:
 - **Home (Playground Map)**: [http://localhost:3000](http://localhost:3000) — global search bar, activity tiles, quick links, today's review, daily quests, and the garden.
 - **Character Exploration + Search**: [http://localhost:3000/learn/explore](http://localhost:3000/learn/explore) — also accepts `?char=明` or `?q=口` to deep-link a search.
 - **Flashcard Revision**: [http://localhost:3000/learn/flashcard](http://localhost:3000/learn/flashcard)
-- **Decomposition Play**: [http://localhost:3000/learn/decompose](http://localhost:3000/learn/decompose)
+- **Decomposition (拆字)**: [http://localhost:3000/learn/decompose](http://localhost:3000/learn/decompose)
 - **Dictation Exercises**: [http://localhost:3000/learn/dictation](http://localhost:3000/learn/dictation)
 - **Stroke Tracing**: [http://localhost:3000/learn/trace](http://localhost:3000/learn/trace) — append `?debug=trace` to see per-stroke score components.
 - **Mini-Games Hub**: [http://localhost:3000/play](http://localhost:3000/play) — list of all 8 games.
@@ -212,7 +215,7 @@ canto-hanzi-learning/
 │   │   │   ├── StrokeAnimation.tsx
 │   │   │   └── RelatedWords.tsx
 │   │   └── ui/
-│   │       ├── AppShell.tsx           # consistent header + back chip
+│   │       ├── AppShell.tsx           # responsive shell + adaptive navigation
 │   │       ├── Mascot.tsx             # panda/rabbit/monkey/owl/cat/tiger
 │   │       ├── FavoriteButton.tsx     # heart toggle (pill / icon / chip)
 │   │       ├── QuestCard.tsx
@@ -369,8 +372,7 @@ import FlashcardRevision from "@/app/components/learning/FlashcardRevision";
 import DecompositionPlay from "@/app/components/learning/DecompositionPlay";
 
 <DecompositionPlay 
-  character="明" 
-  grade="Stage 1"
+  character="明"
   onCharacterChange={(char) => console.log(char)}
 />
 ```
@@ -380,7 +382,7 @@ import DecompositionPlay from "@/app/components/learning/DecompositionPlay";
 ```tsx
 import DictationExercise from "@/app/components/learning/DictationExercise";
 
-<DictationExercise grade="Stage 1" />
+<DictationExercise />
 ```
 
 ## Development

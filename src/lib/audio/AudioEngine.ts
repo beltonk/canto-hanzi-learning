@@ -22,6 +22,7 @@ export class AudioEngine {
   private brushSource: AudioBufferSourceNode | null = null;
   private audioElements = new Map<string, HTMLAudioElement>(); // fallback
   private unlocked = false;
+  private mediaElementUnlocked = false;
 
   setRegistry(registry: SoundRegistry) {
     this.registry = registry;
@@ -93,7 +94,25 @@ export class AudioEngine {
     } catch {
       // Best effort; context may still be usable without priming.
     }
+    await this.unlockMediaElementIfNeeded();
     return ctx.state === 'running';
+  }
+
+  private async unlockMediaElementIfNeeded(): Promise<void> {
+    if (this.mediaElementUnlocked || typeof window === 'undefined') return;
+    const primer = new Audio(this.registry['ui.tap']?.src ?? '/sounds/_initial/ui-tap.mp3');
+    primer.preload = 'auto';
+    primer.muted = true;
+    primer.setAttribute('playsinline', 'true');
+    primer.setAttribute('webkit-playsinline', 'true');
+    try {
+      await primer.play();
+      primer.pause();
+      primer.currentTime = 0;
+      this.mediaElementUnlocked = true;
+    } catch {
+      // Keep false and retry on next trusted gesture.
+    }
   }
 
   private async loadBuffer(id: string): Promise<AudioBuffer | null> {
@@ -115,6 +134,7 @@ export class AudioEngine {
   private playFallback(id: string) {
     const entry = this.registry[id];
     if (!entry) return;
+    void this.unlockMediaElementIfNeeded();
     let el = this.audioElements.get(id);
     if (!el) {
       el = new Audio(entry.src);
@@ -124,6 +144,8 @@ export class AudioEngine {
       el.setAttribute('webkit-playsinline', 'true');
       this.audioElements.set(id, el);
     }
+    el.muted = false;
+    el.volume = 1;
     el.currentTime = 0;
     el.play().catch(() => {});
   }
@@ -135,7 +157,7 @@ export class AudioEngine {
     const ctx = await this.getRunningContext();
     if (!ctx) { this.playFallback(id); return; }
     const buf = await this.loadBuffer(id);
-    if (!buf) return;
+    if (!buf) { this.playFallback(id); return; }
     const src = ctx.createBufferSource();
     src.buffer = buf;
     src.connect(this.gains[entry.category]);
@@ -153,7 +175,7 @@ export class AudioEngine {
     const ctx = await this.getRunningContext();
     if (!ctx) { this.playFallback(id); return; }
     const buf = await this.loadBuffer(id);
-    if (!buf) return;
+    if (!buf) { this.playFallback(id); return; }
     const src = ctx.createBufferSource();
     src.buffer = buf;
     src.connect(this.gains.voice);
@@ -172,7 +194,7 @@ export class AudioEngine {
       const ctx = await this.getRunningContext();
       if (!ctx) return;
       const buf = await this.loadBuffer(id);
-      if (!buf) return;
+      if (!buf) { this.playFallback(id); return; }
       const src = ctx.createBufferSource();
       src.buffer = buf;
       src.loop = true;
@@ -199,7 +221,7 @@ export class AudioEngine {
     const ctx = await this.getRunningContext();
     if (!ctx) return;
     const buf = await this.loadBuffer(id);
-    if (!buf) return;
+    if (!buf) { this.playFallback(id); return; }
     if (this.brushSource) { try { this.brushSource.stop(); } catch { /* ignore */ } }
     const src = ctx.createBufferSource();
     src.buffer = buf;

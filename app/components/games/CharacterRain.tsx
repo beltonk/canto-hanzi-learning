@@ -64,7 +64,8 @@ export default function CharacterRain({ items, onResult }: GameProps) {
   const [, setTick] = useState(0);
 
   // Container-driven sizing
-  const { ref: frameRef, size: frameSize } = useElementSize<HTMLDivElement>();
+  const frameRef = useRef<HTMLDivElement>(null);
+  const frameSize = useElementSize(frameRef);
   const widthPx = frameSize.width || 360;
   const columnCount = laneCountFor(widthPx);
   const columnWidthPct = 100 / columnCount;

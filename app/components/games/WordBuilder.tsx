@@ -77,7 +77,8 @@ export default function WordBuilder({ items, onResult }: GameProps) {
   const current = rounds[roundIdx] ?? null;
   const target = current?.word ?? '';
 
-  const { ref: containerRef, size: containerSize } = useElementSize<HTMLDivElement>();
+  const containerRef = useRef<HTMLDivElement>(null);
+  const containerSize = useElementSize(containerRef);
   const containerWidth = containerSize.width || 0;
 
   // Build pool: target chars + 2-3 random distractor chars

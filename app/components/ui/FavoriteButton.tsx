@@ -45,8 +45,8 @@ export default function FavoriteButton({
   };
 
   const sizes = size === 'sm'
-    ? { btn: 'px-2 py-1 text-xs gap-1', icon: 'text-sm' }
-    : { btn: 'px-3 py-1.5 text-sm gap-1.5', icon: 'text-base' };
+    ? { btn: 'px-2 py-1 text-xs gap-1 min-h-11', icon: 'text-sm' }
+    : { btn: 'px-3 py-1.5 text-sm gap-1.5 min-h-11', icon: 'text-base' };
 
   if (variant === 'icon') {
     return (
@@ -57,8 +57,8 @@ export default function FavoriteButton({
         aria-label={saved ? '從我的收藏移除' : '加入我的收藏'}
         aria-pressed={saved}
         className={`shrink-0 inline-flex items-center justify-center rounded-full transition-all active:scale-90 ${
-          size === 'sm' ? 'w-7 h-7 text-base' : 'w-9 h-9 text-lg'
-        } ${
+          size === 'sm' ? 'w-11 h-11 text-base' : 'w-11 h-11 text-lg'
+        } focus-visible:outline-2 focus-visible:outline-indigo-500 focus-visible:outline-offset-2 ${
           saved
             ? 'bg-rose-100 text-rose-600 hover:bg-rose-200'
             : 'bg-slate-100 text-slate-500 hover:bg-rose-50 hover:text-rose-500'

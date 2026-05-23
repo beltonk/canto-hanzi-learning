@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback, Suspense, useMemo } from 'react';
+import { useState, useEffect, useCallback, Suspense, useMemo, useRef } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import type { FullCharacterData, IndexEntry } from '@/types/fullCharacter';
 import AppShell from '@/app/components/ui/AppShell';
@@ -10,6 +10,7 @@ import { useAudio } from '@/lib/audio/context';
 import EndOfSessionSummary from '@/app/components/ui/EndOfSessionSummary';
 import { useSessionSummary } from '@/lib/activity/useSessionSummary';
 import { recordActivity } from '@/lib/activity/recordActivity';
+import { useElementSize } from '@/lib/viewport';
 
 const STROKE_RANGES = [
   { label: '全部', min: 1, max: 32 },
@@ -31,7 +32,12 @@ function TracePageContent() {
   const [data, setData] = useState<FullCharacterData | null>(null);
   const [loading, setLoading] = useState(true);
   const [lastStars, setLastStars] = useState<1 | 2 | 3 | null>(null);
-  const [canvasSize, setCanvasSize] = useState(360);
+
+  // Container-driven canvas sizing via ResizeObserver — no manual resize listeners needed.
+  const tracingContainerRef = useRef<HTMLDivElement>(null);
+  const { width: containerWidth } = useElementSize(tracingContainerRef);
+  // Canvas is a square that fits inside the container, padded 24px each side, clamped 200–420px.
+  const canvasSize = Math.round(Math.min(Math.max(containerWidth - 48, 200), 420));
 
   useEffect(() => { initSession(); }, [initSession]);
 
@@ -46,22 +52,6 @@ function TracePageContent() {
       })
       .catch(() => {});
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  // Responsive canvas size
-  useEffect(() => {
-    const update = () => {
-      const w = window.innerWidth;
-      // 360 default, fits cleanly on iPad/desktop; mobile uses (width - 32px padding - 4px border)
-      if (w >= 1280) setCanvasSize(390);
-      else if (w >= 1024) setCanvasSize(370);
-      else if (w >= 768) setCanvasSize(350); // tablet portrait keeps larger writing area
-      else if (w >= 640) setCanvasSize(340);
-      else setCanvasSize(Math.min(w - 48, 320));
-    };
-    update();
-    window.addEventListener('resize', update);
-    return () => window.removeEventListener('resize', update);
   }, []);
 
   const filteredList = useMemo(() => {
@@ -138,7 +128,8 @@ function TracePageContent() {
                 <button
                   key={r.label}
                   onClick={() => setStrokeRange(r)}
-                  className={`px-2.5 sm:px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${
+                  className={`px-3 sm:px-4 py-1.5 rounded-lg text-sm font-medium transition-all min-h-11 min-w-11 inline-flex items-center justify-center
+                    focus-visible:outline-2 focus-visible:outline-indigo-500 focus-visible:outline-offset-2 ${
                     strokeRange === r
                       ? 'bg-indigo-600 text-white shadow-sm'
                       : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
@@ -152,7 +143,8 @@ function TracePageContent() {
             <select
               value={filterRadical}
               onChange={e => setFilterRadical(e.target.value)}
-              className="px-3 py-1.5 rounded-lg text-sm border border-indigo-200 bg-white/80 text-slate-700 focus:border-indigo-500 focus:outline-none font-chinese"
+              className="px-3 py-1.5 rounded-lg text-sm border border-indigo-200 bg-white/80 text-slate-700 focus:border-indigo-500 focus:outline-none font-chinese h-11"
+              aria-label="按部首篩選"
             >
               <option value="">全部</option>
               {radicals.map(r => <option key={r} value={r}>{r}</option>)}
@@ -162,15 +154,15 @@ function TracePageContent() {
         </div>
 
         {/* Side-by-side from md (iPad portrait) up — fills remaining vertical space */}
-        <div className="flex-1 grid grid-cols-1 lg:grid-cols-[1fr_300px] xl:grid-cols-[1fr_340px] gap-3 min-h-0">
+        <div className="flex-1 grid grid-cols-1 md:grid-cols-[1fr_260px] lg:grid-cols-[1fr_300px] xl:grid-cols-[1fr_340px] gap-3 min-h-0">
           {/* Tracing area */}
-          <div className="bg-gradient-to-br from-indigo-100 via-purple-100 to-indigo-50 rounded-2xl shadow-sm border-2 border-indigo-300 p-3 sm:p-4 min-h-0 overflow-y-auto">
+          <div ref={tracingContainerRef} className="bg-gradient-to-br from-indigo-100 via-purple-100 to-indigo-50 rounded-2xl shadow-sm border-2 border-indigo-300 p-3 sm:p-4 min-h-0 overflow-y-auto">
             <div className="flex items-center justify-between gap-2 mb-3 flex-wrap">
               <div className="flex items-center gap-2 sm:gap-3">
                 <button
                   onClick={goPrev}
                   disabled={currentIdx <= 0}
-                  className="w-10 h-10 rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 disabled:opacity-40 disabled:cursor-not-allowed transition-all flex items-center justify-center text-lg"
+                  className="w-11 h-11 rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 disabled:opacity-40 disabled:cursor-not-allowed transition-all flex items-center justify-center text-lg focus-visible:outline-2 focus-visible:outline-indigo-500 focus-visible:outline-offset-2"
                   aria-label="上一個"
                 >
                   ←
@@ -184,7 +176,7 @@ function TracePageContent() {
                 <button
                   onClick={goNext}
                   disabled={currentIdx >= filteredList.length - 1}
-                  className="w-10 h-10 rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 disabled:opacity-40 disabled:cursor-not-allowed transition-all flex items-center justify-center text-lg"
+                  className="w-11 h-11 rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 disabled:opacity-40 disabled:cursor-not-allowed transition-all flex items-center justify-center text-lg focus-visible:outline-2 focus-visible:outline-indigo-500 focus-visible:outline-offset-2"
                   aria-label="下一個"
                 >
                   →
@@ -250,12 +242,15 @@ function TracePageContent() {
             </div>
             <div className="flex-1 min-h-0 overflow-y-auto pr-1
                             scrollbar-thin scrollbar-thumb-sky-300 scrollbar-track-transparent">
-              <div className="grid grid-cols-7 sm:grid-cols-8 md:grid-cols-10 lg:grid-cols-4 xl:grid-cols-5 gap-1.5">
+              <div className="grid grid-cols-5 sm:grid-cols-6 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5 gap-1.5">
                 {filteredList.map(e => (
                   <button
                     key={e.character}
                     onClick={() => setCurrentChar(e.character)}
-                    className={`aspect-square rounded-lg font-chinese text-lg sm:text-xl flex items-center justify-center transition-all border ${
+                    aria-label={e.character}
+                    aria-current={e.character === currentChar ? 'true' : undefined}
+                    className={`aspect-square min-h-11 min-w-11 rounded-lg font-chinese text-lg sm:text-xl flex items-center justify-center transition-all border
+                      focus-visible:outline-2 focus-visible:outline-indigo-500 focus-visible:outline-offset-2 ${
                       e.character === currentChar
                         ? 'bg-indigo-600 text-white border-indigo-600 shadow-md scale-105'
                         : 'bg-white/70 border-sky-200 text-slate-800 hover:border-indigo-400 hover:bg-indigo-50'

@@ -180,8 +180,8 @@ export default function WhackAHanzi({ items, onResult }: GameProps) {
         <span>最高連擊 <strong>{bestCombo}</strong></span>
       </div>
 
-      {/* Mole field */}
-      <div className="grid grid-cols-3 gap-3 sm:gap-4 max-w-sm w-full">
+      {/* Mole field — scales with container: narrow on phone, wider on iPad/desktop */}
+      <div className="grid grid-cols-3 gap-3 sm:gap-4 md:gap-5 w-full max-w-sm md:max-w-md lg:max-w-lg">
         {Array.from({ length: HOLES }, (_, i) => {
           const visual = HOLE_VISUALS[i % HOLE_VISUALS.length];
           const isActive = active.includes(i);

@@ -174,7 +174,9 @@ export default function DecompositionPlay({ character, onCharacterChange }: Deco
             {allEntries.length > 24 && (
               <button
                 onClick={() => setShowCharList(!showCharList)}
-                className="text-sm text-indigo-600 hover:text-indigo-700 font-medium flex items-center gap-1"
+                aria-expanded={showCharList}
+                className="text-sm text-indigo-600 hover:text-indigo-700 font-medium flex items-center gap-1 min-h-11 px-2
+                  focus-visible:outline-2 focus-visible:outline-indigo-500 focus-visible:outline-offset-2"
               >
                 {showCharList ? '收起' : '展開全部'}
                 <span className={`transition-transform ${showCharList ? 'rotate-180' : ''}`}>▼</span>
@@ -190,7 +192,10 @@ export default function DecompositionPlay({ character, onCharacterChange }: Deco
                   onCharacterChange?.(e.character);
                   initPuzzle(e);
                 }}
-                className={`text-2xl px-3 py-2 rounded-xl border transition-all hanzi-display font-medium min-w-[48px] ${
+                aria-label={e.character}
+                aria-current={e.character === currentEntry.character ? 'true' : undefined}
+                className={`text-2xl px-3 py-2 rounded-xl border transition-all hanzi-display font-medium min-w-11 min-h-11 inline-flex items-center justify-center
+                  focus-visible:outline-2 focus-visible:outline-indigo-500 focus-visible:outline-offset-2 ${
                   e.character === currentEntry.character
                     ? "bg-indigo-600 text-white border-indigo-600 shadow-md"
                     : "bg-indigo-50/70 border-indigo-200 text-slate-800 hover:border-indigo-400 hover:bg-indigo-100"
@@ -228,13 +233,16 @@ export default function DecompositionPlay({ character, onCharacterChange }: Deco
             />
             <button
               onClick={() => setShowHint(!showHint)}
-              className="px-4 py-2.5 rounded-xl bg-white border border-amber-300 text-amber-700 text-sm font-medium hover:bg-amber-50 transition-all"
+              aria-pressed={showHint}
+              className="px-4 py-2.5 rounded-xl bg-white border border-amber-300 text-amber-700 text-sm font-medium hover:bg-amber-50 transition-all min-h-11 inline-flex items-center
+                         focus-visible:outline-2 focus-visible:outline-indigo-500 focus-visible:outline-offset-2"
             >
               {showHint ? '隱藏提示' : '提示 💡'}
             </button>
             <button
               onClick={reset}
-              className="px-4 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-700 text-sm font-medium hover:bg-slate-50 transition-all"
+              className="px-4 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-700 text-sm font-medium hover:bg-slate-50 transition-all min-h-11 inline-flex items-center
+                         focus-visible:outline-2 focus-visible:outline-indigo-500 focus-visible:outline-offset-2"
             >
               重置 🔄
             </button>
@@ -250,8 +258,16 @@ export default function DecompositionPlay({ character, onCharacterChange }: Deco
         )}
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {/* Drop Zone */}
+      {/* Three-variant layout:
+          - Phone portrait: vertical stack (drop above available)
+          - Phone landscape: side-by-side so kids see both halves without scrolling
+          - iPad+: side-by-side with breathing room (centered)
+          touch-action: manipulation prevents the page from scrolling when
+          rapid taps target component tiles. */}
+      <div
+        className="grid grid-cols-1 max-md:landscape:grid-cols-2 md:grid-cols-2 gap-4"
+        style={{ touchAction: 'manipulation' }}
+      >
         <div className="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-2xl shadow-sm border-2 border-emerald-200 p-4">
           <div className="text-sm font-semibold text-slate-600 mb-3 text-center">放置區（按順序）</div>
           <div className="min-h-[100px] border-2 border-dashed border-emerald-400 rounded-xl bg-emerald-100/60 p-4">
@@ -263,7 +279,9 @@ export default function DecompositionPlay({ character, onCharacterChange }: Deco
                   <button
                     key={idx}
                     onClick={() => moveComponent(component, true)}
-                    className="text-3xl px-4 py-3 bg-emerald-500 text-white rounded-xl shadow hover:bg-emerald-600 active:scale-95 transition-all hanzi-display font-medium"
+                    aria-label={`移除部件「${component}」`}
+                    className="text-3xl px-4 py-3 min-h-11 min-w-11 inline-flex items-center justify-center bg-emerald-500 text-white rounded-xl shadow hover:bg-emerald-600 active:scale-95 transition-all hanzi-display font-medium
+                               focus-visible:outline-2 focus-visible:outline-indigo-500 focus-visible:outline-offset-2"
                   >
                     {component}
                   </button>
@@ -273,7 +291,6 @@ export default function DecompositionPlay({ character, onCharacterChange }: Deco
           </div>
         </div>
 
-        {/* Available Components */}
         <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl shadow-sm border-2 border-amber-200 p-4">
           <div className="text-sm font-semibold text-slate-600 mb-3 text-center">可用部件</div>
           <div className="flex gap-2 flex-wrap justify-center min-h-[100px] items-center p-2">
@@ -284,7 +301,9 @@ export default function DecompositionPlay({ character, onCharacterChange }: Deco
                 <button
                   key={idx}
                   onClick={() => moveComponent(component, false)}
-                  className="text-3xl px-4 py-3 bg-amber-100 rounded-xl border-2 border-amber-300 text-slate-800 hover:bg-amber-200 hover:scale-105 active:scale-95 transition-all hanzi-display font-medium"
+                  aria-label={`加入部件「${component}」`}
+                  className="text-3xl px-4 py-3 min-h-11 min-w-11 inline-flex items-center justify-center bg-amber-100 rounded-xl border-2 border-amber-300 text-slate-800 hover:bg-amber-200 hover:scale-105 active:scale-95 transition-all hanzi-display font-medium
+                             focus-visible:outline-2 focus-visible:outline-indigo-500 focus-visible:outline-offset-2"
                 >
                   {component}
                 </button>

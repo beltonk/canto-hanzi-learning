@@ -57,22 +57,10 @@ export default function FlashcardRevision({
   // Card state
   const [showFilters, setShowFilters] = useState(false);
   const [showStrokeAnimation, setShowStrokeAnimation] = useState(false);
-  const [strokeAnimSize, setStrokeAnimSize] = useState(220);
+  const strokeAnimSize = 220;
 
-  // Adaptive canvas sizing for phone / iPad portrait / iPad landscape.
-  useEffect(() => {
-    const updateSize = () => {
-      const w = window.innerWidth;
-      if (w >= 1366) setStrokeAnimSize(260);
-      else if (w >= 1180) setStrokeAnimSize(240);
-      else if (w >= 900) setStrokeAnimSize(220);
-      else if (w >= 768) setStrokeAnimSize(210);
-      else setStrokeAnimSize(190);
-    };
-    updateSize();
-    window.addEventListener("resize", updateSize);
-    return () => window.removeEventListener("resize", updateSize);
-  }, []);
+  // strokeAnimSize is controlled via the existing useState default (220px).
+  // The component sizes itself to fit its flex container; no resize listener needed.
 
   // Load summary stats on mount
   useEffect(() => {
@@ -402,13 +390,13 @@ export default function FlashcardRevision({
       <div className="flex-1 min-h-0 px-1.5 sm:px-2 pb-1.5 sm:pb-2">
         <div
           key={current.character}
-          className={`h-full grid grid-cols-1 lg:grid-cols-[minmax(320px,42%)_1fr] gap-0 min-h-0 overflow-hidden
+          className={`h-full grid grid-cols-1 md:grid-cols-[minmax(280px,42%)_1fr] gap-0 min-h-0 overflow-hidden
                       bg-gradient-to-br from-sky-100 via-white to-purple-100
                       rounded-3xl shadow-xl border-2 border-sky-300 ${cardEnterClass}`}
         >
           {/* LEFT: Character display */}
-          <div className="flex flex-col items-center justify-center p-4 lg:p-6
-                          lg:border-r-2 border-sky-200 bg-gradient-to-br from-sky-100 to-indigo-100">
+          <div className="flex flex-col items-center justify-center p-4 md:p-6
+                          md:border-r-2 border-sky-200 bg-gradient-to-br from-sky-100 to-indigo-100">
             {/* Prev / next controls stay close to card content on all screens */}
             <div className="w-full flex items-center justify-between mb-2">
               <NavArrow direction="left" onClick={goToPrevious} disabled={isFirst} size="md" />
@@ -468,7 +456,7 @@ export default function FlashcardRevision({
           </div>
 
           {/* RIGHT: Details */}
-          <div className="flex flex-col p-4 lg:p-6 min-h-0 overflow-y-auto gap-3">
+          <div className="flex flex-col p-4 md:p-6 min-h-0 overflow-y-auto gap-3">
             {/* Radical + stroke count pills */}
             <div className="grid grid-cols-2 gap-2 shrink-0">
               <div className="bg-rose-100 border border-rose-200 rounded-2xl p-3 text-center">

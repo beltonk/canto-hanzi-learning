@@ -227,7 +227,9 @@ export default function CharacterExploration({
                 </span>
                 <button
                   onClick={() => setShowFilters(!showFilters)}
-                  className={`text-xs px-1.5 py-0.5 rounded transition-colors ${
+                  aria-expanded={showFilters}
+                  className={`text-xs px-2 py-1 rounded transition-colors min-h-11 inline-flex items-center
+                    focus-visible:outline-2 focus-visible:outline-indigo-500 focus-visible:outline-offset-2 ${
                     showFilters 
                       ? "text-[var(--color-coral)] hover:bg-[var(--color-coral)]/10" 
                       : "text-[var(--color-gray-light)] hover:text-[var(--color-coral)]"
@@ -240,7 +242,9 @@ export default function CharacterExploration({
               {characterList.length > 20 && (
                 <button
                   onClick={() => setShowCharList(!showCharList)}
-                  className="text-xs text-[var(--color-coral)] hover:text-[var(--color-coral-dark)] font-medium flex items-center gap-1"
+                  aria-expanded={showCharList}
+                  className="text-xs text-[var(--color-coral)] hover:text-[var(--color-coral-dark)] font-medium flex items-center gap-1 min-h-11 px-2
+                    focus-visible:outline-2 focus-visible:outline-indigo-500 focus-visible:outline-offset-2"
                 >
                   {showCharList ? t("collapseList") : t("expandList")}
                   <span className={`transition-transform ${showCharList ? "rotate-180" : ""}`}>
@@ -261,7 +265,8 @@ export default function CharacterExploration({
                     value={filterChar}
                     onChange={(e) => setFilterChar(e.target.value)}
                     placeholder="搜尋：輸入字、部首或粵拼"
-                    className="w-full h-9 px-3 text-base border-2 border-rose-200 rounded-xl
+                    aria-label={t("filter")}
+                    className="w-full min-w-0 h-11 px-3 text-base border-2 border-rose-200 rounded-xl
                              bg-white text-slate-900 focus:border-rose-500 focus:outline-none
                              placeholder:text-slate-400"
                   />
@@ -273,7 +278,8 @@ export default function CharacterExploration({
                   <select
                     value={filterRadical}
                     onChange={(e) => setFilterRadical(e.target.value)}
-                    className="w-24 h-9 px-2 text-sm border border-[var(--input-border)] rounded-lg
+                    aria-label={t("radical")}
+                    className="w-24 h-11 px-2 text-sm border border-[var(--input-border)] rounded-lg
                              bg-[var(--input-bg)] text-[var(--color-charcoal)] focus:border-[var(--color-coral)] focus:outline-none
                              font-sans leading-normal"
                   >
@@ -290,7 +296,8 @@ export default function CharacterExploration({
                   <select
                     value={filterStrokeCount}
                     onChange={(e) => setFilterStrokeCount(e.target.value ? Number(e.target.value) : "")}
-                    className="w-20 h-9 px-2 text-sm border border-[var(--input-border)] rounded-lg
+                    aria-label={t("strokeCount")}
+                    className="w-20 h-11 px-2 text-sm border border-[var(--input-border)] rounded-lg
                              bg-[var(--input-bg)] text-[var(--color-charcoal)] focus:border-[var(--color-coral)] focus:outline-none
                              font-sans leading-normal"
                   >
@@ -324,7 +331,10 @@ export default function CharacterExploration({
                   <button
                     key={entry.id}
                     onClick={() => onCharacterChange?.(entry.character)}
-                    className={`text-2xl px-3 py-2 rounded-xl border-2 transition-all hanzi-display ${
+                    aria-label={entry.character}
+                    aria-current={entry.character === character ? 'true' : undefined}
+                    className={`text-2xl px-3 py-2 rounded-xl border-2 transition-all hanzi-display min-w-11 min-h-11 inline-flex items-center justify-center
+                      focus-visible:outline-2 focus-visible:outline-indigo-500 focus-visible:outline-offset-2 ${
                       entry.character === character
                         ? "bg-[var(--color-coral)] text-white border-[var(--color-coral)] shadow-md"
                         : "bg-[var(--card-bg)] border-[var(--color-peach)] text-[var(--color-charcoal)] hover:border-[var(--color-coral-light)] hover:bg-[var(--color-coral)]/10"
@@ -377,7 +387,8 @@ export default function CharacterExploration({
                 <button
                   onClick={() => speakMandarin(data.character)}
                   className="text-sm text-[var(--color-gray-light)] mt-1 hover:text-[var(--color-gray)] transition-colors
-                           inline-flex items-center gap-1 group"
+                           inline-flex items-center gap-1 group min-h-11 px-2
+                           focus-visible:outline-2 focus-visible:outline-indigo-500 focus-visible:outline-offset-2"
                   title={t("mandarinPronunciation")}
                 >
                   <span className="text-xs opacity-60 group-hover:opacity-100">🔊</span>
@@ -398,7 +409,8 @@ export default function CharacterExploration({
                          rounded-full text-base font-semibold
                          shadow-[0_4px_12px_rgba(255,107,107,0.3)]
                          hover:scale-105 active:scale-95 transition-all
-                         flex items-center gap-2"
+                         flex items-center gap-2 min-h-11
+                         focus-visible:outline-2 focus-visible:outline-indigo-500 focus-visible:outline-offset-2"
               >
                 <span className="text-lg">🔊</span> {t("listenPronunciation")}
               </button>
@@ -425,9 +437,11 @@ export default function CharacterExploration({
                     <button
                       key={`${word.word}-${idx}`}
                       onClick={() => speakCantonese(word.word)}
+                      aria-label={`聽詞語：${word.word}`}
                       className="px-3 py-1.5 bg-[var(--color-peach)]/10 border-2 border-[var(--color-peach)] rounded-xl
-                               text-base hanzi-display text-[var(--color-charcoal)]
-                               hover:border-[var(--color-coral-light)] hover:bg-[var(--color-coral)]/5 transition-colors"
+                               text-base hanzi-display text-[var(--color-charcoal)] min-h-11 inline-flex items-center
+                               hover:border-[var(--color-coral-light)] hover:bg-[var(--color-coral)]/5 transition-colors
+                               focus-visible:outline-2 focus-visible:outline-indigo-500 focus-visible:outline-offset-2"
                     >
                       {word.word}
                     </button>

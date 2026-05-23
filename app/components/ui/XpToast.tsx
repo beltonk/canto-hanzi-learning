@@ -20,7 +20,15 @@ export default function XpToast({ amount, onDone }: XpToastProps) {
   if (!visible) return null;
 
   return (
-    <div className="fixed bottom-24 right-4 z-50 animate-float-in pointer-events-none">
+    /* Phone: anchored to top-safe inset. iPad+: top-right corner. */
+    <div
+      className="fixed z-50 animate-float-in pointer-events-none
+                 top-[calc(var(--safe-top)+8px)] right-4
+                 md:top-[calc(var(--safe-top)+16px)] md:right-6"
+      role="status"
+      aria-live="polite"
+      aria-label={`獲得 ${amount} 經驗值`}
+    >
       <div className="bg-[var(--color-golden)] text-[var(--color-charcoal)] font-bold px-4 py-2 rounded-full shadow-lg text-sm">
         +{amount} XP ⭐
       </div>

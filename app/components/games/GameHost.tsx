@@ -175,14 +175,19 @@ export default function GameHost({ module, onExit, onNextGame }: GameHostProps) 
 
   return (
     <div className="bg-gradient-to-br from-indigo-100 to-purple-100 rounded-3xl shadow-md border-2 border-indigo-300 overflow-hidden">
-      <div className="flex items-center justify-between px-4 py-2.5 border-b border-indigo-200 bg-indigo-200/60">
-        <div className="flex items-center gap-2">
-          <span className="text-xl">{manifest.emoji ?? '🎮'}</span>
-          <h3 className="font-bold text-slate-900 text-base">{manifest.title['zh-HK']}</h3>
+      <div
+        className="flex items-center justify-between gap-2 px-4 py-2 border-b border-indigo-200 bg-indigo-200/60 sticky top-0 z-10 backdrop-blur"
+        style={{ paddingTop: 'max(8px, var(--safe-top))' }}
+      >
+        <div className="flex items-center gap-2 min-w-0">
+          <span className="text-xl shrink-0">{manifest.emoji ?? '🎮'}</span>
+          <h3 className="font-bold text-slate-900 text-base truncate">{manifest.title['zh-HK']}</h3>
         </div>
         <button
           onClick={() => setPhase('paused')}
-          className="px-3 py-1.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-white hover:shadow-sm transition-all"
+          aria-label="暫停遊戲"
+          className="shrink-0 px-3 py-1.5 min-h-11 inline-flex items-center rounded-lg text-sm font-medium text-slate-700 hover:bg-white hover:shadow-sm transition-all
+                     focus-visible:outline-2 focus-visible:outline-indigo-500 focus-visible:outline-offset-2"
         >
           ⏸ 暫停
         </button>

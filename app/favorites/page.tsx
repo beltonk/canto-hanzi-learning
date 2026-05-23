@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import AppShell from '@/app/components/ui/AppShell';
+import PageScaffold from '@/app/components/ui/PageScaffold';
 import { useAudio } from '@/lib/audio/context';
 import { getFavorites, removeFavorite, markReviewed } from '@/lib/favorites';
 import type { FavoriteEntry } from '@/lib/storage/types';
@@ -31,7 +32,6 @@ export default function FavoritesPage() {
   const refresh = () => setFavorites(getFavorites());
 
   useEffect(() => {
-    // Defer to next microtask so React doesn't trigger cascading renders.
     Promise.resolve().then(() => setFavorites(getFavorites()));
   }, []);
 
@@ -59,10 +59,6 @@ export default function FavoritesPage() {
     mistake: favorites.filter(f => f.reason === 'mistake').length,
   };
 
-  // Build the deep-link list of single Han characters across the current
-  // filter — used by the "用字卡複習" CTA. Words/phrases are split into
-  // their constituent characters so the flashcard session always sees
-  // single-character cards.
   const reviseCharsParam = (() => {
     const chars = new Set<string>();
     filtered.forEach(f => {
@@ -72,6 +68,7 @@ export default function FavoritesPage() {
     });
     return Array.from(chars).join(',');
   })();
+
   const reviseTitle =
     filter === 'mistake' ? '收藏：錯題複習' :
     filter === 'char'    ? '收藏：單字複習' :
@@ -80,151 +77,155 @@ export default function FavoritesPage() {
 
   return (
     <AppShell title="我的收藏" emoji="❤️" bg="pink">
-      <div className="w-full h-full p-0">
-        {/* Hero */}
-        <div className="mb-5 rounded-3xl bg-gradient-to-br from-pink-500 via-rose-500 to-fuchsia-500 text-white p-5 sm:p-6 shadow-lg relative overflow-hidden">
-          <div className="absolute -right-6 -top-6 text-9xl opacity-20 select-none">❤️</div>
-          <div className="relative">
-            <h2 className="text-xl sm:text-2xl font-bold mb-1">我的收藏</h2>
-            <p className="text-sm sm:text-base text-white/90 mb-3">收藏想多複習的字、詞，或答錯過的題目</p>
-            <div className="flex items-center gap-2 flex-wrap">
-              <span className="px-3 py-1 rounded-full bg-white/20 backdrop-blur text-sm font-semibold">
-                共 {counts.all} 項
-              </span>
-              {counts.mistake > 0 && (
-                <span className="px-3 py-1 rounded-full bg-white/20 backdrop-blur text-sm font-semibold">
-                  錯題 {counts.mistake} 個
+      <PageScaffold
+        primary={
+          <div className="w-full h-full flex flex-col min-h-0 gap-3">
+            {/* Shrunk Hero Row */}
+            <div className="flex items-center justify-between flex-wrap gap-2 bg-gradient-to-br from-pink-500 via-rose-500 to-fuchsia-500 rounded-2xl text-white p-3.5 shadow-md relative overflow-hidden shrink-0">
+              <div aria-hidden="true" className="absolute -right-4 -top-4 text-6xl opacity-15 select-none pointer-events-none">❤️</div>
+              <div>
+                <h2 className="text-sm sm:text-base font-bold flex items-center gap-1.5 leading-none mb-1">
+                  我的收藏 ❤️
+                </h2>
+                <p className="text-[10px] sm:text-xs text-white/90 leading-none">
+                  收藏想多複習的漢字、詞語、或答錯過的題目
+                </p>
+              </div>
+              <div className="flex items-center gap-1.5 shrink-0">
+                <span className="px-2 py-1 rounded-lg bg-white/20 text-[10px] font-bold">
+                  共 {counts.all} 項
                 </span>
-              )}
-              {reviseCharsParam.length > 0 && (
-                <Link
-                  href={`/learn/flashcard?chars=${encodeURIComponent(reviseCharsParam)}&title=${encodeURIComponent(reviseTitle)}`}
-                  className="ml-auto px-4 py-1.5 rounded-full bg-white text-rose-600 text-sm font-bold shadow-md hover:bg-rose-50 active:scale-95 transition-all"
-                >
-                  🃏 用字卡複習
-                </Link>
-              )}
-            </div>
-          </div>
-        </div>
-
-        {/* Filters */}
-        <div className="mb-4 flex items-center gap-2 flex-wrap">
-          {([
-            { key: 'all',     label: '全部',   count: counts.all },
-            { key: 'char',    label: '單字',   count: counts.char },
-            { key: 'word',    label: '詞語',   count: counts.word },
-            { key: 'mistake', label: '錯題',   count: counts.mistake },
-          ] as const).map(f => (
-            <button
-              key={f.key}
-              onClick={() => setFilter(f.key)}
-              className={`px-4 py-2 rounded-full text-sm font-semibold transition-all ${
-                filter === f.key
-                  ? 'bg-rose-500 text-white shadow-md'
-                  : 'bg-rose-50 border border-rose-200 text-slate-700 hover:border-rose-300 hover:bg-rose-100'
-              }`}
-            >
-              {f.label} <span className="opacity-70">({f.count})</span>
-            </button>
-          ))}
-        </div>
-
-        {/* Empty state */}
-        {filtered.length === 0 && (
-          <div className="rounded-2xl bg-gradient-to-br from-rose-50 to-pink-50 border-2 border-rose-200 p-10 text-center shadow-sm">
-            <div className="text-6xl mb-3">📭</div>
-            <div className="text-lg font-bold text-slate-800 mb-1">
-              {favorites.length === 0 ? '還沒有收藏項目' : '此分類下沒有項目'}
-            </div>
-            <div className="text-sm text-slate-500 mb-5">
-              在學習或玩遊戲時，看到喜歡或想再練習的字 / 詞，按 <span className="text-rose-600 font-semibold">❤️ 收藏</span> 即可加入這裡。
-            </div>
-            <div className="flex justify-center gap-2 flex-wrap">
-              <Link href="/learn/explore" className="px-4 py-2 rounded-xl bg-rose-500 text-white text-sm font-semibold hover:bg-rose-600 active:scale-95 transition-all">
-                認字
-              </Link>
-              <Link href="/learn/dictation" className="px-4 py-2 rounded-xl bg-amber-500 text-white text-sm font-semibold hover:bg-amber-600 active:scale-95 transition-all">
-                默書
-              </Link>
-              <Link href="/play" className="px-4 py-2 rounded-xl bg-fuchsia-500 text-white text-sm font-semibold hover:bg-fuchsia-600 active:scale-95 transition-all">
-                遊戲
-              </Link>
-            </div>
-          </div>
-        )}
-
-        {/* Grid */}
-        {filtered.length > 0 && (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-            {filtered.map(fav => (
-              <div
-                key={fav.text}
-                className="group rounded-2xl bg-gradient-to-br from-rose-50 to-pink-50 border-2 border-rose-200 hover:border-rose-400 shadow-sm hover:shadow-md transition-all overflow-hidden flex flex-col"
-              >
-                {/* Character display */}
-                <button
-                  onClick={() => handleSpeak(fav.text)}
-                  className="w-full p-4 flex items-center justify-center bg-gradient-to-br from-rose-50 via-pink-50 to-fuchsia-50 hover:from-rose-100 hover:to-fuchsia-100 transition-all"
-                  title="點擊播放發音"
-                >
-                  <span
-                    className={`hanzi-display text-slate-900 text-center leading-tight ${
-                      fav.kind === 'char' ? 'text-6xl' : 'text-4xl'
-                    }`}
+                {reviseCharsParam.length > 0 && (
+                  <Link
+                    href={`/learn/flashcard?chars=${encodeURIComponent(reviseCharsParam)}&title=${encodeURIComponent(reviseTitle)}`}
+                    className="px-3 py-1.5 rounded-xl bg-white text-rose-600 text-xs font-bold shadow-sm hover:bg-rose-50 active:scale-95 transition-all"
                   >
-                    {fav.text}
-                  </span>
+                    🃏 字卡複習
+                  </Link>
+                )}
+              </div>
+            </div>
+
+            {/* Filters */}
+            <div className="flex items-center gap-1.5 flex-wrap shrink-0">
+              {([
+                { key: 'all',     label: '全部',   count: counts.all },
+                { key: 'char',    label: '單字',   count: counts.char },
+                { key: 'word',    label: '詞語',   count: counts.word },
+                { key: 'mistake', label: '錯題',   count: counts.mistake },
+              ] as const).map(f => (
+                <button
+                  key={f.key}
+                  onClick={() => setFilter(f.key)}
+                  className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all min-h-11 inline-flex items-center gap-1 focus-visible:outline-2 focus-visible:outline-indigo-500 focus-visible:outline-offset-1 ${
+                    filter === f.key
+                      ? 'bg-rose-500 text-white shadow-sm'
+                      : 'bg-rose-50 dark:bg-rose-950/20 border border-rose-200 dark:border-rose-900 text-slate-750 dark:text-rose-350 hover:bg-rose-100/50'
+                  }`}
+                >
+                  {f.label} <span className="opacity-70 text-[10px]">({f.count})</span>
                 </button>
+              ))}
+            </div>
 
-                {/* Meta */}
-                <div className="p-3 flex flex-col gap-2 flex-1">
-                  {fav.jyutping && (
-                    <div className="text-center font-mono text-sm text-indigo-600 truncate">
-                      {fav.jyutping}
-                    </div>
-                  )}
-                  <div className="flex items-center justify-center gap-1 text-xs text-slate-500 flex-wrap">
-                    {fav.reason === 'mistake' && (
-                      <span className="px-1.5 py-0.5 rounded-full bg-rose-100 text-rose-600 font-semibold">錯題</span>
-                    )}
-                    {fav.source && SOURCE_LABEL[fav.source] && (
-                      <span className="px-1.5 py-0.5 rounded-full bg-slate-100 text-slate-600">
-                        來自 {SOURCE_LABEL[fav.source]}
-                      </span>
-                    )}
+            {/* Content area: Grid or Empty State */}
+            <div className="flex-1 min-h-0">
+              {filtered.length === 0 ? (
+                <div className="h-full flex flex-col items-center justify-center rounded-2xl bg-gradient-to-br from-rose-50 to-pink-50 dark:from-slate-900 dark:to-slate-950 border border-rose-100 dark:border-rose-900/50 p-6 text-center shadow-sm">
+                  <div className="text-5xl mb-2">📭</div>
+                  <div className="text-base font-bold text-slate-800 dark:text-slate-200 mb-1">
+                    {favorites.length === 0 ? '還沒有收藏項目' : '此分類下沒有項目'}
                   </div>
-
-                  {/* Actions */}
-                  <div className="mt-auto flex items-center justify-between gap-1.5 pt-1">
-                    <button
-                      onClick={() => handleSpeak(fav.text)}
-                      className="flex-1 px-2 py-1.5 rounded-lg bg-indigo-500 text-white text-xs font-semibold hover:bg-indigo-600 active:scale-95 transition-all"
-                    >
-                      🔊 唸
-                    </button>
-                    {fav.kind === 'char' && (
-                      <Link
-                        href={`/learn/explore?char=${encodeURIComponent(fav.text)}`}
-                        className="flex-1 px-2 py-1.5 rounded-lg bg-emerald-500 text-white text-xs font-semibold text-center hover:bg-emerald-600 active:scale-95 transition-all"
-                      >
-                        看詳情
-                      </Link>
-                    )}
-                    <button
-                      onClick={() => handleRemove(fav.text)}
-                      className="px-2 py-1.5 rounded-lg bg-slate-100 text-slate-500 text-xs hover:bg-rose-100 hover:text-rose-600 active:scale-95 transition-all"
-                      title="移除"
-                    >
-                      ✕
-                    </button>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mb-4 max-w-sm">
+                    在學習或玩遊戲時，看見喜歡或答錯的字，按 <span className="text-rose-600 dark:text-rose-400 font-bold">❤️ 收藏</span> 即可。
+                  </p>
+                  <div className="flex justify-center gap-2 flex-wrap">
+                    <Link href="/learn/explore" className="px-3.5 py-2 rounded-xl bg-rose-500 text-white text-xs font-bold hover:bg-rose-600 active:scale-95 transition-all min-h-9 inline-flex items-center">
+                      認字
+                    </Link>
+                    <Link href="/learn/dictation" className="px-3.5 py-2 rounded-xl bg-amber-500 text-white text-xs font-bold hover:bg-amber-600 active:scale-95 transition-all min-h-9 inline-flex items-center">
+                      默書
+                    </Link>
+                    <Link href="/play" className="px-3.5 py-2 rounded-xl bg-fuchsia-500 text-white text-xs font-bold hover:bg-fuchsia-600 active:scale-95 transition-all min-h-9 inline-flex items-center">
+                      遊戲
+                    </Link>
                   </div>
                 </div>
-              </div>
-            ))}
+              ) : (
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 max-h-full overflow-y-auto pr-1 pb-4 scrollbar-thin">
+                  {filtered.map(fav => (
+                    <div
+                      key={fav.text}
+                      className="group rounded-2xl bg-gradient-to-br from-rose-50 to-pink-50 dark:from-slate-900 dark:to-slate-950 border border-rose-200 dark:border-rose-900/50 hover:border-rose-400 dark:hover:border-rose-700 shadow-sm hover:shadow-md transition-all overflow-hidden flex flex-col min-h-0"
+                    >
+                      {/* Character display */}
+                      <button
+                        onClick={() => handleSpeak(fav.text)}
+                        className="w-full p-4 flex items-center justify-center bg-gradient-to-br from-rose-50 via-pink-50 to-fuchsia-50 hover:from-rose-100 hover:to-fuchsia-100 dark:from-slate-950 dark:to-slate-900 transition-all cursor-pointer"
+                        title="點擊播放發音"
+                      >
+                        <span
+                          className={`hanzi-display text-slate-900 dark:text-slate-100 text-center leading-tight ${
+                            fav.text.length === 1 ? 'text-5xl' : 'text-3xl'
+                          }`}
+                        >
+                          {fav.text}
+                        </span>
+                      </button>
+
+                      {/* Meta & Actions */}
+                      <div className="p-3 flex flex-col gap-2 flex-1 min-h-0 justify-between">
+                        <div>
+                          {fav.jyutping && (
+                            <div className="text-center font-mono text-xs text-indigo-600 dark:text-indigo-400 truncate font-bold mb-1">
+                              {fav.jyutping}
+                            </div>
+                          )}
+                          <div className="flex items-center justify-center gap-1 text-[9px] text-slate-500 flex-wrap">
+                            {fav.reason === 'mistake' && (
+                              <span className="px-1.5 py-0.5 rounded-full bg-rose-100 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400 font-bold">錯題</span>
+                            )}
+                            {fav.source && SOURCE_LABEL[fav.source] && (
+                              <span className="px-1.5 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">
+                                {SOURCE_LABEL[fav.source]}
+                              </span>
+                            )}
+                          </div>
+                        </div>
+
+                        {/* Actions */}
+                        <div className="flex items-center justify-between gap-1.5 pt-1 border-t border-slate-100/50 dark:border-slate-800">
+                          <button
+                            onClick={() => handleSpeak(fav.text)}
+                            className="flex-1 px-1.5 py-1 rounded-lg bg-indigo-500 text-white text-[10px] font-bold hover:bg-indigo-600 active:scale-95 transition-all min-h-8 cursor-pointer"
+                          >
+                            🔊 唸
+                          </button>
+                          {fav.kind === 'char' && (
+                            <Link
+                              href={`/learn/explore?char=${encodeURIComponent(fav.text)}`}
+                              className="flex-1 px-1.5 py-1 rounded-lg bg-emerald-500 text-white text-[10px] font-bold text-center hover:bg-emerald-600 active:scale-95 transition-all min-h-8 inline-flex items-center justify-center"
+                            >
+                              詳情
+                            </Link>
+                          )}
+                          <button
+                            onClick={() => handleRemove(fav.text)}
+                            className="px-2 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 text-[10px] font-bold hover:bg-rose-100 hover:text-rose-600 dark:hover:bg-rose-950/40 active:scale-95 transition-all min-h-8 cursor-pointer"
+                            title="移除"
+                          >
+                            ✕
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
-        )}
-      </div>
+        }
+      />
     </AppShell>
   );
 }

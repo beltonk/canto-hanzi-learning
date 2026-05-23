@@ -4,6 +4,7 @@ import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react'
 import { useAudio } from '@/lib/audio/context';
 import CorrectBurst from '@/app/components/ui/CorrectBurst';
 import type { GameProps } from './types';
+import { useElementSize } from '@/lib/viewport/useElementSize';
 
 const ROUND_COUNT = 8;
 
@@ -75,6 +76,9 @@ export default function WordBuilder({ items, onResult }: GameProps) {
 
   const current = rounds[roundIdx] ?? null;
   const target = current?.word ?? '';
+
+  const { ref: containerRef, size: containerSize } = useElementSize<HTMLDivElement>();
+  const containerWidth = containerSize.width || 0;
 
   // Build pool: target chars + 2-3 random distractor chars
   const pool = useMemo(() => {
@@ -179,10 +183,21 @@ export default function WordBuilder({ items, onResult }: GameProps) {
     if (i >= 0) remaining.splice(i, 1);
   });
 
+  const slotTileSize = (() => {
+    // Tile size adapts to viewport so all chars fit on iPhone SE (320px) and
+    // grow comfortably on iPad. Width-driven, with a sensible ceiling.
+    const cap = containerWidth > 0 ? Math.min(72, Math.floor(containerWidth / (target.length + 2))) : 56;
+    return Math.max(48, cap);
+  })();
+
   return (
-    <div className="p-3 sm:p-4 flex flex-col items-center gap-3">
+    <div
+      ref={containerRef}
+      className="p-3 sm:p-4 flex flex-col items-center gap-3"
+      style={{ touchAction: 'manipulation' }}
+    >
       {/* HUD */}
-      <div className="w-full max-w-md flex items-center justify-between text-sm">
+      <div className="w-full max-w-md md:max-w-lg flex items-center justify-between text-sm">
         <span className="text-slate-700">第 <strong>{roundIdx + 1}</strong> / {totalRounds} 題</span>
         <span className="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 font-bold">
           ⭐ {Math.floor(score)}{score % 1 ? '.5' : ''}
@@ -214,7 +229,8 @@ export default function WordBuilder({ items, onResult }: GameProps) {
         {Array.from({ length: target.length }, (_, i) => (
           <div
             key={i}
-            className={`w-14 h-14 sm:w-16 sm:h-16 rounded-2xl border-2 flex items-center justify-center font-chinese text-3xl sm:text-4xl font-bold shadow-sm transition-all ${
+            style={{ width: slotTileSize, height: slotTileSize, fontSize: Math.round(slotTileSize * 0.55) }}
+            className={`rounded-2xl border-2 flex items-center justify-center font-chinese font-bold shadow-sm transition-all ${
               arranged[i]
                 ? feedback === 'correct'
                   ? 'bg-emerald-500 border-emerald-600 text-white scale-105'
@@ -250,13 +266,15 @@ export default function WordBuilder({ items, onResult }: GameProps) {
       )}
 
       {/* Tile pool */}
-      <div className="flex flex-wrap gap-2 justify-center max-w-md">
+      <div className="flex flex-wrap gap-2 justify-center max-w-md md:max-w-lg">
         {remaining.map((ch, i) => (
           <button
             key={`${ch}-${i}`}
             onClick={() => handleTile(ch, i)}
             disabled={feedback !== 'idle'}
-            className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br from-amber-200 to-amber-300 border-2 border-amber-400 font-chinese text-2xl sm:text-3xl font-bold text-amber-900 hover:scale-110 active:scale-95 disabled:opacity-40 transition-all shadow-md"
+            aria-label={`tile ${ch}`}
+            style={{ width: slotTileSize, height: slotTileSize, fontSize: Math.round(slotTileSize * 0.5) }}
+            className="rounded-2xl bg-gradient-to-br from-amber-200 to-amber-300 border-2 border-amber-400 font-chinese font-bold text-amber-900 hover:scale-110 active:scale-95 disabled:opacity-40 transition-all shadow-md focus-visible:outline-2 focus-visible:outline-indigo-500"
           >
             {ch}
           </button>
@@ -267,20 +285,20 @@ export default function WordBuilder({ items, onResult }: GameProps) {
       <div className="flex gap-2 flex-wrap justify-center">
         <button
           onClick={handleClear}
-          className="px-4 py-2 rounded-xl bg-slate-100 text-slate-700 text-sm font-medium hover:bg-slate-200 active:scale-95"
+          className="px-4 py-2 rounded-xl bg-slate-100 text-slate-700 text-sm font-medium hover:bg-slate-200 active:scale-95 min-h-11 inline-flex items-center focus-visible:outline-2 focus-visible:outline-indigo-500 focus-visible:outline-offset-2"
         >
           ↺ 清除
         </button>
         <button
           onClick={handleHint}
           disabled={hintUsedThisRound}
-          className="px-4 py-2 rounded-xl bg-sky-100 text-sky-700 text-sm font-medium hover:bg-sky-200 active:scale-95 disabled:opacity-40"
+          className="px-4 py-2 rounded-xl bg-sky-100 text-sky-700 text-sm font-medium hover:bg-sky-200 active:scale-95 disabled:opacity-40 min-h-11 inline-flex items-center focus-visible:outline-2 focus-visible:outline-indigo-500 focus-visible:outline-offset-2"
         >
           💡 提示 (-0.5⭐)
         </button>
         <button
           onClick={handleSkip}
-          className="px-4 py-2 rounded-xl bg-rose-50 text-rose-600 text-sm font-medium hover:bg-rose-100 active:scale-95"
+          className="px-4 py-2 rounded-xl bg-rose-50 text-rose-600 text-sm font-medium hover:bg-rose-100 active:scale-95 min-h-11 inline-flex items-center focus-visible:outline-2 focus-visible:outline-indigo-500 focus-visible:outline-offset-2"
         >
           ⏭ 跳過
         </button>

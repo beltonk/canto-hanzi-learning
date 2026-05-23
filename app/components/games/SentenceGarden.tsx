@@ -240,8 +240,8 @@ export default function SentenceGarden({ onResult }: GameProps) {
         </div>
       </div>
 
-      {/* Scene */}
-      <div className="w-full max-w-md rounded-2xl bg-gradient-to-b from-sky-100 via-emerald-50 to-amber-50 border-2 border-emerald-200 p-4 text-center relative overflow-hidden min-h-[100px]">
+      {/* Scene — wider on iPad+ */}
+      <div className="w-full max-w-md md:max-w-2xl rounded-2xl bg-gradient-to-b from-sky-100 via-emerald-50 to-amber-50 border-2 border-emerald-200 p-4 text-center relative overflow-hidden min-h-[100px]">
         <div className="absolute top-2 right-2 text-2xl">☀️</div>
         <div className="absolute top-2 left-2 text-xl opacity-60">☁️</div>
         <div className="text-5xl sm:text-6xl mb-1 animate-float inline-block">{current?.emoji ?? '🌳'}</div>
@@ -249,43 +249,50 @@ export default function SentenceGarden({ onResult }: GameProps) {
         <CorrectBurst show={burst} />
       </div>
 
-      {/* Slots */}
-      <div className={`flex gap-1.5 sm:gap-2 min-h-14 sm:min-h-16 flex-wrap justify-center items-center max-w-md p-3 rounded-2xl border-2 border-dashed transition-colors ${
-        feedback === 'correct' ? 'bg-emerald-100 border-emerald-400' :
-        feedback === 'wrong'   ? 'bg-rose-100 border-rose-400 animate-wiggle' :
-        'bg-indigo-50 border-indigo-300'
-      }`}>
-        {arranged.length === 0 && (
-          <div className="text-slate-400 text-sm">↓ 從下方點擊詞語</div>
-        )}
-        {arranged.map((w, i) => (
-          <button
-            key={i}
-            onClick={() => moveBack(w)}
-            disabled={feedback !== 'idle'}
-            className={`px-3 py-2 rounded-xl border-2 font-chinese font-bold text-base sm:text-lg shadow-sm hover:opacity-80 disabled:cursor-not-allowed ${
-              feedback === 'correct' ? 'bg-emerald-500 border-emerald-600 text-white' :
-              feedback === 'wrong'   ? 'bg-rose-500 border-rose-600 text-white' :
-              'bg-emerald-100 border-emerald-300 text-emerald-900'
-            }`}
-          >
-            {w}
-          </button>
-        ))}
-      </div>
+      {/* Assembly area — stacked on portrait, side-by-side on phone landscape & iPad+ landscape */}
+      <div className="w-full max-w-md md:max-w-3xl flex flex-col max-md:landscape:flex-row md:landscape:flex-row gap-3 items-stretch justify-center">
+        {/* Slots */}
+        <div className={`flex-1 flex gap-1.5 sm:gap-2 min-h-14 sm:min-h-16 flex-wrap justify-center items-center p-3 rounded-2xl border-2 border-dashed transition-colors ${
+          feedback === 'correct' ? 'bg-emerald-100 border-emerald-400' :
+          feedback === 'wrong'   ? 'bg-rose-100 border-rose-400 animate-wiggle' :
+          'bg-indigo-50 border-indigo-300'
+        }`}>
+          {arranged.length === 0 && (
+            <div className="text-slate-400 text-sm">↓ 從下方/旁邊點擊詞語</div>
+          )}
+          {arranged.map((w, i) => (
+            <button
+              key={i}
+              onClick={() => moveBack(w)}
+              disabled={feedback !== 'idle'}
+              aria-label={`移走「${w}」`}
+              className={`px-3 py-2 min-h-11 inline-flex items-center rounded-xl border-2 font-chinese font-bold text-base sm:text-lg shadow-sm hover:opacity-80 disabled:cursor-not-allowed
+                focus-visible:outline-2 focus-visible:outline-indigo-500 focus-visible:outline-offset-2 ${
+                feedback === 'correct' ? 'bg-emerald-500 border-emerald-600 text-white' :
+                feedback === 'wrong'   ? 'bg-rose-500 border-rose-600 text-white' :
+                'bg-emerald-100 border-emerald-300 text-emerald-900'
+              }`}
+            >
+              {w}
+            </button>
+          ))}
+        </div>
 
-      {/* Tray */}
-      <div className="flex gap-2 flex-wrap justify-center max-w-md">
-        {tray.map((w, i) => (
-          <button
-            key={i}
-            onClick={() => moveToSlot(w)}
-            disabled={feedback !== 'idle'}
-            className="px-3 py-2 rounded-xl bg-gradient-to-br from-amber-200 to-orange-300 border-2 border-amber-400 font-chinese font-bold text-base sm:text-lg text-amber-900 hover:scale-105 active:scale-95 disabled:opacity-40 transition-all shadow-md"
-          >
-            {w}
-          </button>
-        ))}
+        {/* Tray */}
+        <div className="flex-1 flex gap-2 flex-wrap justify-center content-center p-3 rounded-2xl bg-amber-50/40 border-2 border-amber-200">
+          {tray.map((w, i) => (
+            <button
+              key={i}
+              onClick={() => moveToSlot(w)}
+              disabled={feedback !== 'idle'}
+              aria-label={`加入「${w}」`}
+              className="px-3 py-2 min-h-11 inline-flex items-center rounded-xl bg-gradient-to-br from-amber-200 to-orange-300 border-2 border-amber-400 font-chinese font-bold text-base sm:text-lg text-amber-900 hover:scale-105 active:scale-95 disabled:opacity-40 transition-all shadow-md
+                focus-visible:outline-2 focus-visible:outline-indigo-500 focus-visible:outline-offset-2"
+            >
+              {w}
+            </button>
+          ))}
+        </div>
       </div>
     </div>
   );

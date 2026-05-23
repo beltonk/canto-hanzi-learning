@@ -4,19 +4,34 @@ import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react'
 import { addFavorite } from '@/lib/favorites';
 import type { GameProps } from './types';
 import { useAudio } from '@/lib/audio/context';
+import { useElementSize } from '@/lib/viewport/useElementSize';
 
 const ROUND_COUNT = 12;
 const MAX_LIVES = 3;
-const COLUMN_COUNT = 4;
-const COLUMN_WIDTH_PCT = 100 / COLUMN_COUNT;
 const TILE_SIZE_PX = 56;
 const SAFE_GAP_PX = 14;
-const FRAME_HEIGHT_PX = 380;
 const FALL_BASE_PX_PER_S = 45;
 const FALL_MAX_PX_PER_S = 120;
 const TICK_MS = 33;
-const SPAWN_INTERVAL_MS = 700;
-const MAX_TILES_ON_SCREEN = 6;
+
+// Derive lane count from container width so each tile has comfortable spacing.
+function laneCountFor(widthPx: number): number {
+  if (widthPx < 360) return 3;
+  if (widthPx < 520) return 4;
+  if (widthPx < 720) return 5;
+  return 6;
+}
+// More lanes → faster spawn so the field stays lively.
+function spawnIntervalFor(lanes: number): number {
+  return Math.round(900 - lanes * 50);
+}
+// Frame height scales with width on tablets, capped to keep gameplay readable.
+function frameHeightFor(widthPx: number): number {
+  if (widthPx < 360) return 340;
+  if (widthPx < 520) return 380;
+  if (widthPx < 720) return 440;
+  return 500;
+}
 
 interface FallingChar {
   id: number;
@@ -48,6 +63,15 @@ export default function CharacterRain({ items, onResult }: GameProps) {
   const [feedback, setFeedback] = useState<{ x: number; y: number; text: string; color: string } | null>(null);
   const [, setTick] = useState(0);
 
+  // Container-driven sizing
+  const { ref: frameRef, size: frameSize } = useElementSize<HTMLDivElement>();
+  const widthPx = frameSize.width || 360;
+  const columnCount = laneCountFor(widthPx);
+  const columnWidthPct = 100 / columnCount;
+  const maxTilesOnScreen = columnCount + 2;
+  const spawnIntervalMs = spawnIntervalFor(columnCount);
+  const frameHeightPx = frameHeightFor(widthPx);
+
   const tilesRef = useRef<FallingChar[]>([]);
   const startRef = useRef(Date.now());
   const doneRef = useRef(false);
@@ -55,6 +79,11 @@ export default function CharacterRain({ items, onResult }: GameProps) {
   const targetRef = useRef('');
   const targetCaughtRef = useRef(false);
   const lastSpawnAtRef = useRef<number>(0);
+
+  // Keep latest dynamic params accessible from the animation loop without
+  // forcing a re-subscription each render.
+  const layoutRef = useRef({ columnCount, spawnIntervalMs, maxTilesOnScreen, frameHeightPx });
+  layoutRef.current = { columnCount, spawnIntervalMs, maxTilesOnScreen, frameHeightPx };
 
   const itemsKey = items.map(i => i.character).join('|');
   const itemsByChar = useMemo(() => {
@@ -100,7 +129,8 @@ export default function CharacterRain({ items, onResult }: GameProps) {
 
     const tileHalfPx = TILE_SIZE_PX / 2;
     const usableLanes: number[] = [];
-    for (let lane = 0; lane < COLUMN_COUNT; lane++) {
+    const lanes = layoutRef.current.columnCount;
+    for (let lane = 0; lane < lanes; lane++) {
       const inLane = currentTiles.filter(ti => ti.lane === lane);
       const minY = inLane.length === 0 ? Infinity : Math.min(...inLane.map(ti => ti.yPx));
       if (minY > tileHalfPx + SAFE_GAP_PX + TILE_SIZE_PX) usableLanes.push(lane);
@@ -144,7 +174,8 @@ export default function CharacterRain({ items, onResult }: GameProps) {
       let next = tilesRef.current.map(t => ({ ...t, yPx: t.yPx + t.speedPxPerS * dt }));
 
       // Check missed target
-      const missed = next.find(t => t.isTarget && t.yPx > FRAME_HEIGHT_PX + TILE_SIZE_PX);
+      const fh = layoutRef.current.frameHeightPx;
+      const missed = next.find(t => t.isTarget && t.yPx > fh + TILE_SIZE_PX);
       let advanceRound = false;
       let advanceTo = 0;
       if (missed && !targetCaughtRef.current) {
@@ -181,10 +212,11 @@ export default function CharacterRain({ items, onResult }: GameProps) {
         next = [];
       } else {
         // Drop tiles past bottom (non-target tiles just disappear)
-        next = next.filter(t => t.yPx <= FRAME_HEIGHT_PX + TILE_SIZE_PX);
+        next = next.filter(t => t.yPx <= fh + TILE_SIZE_PX);
 
         // Spawn new tile when cooldown elapsed
-        if (now - lastSpawnAtRef.current >= SPAWN_INTERVAL_MS && next.length < MAX_TILES_ON_SCREEN) {
+        const { spawnIntervalMs: spawnEvery, maxTilesOnScreen: maxTiles } = layoutRef.current;
+        if (now - lastSpawnAtRef.current >= spawnEvery && next.length < maxTiles) {
           const newTile = spawnTile(next);
           if (newTile) {
             next.push(newTile);
@@ -215,10 +247,10 @@ export default function CharacterRain({ items, onResult }: GameProps) {
       stateRef.current.combo = newCombo;
       setScore(newScore);
       setCombo(newCombo);
-      const xPct = tile.lane * COLUMN_WIDTH_PCT + COLUMN_WIDTH_PCT / 2;
+      const xPct = tile.lane * columnWidthPct + columnWidthPct / 2;
       setFeedback({
         x: xPct,
-        y: (tile.yPx / FRAME_HEIGHT_PX) * 100,
+        y: (tile.yPx / frameHeightPx) * 100,
         text: comboBonus > 0 ? `+${1 + comboBonus} 🔥` : '+1',
         color: 'text-emerald-500',
       });
@@ -239,18 +271,24 @@ export default function CharacterRain({ items, onResult }: GameProps) {
       audio.playIncorrect();
       stateRef.current.combo = 0;
       setCombo(0);
-      const xPct = tile.lane * COLUMN_WIDTH_PCT + COLUMN_WIDTH_PCT / 2;
-      setFeedback({ x: xPct, y: (tile.yPx / FRAME_HEIGHT_PX) * 100, text: '✗', color: 'text-rose-500' });
+      const xPct = tile.lane * columnWidthPct + columnWidthPct / 2;
+      setFeedback({ x: xPct, y: (tile.yPx / frameHeightPx) * 100, text: '✗', color: 'text-rose-500' });
       setTimeout(() => setFeedback(null), 500);
     }
-  }, [audio, spawnRound, finishGame]);
+  }, [audio, spawnRound, finishGame, columnWidthPct, frameHeightPx]);
 
   const tiles = tilesRef.current;
 
   return (
-    <div className="flex flex-col items-center gap-3 p-3 sm:p-4">
+    <div
+      className="flex flex-col items-center gap-3 p-3 sm:p-4"
+      style={{
+        paddingTop: 'max(12px, var(--safe-top))',
+        paddingBottom: 'max(12px, var(--safe-bottom))',
+      }}
+    >
       {/* HUD */}
-      <div className="w-full max-w-md flex items-center justify-between gap-2 px-2 text-sm sm:text-base">
+      <div className="w-full max-w-md md:max-w-xl flex items-center justify-between gap-2 px-2 text-sm sm:text-base">
         <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
           <span className="font-medium text-slate-700">目標</span>
           <span className="font-chinese text-3xl sm:text-4xl font-bold text-rose-600 bg-rose-50 px-3 py-0.5 rounded-xl border-2 border-rose-200 shadow-sm animate-pulse">
@@ -268,32 +306,33 @@ export default function CharacterRain({ items, onResult }: GameProps) {
           )}
         </div>
       </div>
-      <div className="w-full max-w-md flex items-center justify-between text-xs sm:text-sm text-slate-600 px-2">
+      <div className="w-full max-w-md md:max-w-xl flex items-center justify-between text-xs sm:text-sm text-slate-600 px-2">
         <span>第 {Math.min(round + 1, ROUND_COUNT)} / {ROUND_COUNT} 題</span>
         <span>分數 <strong className="text-slate-900">{score}</strong></span>
       </div>
 
-      {/* Game frame */}
+      {/* Game frame — width drives lane count and height. */}
       <div
-        className="relative w-full max-w-md rounded-3xl overflow-hidden border-4 border-sky-300 shadow-xl bg-gradient-to-b from-sky-200 via-sky-100 to-emerald-50"
-        style={{ height: FRAME_HEIGHT_PX, touchAction: 'manipulation' }}
+        ref={frameRef}
+        className="relative w-full max-w-md md:max-w-xl rounded-3xl overflow-hidden border-4 border-sky-300 shadow-xl bg-gradient-to-b from-sky-200 via-sky-100 to-emerald-50"
+        style={{ height: frameHeightPx, touchAction: 'manipulation' }}
       >
         <div className="absolute inset-0 pointer-events-none opacity-60">
           <div className="absolute top-3 left-4 text-3xl">☁️</div>
           <div className="absolute top-8 right-6 text-2xl">☁️</div>
           <div className="absolute top-16 left-1/3 text-xl">☁️</div>
-          {Array.from({ length: COLUMN_COUNT - 1 }, (_, i) => (
+          {Array.from({ length: columnCount - 1 }, (_, i) => (
             <div
               key={i}
               className="absolute top-0 bottom-0 w-px bg-white/30"
-              style={{ left: `${(i + 1) * COLUMN_WIDTH_PCT}%` }}
+              style={{ left: `${(i + 1) * columnWidthPct}%` }}
             />
           ))}
           <div className="absolute bottom-0 left-0 right-0 h-3 bg-gradient-to-t from-emerald-400 to-transparent" />
         </div>
 
         {tiles.map(tile => {
-          const xPct = tile.lane * COLUMN_WIDTH_PCT + COLUMN_WIDTH_PCT / 2;
+          const xPct = tile.lane * columnWidthPct + columnWidthPct / 2;
           const isTarget = tile.isTarget;
           return (
             <button

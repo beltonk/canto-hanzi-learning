@@ -4,6 +4,7 @@ import React, { useState, useRef, useCallback, useEffect } from 'react';
 import StrokeTracing from '@/app/components/learning/StrokeTracing';
 import type { StrokeVector } from '@/types/fullCharacter';
 import type { GameProps } from './types';
+import { useElementSize } from '@/lib/viewport';
 
 const CHAR_COUNT = 5;
 const TIME_PER_CHAR = 30; // generous, since real tracing takes time
@@ -22,26 +23,16 @@ export default function StrokeRacer({ items, onResult }: GameProps) {
   const [loading, setLoading] = useState(true);
   const [resultStars, setResultStars] = useState<(1 | 2 | 3 | 0)[]>([]);
   const [feedback, setFeedback] = useState<'pending' | 'pass' | 'timeout'>('pending');
-  const [canvasSize, setCanvasSize] = useState(320);
+  // Container-driven canvas sizing via ResizeObserver.
+  const canvasContainerRef = useRef<HTMLDivElement>(null);
+  const { width: containerWidth } = useElementSize(canvasContainerRef);
+  const canvasSize = Math.round(Math.min(Math.max(containerWidth - 24, 220), 380));
   const startRef = useRef(0);
   const doneRef = useRef(false);
   const scoreRef = useRef(0);
   const charIdxRef = useRef(0);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const advanceTimerRef = useRef<NodeJS.Timeout | null>(null);
-
-  // Responsive sizing
-  useEffect(() => {
-    const update = () => {
-      const w = typeof window !== 'undefined' ? window.innerWidth : 360;
-      if (w >= 1024) setCanvasSize(360);
-      else if (w >= 640) setCanvasSize(340);
-      else setCanvasSize(Math.min(w - 56, 300));
-    };
-    update();
-    window.addEventListener('resize', update);
-    return () => window.removeEventListener('resize', update);
-  }, []);
 
   // Load full character data (with stroke vectors) for the first CHAR_COUNT items that have them
   useEffect(() => {
@@ -200,7 +191,7 @@ export default function StrokeRacer({ items, onResult }: GameProps) {
       </div>
 
       {/* Tracing area — uses StrokeTracing which already has full stroke detection + visualization */}
-      <div className="relative">
+      <div ref={canvasContainerRef} className="relative w-full max-w-md md:max-w-lg flex flex-col items-center">
         <StrokeTracing
           key={charIdx}
           strokeVectors={currentChar.strokeVectors}

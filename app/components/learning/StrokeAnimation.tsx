@@ -337,8 +337,9 @@ export default function StrokeAnimation({
       {/* Simple controls */}
       <div className="mt-3 flex items-center gap-2">
         <button 
-          onClick={isAnimating ? stopAnimation : startAnimation} 
-          className="px-4 py-2 rounded-lg bg-[var(--color-coral)] text-white text-sm font-medium hover:bg-[var(--color-coral-dark)] transition-colors"
+          onClick={isAnimating ? stopAnimation : startAnimation}
+          className="px-4 py-2 rounded-lg bg-[var(--color-coral)] text-white text-sm font-medium hover:bg-[var(--color-coral-dark)] transition-colors min-h-11 inline-flex items-center
+                     focus-visible:outline-2 focus-visible:outline-indigo-500 focus-visible:outline-offset-2"
         >
           {isAnimating ? `⏹ ${t("stop")}` : `✏️ ${t("showStrokes")}`}
         </button>

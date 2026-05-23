@@ -19,8 +19,24 @@ Highlights:
   words you got wrong in dictation, games, and Sentence Garden.
 - Modern UI with Free HK Kai brush-stroke font, WCAG-AA-pinned palette,
   and `prefers-reduced-motion`–aware animations throughout.
-- Adaptive responsive layout across phone / iPad / desktop, with
-  full-pane content usage and consistent main-pane margins.
+- Adaptive responsive layout across phone portrait, phone landscape, iPad portrait (icon rail), iPad landscape, and desktop, with four navigation variants and fluid Chinese typography.
+- Safe-area-inset awareness for iOS notch and home indicator on all devices.
+- Automated Playwright viewport matrix (`npm run test:e2e`) gating every route on 6 device profiles — see [`tests/e2e/responsive/README.md`](tests/e2e/responsive/README.md).
+
+## Responsive Design
+
+The app uses a canonical breakpoint contract (see `src/lib/viewport/`):
+
+| Token | Min px | Typical device                | Nav variant    |
+|-------|--------|-------------------------------|----------------|
+| xs    |      0 | Phone portrait                | Bottom tabs    |
+| sm    |    480 | Phone landscape               | Top tabs       |
+| md    |    768 | iPad portrait / split-view    | Icon rail      |
+| lg    |   1024 | iPad landscape / small laptop | Full sidebar   |
+| xl    |   1280 | Desktop                       | Full sidebar   |
+| 2xl   |   1536 | Large desktop                 | Full sidebar   |
+
+The Hong Kong Chinese font stack (`Free HK Kai`, `LXGW WenKai TC`, Noto Serif/Sans TC, PMingLiU) is immutable and is enforced as an invariant in the E2E test suite. Fluid `clamp()`-based sizing is used for all Chinese typography classes while keeping `font-family` byte-for-byte identical.
 
 ## 數據來源 (Data Source)
 

@@ -580,7 +580,7 @@ export default function StrokeTracing({
       <div className="flex gap-2 sm:gap-3 flex-wrap justify-center">
         <button
           onClick={handleReset}
-          className="px-5 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-700 text-sm font-medium hover:bg-slate-50 transition-all"
+          className="px-5 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-700 text-sm font-medium hover:bg-slate-50 transition-all min-h-11 inline-flex items-center focus-visible:outline-2 focus-visible:outline-indigo-500 focus-visible:outline-offset-2"
         >
           {completed ? '再練一次' : '重新開始'}
         </button>
@@ -588,7 +588,8 @@ export default function StrokeTracing({
           <button
             onClick={() => setShowHint(h => !h)}
             aria-pressed={showHint}
-            className={`px-5 py-2.5 rounded-xl text-sm font-medium transition-all border ${
+            className={`px-5 py-2.5 rounded-xl text-sm font-medium transition-all border min-h-11 inline-flex items-center
+              focus-visible:outline-2 focus-visible:outline-indigo-500 focus-visible:outline-offset-2 ${
               showHint
                 ? 'bg-amber-100 border-amber-300 text-amber-800 hover:bg-amber-200'
                 : 'bg-white border-slate-300 text-slate-700 hover:bg-slate-50'

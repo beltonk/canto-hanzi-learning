@@ -213,7 +213,7 @@ export default function ToneBingo({ items, onResult }: GameProps) {
       </div>
 
       {/* Board: 4x2 — exactly 4 right answers among 8 cards */}
-      <div className="relative grid grid-cols-4 gap-2 sm:gap-3 w-full max-w-md">
+      <div className="relative grid grid-cols-4 gap-2 sm:gap-3 w-full max-w-md md:max-w-lg">
         <CorrectBurst show={burst} />
         {round.cells.map((cell, i) => {
           const isMarked = marked.has(i);

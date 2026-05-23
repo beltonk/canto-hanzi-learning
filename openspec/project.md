@@ -32,9 +32,14 @@ A web application for learning Cantonese (粵語) and Chinese characters (漢字
 - **Styling**: Utility-first approach with Tailwind, supports dark mode via `prefers-color-scheme`
 
 ### Testing Strategy
-- Testing framework not yet configured
-- Consider adding Jest/Vitest and React Testing Library for component testing
-- E2E testing with Playwright or Cypress recommended for future implementation
+- **Unit / integration**: Vitest + @testing-library/react (run with `npm run check`)
+- **E2E responsive matrix**: Playwright (`npm run test:e2e`) — 6 device profiles × all routes; see `tests/e2e/responsive/README.md`
+
+### Important Constraints
+- **Canonical breakpoints**: xs=0, sm=480, md=768, lg=1024, xl=1280, 2xl=1536 px — always use these via `src/lib/viewport/breakpoints.ts` and matching Tailwind classes
+- **Hong Kong font stack invariant**: The `font-family` on `.font-chinese`, `.hanzi-display`, `.hanzi-medium`, `.hanzi-sentence` MUST start with `'Free HK Kai'` and must never be changed. This is enforced by the Playwright invariant `assertHKFontFirst`.
+- **Safe-area insets**: Use `.pt-safe`, `.pb-safe`, `.pl-safe`, `.pr-safe` CSS utilities (defined in `app/globals.css`) for any sticky header, bottom nav, or full-screen overlay.
+- **Audio engine**: Do not modify `src/lib/audio/AudioEngine.ts` or `src/lib/audio/context.tsx` during UI work — the iPad audio unlock path is fragile.
 
 ### Git Workflow
 - Git workflow not yet defined

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback, useRef } from "react";
+import { useElementSize } from "@/lib/viewport";
 import type { FullCharacterData } from "@/types/fullCharacter";
 import { useAudio } from "@/lib/audio/context";
 import { recordActivity } from "@/lib/activity/recordActivity";
@@ -52,8 +53,12 @@ export default function DictationExercise(props: DictationExerciseProps) {
   const [score, setScore] = useState({ correct: 0, total: 0 });
   const [showHint, setShowHint] = useState(false);
   const [burst, setBurst] = useState(false);
-  const [paneSize, setPaneSize] = useState(280);
   const paneRef = useRef<HandwritingPaneHandle>(null);
+  // Container-driven pane sizing so it fills available width on every device.
+  const paneSizerRef = useRef<HTMLDivElement>(null);
+  const { width: paneContainerWidth } = useElementSize(paneSizerRef);
+  // Clamp: min 220px, max 480px, square.
+  const paneSize = Math.round(Math.min(Math.max(paneContainerWidth - 32, 220), 480));
   const lastSpokenIdxRef = useRef<number>(-1);
 
   const loadQuestions = useCallback(async (range: typeof strokeRange) => {
@@ -117,20 +122,6 @@ export default function DictationExercise(props: DictationExerciseProps) {
     return () => clearTimeout(t);
   }, [currentIndex, questions, loading, audio]);
 
-  // Responsive pane size
-  useEffect(() => {
-    const update = () => {
-      const w = window.innerWidth;
-      if (w >= 1366) setPaneSize(420);
-      else if (w >= 1024) setPaneSize(380);
-      else if (w >= 768) setPaneSize(340);
-      else if (w >= 640) setPaneSize(300);
-      else setPaneSize(Math.min(w - 80, 280));
-    };
-    update();
-    window.addEventListener('resize', update);
-    return () => window.removeEventListener('resize', update);
-  }, []);
 
   function speak() {
     const q = questions[currentIndex];
@@ -247,7 +238,8 @@ export default function DictationExercise(props: DictationExerciseProps) {
             <button
               key={r.label}
               onClick={() => setStrokeRange(r)}
-              className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${
+              className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all min-h-11 inline-flex items-center
+                focus-visible:outline-2 focus-visible:outline-indigo-500 focus-visible:outline-offset-2 ${
                 strokeRange === r
                   ? 'bg-indigo-600 text-white shadow-sm'
                   : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
@@ -307,7 +299,7 @@ export default function DictationExercise(props: DictationExerciseProps) {
         )}
 
         {/* Writing area */}
-        <div className="flex flex-col md:flex-row items-center md:items-start md:justify-between gap-4 md:gap-6 w-full">
+        <div ref={paneSizerRef} className="flex flex-col md:flex-row items-center md:items-start md:justify-between gap-4 md:gap-6 w-full">
           {/* User's writing pane */}
           <div className="flex flex-col items-center gap-2">
             <div className="text-xs font-semibold text-slate-600 self-start">
@@ -325,7 +317,8 @@ export default function DictationExercise(props: DictationExerciseProps) {
             <button
               onClick={handleClear}
               disabled={submitted || drawnCount === 0}
-              className="px-4 py-1.5 rounded-lg text-sm font-medium bg-slate-100 text-slate-700 border border-slate-300 hover:bg-slate-200 disabled:opacity-40 disabled:cursor-not-allowed transition-all"
+              className="px-4 py-1.5 rounded-lg text-sm font-medium bg-slate-100 text-slate-700 border border-slate-300 hover:bg-slate-200 disabled:opacity-40 disabled:cursor-not-allowed transition-all min-h-11 inline-flex items-center justify-center
+                         focus-visible:outline-2 focus-visible:outline-indigo-500 focus-visible:outline-offset-2"
             >
               🧽 清除重寫
             </button>

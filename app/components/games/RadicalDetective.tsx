@@ -191,15 +191,21 @@ export default function RadicalDetective({ items, onResult }: GameProps) {
         ))}
       </div>
 
-      {/* Grid: 4x2 — exactly 4 right answers among 8 cards */}
-      <div className="relative grid grid-cols-4 gap-2 sm:gap-3 w-full max-w-md">
+      {/* Grid — adaptive column count.
+          Phone portrait: 4×2 (chunky tiles)
+          Phone landscape: 8×1 (single row uses wide aspect)
+          iPad+: 4×2 with breathing room. */}
+      <div className="relative grid grid-cols-4 max-md:landscape:grid-cols-8 gap-2 sm:gap-3 md:gap-4 w-full max-w-md md:max-w-xl">
         <CorrectBurst show={burst} />
         {round.grid.map((item, i) => (
           <button
             key={i}
             onClick={() => handleClick(i)}
             disabled={found.has(i) || transitioning}
-            className={`aspect-square rounded-xl font-chinese text-2xl sm:text-3xl font-bold border-2 flex items-center justify-center transition-all shadow-sm ${
+            aria-label={`字 ${item.char}`}
+            aria-pressed={found.has(i)}
+            className={`aspect-square min-w-11 min-h-11 rounded-xl font-chinese text-2xl sm:text-3xl font-bold border-2 flex items-center justify-center transition-all shadow-sm
+              focus-visible:outline-2 focus-visible:outline-violet-500 focus-visible:outline-offset-2 ${
               found.has(i)
                 ? 'bg-gradient-to-br from-emerald-400 to-emerald-500 border-emerald-600 text-white scale-95'
                 : transitioning

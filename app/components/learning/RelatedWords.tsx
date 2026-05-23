@@ -168,7 +168,8 @@ export default function RelatedWords({
             <button
               key={cat.key}
               onClick={() => setActiveCategory(cat.key)}
-              className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all whitespace-nowrap
+              className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all whitespace-nowrap min-h-11 inline-flex items-center
+                focus-visible:outline-2 focus-visible:outline-indigo-500 focus-visible:outline-offset-2
                 ${activeCategory === cat.key
                   ? "bg-[var(--color-coral)] text-white shadow-md"
                   : "bg-[var(--input-bg)] text-[var(--color-gray)] hover:bg-[var(--color-coral)]/10 hover:text-[var(--color-coral)]"
@@ -202,9 +203,11 @@ export default function RelatedWords({
                   <button
                     key={`${word}-${idx}`}
                     onClick={() => speakWord(word)}
+                    aria-label={`聽詞語：${word}`}
                     className="group p-3 rounded-xl border-2 border-[var(--color-peach)] bg-[var(--color-peach)]/10
                              hover:border-[var(--color-coral-light)] hover:bg-[var(--color-coral)]/5 transition-all
-                             text-left"
+                             text-left min-h-11
+                             focus-visible:outline-2 focus-visible:outline-indigo-500 focus-visible:outline-offset-2"
                   >
                     <div className="flex items-start justify-between gap-1">
                       <span className="hanzi-display text-lg text-[var(--color-charcoal)] leading-tight">

@@ -1,17 +1,18 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useState, useEffect, useRef } from "react";
-import AppShell from "@/app/components/ui/AppShell";
-import GardenPanel from "@/app/components/ui/GardenPanel";
-import QuestCard from "@/app/components/ui/QuestCard";
-import { loadRoot } from "@/lib/storage";
-import { pickDailyQuests, QUEST_POOL } from "@/lib/gamification/quests";
-import { getDueCharacters } from "@/lib/progress/srs";
-import { getTodayString } from "@/lib/gamification/streak";
-import { levelForXp } from "@/lib/gamification/levelCurve";
-import { getFavoritesCount } from "@/lib/favorites";
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useState, useEffect, useRef } from 'react';
+import AppShell from '@/app/components/ui/AppShell';
+import PageScaffold, { type TabItem } from '@/app/components/ui/PageScaffold';
+import GardenPanel from '@/app/components/ui/GardenPanel';
+import QuestCard from '@/app/components/ui/QuestCard';
+import { loadRoot } from '@/lib/storage';
+import { pickDailyQuests, QUEST_POOL } from '@/lib/gamification/quests';
+import { getDueCharacters } from '@/lib/progress/srs';
+import { getTodayString } from '@/lib/gamification/streak';
+import { levelForXp } from '@/lib/gamification/levelCurve';
+import { getFavoritesCount } from '@/lib/favorites';
 
 interface ActivityCard {
   href: string;
@@ -92,7 +93,6 @@ export default function Home() {
     e.preventDefault();
     const q = search.trim();
     if (!q) return;
-    // If a single Chinese character is entered, jump straight to its detail.
     if ([...q].length === 1 && /[\u4e00-\u9fff]/.test(q)) {
       router.push(`/learn/explore?char=${encodeURIComponent(q)}`);
     } else {
@@ -105,153 +105,160 @@ export default function Home() {
     ? 100
     : Math.round(((xp - currentLevelXp) / (nextLevelXp - currentLevelXp)) * 100);
 
-  return (
-    <AppShell title="粵語漢字學習" emoji="📖" hideBack bg="indigo">
-      <div className="w-full h-full p-0">
-        {/* Hero compact band */}
-        <div className="mb-5 sm:mb-6 grid grid-cols-1 lg:grid-cols-3 gap-3 sm:gap-4">
-          {/* Welcome / progress */}
-          <div className="md:col-span-2 rounded-3xl bg-gradient-to-br from-indigo-500 via-purple-500 to-fuchsia-500 text-white p-5 sm:p-6 shadow-lg relative overflow-hidden">
-            <div className="absolute -right-8 -top-8 text-9xl opacity-20 select-none">🐼</div>
-            <div className="relative">
-              <h2 className="text-xl sm:text-2xl font-bold mb-1">準備好學中文了嗎？</h2>
-              <p className="text-sm sm:text-base text-white/90 mb-4">每天進步一點點，累積大成就 🚀</p>
-              <div className="flex items-center gap-3 mb-2 flex-wrap">
-                <div className="px-3 py-1.5 rounded-full bg-white/20 backdrop-blur text-sm font-semibold flex items-center gap-1.5">⭐ Lv.{level}</div>
-                <div className="px-3 py-1.5 rounded-full bg-white/20 backdrop-blur text-sm font-semibold flex items-center gap-1.5">💎 {xp} XP</div>
-                <div className="px-3 py-1.5 rounded-full bg-white/20 backdrop-blur text-sm font-semibold flex items-center gap-1.5">🔥 {streak} 天</div>
-                <div className="px-3 py-1.5 rounded-full bg-white/20 backdrop-blur text-sm font-semibold flex items-center gap-1.5">📚 {stickerCount} 貼紙</div>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="flex-1 h-2.5 rounded-full bg-white/20 overflow-hidden">
-                  <div className="h-full bg-white rounded-full transition-all" style={{ width: `${xpProgress}%` }} />
-                </div>
-                <span className="text-xs font-medium text-white/90 shrink-0">
-                  {nextLevelXp === Infinity ? '已滿級' : `${xp - currentLevelXp}/${nextLevelXp - currentLevelXp}`}
-                </span>
-              </div>
-            </div>
+  // Setup secondary tabs for PageScaffold
+  const secondaryTabs: TabItem[] = [
+    {
+      id: 'review',
+      label: `📖 複習 (${dueChars.length})`,
+      content: dueChars.length > 0 ? (
+        <div className="flex flex-col gap-2 min-h-0">
+          <div className="flex items-center justify-between flex-wrap gap-2 mb-1">
+            <span className="text-xs text-slate-500 dark:text-slate-400 font-semibold">
+              今日有 {dueChars.length} 個字待溫習
+            </span>
+            <Link
+              href={`/learn/flashcard?chars=${encodeURIComponent(dueChars.join(','))}&title=${encodeURIComponent('今日要複習')}`}
+              className="text-xs text-indigo-600 dark:text-indigo-400 font-bold hover:underline"
+            >
+              用字卡複習 →
+            </Link>
           </div>
-
-          {/* Quick actions */}
-          <div className="grid grid-cols-2 gap-3">
-            <Link href="/favorites" className="rounded-3xl bg-gradient-to-br from-pink-500 to-rose-500 text-white shadow-md hover:shadow-lg transition-all p-4 flex flex-col items-center justify-center gap-1 active:scale-95">
-              <div className="text-3xl">❤️</div>
-              <div className="text-sm font-bold">我的收藏</div>
-              <div className="text-xs text-white/85">{favCount} 項</div>
-            </Link>
-            <Link href="/progress" className="rounded-3xl bg-gradient-to-br from-sky-400 to-indigo-500 text-white shadow-md hover:shadow-lg transition-all p-4 flex flex-col items-center justify-center gap-1 active:scale-95">
-              <div className="text-3xl">📊</div>
-              <div className="text-sm font-bold">學習進度</div>
-              <div className="text-xs text-white/85">📚 {stickerCount} 貼紙</div>
-            </Link>
+          <div className="flex flex-wrap gap-1.5 sm:gap-2">
+            {dueChars.map(char => (
+              <Link
+                key={char}
+                href={`/learn/flashcard?chars=${encodeURIComponent(char)}&title=${encodeURIComponent('複習：' + char)}`}
+                className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-slate-800 dark:to-slate-900 border border-indigo-200 dark:border-indigo-850 flex items-center justify-center font-chinese text-lg sm:text-xl text-slate-900 dark:text-slate-100 hover:scale-110 hover:border-indigo-500 active:scale-95 transition-all shadow-sm"
+              >
+                {char}
+              </Link>
+            ))}
           </div>
         </div>
+      ) : (
+        <div className="text-center py-6 text-slate-500 text-xs sm:text-sm">
+          🌟 太棒了！今天所有的字都複習完畢！
+        </div>
+      )
+    },
+    {
+      id: 'quests',
+      label: '🎯 今日任務',
+      content: quests.length > 0 ? (
+        <div className="grid grid-cols-1 gap-2 min-h-0">
+          {quests.map(q => <QuestCard key={q.id} quest={q} />)}
+        </div>
+      ) : (
+        <div className="text-center py-6 text-slate-500 text-xs sm:text-sm">
+          🎯 今日無任何任務，休息一下吧！
+        </div>
+      )
+    },
+    {
+      id: 'garden',
+      label: '🌱 我的花園',
+      content: (
+        <div className="min-h-0">
+          <GardenPanel plants={plants} />
+        </div>
+      )
+    }
+  ];
 
-        {/* Search bar — primary entry point for finding a specific character */}
-        <form onSubmit={submitSearch} className="mb-5 sm:mb-6">
-          <div className="relative bg-gradient-to-r from-indigo-50 to-purple-50 border-2 border-indigo-300 rounded-2xl shadow-sm focus-within:border-indigo-500 focus-within:shadow-md transition-all flex items-center gap-2 pl-4 pr-2 py-1.5">
-            <span className="text-2xl">🔍</span>
-            <input
-              ref={searchRef}
-              type="text"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="搜尋漢字、部首或粵拼（例如：明、口、ming4）"
-              className="flex-1 bg-transparent outline-none text-base sm:text-lg py-2 text-slate-900 placeholder:text-slate-400 hanzi-display"
-              aria-label="搜尋漢字"
-            />
-            <button
-              type="submit"
-              className="px-4 py-2 rounded-xl bg-indigo-600 text-white font-semibold text-sm sm:text-base hover:bg-indigo-700 active:scale-95 transition-all shadow-sm"
-            >
-              查字
-            </button>
-          </div>
-          <div className="mt-2 flex items-center gap-2 flex-wrap text-xs sm:text-sm">
-            <span className="text-slate-500">熱門搜尋：</span>
-            {['口', '木', '水', '心', '火', '日', '人', '手'].map(r => (
-              <Link
-                key={r}
-                href={`/learn/explore?q=${encodeURIComponent(r)}`}
-                className="px-2.5 py-1 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-semibold border border-indigo-200 hanzi-display"
-              >
-                {r} 部
-              </Link>
-            ))}
-          </div>
-        </form>
-
-        {/* Activity Cards — compact, vivid, denser */}
-        <section className="mb-5 sm:mb-6">
-          <div className="flex items-baseline justify-between mb-3">
-            <h2 className="text-lg sm:text-xl font-bold text-slate-900">學習活動</h2>
-            <span className="text-xs text-slate-500">點擊開始</span>
-          </div>
-          <div className="grid grid-cols-2 lg:grid-cols-3 gap-3">
-            {ACTIVITIES.map(act => (
-              <Link
-                key={act.href}
-                href={act.href}
-                className={`group relative overflow-hidden rounded-2xl bg-gradient-to-br ${act.gradient} shadow-md hover:shadow-xl active:scale-95 transition-all p-4 sm:p-5 ring-2 ring-transparent hover:${act.ring}`}
-              >
-                <div className="absolute -right-2 -bottom-2 text-7xl opacity-25 select-none">{act.emoji}</div>
-                <div className="relative">
-                  <div className="text-3xl sm:text-4xl mb-2">{act.emoji}</div>
-                  <div className={`font-bold text-base sm:text-lg ${act.text} mb-0.5`}>{act.label}</div>
-                  <div className="text-xs sm:text-sm text-white/85 leading-snug">{act.description}</div>
+  return (
+    <AppShell title="粵語漢字學習" emoji="📖" hideBack bg="indigo">
+      <PageScaffold
+        persistKey="home.secondaryTab"
+        defaultSelected={dueChars.length > 0 ? 'review' : 'quests'}
+        primary={
+          <div className="w-full flex flex-col min-h-0 gap-3">
+            {/* Collapsed Welcome / Stats Band */}
+            <div className="flex items-center justify-between flex-wrap gap-2 bg-gradient-to-br from-indigo-500 via-purple-500 to-fuchsia-500 rounded-2xl text-white p-3 shadow-md relative overflow-hidden shrink-0">
+              <div aria-hidden="true" className="absolute -right-4 -top-4 text-6xl opacity-15 select-none pointer-events-none">🐼</div>
+              <div className="relative">
+                <h2 className="text-sm sm:text-base font-bold flex items-center gap-1.5 leading-none mb-1">
+                  <span>🐼</span> 你好！學中文嘍 🚀
+                </h2>
+                <div className="flex items-center gap-2">
+                  <div className="w-20 h-1.5 rounded-full bg-white/20 overflow-hidden">
+                    <div className="h-full bg-white rounded-full transition-all" style={{ width: `${xpProgress}%` }} />
+                  </div>
+                  <span className="text-[10px] text-white/80 shrink-0 font-medium">
+                    Lv.{level}
+                  </span>
                 </div>
-              </Link>
-            ))}
-          </div>
-        </section>
-
-        {/* Today's review */}
-        {dueChars.length > 0 && (
-          <section className="mb-5 rounded-2xl bg-gradient-to-br from-indigo-50 to-purple-50 border-2 border-indigo-200 shadow-sm p-4 sm:p-5">
-            <div className="flex items-center justify-between mb-3">
-              <div className="flex items-center gap-2">
-                <span className="text-xl">📖</span>
-                <h2 className="text-base sm:text-lg font-bold text-slate-900">今日要複習</h2>
-                <span className="px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-700 text-xs font-bold">{dueChars.length}</span>
               </div>
-              <Link
-                href={`/learn/flashcard?chars=${encodeURIComponent(dueChars.join(','))}&title=${encodeURIComponent('今日要複習')}`}
-                className="text-xs sm:text-sm text-indigo-600 font-semibold hover:underline"
-              >
-                立即複習 →
-              </Link>
+              <div className="relative flex items-center gap-1.5 text-[10px] font-bold shrink-0">
+                <span className="px-2 py-1 rounded-lg bg-white/20 backdrop-blur">💎 {xp} XP</span>
+                <span className="px-2 py-1 rounded-lg bg-white/20 backdrop-blur">🔥 {streak} 天</span>
+                <span className="px-2 py-1 rounded-lg bg-white/20 backdrop-blur">📚 {stickerCount} 貼紙</span>
+                <span className="px-2 py-1 rounded-lg bg-white/20 backdrop-blur">❤️ {favCount}</span>
+              </div>
             </div>
-            <div className="flex flex-wrap gap-1.5 sm:gap-2">
-              {dueChars.map(char => (
-                <Link
-                  key={char}
-                  href={`/learn/flashcard?chars=${encodeURIComponent(char)}&title=${encodeURIComponent('複習：' + char)}`}
-                  className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-indigo-50 to-purple-50 border-2 border-indigo-200 flex items-center justify-center font-chinese text-xl sm:text-2xl text-slate-900 hover:scale-110 hover:border-indigo-500 active:scale-95 transition-all shadow-sm"
+
+            {/* Search Bar with Hot Searches Inline */}
+            <form onSubmit={submitSearch} className="shrink-0">
+              <div className="relative bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-slate-800 dark:to-slate-900 border border-indigo-200 dark:border-indigo-850 rounded-2xl shadow-sm focus-within:border-indigo-500 focus-within:shadow-md transition-all flex items-center gap-2 pl-3 pr-1.5 py-1 min-w-0">
+                <span className="text-xl shrink-0">🔍</span>
+                <input
+                  ref={searchRef}
+                  type="text"
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  placeholder="搜尋漢字 / 部首 / 粵拼"
+                  className="flex-1 min-w-0 bg-transparent outline-none text-sm sm:text-base py-1 text-slate-900 dark:text-slate-100 placeholder:text-slate-400 hanzi-display min-h-9"
+                  aria-label="搜尋漢字"
+                />
+                <button
+                  type="submit"
+                  className="shrink-0 px-3 py-1.5 rounded-xl bg-indigo-600 text-white font-semibold text-xs sm:text-sm hover:bg-indigo-700 active:scale-95 transition-all shadow-sm min-h-9"
                 >
-                  {char}
-                </Link>
-              ))}
-            </div>
-          </section>
-        )}
+                  查字
+                </button>
+              </div>
+              <div className="mt-1 flex items-center gap-1 flex-wrap text-[10px] sm:text-xs">
+                <span className="text-slate-500 dark:text-slate-400 font-medium">推薦：</span>
+                {['口', '木', '水', '心', '火', '日'].map(r => (
+                  <Link
+                    key={r}
+                    href={`/learn/explore?q=${encodeURIComponent(r)}`}
+                    aria-label={`${r} 部`}
+                    className="px-1.5 py-0.5 rounded-md bg-indigo-50 dark:bg-indigo-950/30 hover:bg-indigo-100 dark:hover:bg-indigo-900/40 text-indigo-700 dark:text-indigo-300 font-bold border border-indigo-100 dark:border-indigo-900 hanzi-display inline-flex items-center"
+                  >
+                    {r} 部
+                  </Link>
+                ))}
+              </div>
+            </form>
 
-        {/* Quests */}
-        {quests.length > 0 && (
-          <section className="mb-5">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-xl">🎯</span>
-              <h2 className="text-base sm:text-lg font-bold text-slate-900">今日任務</h2>
+            {/* Compact Activity Grid */}
+            <div className="flex-1 min-h-0 flex flex-col justify-center">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                {ACTIVITIES.map(act => (
+                  <Link
+                    key={act.href}
+                    href={act.href}
+                    className={`group relative overflow-hidden rounded-2xl bg-gradient-to-br ${act.gradient} shadow-sm hover:shadow-md active:scale-95 transition-all p-3 flex flex-col justify-between h-[90px] xs:h-[100px] sm:h-[90px] md:h-[95px] ring-2 ring-transparent`}
+                  >
+                    <div
+                      aria-hidden="true"
+                      className="absolute -right-2 -bottom-2 text-5xl opacity-20 select-none pointer-events-none transition-transform group-hover:scale-110"
+                    >
+                      {act.emoji}
+                    </div>
+                    <div className="text-2xl leading-none">{act.emoji}</div>
+                    <div>
+                      <div className="font-bold text-xs sm:text-sm text-white mb-0.5 leading-tight">{act.label}</div>
+                      <div className="text-[9px] sm:text-[10px] text-white/80 leading-none truncate">{act.description}</div>
+                    </div>
+                  </Link>
+                ))}
+              </div>
             </div>
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
-              {quests.map(q => <QuestCard key={q.id} quest={q} />)}
-            </div>
-          </section>
-        )}
-
-        {/* Garden */}
-        <GardenPanel plants={plants} className="mb-4" />
-      </div>
+          </div>
+        }
+        secondary={secondaryTabs}
+      />
     </AppShell>
   );
 }

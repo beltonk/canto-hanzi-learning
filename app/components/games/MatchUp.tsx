@@ -241,7 +241,7 @@ export default function MatchUp({ items, onResult }: GameProps) {
 
       {/* Board */}
       <div
-        className="relative grid gap-2 sm:gap-3 w-full max-w-md"
+        className="relative grid gap-2 sm:gap-3 md:gap-4 w-full max-w-md md:max-w-xl"
         style={{ gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))` }}
       >
         <CorrectBurst show={showBurst} />
